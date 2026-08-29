@@ -14,12 +14,15 @@ import type { ProofVariant } from '@/components/sections/Proof';
  *   ecosystem 'doors'      four cards; fastest to scan
  *             'index'      four full-width rows; more editorial
  *             'stack'      four full-bleed cards that pin and stack on
- *                          scroll (the avax.network pattern) — current pick
+ *                          scroll (the avax.network pattern)
+ *             'stackSide'  a narrower stacking column beside a heading that
+ *                          sticks level with it (Figma node 96:209) —
+ *                          current pick
  */
 export const homeLayout: {
   proof: ProofVariant;
   ecosystem: EcosystemVariant;
 } = {
   proof: 'asymmetric',
-  ecosystem: 'stack',
+  ecosystem: 'stackSide',
 };

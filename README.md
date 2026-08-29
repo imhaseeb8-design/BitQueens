@@ -136,6 +136,28 @@ independent again. This only shows up in the last ~1 card's-height of
 scroll, so it's easy to test the middle of the effect, ship it, and never
 notice the ending is broken.
 
+**Ecosystem `stackSide` variant (current pick)** — from Figma node 96:209.
+Same stacking mechanism as `stack`, but the cards stay confined to a
+narrower column (not full-bleed) beside a heading that is itself
+`position: sticky` at the same `top`, so it holds level with whichever card
+is currently pinned. Two things worth knowing:
+- It has to render as a plain `<section>`, **not** the `<Section>` wrapper —
+  `Section` clips itself with `overflow: hidden`, and any such ancestor
+  (even one that never actually clips anything) breaks `position: sticky`
+  for everything inside it. `stack` avoids this by rendering its cards as a
+  sibling *after* `</Section>`; `stackSide` can't do that because the
+  heading and the cards must share one sticky-safe ancestor to stay level
+  with each other, so the whole two-column grid moves outside instead.
+  Same failure mode as the `overflow-x: hidden` → `clip` fix on `body`
+  below — the class of bug reappears at any wrapping level, not just the
+  page root.
+- Each card's own "stuck" window is short by design — its `.sideItem`
+  wrapper is only card height + one wave-band's worth of extra room, so a
+  card individually pins for a beat (a few dozen px of scroll) before the
+  *next* card, now sticking above it in DOM order, covers the seam. Don't
+  mistake the short per-card window for broken sticky when testing by hand:
+  sampling at a coarse scroll interval can step right over it.
+
 **Motion**
 - Only `transform` and `opacity` animate.
 - One easing curve: `--bq-ease` = `cubic-bezier(.16, 1, .3, 1)`. Never `ease-in`.
