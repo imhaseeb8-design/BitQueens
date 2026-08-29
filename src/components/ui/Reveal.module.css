@@ -1,0 +1,64 @@
+/**
+ * Scroll-triggered entrance.
+ *
+ * Only transform and opacity animate — both skip layout and paint and run on
+ * the GPU. The transition (rather than a keyframe) means an element caught
+ * mid-reveal retargets smoothly instead of restarting.
+ */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity var(--bq-dur-reveal) var(--bq-ease),
+    transform var(--bq-dur-reveal) var(--bq-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal[data-visible='true'] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* Variant: no vertical travel, for elements where movement would fight the
+   layout (large headline blocks already carrying a line-mask animation). */
+.fade {
+  transform: none;
+}
+
+/* Variant: hairline rules draw themselves left-to-right. */
+.draw {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--bq-dur-reveal) var(--bq-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.draw[data-visible='true'] {
+  transform: scaleX(1);
+}
+
+/* Without scripting the observer never runs, so the reveal would hide the
+   page permanently. Show everything instead. */
+@media (scripting: none) {
+  .reveal,
+  .draw {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .draw {
+    transform: none;
+    transition: opacity 300ms ease;
+  }
+
+  .reveal[data-visible='true'],
+  .draw[data-visible='true'] {
+    transform: none;
+  }
+}

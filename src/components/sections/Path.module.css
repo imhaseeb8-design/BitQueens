@@ -1,0 +1,132 @@
+/**
+ * 05 · Where you start — the path.
+ *
+ * The numbered steps are genuinely a sequence (join, then learn, then build),
+ * so an ordered list is the honest markup and the numerals carry real
+ * information rather than decorating the layout.
+ */
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+  gap: clamp(2.5rem, 1rem + 6vw, 5.5rem);
+  align-items: end;
+  margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-xl);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.038em;
+  text-wrap: pretty;
+}
+
+.intro {
+  max-width: 46ch;
+  margin-top: 2rem;
+  font-size: var(--bq-t-body-lg);
+  line-height: 1.62;
+  color: var(--bq-ink-72);
+  text-wrap: pretty;
+}
+
+.image {
+  height: clamp(240px, 30vw, 360px);
+}
+
+/* -- steps --------------------------------------------------------------- */
+
+.steps {
+  margin-top: clamp(3.5rem, 2rem + 6vw, 7.5rem);
+}
+
+.rule {
+  height: 1px;
+  background: rgba(26, 26, 26, 0.85);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(1.75rem, 1rem + 2vw, 2.5rem);
+}
+
+.step {
+  padding: 34px 40px 0 0;
+}
+
+.stepNum {
+  margin-bottom: 22px;
+  font-size: var(--bq-t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--bq-orange);
+}
+
+.stepTitle {
+  margin: 0 0 14px;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-sm);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+
+.stepDesc {
+  margin: 0;
+  font-size: var(--bq-t-body-sm);
+  line-height: 1.6;
+  color: var(--bq-ink-72);
+  text-wrap: pretty;
+}
+
+/* -- brand promise ------------------------------------------------------- */
+
+.quote {
+  max-width: 22ch;
+  margin: clamp(4rem, 2rem + 7vw, 8rem) 0 0;
+}
+
+.quoteText {
+  margin: 0;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-md);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  text-wrap: pretty;
+  max-width: 24ch;
+}
+
+.quoteWide {
+  max-width: 68ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(1rem, 0.5rem + 2vw, 1.75rem);
+  margin-top: clamp(2.5rem, 1rem + 4vw, 4.5rem);
+}
+
+.note {
+  font-size: var(--bq-t-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bq-ink-42);
+}
+
+@media (max-width: 900px) {
+  .head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .step {
+    padding-right: 0;
+  }
+}

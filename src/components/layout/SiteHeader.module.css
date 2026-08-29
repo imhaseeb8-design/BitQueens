@@ -1,0 +1,165 @@
+.header {
+  position: relative;
+  z-index: 20;
+  background: var(--bq-canvas);
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 1rem + 1.5vw, 3.25rem) var(--bq-gutter) 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 0.5rem + 4vw, 6rem);
+}
+
+.logo {
+  flex: none;
+  display: block;
+}
+
+.logo img {
+  height: 19px;
+  width: auto;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 0.4rem + 1.6vw, 2rem);
+}
+
+.navLink {
+  position: relative;
+  font-size: var(--bq-t-meta);
+  letter-spacing: 0.02em;
+  padding: 6px 0;
+  transition: color 300ms var(--bq-ease);
+}
+
+/* Underline grows from the left rather than fading in — it reads as the link
+   acknowledging the pointer, not as a second element appearing. */
+.navLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms var(--bq-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navLink:hover {
+    color: var(--bq-orange);
+  }
+
+  .navLink:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.cta {
+  margin-left: auto;
+  flex: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--bq-orange);
+  color: var(--bq-orange);
+  font-size: var(--bq-t-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 300ms var(--bq-ease), border-color 300ms var(--bq-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    color: var(--bq-ink);
+    border-color: var(--bq-ink);
+  }
+}
+
+.rule {
+  max-width: var(--bq-max);
+  margin: clamp(1.25rem, 1rem + 1vw, 2.5rem) auto 0;
+  padding: 0 var(--bq-gutter);
+}
+
+.ruleLine {
+  height: 1px;
+  background: var(--bq-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: bqHeaderRule 1.1s var(--bq-ease) 0.05s forwards;
+}
+
+@keyframes bqHeaderRule {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* -- mobile -------------------------------------------------------------- */
+
+.toggle {
+  display: none;
+  margin-left: auto;
+  min-height: 44px;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  font-size: var(--bq-t-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media (max-width: 1080px) {
+  .nav,
+  .cta {
+    display: none;
+  }
+
+  .toggle {
+    display: block;
+  }
+
+  .open .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    order: 3;
+    flex-basis: 100%;
+    margin-top: 1.5rem;
+  }
+
+  .open .navLink {
+    padding: 14px 0;
+    border-top: 1px solid var(--bq-ink-14);
+    font-size: var(--bq-t-body);
+  }
+
+  .open .cta {
+    display: block;
+    order: 4;
+    flex-basis: 100%;
+    margin: 1.25rem 0 0;
+    padding-bottom: 4px;
+    align-self: flex-start;
+    width: fit-content;
+  }
+
+  .inner {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ruleLine {
+    transform: scaleX(1);
+    animation: none;
+  }
+}

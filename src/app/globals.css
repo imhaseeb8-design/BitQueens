@@ -1,40 +1,55 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import '../styles/tokens.css';
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ------------------------------------------------------------------ reset */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  font-family: var(--bq-body);
+  font-size: var(--bq-t-body);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* The page is a stack of full-bleed bands; nothing may scroll sideways.
+     `clip`, not `hidden` — `hidden` makes the body a scroll container, which
+     silently breaks `position: sticky` for everything inside it (the hero
+     stage depends on it). `clip` trims the overflow without that side effect. */
+  overflow-x: clip;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+ol,
+ul {
   margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
 a {
@@ -42,8 +57,67 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+/* ------------------------------------------------------------ typography */
+
+.bq-display {
+  font-family: var(--bq-display);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------- accessibility */
+
+.bq-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--bq-orange);
+  outline-offset: 3px;
+}
+
+.bq-skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--bq-ink);
+  color: var(--bq-cream);
+  font-size: var(--bq-t-body-sm);
+  transform: translateY(-120%);
+  transition: transform 200ms var(--bq-ease);
+}
+
+.bq-skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------- motion */
+
+/* Reduced motion means fewer and gentler animations, not zero. Opacity and
+   colour transitions that aid comprehension stay; movement goes. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 200ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -1,69 +1,43 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Blog } from '@/components/sections/Blog';
+import { Conference } from '@/components/sections/Conference';
+import { Ecosystem } from '@/components/sections/Ecosystem';
+import { Founder } from '@/components/sections/Founder';
+import { Hero } from '@/components/sections/Hero';
+import { Join } from '@/components/sections/Join';
+import { Mission } from '@/components/sections/Mission';
+import { Partners } from '@/components/sections/Partners';
+import { Path } from '@/components/sections/Path';
+import { home } from '@/content/home';
+import { homeLayout } from '@/content/layout';
 
-export default function Home() {
+/**
+ * The homepage.
+ *
+ * Order is the argument: who we are and that we are real (01, the hero
+ * carries its own proof) → what the
+ * ecosystem is (03) → why it exists (04) → that you can start (05) → the
+ * flagship moment (06) → who is behind it (07) → who backs it (08) → what we
+ * publish (09) → the two ways in (10).
+ *
+ * Sections 02 and 03 are still being compared. Switch variants in
+ * `src/content/layout.ts` — no component edits required.
+ */
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Hero content={home.hero} />
+      {/* 02 Proof is hidden: the hero's second state now carries the proof
+          figures, so a separate section repeats the same job. The component
+          and its content are kept — restore this line to bring it back.
+          <Proof content={home.proof} variant={homeLayout.proof} /> */}
+      <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
+      <Mission content={home.mission} />
+      <Path content={home.path} />
+      <Conference content={home.conference} />
+      <Founder content={home.founder} />
+      <Partners content={home.partners} />
+      <Blog content={home.blog} />
+      <Join content={home.join} />
+    </>
   );
 }

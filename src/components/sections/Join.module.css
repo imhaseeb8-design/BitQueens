@@ -1,0 +1,186 @@
+/**
+ * 10 · Join — two doors, full-bleed ink.
+ *
+ * The page ends by splitting its two audiences cleanly: a woman who wants to
+ * learn, and an institution that wants to work with BitQueens. Everything
+ * above narrows to these two actions.
+ */
+
+.headline {
+  max-width: 18ch;
+  margin: clamp(2.5rem, 1rem + 4vw, 4rem) 0 0;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-xxl);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  text-wrap: pretty;
+}
+
+.doors {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 5vw, 5.5rem);
+  margin-top: clamp(3.5rem, 2rem + 6vw, 7rem);
+}
+
+.divider {
+  background: var(--bq-cream-22);
+}
+
+.doorTitle {
+  margin: 0;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-md);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.doorBody {
+  max-width: 40ch;
+  margin: 1.5rem 0 0;
+  font-size: var(--bq-t-body-lg);
+  line-height: 1.62;
+  color: var(--bq-cream-dim);
+  text-wrap: pretty;
+}
+
+.doorAction {
+  margin-top: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+}
+
+/* -- newsletter ---------------------------------------------------------- */
+
+.news {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 620px);
+  gap: clamp(2rem, 1rem + 5vw, 5.5rem);
+  align-items: start;
+  margin-top: clamp(4rem, 2rem + 7vw, 8rem);
+  padding-top: 44px;
+  border-top: 1px solid var(--bq-cream-22);
+}
+
+.newsLabel {
+  padding-top: 12px;
+  font-size: var(--bq-t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(241, 238, 228, 0.72);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  gap: 14px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  min-height: 56px;
+  padding: 16px 18px;
+  background: transparent;
+  border: 1px solid rgba(241, 238, 228, 0.4);
+  color: var(--bq-cream);
+  font-size: var(--bq-t-body);
+  transition: border-color 300ms var(--bq-ease);
+}
+
+.input::placeholder {
+  color: rgba(241, 238, 228, 0.5);
+}
+
+.input:focus-visible {
+  border-color: var(--bq-cream);
+  outline: 2px solid var(--bq-cream);
+  outline-offset: 2px;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--bq-blush);
+}
+
+.submit {
+  min-height: 56px;
+  padding: 16px 32px;
+  background: var(--bq-cream);
+  border: none;
+  color: var(--bq-ink);
+  font-size: var(--bq-t-body);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--bq-dur-hover) var(--bq-ease),
+    color var(--bq-dur-hover) var(--bq-ease),
+    transform var(--bq-dur-press) var(--bq-ease);
+}
+
+.submit:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .submit:hover:not(:disabled) {
+    background: var(--bq-orange);
+    color: var(--bq-canvas);
+  }
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.status {
+  min-height: 20px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.error {
+  color: var(--bq-blush);
+}
+
+.success {
+  color: var(--bq-blue-pale);
+}
+
+.disclaimer {
+  max-width: 52ch;
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: rgba(241, 238, 228, 0.6);
+}
+
+@media (max-width: 900px) {
+  .doors {
+    grid-template-columns: 1fr;
+  }
+
+  .divider {
+    height: 1px;
+  }
+
+  .news {
+    grid-template-columns: 1fr;
+  }
+
+  .field {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submit:active {
+    transform: none;
+  }
+}

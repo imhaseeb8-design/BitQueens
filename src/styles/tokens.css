@@ -1,0 +1,75 @@
+/**
+ * BitQueens design tokens.
+ *
+ * Palette is locked — do not introduce hues outside this set. The gradient
+ * rule from the brand work: flows cool → mid → warm; cream and ink never sit
+ * inside a gradient; one flat solid is always pulled out as a block.
+ */
+
+:root {
+  /* -- colour ------------------------------------------------------------ */
+  --bq-canvas: #fafaf8; /* page ground, off-white */
+  --bq-cream: #f1eee4; /* text on dark blocks */
+  --bq-cream-dim: #dcd8cd;
+  --bq-paper: #f0ede4; /* image slots, inset panels */
+  --bq-ink: #1a1a1a;
+
+  --bq-orange: #e8641c; /* energy accent — primary CTA, used sparingly */
+  --bq-forest: #1e4a2c; /* flat solid block */
+  --bq-blue-deep: #2b6ca3; /* flat solid block */
+  --bq-blue-sky: #4a9bd1;
+  --bq-blue-pale: #b9dcf2;
+  --bq-green-grass: #5fa544;
+  --bq-blush: #f3afbc; /* soft punctuation */
+
+  /* Ink at opacity — hierarchy comes from opacity, not from new hues. */
+  --bq-ink-72: rgba(26, 26, 26, 0.72);
+  --bq-ink-66: rgba(26, 26, 26, 0.66);
+  --bq-ink-50: rgba(26, 26, 26, 0.5);
+  --bq-ink-42: rgba(26, 26, 26, 0.42);
+  --bq-ink-20: rgba(26, 26, 26, 0.2);
+  --bq-ink-14: rgba(26, 26, 26, 0.14);
+  --bq-ink-06: rgba(26, 26, 26, 0.06);
+
+  --bq-cream-82: rgba(241, 238, 228, 0.82);
+  --bq-cream-50: rgba(241, 238, 228, 0.5);
+  --bq-cream-30: rgba(241, 238, 228, 0.3);
+  --bq-cream-22: rgba(241, 238, 228, 0.22);
+  --bq-cream-10: rgba(241, 238, 228, 0.1);
+  --bq-cream-08: rgba(241, 238, 228, 0.08);
+
+  /* -- type -------------------------------------------------------------- */
+  --bq-display: 'Cabinet Grotesk', 'Switzer', system-ui, sans-serif;
+  --bq-body: 'Switzer', system-ui, -apple-system, sans-serif;
+
+  /* Fluid display scale. Each clamp runs min at 360px → max at 1440px. */
+  --bq-t-hero: clamp(3.5rem, 1.2rem + 10.2vw, 7.5rem);
+  --bq-t-xxl: clamp(2.75rem, 1.1rem + 7.3vw, 6.5rem);
+  --bq-t-xl: clamp(2.5rem, 1.3rem + 5.3vw, 5.125rem);
+  --bq-t-lg: clamp(2rem, 1.2rem + 3.6vw, 3.875rem);
+  --bq-t-md: clamp(1.75rem, 1.2rem + 2.4vw, 2.875rem);
+  --bq-t-sm: clamp(1.5rem, 1.2rem + 1.4vw, 2.125rem);
+  --bq-t-xs: clamp(1.3rem, 1.1rem + 0.9vw, 1.6875rem);
+
+  --bq-t-body-lg: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem);
+  --bq-t-body: clamp(0.95rem, 0.92rem + 0.15vw, 1.0625rem);
+  --bq-t-body-sm: 0.9375rem;
+  --bq-t-meta: 0.75rem;
+  --bq-t-eyebrow: 0.6875rem;
+
+  /* -- layout ------------------------------------------------------------ */
+  --bq-max: 1440px;
+  /* 20px at 360 → exactly 72px at the 1440 design width, then holds. */
+  --bq-gutter: clamp(1.25rem, 0.4rem + 4.56vw, 4.5rem);
+  --bq-col-gap: 24px;
+
+  /* -- motion ------------------------------------------------------------ */
+  /* Strong ease-out. The built-in CSS easings are too weak to read as
+     intentional; never ease-in on anything entering. */
+  --bq-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --bq-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --bq-dur-press: 160ms;
+  --bq-dur-hover: 400ms;
+  --bq-dur-reveal: 750ms;
+}

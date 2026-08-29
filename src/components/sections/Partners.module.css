@@ -1,0 +1,134 @@
+/**
+ * 08 · Partners — an invitation, not a logo wall.
+ *
+ * No partner logos exist to show yet. Rather than padding the section with
+ * placeholders, it opens with the three ways to work together; the logo rail
+ * appears above them the moment `partners` is populated.
+ */
+
+.logos {
+  margin-top: clamp(2.5rem, 1.5rem + 3vw, 3.5rem);
+}
+
+.logoRail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: clamp(1.5rem, 1rem + 2vw, 2rem);
+  align-items: center;
+  padding: 36px 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.18);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.18);
+}
+
+.logo {
+  min-width: 0;
+  display: block;
+}
+
+.logo img {
+  max-width: 100%;
+  height: 34px;
+  object-fit: contain;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  gap: clamp(2.5rem, 1rem + 7vw, 7rem);
+  align-items: start;
+  margin-top: clamp(2.5rem, 1rem + 4vw, 4.5rem);
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-xl);
+  font-weight: 500;
+  line-height: 0.99;
+  letter-spacing: -0.04em;
+  text-wrap: pretty;
+}
+
+.body {
+  max-width: 52ch;
+  margin: clamp(1.75rem, 1rem + 2vw, 2.25rem) 0 0;
+  font-size: var(--bq-t-body-lg);
+  line-height: 1.66;
+  color: var(--bq-ink-72);
+  text-wrap: pretty;
+}
+
+.action {
+  margin-top: clamp(2.25rem, 1.5rem + 2vw, 3.25rem);
+}
+
+/* -- tiers --------------------------------------------------------------- */
+
+.tiers {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+}
+
+.tier {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: baseline;
+  padding: 30px 4px 30px 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.18);
+  transition: padding-left 500ms var(--bq-ease);
+}
+
+.tier:first-child {
+  border-top-color: rgba(26, 26, 26, 0.85);
+}
+
+.tier:last-child {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.18);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tier:hover {
+    padding-left: 14px;
+  }
+
+  .tier:hover .tierArrow {
+    transform: translateX(4px);
+  }
+}
+
+.tierTitle {
+  margin: 0 0 10px;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-xs);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+
+.tierDesc {
+  margin: 0;
+  font-size: var(--bq-t-body-sm);
+  line-height: 1.55;
+  color: var(--bq-ink-66);
+}
+
+.tierArrow {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--bq-forest);
+  transition: transform 300ms var(--bq-ease);
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier:hover {
+    padding-left: 0;
+  }
+}

@@ -1,0 +1,314 @@
+import type { HomePage } from '@/lib/types';
+
+/**
+ * Homepage content.
+ *
+ * Copy is drawn from the approved design and the project brief. One thing
+ * still needs the client before launch, marked NEEDS CONFIRMATION:
+ *   • `founder.bio` — placeholder, awaiting Kristie's own words.
+ *
+ * `proof.stats` is intentionally empty. The brief asks the homepage to
+ * "showcase real impact and numbers", but no verified figures exist yet —
+ * so the section leads with the entity register, which is real and
+ * independently checkable. Populate `stats` when BitQueens supplies them and
+ * the numerals row appears automatically.
+ */
+export const home: HomePage = {
+  /* ---------------------------------------------------------- 01 · hero -- */
+  hero: {
+    headline: ['Learn it.', 'Build it.'],
+    headlineAccent: 'Lead it.',
+    body:
+      'BitQueens is an ecosystem helping women learn emerging technologies, ' +
+      'build careers and enter the digital economy across Africa and beyond.',
+    primaryCta: { label: 'Join BitQueens', href: '/join' },
+    secondaryCta: { label: 'Partner with us', href: '/partners' },
+    stats: [
+      { value: '6,000+', label: 'women trained since 2023' },
+      { value: '14', label: 'African countries reached' },
+      // NEEDS CONFIRMATION — the brief's entity table lists TWO companies as
+      // registered (BitQueens Limited, Bit-Queens Innovations Limited); BIET,
+      // the Foundation and Global LLC are name-approved, in progress and
+      // planned respectively. This "3" comes from the Figma hero. Confirm
+      // which count is current before launch.
+      { value: '3', label: 'registered entities under the group' },
+    ],
+    media: {
+      src: '/hero-waves.png',
+      alt: 'Layered wave bands in the BitQueens palette — sky blue, grass green and orange',
+      width: 897,
+      height: 304,
+    },
+  },
+
+  /* --------------------------------------------------------- 02 · proof -- */
+  proof: {
+    eyebrow: 'Proof',
+    statement:
+      'BitQueens is not a concept or a plan. It is a registered group of ' +
+      'companies, actively operating in Nigeria with international expansion ' +
+      'underway.',
+    entities: [
+      {
+        name: 'BitQueens Limited',
+        rc: 'RC 9557101',
+        status: 'registered',
+        statusLabel: 'Registered',
+      },
+      {
+        name: 'Bit-Queens Innovations Limited',
+        rc: 'RC 9627471',
+        status: 'registered',
+        statusLabel: 'Registered',
+      },
+      {
+        name: 'BitQueens Institute of Emerging Technologies (BIET) LTD/GTE',
+        status: 'name-approved',
+        statusLabel: 'Name approved — filing in progress',
+      },
+      {
+        name: 'BitQueens Foundation',
+        status: 'in-progress',
+        statusLabel: 'Registration in progress',
+      },
+      {
+        name: 'BitQueens Global LLC',
+        status: 'planned',
+        statusLabel: 'Planned — Wyoming, USA',
+      },
+    ],
+    // Populate when BitQueens supplies verified figures.
+    stats: [],
+  },
+
+  /* ----------------------------------------------------- 03 · ecosystem -- */
+  ecosystem: {
+    eyebrow: 'The Ecosystem',
+    headline: 'One ecosystem.',
+    headlineMuted: 'Four ways in.',
+    intro:
+      'Four divisions, one route each. Pick the door that matches where you ' +
+      'are today.',
+    pillars: [
+      {
+        name: 'Academy',
+        description:
+          'Community learning, cohort programmes and campus chapters. This is where you join.',
+        cta: 'Join the Academy',
+        href: '/academy',
+        color: '#2B6CA3',
+      },
+      {
+        name: 'Innovations & Labs',
+        description:
+          'Technology products, Chainelle, BitQueens AI and skills programmes. This is where you build.',
+        cta: 'Explore Labs',
+        href: '/innovations',
+        color: '#E8641C',
+      },
+      {
+        name: 'BIET',
+        description:
+          'The Institute of Emerging Technologies — certificates, diplomas and fellowships. This is where you enrol.',
+        cta: 'View programmes',
+        href: '/biet',
+        color: '#1E4A2C',
+      },
+      {
+        name: 'Foundation',
+        description:
+          'Scholarships, advocacy and donations. This is where support is given and received.',
+        cta: 'Support the mission',
+        href: '/foundation',
+        color: '#4A9BD1',
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------- 04 · mission -- */
+  mission: {
+    eyebrow: 'Why we exist',
+    headline: 'Technology is shaping the future.',
+    body:
+      'Millions of women remain excluded from the opportunities being created. ' +
+      'BitQueens exists to change that. Through education, innovation and ' +
+      'community, we are preparing women to participate confidently in the ' +
+      'next generation of the internet.',
+    refrain: [
+      'Access creates confidence.',
+      'Confidence creates opportunity.',
+      'Opportunity creates leaders.',
+    ],
+  },
+
+  /* ---------------------------------------------------------- 05 · path -- */
+  path: {
+    eyebrow: 'Where you start',
+    headline: 'You do not need a technical background.',
+    intro:
+      'Most people who join BitQueens start with no experience in emerging ' +
+      'technologies at all. The path is built for that.',
+    steps: [
+      {
+        title: 'Join',
+        description:
+          'Enter the community and pick a learning track that fits where you are.',
+      },
+      {
+        title: 'Learn',
+        description:
+          'Cohort programmes, mentorship and campus chapters, taught in plain language.',
+      },
+      {
+        title: 'Build',
+        description:
+          'Apply what you learn to real projects, careers and businesses.',
+      },
+    ],
+    quote:
+      'I belong here. I can understand this. I can build something. I can earn. I can lead.',
+    cta: { label: 'Join BitQueens', href: '/join' },
+    ctaNote: 'No experience required',
+    image: {
+      alt: 'Women collaborating during a BitQueens cohort session',
+      width: 520,
+      height: 360,
+    },
+  },
+
+  /* ---------------------------------------------------- 06 · conference -- */
+  conference: {
+    eyebrow: 'The Conference',
+    headline: 'The BitQueens Conference',
+    body:
+      'Our flagship gathering brings together the women building in emerging ' +
+      'technologies, alongside the institutions, partners and technologists ' +
+      'backing them.',
+    note: 'Dates and speakers to be announced.',
+    primaryCta: { label: 'Explore the Conference', href: '/conference' },
+    secondaryCta: { label: 'Register interest', href: '/conference/register' },
+    image: {
+      alt: 'The audience at a previous BitQueens gathering',
+      width: 664,
+      height: 420,
+    },
+    speakers: [],
+  },
+
+  /* ------------------------------------------------------- 07 · founder -- */
+  founder: {
+    eyebrow: 'The Founder',
+    headline: 'Founded by Kristie.',
+    name: 'Kristie',
+    role: 'Founder, BitQueens',
+    // NEEDS CONFIRMATION — placeholder bio, awaiting Kristie's own copy.
+    bio:
+      'Kristie founded BitQueens after watching capable women be priced and ' +
+      'talked out of an industry that badly needs them. She builds the on-ramp ' +
+      'she could not find: programmes that assume no prior knowledge, taught in ' +
+      'plain language, with a community attached.',
+    credentials: [],
+    // Deliberately empty: "The future should not be built without women" is
+    // the closing headline in section 10, and repeating it three sections
+    // earlier blunts both. Add a different line in Kristie's own words.
+    quote: undefined,
+    primaryCta: { label: 'Book Kristie as a speaker', href: '/contact' },
+    secondaryCta: { label: 'Read the full story', href: '/about' },
+    portrait: {
+      alt: 'Kristie, founder of BitQueens',
+      width: 468,
+      height: 585,
+    },
+  },
+
+  /* ------------------------------------------------------ 08 · partners -- */
+  partners: {
+    eyebrow: 'Partners',
+    headline: 'Build this with us.',
+    body:
+      'BitQueens works with governments, universities, NGOs and technology ' +
+      'companies to bring emerging technology education to more women across ' +
+      'Africa and beyond.',
+    cta: { label: 'Partner with us', href: '/partners' },
+    tiers: [
+      {
+        title: 'Institutional',
+        description: 'Governments, universities and public agencies.',
+        href: '/partners#institutional',
+      },
+      {
+        title: 'Corporate',
+        description: 'Technology companies and industry partners.',
+        href: '/partners#corporate',
+      },
+      {
+        title: 'Sponsorship',
+        description: 'Conference, programme and scholarship sponsors.',
+        href: '/partners#sponsorship',
+      },
+    ],
+    partners: [],
+  },
+
+  /* ---------------------------------------------------------- 09 · blog -- */
+  blog: {
+    eyebrow: 'Blog',
+    headline: 'Read the work.',
+    intro:
+      'Articles, updates and educational content from across the ecosystem.',
+    cta: { label: 'View all articles', href: '/blog' },
+    posts: [
+      {
+        title: 'What “emerging technology” actually means for your career',
+        excerpt:
+          'A plain-language map of the field, and where a beginner can realistically start.',
+        category: 'Explainer',
+        date: '12 August 2026',
+        href: '/blog/emerging-technology-careers',
+      },
+      {
+        title: 'Inside a BitQueens cohort: eight weeks, no prior experience',
+        excerpt:
+          'What the programme actually looks like week by week, from the people who took it.',
+        category: 'Programmes',
+        date: '29 July 2026',
+        href: '/blog/inside-a-cohort',
+      },
+      {
+        title: 'Why campus chapters change who gets into tech',
+        excerpt:
+          'Reaching women where they already are turns out to matter more than any curriculum.',
+        category: 'Community',
+        date: '15 July 2026',
+        href: '/blog/campus-chapters',
+      },
+    ],
+  },
+
+  /* ---------------------------------------------------------- 10 · join -- */
+  join: {
+    eyebrow: 'Join',
+    headline: 'The future should not be built without women.',
+    doors: [
+      {
+        title: 'Start learning.',
+        body:
+          'Join the community, pick a track and begin with no technical background.',
+        cta: { label: 'Join BitQueens', href: '/join' },
+      },
+      {
+        title: 'Work with us.',
+        body:
+          'For governments, universities, NGOs, technology companies and sponsors.',
+        cta: { label: 'Partner with us', href: '/partners' },
+      },
+    ],
+    newsletter: {
+      label: 'Stay updated',
+      placeholder: 'Your email address',
+      submitLabel: 'Subscribe',
+      disclaimer:
+        'We will only send updates about programmes, events and opportunities.',
+    },
+  },
+};

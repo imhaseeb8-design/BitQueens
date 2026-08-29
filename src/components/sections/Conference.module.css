@@ -1,0 +1,133 @@
+/**
+ * 06 · The Conference — full-bleed deep blue.
+ *
+ * Produced by the internal Hub, but visitors only ever meet it as "the
+ * Conference". Dates are unannounced, so the section commits to that plainly
+ * instead of implying a schedule that does not exist yet.
+ */
+
+.dateLine {
+  margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+  font-size: var(--bq-t-body-sm);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bq-blue-pale);
+}
+
+.eyebrowAccent {
+  color: var(--bq-blue-pale);
+}
+
+.headline {
+  max-width: 16ch;
+  margin: clamp(2rem, 1rem + 3vw, 3.5rem) 0 0;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-xxl);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  text-wrap: pretty;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+  gap: clamp(2.5rem, 1rem + 6vw, 6rem);
+  align-items: start;
+  margin-top: clamp(2.5rem, 1rem + 4vw, 4.5rem);
+}
+
+.body {
+  margin: 0;
+  font-size: var(--bq-t-body-lg);
+  line-height: 1.6;
+  color: #edeae1;
+  text-wrap: pretty;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(1.75rem, 1rem + 2vw, 2.375rem);
+}
+
+.noteRule {
+  width: 28px;
+  height: 1px;
+  flex: none;
+  background: var(--bq-blue-pale);
+}
+
+.noteText {
+  font-size: var(--bq-t-meta);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #dfeaf3;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+  margin-top: clamp(2.5rem, 1rem + 4vw, 3.5rem);
+}
+
+.image {
+  height: clamp(260px, 32vw, 420px);
+}
+
+/* -- speakers (renders only once announced) ------------------------------ */
+
+.speakers {
+  margin-top: clamp(4rem, 2rem + 6vw, 7rem);
+}
+
+.speakersRule {
+  height: 1px;
+  background: var(--bq-cream-30);
+}
+
+.speakersLabel {
+  padding-top: 26px;
+  font-size: var(--bq-t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bq-blue-pale);
+}
+
+.speakerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--bq-col-gap);
+  margin-top: 28px;
+}
+
+.speaker {
+  min-width: 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(241, 238, 228, 0.24);
+}
+
+.speakerName {
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-xs);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.speakerRole {
+  margin-top: 8px;
+  font-size: var(--bq-t-meta);
+  color: rgba(241, 238, 228, 0.75);
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}

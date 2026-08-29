@@ -1,0 +1,116 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 16px 36px;
+  border: 1px solid transparent;
+  font-family: var(--bq-body);
+  font-size: var(--bq-t-body);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  /* Name the properties explicitly — `all` animates things you did not mean. */
+  transition:
+    background-color var(--bq-dur-hover) var(--bq-ease),
+    border-color var(--bq-dur-hover) var(--bq-ease),
+    color var(--bq-dur-hover) var(--bq-ease),
+    transform var(--bq-dur-press) var(--bq-ease);
+}
+
+/* Instant feedback on press — the interface confirms it heard you. */
+.base:active {
+  transform: scale(0.97);
+}
+
+.arrow {
+  transition: transform 260ms var(--bq-ease);
+}
+
+/* Hover states are gated: touch devices fire hover on tap, which strands the
+   element in its hover style after the finger lifts. */
+@media (hover: hover) and (pointer: fine) {
+  .base:hover .arrow {
+    transform: translateX(4px);
+  }
+}
+
+/* -- primary: the one orange thing in view ------------------------------- */
+.primary {
+  background: var(--bq-orange);
+  color: var(--bq-canvas);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover {
+    background: var(--bq-ink);
+  }
+}
+
+/* -- secondary: outlined, sits beside a primary -------------------------- */
+.secondary {
+  background: transparent;
+  border-color: rgba(26, 26, 26, 0.5);
+  color: var(--bq-ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .secondary:hover {
+    border-color: var(--bq-ink);
+    background: #f2f0e9;
+  }
+}
+
+/* -- on dark bands ------------------------------------------------------- */
+.onDark.primary {
+  background: var(--bq-cream);
+  color: var(--bq-ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .onDark.primary:hover {
+    background: var(--bq-blue-pale);
+  }
+}
+
+.onDark.secondary {
+  border-color: rgba(241, 238, 228, 0.55);
+  color: var(--bq-cream);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .onDark.secondary:hover {
+    border-color: var(--bq-cream);
+    background: var(--bq-cream-10);
+  }
+}
+
+/* -- link: underlined text action ---------------------------------------- */
+.link {
+  min-height: 48px;
+  padding: 12px 2px;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  color: var(--bq-ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: var(--bq-orange);
+  }
+}
+
+.onDark.link {
+  color: var(--bq-cream);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .base:active {
+    transform: none;
+  }
+
+  .base:hover .arrow {
+    transform: none;
+  }
+}

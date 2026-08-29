@@ -1,0 +1,118 @@
+/**
+ * 07 · The Founder — editorial split.
+ *
+ * The blush block offset behind the portrait is the one decorative move in
+ * the section; everything else stays quiet so the portrait and the quote
+ * carry it.
+ */
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 468px) minmax(0, 1fr);
+  gap: clamp(2.5rem, 1rem + 7vw, 7rem);
+  align-items: start;
+  margin-top: clamp(2.5rem, 1rem + 4vw, 4rem);
+}
+
+.portraitWrap {
+  position: relative;
+}
+
+.portraitOffset {
+  position: absolute;
+  inset: 20px -20px -20px 20px;
+  background: var(--bq-blush);
+  opacity: 0.45;
+}
+
+.portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+}
+
+.credit {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(2.5rem, 1.5rem + 2vw, 3.25rem);
+}
+
+.creditRule {
+  width: 28px;
+  height: 1px;
+  flex: none;
+  background: var(--bq-ink);
+}
+
+.creditText {
+  font-size: var(--bq-t-meta);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-xl);
+  font-weight: 500;
+  line-height: 0.99;
+  letter-spacing: -0.04em;
+  text-wrap: pretty;
+}
+
+.bio {
+  max-width: 58ch;
+  margin: clamp(1.75rem, 1rem + 2vw, 2.5rem) 0 0;
+  font-size: var(--bq-t-body-lg);
+  line-height: 1.66;
+  color: var(--bq-ink-72);
+  text-wrap: pretty;
+}
+
+.credentials {
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(2rem, 1rem + 2vw, 3rem);
+}
+
+.credential {
+  padding: 16px 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.16);
+  font-size: var(--bq-t-body-sm);
+}
+
+.quote {
+  max-width: 40ch;
+  margin: clamp(2.5rem, 1.5rem + 3vw, 3.5rem) 0 0;
+  padding-left: 28px;
+  border-left: 2px solid var(--bq-forest);
+}
+
+.quoteText {
+  margin: 0;
+  font-family: var(--bq-display);
+  font-size: var(--bq-t-xs);
+  font-weight: 500;
+  line-height: 1.24;
+  letter-spacing: -0.025em;
+  text-wrap: pretty;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+  margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .portraitOffset {
+    inset: 14px -14px -14px 14px;
+  }
+}

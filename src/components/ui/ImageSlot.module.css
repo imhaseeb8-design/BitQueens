@@ -1,0 +1,53 @@
+/**
+ * Photography placeholder.
+ *
+ * Real images have not been shot yet. Rather than filling the space with
+ * stock — the brief rules out crypto-cliché and AI imagery outright — the
+ * slot states its own dimensions and the alt text it is waiting for, so the
+ * layout is honest about what is missing.
+ */
+
+.slot {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 20px;
+  background: var(--bq-paper);
+  border: 1px solid var(--bq-ink-14);
+  overflow: hidden;
+}
+
+.note {
+  max-width: 34ch;
+  font-size: 0.625rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bq-ink-42);
+}
+
+.mark {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  background: var(--slot-mark, var(--bq-blush));
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* On dark bands the slot inverts so it does not punch a bright hole. */
+.onDark {
+  background: var(--bq-cream-08);
+  border-color: var(--bq-cream-30);
+}
+
+.onDark .note {
+  color: rgba(241, 238, 228, 0.75);
+}
