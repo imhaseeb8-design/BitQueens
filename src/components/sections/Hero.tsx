@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Button } from '@/components/ui/Button';
-import { GridLines } from '@/components/ui/GridLines';
 import type { HeroSection } from '@/lib/types';
 import styles from './Hero.module.css';
 import { HeroStats } from './HeroStats';
@@ -90,12 +89,6 @@ export function Hero({ content }: { content: HeroSection }) {
       style={{ '--p': 0, '--stage-h': '100vh' } as CSSProperties}
     >
       <div className={styles.stage} ref={stage}>
-        <GridLines />
-
-        <div className={styles.rule}>
-          <div className={styles.ruleLine} />
-        </div>
-
         <div className={styles.zone}>
           <div className={styles.swap}>
             <div className={styles.chapterHead} aria-hidden="true">

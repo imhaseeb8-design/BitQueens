@@ -92,7 +92,7 @@ is fluid `clamp()` in `tokens.css`; use the tokens, not raw px.
 (the brand file hides columns 2–11), so the structure is stated once at each
 margin instead of striped across the page.
 
-**Hero** (v2, redesigned) — a scroll-driven crossfade, pinned via
+**Hero** (v3) — a scroll-driven crossfade, pinned via
 `position: sticky`. One persistent block (the pitch: lede + CTAs) sits beside
 a region where the headline + artwork dissolve into three proof figures —
 same pattern mistral.ai's own hero uses under the hood (persistent content,
@@ -114,6 +114,21 @@ foreground swapped), not boxes resizing on scroll. Only `transform` and
 
 Note `body` uses `overflow-x: clip`, not `hidden` — `hidden` makes the body a
 scroll container and silently breaks the pin.
+
+**v3 spacing/chrome pass:** `SiteHeader` and `Hero` were each independently
+drawing a hairline under the nav — two stacked rules, not one. `SiteHeader`'s
+`.rule` is gone entirely; `Hero`'s own `.rule` and its `<GridLines />` margin
+rails are gone too (scoped to the hero only — other sections still use the
+exposed-grid rails, that wasn't part of this complaint). `.zone` no longer
+centers its content in the full 100vh stage either — that vertical centering
+was the actual source of "the hero feels like a lot of space," not the stage
+height. It now anchors near the top with `align-items: start` and a small
+`padding-top`, closer to how bold-headline references (La Playa, Graffio,
+ClearBank) sit type right under the nav. Top nav trimmed from 8 items to 5
+(`content/site.ts`) — Innovations/BIET/Foundation dropped from the nav bar
+but stayed reachable via the footer's "Ecosystem" column
+(`footerLinks.ecosystem` in the same file) and the homepage's Ecosystem
+stack section, so nothing lost a URL.
 
 **Ecosystem `stack` variant** — four full-bleed cards that pin and stack on
 scroll (the avax.network pattern: each card slides up and covers the last,

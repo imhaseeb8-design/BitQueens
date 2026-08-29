@@ -1,14 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { mailboxes, site } from '@/content/site';
+import { footerLinks, mailboxes, site } from '@/content/site';
 import styles from './SiteFooter.module.css';
-
-/** Footer-only links, per the brief: not main nav, but they must exist. */
-const moreLinks = [
-  { label: 'Contact', href: '/contact' },
-  { label: 'Brand assets', href: '/brand' },
-  { label: 'Careers', href: '/careers' },
-];
 
 export function SiteFooter() {
   return (
@@ -35,7 +28,7 @@ export function SiteFooter() {
             <div>
               <h2 className={styles.colTitle}>Ecosystem</h2>
               <div className={styles.list}>
-                {site.nav.map((link) => (
+                {footerLinks.ecosystem.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
@@ -48,9 +41,9 @@ export function SiteFooter() {
             </div>
 
             <div>
-              <h2 className={styles.colTitle}>More</h2>
+              <h2 className={styles.colTitle}>Company</h2>
               <div className={styles.list}>
-                {moreLinks.map((link) => (
+                {footerLinks.company.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}

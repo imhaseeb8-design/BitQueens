@@ -7,6 +7,11 @@ import type { SiteConfig } from '@/lib/types';
  * visitors see the OUTPUT of the internal engines, never the engines
  * themselves — "Blog" not "Media", "Conference" not "Hub", "Partners" not
  * "Alliance".
+ *
+ * Top nav is deliberately short (5 items) — Innovations, BIET and Foundation
+ * are one scroll away in the homepage's Ecosystem section and still fully
+ * reachable via the footer; they don't need to also compete for space in
+ * the hero's nav bar.
  */
 export const site: SiteConfig = {
   name: 'BitQueens',
@@ -17,9 +22,6 @@ export const site: SiteConfig = {
 
   nav: [
     { label: 'Academy', href: '/academy' },
-    { label: 'Innovations', href: '/innovations' },
-    { label: 'BIET', href: '/biet' },
-    { label: 'Foundation', href: '/foundation' },
     { label: 'Conference', href: '/conference' },
     { label: 'Partners', href: '/partners' },
     { label: 'Blog', href: '/blog' },
@@ -41,6 +43,29 @@ export const site: SiteConfig = {
     { label: 'LinkedIn', href: '#' },
     { label: 'X', href: '#' },
     { label: 'Instagram', href: '#' },
+  ],
+};
+
+/**
+ * Footer-only links. The top nav dropped Innovations/BIET/Foundation to stay
+ * short; they still need a permanent home, so the footer's "Ecosystem"
+ * column lists all four divisions regardless of what made the top nav.
+ */
+export const footerLinks = {
+  ecosystem: [
+    { label: 'Academy', href: '/academy' },
+    { label: 'Innovations & Labs', href: '/innovations' },
+    { label: 'BIET', href: '/biet' },
+    { label: 'Foundation', href: '/foundation' },
+  ],
+  company: [
+    { label: 'Conference', href: '/conference' },
+    { label: 'Partners', href: '/partners' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Brand assets', href: '/brand' },
+    { label: 'Careers', href: '/careers' },
   ],
 };
 
