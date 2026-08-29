@@ -199,28 +199,41 @@ export interface JoinSection {
   };
 }
 
-export interface HeroStat {
-  /** Display value as written, e.g. "6,000+". Any leading number is counted
-   *  up on reveal; prefix and suffix are preserved verbatim. */
+export interface ImpactStat {
+  /** Display value as written, e.g. "2000+". Any leading number is counted
+   *  up on reveal; a trailing "+" is set smaller, on the same baseline. */
   value: string;
+  /** The short name under the figure, e.g. "women trained". */
   label: string;
+  /** One sentence saying what the figure actually counts. */
+  support: string;
+}
+
+/** 02 · "This is BitQueens" — the impact figures. */
+export interface ImpactSection {
+  eyebrow: string;
+  /** Claim, set in ink. */
+  headline: string;
+  /** Qualifier, set grey, continuing the same sentence. */
+  headlineMuted: string;
+  stats: ImpactStat[];
 }
 
 export interface HeroSection {
-  /** Opening clauses set in ink, e.g. ["Learn it.", "Build it."]. */
-  headline: string[];
-  /** The closing clause, set in the accent. */
+  /** Opening clause, set in ink. Wraps within the headline's own measure. */
+  headline: string;
+  /** The closing clause, set in the accent, on its own line. */
   headlineAccent: string;
   body: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
-  /** Revealed in the hero's second state, as it becomes its own section. */
-  stats: HeroStat[];
+  /** The full-bleed wave band above the headline. */
   media: ImageSlot;
 }
 
 export interface HomePage {
   hero: HeroSection;
+  impact: ImpactSection;
   proof: ProofSection;
   ecosystem: EcosystemSection;
   mission: MissionSection;

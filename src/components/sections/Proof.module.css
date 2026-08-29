@@ -124,7 +124,7 @@
 }
 
 .nameApproved .dot {
-  background: var(--bq-orange);
+  background: var(--bq-accent);
 }
 
 .inProgress .dot {
@@ -169,7 +169,7 @@
   width: 56px;
   height: 2px;
   margin: 2rem 0;
-  background: var(--bq-orange);
+  background: var(--bq-accent);
   transform-origin: left;
 }
 

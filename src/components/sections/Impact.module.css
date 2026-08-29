@@ -1,0 +1,132 @@
+/**
+ * 02 · This is BitQueens — the four impact figures.
+ *
+ * From the lower half of Figma node 75:135. Measured from that frame:
+ *   eyebrow          14px tall, at the content left margin
+ *   headline block   718 wide, 111 tall (three lines at ~37px leading)
+ *   stats row        four 306-wide columns, 24px gutters, 179 tall
+ *   figure           104 tall — numerals ~96px, the "+" ~40px, baseline-aligned
+ *
+ * The figures replace the ones that used to crossfade inside the hero. They
+ * are the real reported numbers (2000+ / 3 / 2 / 8+), not the placeholder
+ * set the earlier hero frames carried.
+ */
+
+.section {
+  background: var(--bq-canvas);
+  padding: clamp(2.5rem, 1.5rem + 3.5vw, 4.9rem) 0
+    clamp(4rem, 2rem + 7vw, 9rem);
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: var(--bq-t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bq-ink);
+}
+
+/* One paragraph, two voices: the claim in ink, the qualifier in grey —
+   the same device the Ecosystem headline uses. */
+.headline {
+  /* 718px at the frame's 30px size — wide enough to hold "Programs, cohorts
+     and campus chapters for women" on one line, as the frame sets it. */
+  max-width: 24em;
+  margin: clamp(1.25rem, 0.75rem + 1.4vw, 1.625rem) 0 0;
+  font-family: var(--bq-display);
+  font-size: clamp(1.375rem, 0.75rem + 1.9vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.23;
+  letter-spacing: -0.02em;
+  color: var(--bq-ink);
+  text-wrap: pretty;
+}
+
+/* Starts its own line rather than running on after "Web3.", as the frame
+   sets it — the claim gets a line to itself. */
+.headlineMuted {
+  display: block;
+  color: var(--bq-ink-42);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.5rem, 0.5rem + 2vw, 1.5rem);
+  margin-top: clamp(2.5rem, 1.5rem + 4vw, 4.375rem);
+}
+
+.stat {
+  min-width: 0;
+  /* Wipes open from the left as the row loads in. */
+  clip-path: inset(0 calc((1 - var(--reveal, 0)) * 100%) 0 0);
+  transition: clip-path 620ms var(--bq-ease);
+  transition-delay: calc(var(--i) * 110ms);
+}
+
+.figure {
+  margin: 0;
+  font-family: var(--bq-display);
+  font-size: clamp(3rem, 1rem + 5.5vw, 6rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--bq-ink);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Sits on the numeral's own baseline at ~40% of its size, as the frame
+   sets it — not raised like a true superscript. */
+.plus {
+  font-size: 0.42em;
+  letter-spacing: 0;
+}
+
+.label {
+  margin: clamp(0.5rem, 0.25rem + 0.6vw, 0.75rem) 0 0;
+  font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1.0625rem);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--bq-ink);
+}
+
+.support {
+  max-width: 34ch;
+  margin: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem) 0 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--bq-ink-50);
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 1.5rem + 3vw, 2.5rem);
+  }
+
+  .headline {
+    max-width: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat {
+    clip-path: none;
+    transition: none;
+  }
+}

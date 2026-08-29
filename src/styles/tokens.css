@@ -14,7 +14,13 @@
   --bq-paper: #f0ede4; /* image slots, inset panels */
   --bq-ink: #1a1a1a;
 
-  --bq-orange: #e8641c; /* energy accent — primary CTA, used sparingly */
+  /* The interactive/accent role: primary CTA, section numerals, focus rings,
+     link hovers. The Figma hero (node 75:135, "Swiss International Style")
+     paints all of these in this red, so it lives behind ONE token — flip this
+     single value to take the whole site back to orange. */
+  --bq-accent: #d8371b;
+
+  --bq-orange: #e8641c; /* brand hue; still the Innovations & Labs pillar */
   --bq-forest: #1e4a2c; /* flat solid block */
   --bq-blue-deep: #2b6ca3; /* flat solid block */
   --bq-blue-sky: #4a9bd1;

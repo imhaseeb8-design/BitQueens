@@ -3,6 +3,7 @@ import { Conference } from '@/components/sections/Conference';
 import { Ecosystem } from '@/components/sections/Ecosystem';
 import { Founder } from '@/components/sections/Founder';
 import { Hero } from '@/components/sections/Hero';
+import { Impact } from '@/components/sections/Impact';
 import { Join } from '@/components/sections/Join';
 import { Mission } from '@/components/sections/Mission';
 import { Partners } from '@/components/sections/Partners';
@@ -26,6 +27,7 @@ export default function HomePage() {
   return (
     <>
       <Hero content={home.hero} />
+      <Impact content={home.impact} />
       {/* 02 Proof is hidden: the hero's second state now carries the proof
           figures, so a separate section repeats the same job. The component
           and its content are kept — restore this line to bring it back.

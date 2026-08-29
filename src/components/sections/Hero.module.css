@@ -1,146 +1,91 @@
 /**
- * 01 · Hero — a scroll-driven crossfade, pinned via `position: sticky`.
+ * 01 · Hero — implemented from Figma node 75:135 ("Swiss International Style").
  *
- * Redesign note (v2): the first version resized boxes on scroll — the grey
- * panel's left edge, the artwork's width and height, all driven by calc()
- * chains bound to progress. It animated `left`/`top`/`width`/`height`,
- * which forces layout on every scroll frame, and needed three separately
- * time-shifted phases just to stop the pieces colliding mid-scroll.
+ * Layout is measured from that frame (1440 wide, 72px margins, nav 81px tall
+ * and owned by SiteHeader):
+ *   wave band   y  81 → 367   (286 tall, full-bleed)
+ *   lede card   y 295 → 653   (399 wide, right-aligned; overlaps the wave by
+ *                              72px, which is where the -5vw margin comes from)
+ *   headline    y 438 → 654   (3 lines × 72px, left margin)
+ *   rule        y 711         (full content width + a 90px accent segment)
  *
- * This version does one thing: the headline + artwork dissolve into the
- * three proof figures, in place, while the pitch (lede + CTAs) stays put the
- * whole time — the pattern mistral.ai's own hero actually uses (a persistent
- * block, content swapped inside it), and closer to the restraint of the
- * Unsection references (one confident move, not a shape animating open).
- * Only `transform` and `opacity` change on scroll; nothing reflows.
+ * The card and the headline bottom-align (572 / 573 in the frame), so the
+ * grid uses `align-items: end` and the card's own height sets the row.
  *
- * v3: dropped the hero's own rule (SiteHeader was already drawing an
- * identical one right above it — two stacked hairlines under the nav) and
- * the margin-rail GridLines. `.zone` no longer centers its content in the
- * full 100vh stage either; it anchors near the top, closer to how the
- * La Playa / Graffio / ClearBank references sit their headline right under
- * the nav instead of in the dead centre of the screen.
+ * v4 note: the scroll-driven crossfade is gone. The proof figures moved into
+ * their own "This is BitQueens" section (see Impact.tsx) exactly as the frame
+ * draws them, so the hero no longer needs the pinned stage, the phase
+ * remapping, or the two-chapter swap. What is left animates on load (the
+ * masked headline lines) plus one restrained scroll touch: the wave band
+ * parallaxes on `transform` only.
  */
 
 .hero {
   position: relative;
-  height: calc(var(--stage-h) + 90vh);
   background: var(--bq-canvas);
+  padding-bottom: clamp(2rem, 1rem + 2.6vw, 3.625rem);
 }
 
-.stage {
-  position: sticky;
-  top: 0;
-  height: var(--stage-h);
+/* -- the wave band -------------------------------------------------------- */
+
+.wave {
+  position: relative;
+  height: clamp(150px, 19.9vw, 286px);
   overflow: hidden;
 }
 
-.zone {
+/* Deliberately taller than its frame so the parallax can move it without
+   ever exposing an edge. Only `transform` changes on scroll. */
+.wave img {
+  position: absolute;
+  inset: -14% 0 auto 0;
+  width: 100%;
+  height: 128%;
+  object-fit: cover;
+  /* Favours the hills over the sky, matching the frame's crop. */
+  object-position: center 64%;
+  transform: translate3d(0, calc(var(--wave-shift, 0) * 1px), 0);
+}
+
+/* -- content -------------------------------------------------------------- */
+
+.body {
   position: relative;
   z-index: 1;
   box-sizing: border-box;
   max-width: var(--bq-max);
-  height: 100%;
   margin: 0 auto;
-  /* Content sits close under the nav rather than centered in the full
-     viewport — the empty band above the headline was the actual source of
-     "the hero feels like a lot of space", not the stage height itself. */
-  padding: clamp(1rem, 0.5rem + 2vw, 2.5rem) var(--bq-gutter) 0;
+  padding: 0 var(--bq-gutter);
+}
+
+.grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  column-gap: clamp(2rem, 1rem + 5vw, 5.5rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 399px);
+  column-gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+  align-items: end;
+  /* Lifts the card up over the wave — 72px of overlap at the 1440 frame. */
+  margin-top: clamp(-4.5rem, -5vw, -2.5rem);
 }
-
-/* -- the crossfade region -------------------------------------------------
-   Both chapters occupy the same grid cell (the "stack two things in one
-   place" trick), so the wrapper sizes itself to the taller of the two and
-   nothing needs a measured height from JS.
-
-   The two chapters do NOT dissolve on top of each other at the same
-   position — headline glyphs cross-fading directly through stat numerals is
-   illegible no matter how the opacity is timed, which is what the first pass
-   of this fix got wrong. `chapterHead` anchors to the top of the box;
-   `chapterProof` anchors to the bottom, over the lower part of the artwork,
-   on its own legible backdrop. During the handoff they overlap in time, but
-   not in the same few square centimetres of text. */
-.swap {
-  display: grid;
-  align-items: stretch;
-}
-
-.swap > * {
-  grid-area: 1 / 1;
-}
-
-.chapterHead {
-  align-self: start;
-}
-
-.chapterProof {
-  align-self: end;
-  margin: 0 clamp(-0.5rem, -1.5vw, 0);
-  padding: 20px clamp(0.5rem, 1.5vw, 1.25rem) 4px;
-  background: linear-gradient(
-    to top,
-    var(--bq-canvas) 62%,
-    rgba(250, 250, 248, 0)
-  );
-}
-
-/* Both curves run over the SAME short window and are exact complements of
-   one another (1 − x and x), so their opacities always sum to 1 through the
-   handoff — no point where both are nearly invisible. The window is
-   deliberately narrow (p 0.44 → 0.56): this is a quick handoff, not a slow
-   dissolve, so a reader scrolling at a normal pace barely catches it
-   mid-blend. */
-.chapterHead {
-  opacity: clamp(0, calc(4.6667 - var(--p) * 8.3333), 1);
-  transform: translateY(calc(var(--p) * -32px));
-}
-
-.chapterProof {
-  opacity: clamp(0, calc(var(--p) * 8.3333 - 3.6667), 1);
-  transform: translateY(calc((1 - var(--p)) * 32px));
-  /* Sits under chapterHead until it actually has something to show, so it
-     can never intercept a click meant for the headline above it. */
-  pointer-events: var(--proof-events, none);
-}
-
-/* Opacity 0 does not remove an element from layout — chapterHead's box
-   (headline + artwork) would otherwise reserve its full height forever,
-   leaving a permanent blank gap once proof takes over. `data-phase` (written
-   once per direction change, not per frame) drops the fully-faded chapter
-   out of flow entirely, exactly when its opacity has already hit 0, so the
-   swap box actually shrinks to fit whichever chapter is showing. */
-/* Scoped to the pinned desktop layout only — below 900px both chapters must
-   stay in flow regardless of a stale phase from before the breakpoint
-   switched (see the mobile override further down, which also wins on
-   specificity but this keeps intent explicit). */
-@media (min-width: 901px) {
-  .hero[data-phase='past'] .chapterHead {
-    display: none;
-  }
-
-  .hero[data-phase='pre'] .chapterProof {
-    display: none;
-  }
-}
-
-/* -- chapter A: headline + artwork ---------------------------------------- */
 
 .headline {
+  /* Caps the measure so the copy breaks where the frame breaks it:
+     "The digital" / "economy. Open to" / "every woman."
+     In Cabinet Grotesk at this size "economy. Open to" measures 7.40em and
+     "The digital economy." 8.27em, so the cap has to sit between them —
+     the frame's own font is wider, which is why this is not the 8.6em the
+     Figma geometry alone would suggest. */
+  max-width: 7.8em;
   margin: 0;
   font-family: var(--bq-display);
-  font-size: clamp(2.75rem, 1rem + 6.1vw, 5.375rem);
+  font-size: clamp(2.25rem, 0.5rem + 4.4vw, 4.5rem);
   font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.045em;
-  text-wrap: balance;
+  letter-spacing: -0.03em;
 }
 
 .accent {
-  color: var(--bq-orange);
+  display: block;
+  color: var(--bq-accent);
 }
 
 .lineMask {
@@ -154,7 +99,7 @@
 }
 
 .lineMask:nth-of-type(2) .lineInner {
-  animation-delay: 0.12s;
+  animation-delay: 0.1s;
 }
 
 @keyframes bqHeroLine {
@@ -166,133 +111,87 @@
   }
 }
 
-.media {
-  margin: clamp(2rem, 1rem + 3vw, 3.5rem) 0 0;
-  overflow: hidden;
-}
+/* -- the lede card -------------------------------------------------------- */
 
-.media img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* -- chapter B: proof stats ------------------------------------------------
-   Reuses the same left column, so the three figures read as the direct
-   answer to the headline that just stood there — not a different section. */
-
-.proofLabel {
-  margin: 0 0 clamp(1.5rem, 1rem + 2vw, 2.25rem);
-  font-size: var(--bq-t-eyebrow);
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--bq-ink-42);
-}
-
-.proofRow {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 1rem + 2vw, 3rem);
-}
-
-.stat {
-  padding-top: 22px;
-  border-top: 1px solid var(--bq-ink-14);
-  clip-path: inset(0 calc((1 - var(--reveal, 0)) * 100%) 0 0);
-  transition: clip-path 620ms var(--bq-ease);
-  transition-delay: calc(var(--i) * 110ms);
-}
-
-.statValue {
-  margin: 0;
-  font-family: var(--bq-display);
-  font-size: clamp(2rem, 1rem + 3vw, 3.25rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.statLabel {
-  margin: 10px 0 0;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--bq-ink-66);
-}
-
-/* -- the persistent pitch: lede + CTAs, does not move on scroll ---------- */
-
-.pitch {
-  align-self: center;
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: clamp(2rem, 1rem + 2.8vw, 3.75rem) clamp(1.5rem, 1rem + 2.4vw, 3.5rem);
+  background: #f4f4f3;
+  text-align: right;
 }
 
 .lede {
-  margin: 0 0 clamp(1.75rem, 1.25rem + 1.5vw, 2.25rem);
-  font-size: clamp(1rem, 0.85rem + 0.6vw, 1.1875rem);
-  line-height: 1.55;
-  color: var(--bq-ink-72);
+  max-width: 295px;
+  margin: 0;
+  font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1rem);
+  line-height: 1.5;
+  color: var(--bq-ink);
   text-wrap: pretty;
 }
 
 .ctas {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 16px;
+  margin-top: clamp(1.5rem, 1rem + 1.4vw, 2.125rem);
 }
 
-/* -- responsive ------------------------------------------------------------
-   Below 900px there is no scroll distance to pin against, so both chapters
-   render in normal flow, in reading order: headline, artwork, pitch, proof. */
+/* -- the closing rule ----------------------------------------------------- */
+
+.rule {
+  position: relative;
+  height: 1px;
+  margin-top: clamp(2rem, 1rem + 2.6vw, 3.625rem);
+  background: rgba(26, 26, 26, 0.25);
+}
+
+/* The 90px accent segment the frame sets at the left end of the rule. */
+.ruleAccent {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 90px;
+  background: var(--bq-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: bqRuleDraw 900ms var(--bq-ease) 500ms forwards;
+}
+
+@keyframes bqRuleDraw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* -- responsive ----------------------------------------------------------- */
+
 @media (max-width: 900px) {
-  .hero {
-    height: auto;
-  }
-
-  .stage {
-    position: static;
-    height: auto;
-  }
-
-  .zone {
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: clamp(3rem, 2rem + 4vw, 5rem);
-  }
-
-  .swap {
-    order: 1;
-    display: block;
-  }
-
-  .swap > * {
-    position: static;
-  }
-
-  .chapterHead,
-  .chapterProof {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-
-  .chapterProof {
-    margin-top: clamp(3rem, 2rem + 4vw, 4rem);
+  .grid {
+    grid-template-columns: 1fr;
+    row-gap: clamp(2rem, 1.5rem + 3vw, 3rem);
+    /* No overlap on a single column — the card would sit on top of the
+       headline rather than beside it. */
+    margin-top: clamp(2rem, 1.5rem + 3vw, 3rem);
   }
 
   .headline {
-    font-size: clamp(2.5rem, 1.2rem + 9vw, 4rem);
+    max-width: none;
+    font-size: clamp(2.25rem, 1.1rem + 5.6vw, 3.25rem);
   }
 
-  .pitch {
-    order: 2;
-    margin-top: clamp(2.5rem, 2rem + 3vw, 3.5rem);
+  .card {
+    align-items: flex-start;
+    text-align: left;
   }
 
-  .stat {
-    clip-path: none;
+  .lede {
+    max-width: none;
+  }
+
+  .ctas {
+    align-items: flex-start;
   }
 }
 
@@ -301,13 +200,12 @@
     animation: none;
   }
 
-  .chapterHead,
-  .chapterProof {
-    transform: none;
+  .ruleAccent {
+    transform: scaleX(1);
+    animation: none;
   }
 
-  .stat {
-    clip-path: none;
-    transition: none;
+  .wave img {
+    transform: none;
   }
 }

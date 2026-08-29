@@ -4,12 +4,14 @@
   background: var(--bq-canvas);
 }
 
+/* The bar is a fixed height rather than padded, so the red CTA block can
+   stretch edge-to-edge vertically (81px in the Figma frame). */
 .inner {
   box-sizing: border-box;
   max-width: var(--bq-max);
   margin: 0 auto;
-  padding: clamp(1.5rem, 1rem + 1.5vw, 3.25rem) var(--bq-gutter)
-    clamp(1rem, 0.75rem + 1vw, 1.75rem);
+  padding: 0 0 0 var(--bq-gutter);
+  min-height: clamp(60px, 5.6vw, 81px);
   display: flex;
   align-items: center;
   gap: clamp(1.5rem, 0.5rem + 4vw, 6rem);
@@ -56,7 +58,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .navLink:hover {
-    color: var(--bq-orange);
+    color: var(--bq-accent);
   }
 
   .navLink:hover::after {
@@ -64,22 +66,30 @@
   }
 }
 
+/* A solid block that bleeds off the right edge of the viewport, not a text
+   link. The negative margin has to clear both the container's own gutter and
+   whatever leftover space centring leaves on wide screens. */
 .cta {
   margin-left: auto;
+  margin-right: calc(-1 * max(0px, (100vw - var(--bq-max)) / 2));
   flex: none;
-  padding-bottom: 3px;
-  border-bottom: 1px solid var(--bq-orange);
-  color: var(--bq-orange);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(1.5rem, 0.5rem + 4.4vw, 7.875rem);
+  background: var(--bq-accent);
+  color: var(--bq-canvas);
   font-size: var(--bq-t-meta);
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: color 300ms var(--bq-ease), border-color 300ms var(--bq-ease);
+  white-space: nowrap;
+  transition: background-color 300ms var(--bq-ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .cta:hover {
-    color: var(--bq-ink);
-    border-color: var(--bq-ink);
+    background: var(--bq-ink);
   }
 }
 
@@ -124,17 +134,28 @@
   }
 
   .open .cta {
-    display: block;
+    display: flex;
+    justify-content: center;
     order: 4;
     flex-basis: 100%;
-    margin: 1.25rem 0 0;
-    padding-bottom: 4px;
-    align-self: flex-start;
-    width: fit-content;
+    /* The bleed only makes sense on the desktop bar; in the stacked menu it
+       is a full-width block instead. */
+    margin: 1.5rem 0 0;
+    padding: 16px 24px;
+    align-self: stretch;
+    width: auto;
   }
 
   .inner {
     flex-wrap: wrap;
+    /* Desktop drops the right padding so the CTA can bleed off the edge; the
+       hamburger needs it back once that block is hidden. */
+    padding-right: var(--bq-gutter);
+    padding-bottom: 0;
+  }
+
+  .open {
+    padding-bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
   }
 }
 

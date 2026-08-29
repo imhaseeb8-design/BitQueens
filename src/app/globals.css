@@ -86,7 +86,7 @@ input {
 }
 
 :focus-visible {
-  outline: 2px solid var(--bq-orange);
+  outline: 2px solid var(--bq-accent);
   outline-offset: 3px;
 }
 

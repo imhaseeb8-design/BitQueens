@@ -63,7 +63,7 @@
   font-size: var(--bq-t-eyebrow);
   font-weight: 500;
   letter-spacing: 0.2em;
-  color: var(--bq-orange);
+  color: var(--bq-accent);
 }
 
 .stepTitle {

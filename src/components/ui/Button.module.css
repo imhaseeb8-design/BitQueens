@@ -37,7 +37,7 @@
 
 /* -- primary: the one orange thing in view ------------------------------- */
 .primary {
-  background: var(--bq-orange);
+  background: var(--bq-accent);
   color: var(--bq-canvas);
 }
 
@@ -97,7 +97,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .link:hover {
-    color: var(--bq-orange);
+    color: var(--bq-accent);
   }
 }
 

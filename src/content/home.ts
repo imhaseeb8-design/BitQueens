@@ -16,29 +16,54 @@ import type { HomePage } from '@/lib/types';
 export const home: HomePage = {
   /* ---------------------------------------------------------- 01 · hero -- */
   hero: {
-    headline: ['Learn it.', 'Build it.'],
-    headlineAccent: 'Lead it.',
+    headline: 'The digital economy. Open to',
+    headlineAccent: 'every woman.',
     body:
       'BitQueens is an ecosystem helping women learn emerging technologies, ' +
       'build careers and enter the digital economy across Africa and beyond.',
     primaryCta: { label: 'Join BitQueens', href: '/join' },
     secondaryCta: { label: 'Partner with us', href: '/partners' },
-    stats: [
-      { value: '6,000+', label: 'women trained since 2023' },
-      { value: '14', label: 'African countries reached' },
-      // NEEDS CONFIRMATION — the brief's entity table lists TWO companies as
-      // registered (BitQueens Limited, Bit-Queens Innovations Limited); BIET,
-      // the Foundation and Global LLC are name-approved, in progress and
-      // planned respectively. This "3" comes from the Figma hero. Confirm
-      // which count is current before launch.
-      { value: '3', label: 'registered entities under the group' },
-    ],
     media: {
       src: '/hero-waves.png',
       alt: 'Layered wave bands in the BitQueens palette — sky blue, grass green and orange',
       width: 897,
       height: 304,
     },
+  },
+
+  /* ------------------------------------------------------- 02 · impact -- */
+  /* The real reported figures, straight from the Figma frame — these replace
+     the earlier placeholder set (6,000+ / 14 countries / 3 entities) that the
+     old hero carried. */
+  impact: {
+    eyebrow: 'This is BitQueens',
+    headline: 'The women’s layer of Web3.',
+    headlineMuted:
+      'Programs, cohorts and campus chapters for women across Africa and beyond.',
+    stats: [
+      {
+        value: '2000+',
+        label: 'women trained',
+        support: 'Hands-on training in emerging technologies since 2023.',
+      },
+      {
+        value: '3',
+        label: 'cohorts delivered',
+        support:
+          'Structured programmes taking beginners from curious to capable.',
+      },
+      {
+        value: '2',
+        label: 'campus chapters',
+        support:
+          'Student-led communities holding the momentum between cohorts.',
+      },
+      {
+        value: '8+',
+        label: 'countries reached',
+        support: 'Learners and chapters far beyond where we started.',
+      },
+    ],
   },
 
   /* --------------------------------------------------------- 02 · proof -- */

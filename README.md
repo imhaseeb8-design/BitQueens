@@ -76,14 +76,15 @@ The types already model the empty states the design supports: `partners`,
 | canvas | `#FAFAF8` | page ground |
 | cream | `#F1EEE4` | text on dark bands |
 | ink | `#1A1A1A` | text, the ink band |
-| orange | `#E8641C` | energy accent, primary CTA — sparingly |
+| accent | `#D8371B` | primary CTA, section numerals, focus, hovers |
+| orange | `#E8641C` | the Innovations & Labs pillar hue |
 | forest | `#1E4A2C` | flat block (Why we exist) |
 | deep blue | `#2B6CA3` | flat block (Conference) |
 | sky / pale blue | `#4A9BD1` / `#B9DCF2` | accents on blue |
 | blush | `#F3AFBC` | soft punctuation |
 
 Hierarchy comes from **opacity, not new hues**. Dark bands take their own
-counter-accent (forest → blush, blue → pale blue) rather than orange.
+counter-accent (forest → blush, blue → pale blue) rather than the accent.
 
 **Type** — Cabinet Grotesk (display) + Switzer (body), via Fontshare. The scale
 is fluid `clamp()` in `tokens.css`; use the tokens, not raw px.
@@ -92,43 +93,33 @@ is fluid `clamp()` in `tokens.css`; use the tokens, not raw px.
 (the brand file hides columns 2–11), so the structure is stated once at each
 margin instead of striped across the page.
 
-**Hero** (v3) — a scroll-driven crossfade, pinned via
-`position: sticky`. One persistent block (the pitch: lede + CTAs) sits beside
-a region where the headline + artwork dissolve into three proof figures —
-same pattern mistral.ai's own hero uses under the hood (persistent content,
-foreground swapped), not boxes resizing on scroll. Only `transform` and
-`opacity` animate. Two things worth knowing if you touch it:
-- The crossfade window (`p` 0.44–0.56 in `Hero.module.css`) uses
-  **complementary** opacity curves (`1−x` and `x` over the same interval) so
-  they sum to 1 throughout — independent, differently-timed ramps will dip
-  toward invisible at the crossover instead of blending.
-- The two chapters don't dissolve at the same position — the headline
-  anchors top, the proof stats anchor bottom (over the artwork, on a
-  legible backdrop). Crossfading text directly through other text is
-  illegible regardless of the timing; this was the real bug in an earlier
-  pass, not the opacity math.
-- `data-phase` (`pre`/`mid`/`past`, written once per direction change, not
-  per frame) removes the fully-faded chapter from layout once its opacity
-  hits exactly 0 — otherwise its box keeps reserving height forever and the
-  final state has a permanent blank gap above the stats.
+**Hero** (v4) — implemented from Figma node 75:135 ("Swiss International
+Style"). A full-bleed wave band, a 72px headline whose accent clause takes its
+own line, and a grey lede card that overlaps the band by 72px and bottom-aligns
+with the headline (`align-items: end` plus a negative top margin on the grid).
+The scroll-driven crossfade is **gone** — the proof figures moved into their own
+"This is BitQueens" section (`Impact.tsx`), which is how the frame draws them,
+so the pinned stage, phase remapping and two-chapter swap are all deleted. What
+remains: the masked headline lines on load, one restrained `transform`-only
+parallax on the wave, and the count-up + clip wipe on the figures.
 
-Note `body` uses `overflow-x: clip`, not `hidden` — `hidden` makes the body a
-scroll container and silently breaks the pin.
+Two things worth knowing if you touch it:
+- The headline's `max-width: 7.8em` is what forces the frame's line break
+  ("The digital" / "economy. Open to"). It is font-metric dependent — Cabinet
+  Grotesk is narrower than the frame's own font, so the cap has to sit between
+  `economy. Open to` (7.40em) and `The digital economy.` (8.27em). Changing the
+  display face means re-measuring it.
+- The nav's red CTA bleeds off the right edge with
+  `margin-right: calc(-1 * max(0px, (100vw - var(--bq-max)) / 2))`, which is
+  why `.inner` carries no right padding on desktop — the mobile query adds it
+  back once that block is hidden.
 
-**v3 spacing/chrome pass:** `SiteHeader` and `Hero` were each independently
-drawing a hairline under the nav — two stacked rules, not one. `SiteHeader`'s
-`.rule` is gone entirely; `Hero`'s own `.rule` and its `<GridLines />` margin
-rails are gone too (scoped to the hero only — other sections still use the
-exposed-grid rails, that wasn't part of this complaint). `.zone` no longer
-centers its content in the full 100vh stage either — that vertical centering
-was the actual source of "the hero feels like a lot of space," not the stage
-height. It now anchors near the top with `align-items: start` and a small
-`padding-top`, closer to how bold-headline references (La Playa, Graffio,
-ClearBank) sit type right under the nav. Top nav trimmed from 8 items to 5
-(`content/site.ts`) — Innovations/BIET/Foundation dropped from the nav bar
-but stayed reachable via the footer's "Ecosystem" column
-(`footerLinks.ecosystem` in the same file) and the homepage's Ecosystem
-stack section, so nothing lost a URL.
+**Accent colour** — the design paints the CTA, headline accent and nav block in
+`#D8371B`, not the site's original orange. Every accent/interactive use (primary
+buttons, section numerals, focus rings, link hovers) now points at one token,
+`--bq-accent` in `tokens.css`. Flip that single value to take the whole site
+back to orange. `--bq-orange` is still defined — it remains the Innovations &
+Labs pillar hue in `content/home.ts`.
 
 **Ecosystem `stack` variant** — four full-bleed cards that pin and stack on
 scroll (the avax.network pattern: each card slides up and covers the last,
@@ -161,17 +152,15 @@ notice the ending is broken.
 
 - **`founder.bio`** in `content/home.ts` is placeholder copy — needs Kristie's
   own words. `founder.quote` is deliberately empty (see the note there).
-- **`proof.stats`** is empty on purpose. No verified impact figures exist yet,
-  so the section leads with the entity register, which is checkable. Populate
-  `stats` and the numerals row appears.
+- **Impact figures are real** (2000+ / 3 / 2 / 8+, from the client). They
+  replaced the earlier placeholder set the old hero carried. `proof.stats`
+  in the unrendered Proof section is still empty.
 - **Photography** — none shot yet. Every slot states the ratio and the alt text
   it is waiting for. Brief rules out stock crypto imagery and AI faces.
 - **Newsletter** — `NewsletterForm` has no endpoint; it validates, then says so
   plainly. Wire it before launch.
-- **Sections 02 and 03** each have two variants under review. Switch in
-  `content/layout.ts`. Section 02 (Proof) is currently **not rendered** — the
-  hero's second state carries the figures instead. Restore the commented line
-  in `app/page.tsx` to bring it back.
-- **"3 registered entities"** in the hero figures conflicts with the brief's
-  entity table, which lists two companies as registered and three more as
-  approved, in progress and planned. Confirm the current count.
+- **Section 03 (Ecosystem)** still has variants under review — switch in
+  `content/layout.ts`. Section 02 (Proof, the entity register) is **not
+  rendered**: the "This is BitQueens" figures now occupy that slot. The
+  component and its content are kept; restore the commented line in
+  `app/page.tsx` to bring the register back.
