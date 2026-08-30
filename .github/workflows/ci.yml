@@ -1,0 +1,33 @@
+# Vercel already runs `next build` on every push, and that build type-checks,
+# so compile and type errors fail the deployment visibly on their own.
+# What Vercel does not run is ESLint — Next 16 dropped it from the build — so
+# without this a lint regression reaches main unnoticed. That is the gap this
+# fills, plus an explicit tsc run so a type error is reported here as a test
+# failure rather than only as a failed deploy.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Kept in step with .nvmrc and package.json engines, so CI, Vercel
+          # and local all build on the same major.
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npx eslint src

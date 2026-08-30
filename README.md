@@ -15,6 +15,28 @@ npx eslint src
 
 ---
 
+## Deployment
+
+Live at **https://bitqueens-website.vercel.app**.
+
+Vercel is connected to this repo's `main` branch: **pushing to `main` deploys
+to production**, and pull requests get their own preview URL. There is no
+deploy step to run by hand.
+
+The Node major is pinned in three places that must stay in agreement —
+`.nvmrc`, `engines.node` in `package.json`, and the `node-version-file` the CI
+workflow reads. Vercel reads `engines.node`. Left unpinned, Vercel picks its
+own default and can drift away from what the site was built and tested
+against.
+
+`.github/workflows/ci.yml` runs `tsc --noEmit` and `eslint src` on every push
+and PR. It exists because Vercel's build type-checks but **does not run
+ESLint** (Next 16 dropped it from `next build`), so lint regressions would
+otherwise reach `main` unseen. A red check there means the deploy may still
+have succeeded — read the failure before assuming the site is broken.
+
+---
+
 ## Structure
 
 ```
