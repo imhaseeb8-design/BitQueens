@@ -322,14 +322,18 @@
    whichever card is currently pinned instead of scrolling on past it.
 
    Same containing-block rule as `stack` applies: each card needs its own
-   `.sideItem` wrapper, sized card height + one wave-band's worth of extra
-   room, or the whole column collapses onto itself at the very end of the
-   last card. Here the "peeking" sliver left behind by each exiting card is
-   its own wave band (`.sideWave`), not a separate header row — the stagger
-   offset (`--i` × band height) is exactly the band's height for that reason. */
+   `.sideItem` wrapper, sized card height + one peek's worth of extra room,
+   or the whole column collapses onto itself at the very end of the last
+   card. The peek amount (`--side-peek`) is measured off Figma's own
+   storyboard frame (node 101:2): four 411-tall cards offset 113px apart,
+   so each one leaves ~27% of itself — wave band, index number and rule —
+   showing above the next before the name and body copy get covered. */
 
 .sideSection {
   position: relative;
+  /* Page ground, #FAFAF8 — not pure white, so the closing card (which sits
+     directly on this background, no block of its own) reads as continuous
+     with the rest of the page rather than a brighter patch. */
   background: var(--bq-canvas);
   color: var(--bq-ink);
 }
@@ -385,17 +389,21 @@
 .sideStack {
   --side-wave-h: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
   --side-card-h: clamp(22rem, 52vh, 27rem);
+  /* ~27% of the card height, matching the 113px-of-411px the Figma
+     storyboard sets — enough to show the wave band and the index/rule row
+     of the card underneath, not enough to reach its name. */
+  --side-peek: clamp(4.75rem, 3.75rem + 3.5vw, 7.25rem);
   position: relative;
 }
 
 .sideItem {
   position: relative;
-  height: calc(var(--side-card-h) + var(--side-wave-h));
+  height: calc(var(--side-card-h) + var(--side-peek));
 }
 
 .sideCard {
   position: sticky;
-  top: calc(var(--i) * var(--side-wave-h));
+  top: calc(var(--i) * var(--side-peek));
   display: block;
   height: var(--side-card-h);
   background: var(--accent);
