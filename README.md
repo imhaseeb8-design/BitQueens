@@ -231,6 +231,26 @@ is currently pinned. Two things worth knowing:
   mistake the short per-card window for broken sticky when testing by hand:
   sampling at a coarse scroll interval can step right over it.
 
+**Path, "The Rising Path"** — Join, then Learn, then Build is a sequence, and
+the layout is what says so: the three steps climb left to right along a band of
+the wave artwork, each tethered to it by a hairline. It replaced three equal
+columns, which rendered a sequence as parallel options and left the numerals
+carrying the order on their own. The empty 520x360 photography slot went with
+it; `PathSection.image` is now `PathSection.band`.
+
+The whole geometry derives from three custom properties on `.stage`
+(`--band-h`, `--clear`, `--rise`), so the climb, the hairlines and the
+clearance above the band cannot drift apart. Change `--rise` and the ticks
+follow. Steps are addressed by `[data-step]`, never `nth-child`: the band is a
+sibling inside `.stage` and index selectors here have already been off by one
+once.
+
+The band's drift is a **CSS scroll-driven animation**
+(`animation-timeline: view()`), not a scroll listener, which is why this
+section is still a Server Component. The hero predates that approach and still
+uses a `scroll` listener in a client component; prefer the CSS route for
+anything new.
+
 **Motion**
 - Only `transform` and `opacity` animate.
 - One easing curve: `--bq-ease` = `cubic-bezier(.16, 1, .3, 1)`. Never `ease-in`.

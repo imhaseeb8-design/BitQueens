@@ -100,7 +100,12 @@ export interface PathSection {
   quote: string;
   cta: NavLink;
   ctaNote: string;
-  image: ImageSlot;
+  /**
+   * The wave band the steps climb. Decorative, so `alt` is empty by design:
+   * the ordered list already carries the sequence for a screen reader. This
+   * replaced a photography slot that had sat empty since launch.
+   */
+  band: ImageSlot;
 }
 
 export interface ImageSlot {

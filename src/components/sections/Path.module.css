@@ -1,73 +1,103 @@
 /**
- * 05 · Where you start — the path.
+ * Where you start - "The Rising Path".
  *
- * The numbered steps are genuinely a sequence (join, then learn, then build),
- * so an ordered list is the honest markup and the numerals carry real
- * information rather than decorating the layout.
+ * The three steps climb left to right along a band of the wave artwork. The
+ * geometry is all derived from three custom properties on `.stage`, so the
+ * climb, the hairlines and the clearance above the band stay in agreement at
+ * every width. Change --rise and everything follows.
+ *
+ * The list is still an <ol> and still numbered, because the content is
+ * genuinely ordered. The difference is that the numerals no longer carry that
+ * on their own - the rise says it first.
  */
 
-.head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
-  gap: clamp(2.5rem, 1rem + 6vw, 5.5rem);
-  align-items: end;
-  margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
-}
-
 .headline {
-  margin: 0;
+  max-width: 16ch;
+  margin: clamp(2rem, 1rem + 3vw, 3.5rem) 0 0;
   font-family: var(--bq-display);
   font-size: var(--bq-t-xl);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.038em;
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 .intro {
   max-width: 46ch;
-  margin-top: 2rem;
+  margin-top: 1.75rem;
   font-size: var(--bq-t-body-lg);
   line-height: 1.62;
   color: var(--bq-ink-72);
   text-wrap: pretty;
 }
 
-.image {
-  height: clamp(240px, 30vw, 360px);
-}
+/* -- the rising path ------------------------------------------------------ */
 
-/* -- steps --------------------------------------------------------------- */
+.stage {
+  /* --band-h  height of the wave band at the base
+     --clear   gap between the lowest step and the band
+     --rise    how much higher each step sits than the one before it */
+  --band-h: clamp(52px, 6vw, 92px);
+  --clear: clamp(1.25rem, 2vw, 2.25rem);
+  --rise: clamp(1.5rem, 2.2vw, 2.75rem);
 
-.steps {
-  margin-top: clamp(3.5rem, 2rem + 6vw, 7.5rem);
-}
-
-.rule {
-  height: 1px;
-  background: var(--bq-rule);
+  position: relative;
+  margin-top: clamp(3rem, 1.5rem + 5vw, 6rem);
 }
 
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: clamp(1.75rem, 1rem + 2vw, 2.5rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  /* Bottom-aligned, so a taller step grows upward and the climb reads off the
+     shared baseline rather than off the top of the row. */
+  align-items: end;
 }
 
+/* Selected by data-step rather than nth-child: the band is a sibling inside
+   .stage, and index-based selectors here have already been off by one once. */
 .step {
-  padding: 34px 40px 0 0;
+  position: relative;
+  min-width: 0;
+  padding-bottom: calc(var(--band-h) + var(--clear));
+}
+
+.step[data-step='2'] {
+  padding-bottom: calc(var(--band-h) + var(--clear) + var(--rise));
+}
+
+.step[data-step='3'] {
+  padding-bottom: calc(var(--band-h) + var(--clear) + 2 * var(--rise));
+}
+
+.tick {
+  position: absolute;
+  left: 0;
+  bottom: var(--band-h);
+  width: 1px;
+  height: var(--clear);
+  background: var(--bq-rule);
+}
+
+.step[data-step='2'] .tick {
+  height: calc(var(--clear) + var(--rise));
+}
+
+.step[data-step='3'] .tick {
+  height: calc(var(--clear) + 2 * var(--rise));
 }
 
 .stepNum {
-  margin-bottom: 22px;
+  margin: 0 0 14px;
   font-size: var(--bq-t-eyebrow);
   font-weight: 500;
   letter-spacing: 0.2em;
   color: var(--bq-accent);
+  font-variant-numeric: tabular-nums;
 }
 
 .stepTitle {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   font-family: var(--bq-display);
   font-size: var(--bq-t-sm);
   font-weight: 500;
@@ -77,13 +107,58 @@
 
 .stepDesc {
   margin: 0;
+  max-width: 34ch;
   font-size: var(--bq-t-body-sm);
   line-height: 1.6;
   color: var(--bq-ink-72);
   text-wrap: pretty;
 }
 
-/* -- brand promise ------------------------------------------------------- */
+/* -- the band ------------------------------------------------------------- */
+
+.band {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--band-h);
+  overflow: hidden;
+}
+
+/* Wider than the frame on both sides so the drift can never expose an edge.
+   This is the element that moves; the image inside it is left alone. */
+.bandInner {
+  position: absolute;
+  inset: 0 -6%;
+}
+
+.bandImg {
+  object-fit: cover;
+  /* Favours the hills over the sky, matching the hero's crop. */
+  object-position: center 62%;
+}
+
+/* Scroll-driven, so there is no scroll listener and no client component: the
+   browser runs it off the main thread and it simply does not apply where it is
+   unsupported. Transform only. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .bandInner {
+      animation: bqBandDrift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes bqBandDrift {
+  from {
+    transform: translate3d(-2.2%, 0, 0);
+  }
+  to {
+    transform: translate3d(2.2%, 0, 0);
+  }
+}
+
+/* -- brand promise -------------------------------------------------------- */
 
 .quote {
   max-width: 22ch;
@@ -120,13 +195,39 @@
   color: var(--bq-ink-42);
 }
 
-@media (max-width: 900px) {
-  .head {
+/* -- responsive ----------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .headline {
+    max-width: none;
+  }
+
+  /* A three-deep climb needs horizontal room it does not have here, and a
+     stacked list is already ordered top to bottom. The band stays, as the
+     ground the list sits on. */
+  .list {
     grid-template-columns: 1fr;
+    gap: clamp(2rem, 1.5rem + 3vw, 2.75rem);
     align-items: start;
   }
 
-  .step {
-    padding-right: 0;
+  .step,
+  .step[data-step='2'],
+  .step[data-step='3'] {
+    padding-bottom: 0;
+  }
+
+  .list > .step:last-child {
+    padding-bottom: calc(var(--band-h) + var(--clear));
+  }
+
+  .tick,
+  .step[data-step='2'] .tick,
+  .step[data-step='3'] .tick {
+    display: none;
+  }
+
+  .stepDesc {
+    max-width: none;
   }
 }

@@ -183,10 +183,11 @@ export const home: HomePage = {
       'I belong here. I can understand this. I can build something. I can earn. I can lead.',
     cta: { label: 'Join BitQueens', href: '/join' },
     ctaNote: 'No experience required',
-    image: {
-      alt: 'Women collaborating during a BitQueens cohort session',
-      width: 520,
-      height: 360,
+    band: {
+      src: '/hero-waves.png',
+      alt: '',
+      width: 897,
+      height: 304,
     },
   },
 
