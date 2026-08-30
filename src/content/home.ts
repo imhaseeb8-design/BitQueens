@@ -156,39 +156,55 @@ export const home: HomePage = {
 
 
   /* ---------------------------------------------------------- 05 · path -- */
+  /* The closing quote ("I belong here...") was dropped here when the section
+     was rebuilt from Figma 111:73, which does not include it. It was set in
+     quote marks with no attributor, so it read as a testimonial while
+     claiming nothing checkable. It is in git history if a named version of
+     it ever arrives. */
   path: {
     eyebrow: 'Where you start',
     headline: 'You do not need a technical background.',
     intro:
       'Most people who join BitQueens start with no experience in emerging ' +
       'technologies at all. The path is built for that.',
+    /* Panel heights rise across these three, which is what builds the
+       staircase. Order is load-bearing. */
     steps: [
       {
         title: 'Join',
         description:
           'Enter the community and pick a learning track that fits where you are.',
+        image: {
+          src: '/path-wave-01.jpg',
+          alt: '',
+          width: 1200,
+          height: 514,
+        },
       },
       {
         title: 'Learn',
         description:
           'Cohort programmes, mentorship and campus chapters, taught in plain language.',
+        image: {
+          src: '/path-wave-02.jpg',
+          alt: '',
+          width: 1200,
+          height: 672,
+        },
       },
       {
         title: 'Build',
         description:
           'Apply what you learn to real projects, careers and businesses.',
+        image: {
+          src: '/path-wave-03.jpg',
+          alt: '',
+          width: 1200,
+          height: 672,
+        },
       },
     ],
-    quote:
-      'I belong here. I can understand this. I can build something. I can earn. I can lead.',
     cta: { label: 'Join BitQueens', href: '/join' },
-    ctaNote: 'No experience required',
-    band: {
-      src: '/hero-waves.png',
-      alt: '',
-      width: 897,
-      height: 304,
-    },
   },
 
   /* ---------------------------------------------------- 06 · conference -- */

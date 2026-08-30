@@ -231,25 +231,37 @@ is currently pinned. Two things worth knowing:
   mistake the short per-card window for broken sticky when testing by hand:
   sampling at a coarse scroll interval can step right over it.
 
-**Path, "The Rising Path"** — Join, then Learn, then Build is a sequence, and
-the layout is what says so: the three steps climb left to right along a band of
-the wave artwork, each tethered to it by a hairline. It replaced three equal
-columns, which rendered a sequence as parallel options and left the numerals
-carrying the order on their own. The empty 520x360 photography slot went with
-it; `PathSection.image` is now `PathSection.band`.
+**Path, the rising staircase** - implemented from Figma node 111:73. Three
+bottom-aligned columns, each carrying a wave panel, and the panels get taller
+left to right (96 / 221 / 346 at the 1296 frame, a 125 rise per step). Because
+the columns share a baseline, **a taller panel is what lifts the copy above
+it** - the staircase is built by the imagery, not drawn on top of it. Join,
+then Learn, then Build is a sequence and the rise is what says so.
 
-The whole geometry derives from three custom properties on `.stage`
-(`--band-h`, `--clear`, `--rise`), so the climb, the hairlines and the
-clearance above the band cannot drift apart. Change `--rise` and the ticks
-follow. Steps are addressed by `[data-step]`, never `nth-child`: the band is a
-sibling inside `.stage` and index selectors here have already been off by one
-once.
+Both derived numbers come from `--panel-base` and `--panel-rise` on `.list`,
+so changing the staircase is a one-line edit. Verified against the frame:
+column widths 416, gutter 24, panel heights 96/221/346, header-to-steps gap 61,
+headline 572 wide at 64px, aside 479 wide right-aligned, CTA 24 under the
+intro. Each step gets its own artwork (`PathStep.image`), so there are three
+panel assets rather than one shared band.
 
-The band's drift is a **CSS scroll-driven animation**
-(`animation-timeline: view()`), not a scroll listener, which is why this
-section is still a Server Component. The hero predates that approach and still
-uses a `scroll` listener in a client component; prefer the CSS route for
-anything new.
+The CTA sits in the header opposite the headline, not at the foot of the
+section. The unattributed "I belong here" quote and the "No experience
+required" note are both gone; the frame drops them (the note is explicitly
+hidden in Figma). See the note in `content/home.ts` for why the quote went.
+
+Panel drift is a **CSS scroll-driven animation** (`animation-timeline: view()`),
+not a scroll listener, which is why this section is a Server Component. Each
+panel's `animation-range` is offset slightly so the three do not move in
+lockstep. The hero predates this approach and still uses a `scroll` listener;
+prefer the CSS route for anything new.
+
+**Button scale** - the Figma frames specify 48px in-content CTAs (16/34
+padding, 14px label), which is `<Button size="compact">`. The rest of the site
+still uses the older 56px `default`. Both values exist deliberately rather than
+one being changed quietly: **aligning the whole site on `compact` is a call to
+make on purpose**, and today only the Path CTA and the ecosystem cards match
+the design system's button.
 
 **Motion**
 - Only `transform` and `opacity` animate.

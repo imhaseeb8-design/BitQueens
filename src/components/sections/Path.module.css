@@ -1,233 +1,202 @@
 /**
- * Where you start - "The Rising Path".
+ * Where you start - Figma node 111:73.
  *
- * The three steps climb left to right along a band of the wave artwork. The
- * geometry is all derived from three custom properties on `.stage`, so the
- * climb, the hairlines and the clearance above the band stay in agreement at
- * every width. Change --rise and everything follows.
+ * Measured from that frame (1296 content width):
+ *   header       headline 572 wide left, a 479-wide right column holding the
+ *                intro and, 24px under it, the CTA. Both right-aligned.
+ *   header gap   61 to the steps row
+ *   steps        three 416 columns, 24 gutters, BOTTOM aligned
+ *   column       text block, 36 gap, wave panel
+ *   panels       96 / 221 / 346 tall - a 125 rise per step
  *
- * The list is still an <ol> and still numbered, because the content is
- * genuinely ordered. The difference is that the numerals no longer carry that
- * on their own - the rise says it first.
+ * The rise is a consequence, not a rule: the columns share a baseline, so a
+ * taller panel is what lifts the copy above it. Both numbers below are
+ * derived from --panel-base and --panel-rise, so changing the staircase is a
+ * one-line edit and the copy follows.
  */
 
+/* -- header --------------------------------------------------------------- */
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(1.75rem, 1rem + 3vw, 4rem);
+  margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+}
+
 .headline {
-  max-width: 16ch;
-  margin: clamp(2rem, 1rem + 3vw, 3.5rem) 0 0;
+  flex: 1 1 20rem;
+  /* 572 at the frame. */
+  max-width: 35.75rem;
+  margin: 0;
   font-family: var(--bq-display);
-  font-size: var(--bq-t-xl);
+  /* 64px at 1440. */
+  font-size: clamp(2.25rem, 1.15rem + 3.8vw, 4rem);
   font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.038em;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
   text-wrap: balance;
 }
 
+/* 479 at the frame, and the whole column is set right so the intro's ragged
+   edge and the button's edge line up against the margin. */
+.headAside {
+  flex: 0 1 29.9375rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+  text-align: right;
+}
+
 .intro {
-  max-width: 46ch;
-  margin-top: 1.75rem;
-  font-size: var(--bq-t-body-lg);
-  line-height: 1.62;
-  color: var(--bq-ink-72);
+  margin: 0;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.22;
+  color: var(--bq-ink-80);
   text-wrap: pretty;
 }
 
-/* -- the rising path ------------------------------------------------------ */
-
-.stage {
-  /* --band-h  height of the wave band at the base
-     --clear   gap between the lowest step and the band
-     --rise    how much higher each step sits than the one before it */
-  --band-h: clamp(52px, 6vw, 92px);
-  --clear: clamp(1.25rem, 2vw, 2.25rem);
-  --rise: clamp(1.5rem, 2.2vw, 2.75rem);
-
-  position: relative;
-  margin-top: clamp(3rem, 1.5rem + 5vw, 6rem);
-}
+/* -- the staircase -------------------------------------------------------- */
 
 .list {
+  /* 96 and 125 at 1440, held as viewport ratios so the staircase keeps its
+     proportions instead of collapsing on narrower desktops. */
+  --panel-base: clamp(3.5rem, 6.67vw, 6rem);
+  --panel-rise: clamp(4rem, 8.68vw, 7.8125rem);
+
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 1rem + 2vw, 2.75rem);
-  /* Bottom-aligned, so a taller step grows upward and the climb reads off the
-     shared baseline rather than off the top of the row. */
+  gap: var(--bq-col-gap);
+  /* The whole effect. Shared baseline plus unequal panels equals the rise. */
   align-items: end;
+  margin-top: clamp(2rem, 1rem + 3.1vw, 3.8125rem);
 }
 
-/* Selected by data-step rather than nth-child: the band is a sibling inside
-   .stage, and index-based selectors here have already been off by one once. */
 .step {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 0.75rem + 1.6vw, 2.25rem);
   min-width: 0;
-  padding-bottom: calc(var(--band-h) + var(--clear));
 }
 
-.step[data-step='2'] {
-  padding-bottom: calc(var(--band-h) + var(--clear) + var(--rise));
+.stepText {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* 370 at the frame, which is what holds each description to two lines. */
+  max-width: 23.125rem;
 }
 
-.step[data-step='3'] {
-  padding-bottom: calc(var(--band-h) + var(--clear) + 2 * var(--rise));
-}
-
-.tick {
-  position: absolute;
-  left: 0;
-  bottom: var(--band-h);
-  width: 1px;
-  height: var(--clear);
-  background: var(--bq-rule);
-}
-
-.step[data-step='2'] .tick {
-  height: calc(var(--clear) + var(--rise));
-}
-
-.step[data-step='3'] .tick {
-  height: calc(var(--clear) + 2 * var(--rise));
+.stepCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .stepNum {
-  margin: 0 0 14px;
-  font-size: var(--bq-t-eyebrow);
+  margin: 0;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.06em;
   color: var(--bq-accent);
   font-variant-numeric: tabular-nums;
 }
 
 .stepTitle {
-  margin: 0 0 12px;
+  margin: 0;
   font-family: var(--bq-display);
-  font-size: var(--bq-t-sm);
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2rem);
   font-weight: 500;
-  line-height: 1.06;
+  line-height: 1.05;
   letter-spacing: -0.025em;
 }
 
 .stepDesc {
   margin: 0;
-  max-width: 34ch;
-  font-size: var(--bq-t-body-sm);
-  line-height: 1.6;
-  color: var(--bq-ink-72);
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.22;
+  color: var(--bq-ink-80);
   text-wrap: pretty;
 }
 
-/* -- the band ------------------------------------------------------------- */
+/* -- the panels ----------------------------------------------------------- */
 
-.band {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: var(--band-h);
+.panel {
+  position: relative;
+  width: 100%;
+  height: calc(var(--panel-base) + var(--i) * var(--panel-rise));
   overflow: hidden;
 }
 
-/* Wider than the frame on both sides so the drift can never expose an edge.
+/* Taller than the panel at both ends so the drift can never expose an edge.
    This is the element that moves; the image inside it is left alone. */
-.bandInner {
+.panelInner {
   position: absolute;
-  inset: 0 -6%;
+  inset: -5% 0;
 }
 
-.bandImg {
+.panelImg {
   object-fit: cover;
-  /* Favours the hills over the sky, matching the hero's crop. */
-  object-position: center 62%;
+  object-position: center 55%;
 }
 
-/* Scroll-driven, so there is no scroll listener and no client component: the
-   browser runs it off the main thread and it simply does not apply where it is
-   unsupported. Transform only. */
+/* Scroll-driven, so there is no scroll listener and this stays a Server
+   Component. Transform only, and it simply does not apply where unsupported.
+   Each panel is offset a little so the three do not move in lockstep. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .bandInner {
-      animation: bqBandDrift linear both;
+    .panelInner {
+      animation: bqPanelDrift linear both;
       animation-timeline: view();
       animation-range: entry 0% exit 100%;
+    }
+
+    .step:nth-child(2) .panelInner {
+      animation-range: entry 6% exit 100%;
+    }
+
+    .step:nth-child(3) .panelInner {
+      animation-range: entry 12% exit 100%;
     }
   }
 }
 
-@keyframes bqBandDrift {
+@keyframes bqPanelDrift {
   from {
-    transform: translate3d(-2.2%, 0, 0);
+    transform: translate3d(0, -2.4%, 0);
   }
   to {
-    transform: translate3d(2.2%, 0, 0);
+    transform: translate3d(0, 2.4%, 0);
   }
-}
-
-/* -- brand promise -------------------------------------------------------- */
-
-.quote {
-  max-width: 22ch;
-  margin: clamp(4rem, 2rem + 7vw, 8rem) 0 0;
-}
-
-.quoteText {
-  margin: 0;
-  font-family: var(--bq-display);
-  font-size: var(--bq-t-md);
-  font-weight: 500;
-  line-height: 1.18;
-  letter-spacing: -0.03em;
-  text-wrap: pretty;
-  max-width: 24ch;
-}
-
-.quoteWide {
-  max-width: 68ch;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: clamp(1rem, 0.5rem + 2vw, 1.75rem);
-  margin-top: clamp(2.5rem, 1rem + 4vw, 4.5rem);
-}
-
-.note {
-  font-size: var(--bq-t-meta);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--bq-ink-42);
 }
 
 /* -- responsive ----------------------------------------------------------- */
 
-@media (max-width: 860px) {
-  .headline {
+@media (max-width: 1080px) {
+  .stepText {
     max-width: none;
   }
+}
 
-  /* A three-deep climb needs horizontal room it does not have here, and a
-     stacked list is already ordered top to bottom. The band stays, as the
-     ground the list sits on. */
+@media (max-width: 860px) {
+  .headAside {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  /* A three-deep staircase needs horizontal room a phone does not have, and a
+     stacked list is already ordered top to bottom. The panels stay, at one
+     height, as the ground under each step. */
   .list {
     grid-template-columns: 1fr;
-    gap: clamp(2rem, 1.5rem + 3vw, 2.75rem);
+    gap: clamp(2.5rem, 2rem + 3vw, 3.5rem);
     align-items: start;
   }
 
-  .step,
-  .step[data-step='2'],
-  .step[data-step='3'] {
-    padding-bottom: 0;
-  }
-
-  .list > .step:last-child {
-    padding-bottom: calc(var(--band-h) + var(--clear));
-  }
-
-  .tick,
-  .step[data-step='2'] .tick,
-  .step[data-step='3'] .tick {
-    display: none;
-  }
-
-  .stepDesc {
-    max-width: none;
+  .panel {
+    height: clamp(8.75rem, 34vw, 13rem);
   }
 }

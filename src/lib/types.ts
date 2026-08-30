@@ -90,6 +90,12 @@ export interface EcosystemSection {
 export interface PathStep {
   title: string;
   description: string;
+  /**
+   * The wave panel under this step. Their heights are what build the
+   * staircase: bottom-aligned columns plus a taller panel each time is what
+   * lifts the copy above it. Decorative, so `alt` is empty by design.
+   */
+  image: ImageSlot;
 }
 
 export interface PathSection {
@@ -97,15 +103,7 @@ export interface PathSection {
   headline: string;
   intro: string;
   steps: PathStep[];
-  quote: string;
   cta: NavLink;
-  ctaNote: string;
-  /**
-   * The wave band the steps climb. Decorative, so `alt` is empty by design:
-   * the ordered list already carries the sequence for a screen reader. This
-   * replaced a photography slot that had sat empty since launch.
-   */
-  band: ImageSlot;
 }
 
 export interface ImageSlot {

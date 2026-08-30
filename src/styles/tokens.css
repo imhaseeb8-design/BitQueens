@@ -34,6 +34,7 @@
   --bq-blush: #f3afbc; /* soft punctuation */
 
   /* Ink at opacity — hierarchy comes from opacity, not from new hues. */
+  --bq-ink-80: rgba(26, 26, 26, 0.8);
   --bq-ink-72: rgba(26, 26, 26, 0.72);
   --bq-ink-66: rgba(26, 26, 26, 0.66);
   --bq-ink-50: rgba(26, 26, 26, 0.5);

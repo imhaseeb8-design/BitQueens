@@ -18,6 +18,16 @@
     transform var(--bq-dur-press) var(--bq-ease);
 }
 
+/* The scale the Figma frames use for in-content CTAs (node 111:26 and the
+   ecosystem cards): 48px tall, 16/34 padding, 14px label. */
+.compact {
+  min-height: 48px;
+  padding: 16px 34px;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
 /* Instant feedback on press — the interface confirms it heard you. */
 .base:active {
   transform: scale(0.97);
