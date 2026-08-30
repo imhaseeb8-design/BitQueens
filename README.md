@@ -108,6 +108,12 @@ The types already model the empty states the design supports: `partners`,
 Hierarchy comes from **opacity, not new hues**. Dark bands take their own
 counter-accent (forest → blush, blue → pale blue) rather than the accent.
 
+**`#FFFFFF` is used exactly once, on purpose:** the closing Foundation card in
+the ecosystem stack (Figma node 89:205). It has to be brighter than the
+`#FAFAF8` page or its edges disappear and the stack looks like it ended a card
+early. "Correcting" it to `--bq-canvas` is a mistake this repo has already
+made once — don't repeat it.
+
 **Type** — Cabinet Grotesk (display) + Switzer (body), via Fontshare. The scale
 is fluid `clamp()` in `tokens.css`; use the tokens, not raw px.
 

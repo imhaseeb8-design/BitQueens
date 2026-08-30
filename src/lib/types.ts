@@ -69,6 +69,14 @@ export interface Pillar {
   href: string;
   /** Accent pulled from the brand palette — one flat hue per arm. */
   color: Hex;
+  /**
+   * Fill for the card's CTA button, which the design contrasts against the
+   * card itself: the deep blue and forest take a light button, the orange
+   * and the white closing card take an ink one. Stated per pillar rather
+   * than derived, because "which reads better on this hue" is a design call,
+   * not something a luminance threshold gets right at these mid-tones.
+   */
+  ctaFill: 'light' | 'dark';
 }
 
 export interface EcosystemSection {

@@ -122,6 +122,7 @@ export const home: HomePage = {
         cta: 'Join the Academy',
         href: '/academy',
         color: '#2B6CA3',
+        ctaFill: 'light',
       },
       {
         name: 'Innovations & Labs',
@@ -130,6 +131,7 @@ export const home: HomePage = {
         cta: 'Explore Labs',
         href: '/innovations',
         color: '#E8641C',
+        ctaFill: 'dark',
       },
       {
         name: 'BIET',
@@ -138,6 +140,7 @@ export const home: HomePage = {
         cta: 'View programmes',
         href: '/biet',
         color: '#1E4A2C',
+        ctaFill: 'light',
       },
       {
         name: 'Foundation',
@@ -146,6 +149,7 @@ export const home: HomePage = {
         cta: 'Support the mission',
         href: '/foundation',
         color: '#4A9BD1',
+        ctaFill: 'dark',
       },
     ],
   },

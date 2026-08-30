@@ -65,8 +65,7 @@
 @media (hover: hover) and (pointer: fine) {
   .door:hover {
     transform: translateY(-6px);
-    /* The page ground, not pure white — nothing on this site is #FFF. */
-    background: var(--bq-canvas);
+    background: #ffffff;
   }
 
   .door:hover .doorCta {
@@ -440,11 +439,14 @@
   height: calc(var(--side-card-h) * 0.6);
 }
 
-/* The closing card sits on the page ground with ink text, exactly as the
-   frame sets it — the ecosystem's last stop reads as an open door, not
-   another coloured block. */
+/* The closing card is pure #FFF, and that is deliberate rather than sloppy:
+   the frame (node 89:205) sets it to white specifically so it separates from
+   the #FAFAF8 page behind it. Painting it --bq-canvas instead — as an earlier
+   pass did, on the theory that nothing on the site is pure white — made the
+   card's edges vanish into the background and the stack look like it ended a
+   card early. This is the one element on the site that is #FFFFFF. */
 .sideCard[data-last] {
-  background: var(--bq-canvas);
+  background: #ffffff;
   color: var(--bq-ink);
 }
 
@@ -505,21 +507,53 @@
   text-wrap: pretty;
 }
 
+/* A filled block, not an underlined link — 48px tall at the frame's 16/34
+   padding, 14px text with 0.28px tracking (node 94:9). */
 .sideCta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   width: fit-content;
-  padding-bottom: 4px;
-  border-bottom: 1px solid color-mix(in srgb, currentColor 60%, transparent);
-  font-size: var(--bq-t-body);
-  transition: gap 400ms var(--bq-ease), border-color 400ms var(--bq-ease);
+  padding: 16px 34px;
+  font-size: 0.875rem;
+  /* The frame's 48px height is 16 + 16 padding around a 16px line box. The
+     inherited body line-height (1.6) would make that 54. */
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  transition:
+    gap 400ms var(--bq-ease),
+    background-color 400ms var(--bq-ease),
+    color 400ms var(--bq-ease);
 }
 
+/* The fill contrasts with the card rather than tinting to match it, so the
+   button carries the same weight on every card. Which way round is a per
+   pillar content decision (`ctaFill`) — see the note on Pillar in types.ts. */
+.sideCard[data-cta='light'] .sideCta {
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+}
+
+.sideCard[data-cta='dark'] .sideCta {
+  background: var(--bq-ink);
+  color: var(--bq-canvas);
+}
+
+/* Hover swaps the two, so the button answers the pointer with the card's own
+   pairing instead of a new colour. */
 @media (hover: hover) and (pointer: fine) {
   .sideCard:hover .sideCta {
-    gap: 14px;
-    border-color: currentColor;
+    gap: 16px;
+  }
+
+  .sideCard[data-cta='light']:hover .sideCta {
+    background: var(--bq-ink);
+    color: var(--bq-canvas);
+  }
+
+  .sideCard[data-cta='dark']:hover .sideCta {
+    background: var(--bq-canvas);
+    color: var(--bq-ink);
   }
 }
 

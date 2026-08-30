@@ -63,6 +63,7 @@ export function Ecosystem({
                   className={styles.sideCard}
                   style={{ '--i': i, '--accent': pillar.color } as CSSProperties}
                   data-last={i === content.pillars.length - 1 || undefined}
+                  data-cta={pillar.ctaFill}
                 >
                   <span
                     className={styles.sideWave}
