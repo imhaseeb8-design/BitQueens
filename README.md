@@ -121,20 +121,40 @@ buttons, section numerals, focus rings, link hovers) now points at one token,
 back to orange. `--bq-orange` is still defined — it remains the Innovations &
 Labs pillar hue in `content/home.ts`.
 
-**Ecosystem `stack` variant** — four full-bleed cards that pin and stack on
-scroll (the avax.network pattern: each card slides up and covers the last,
-leaving its number + name peeking above). **Pure CSS `position: sticky`
-at staggered `top` offsets — no JavaScript, no scroll listener at all.**
-One thing that will bite you if you touch it: **each card needs its own
-wrapper** (`.stackItem`). A sticky element can't stick past its *containing
-block's* bottom edge — if all the cards share one flat parent as their
-containing block, that rule applies to the shared bottom, and near the end
-of the last card every card gets bottom-constrained at once and they
-collapse onto the same spot instead of exiting one at a time. Give each
-card its own appropriately-sized wrapper and each one's exit becomes
-independent again. This only shows up in the last ~1 card's-height of
-scroll, so it's easy to test the middle of the effect, ship it, and never
-notice the ending is broken.
+**Ecosystem card stacks** — cards that pin and stack on scroll (the
+avax.network pattern: each card slides up and covers the last, leaving a
+sliver of it showing). **Pure CSS `position: sticky` at staggered `top`
+offsets — no JavaScript, no scroll listener at all.**
+
+**The rule that decides whether a sticky stack works at all: every card must
+be a sibling of ONE shared containing block, in normal flow.** A sticky box
+can only travel inside its own containing block, so if you wrap each card in
+its own `card height + peek` div, each card's travel is capped at one peek —
+it pins for a moment, gets pushed off by its own wrapper, and the cards never
+appear on screen together. That is not a stack; it is four cards taking turns.
+With one shared parent, card 01 stays pinned for the rest of the run while
+02–04 slide up over it, which is the whole effect.
+
+`stackSide` (the current pick, Figma node 96:209 / 103:3) is built this way
+and verified: card 01 holds its pin for ~1550px of scroll and all four are
+simultaneously pinned for ~250px. Two things worth knowing:
+
+- Proportions are derived, not typed in. Figma's storyboard (node 101:2)
+  offsets four 411px cards by 113px, so `--side-peek` is
+  `calc(var(--side-card-h) * 0.275)` and that ratio survives every viewport.
+  The peek is sized to reveal each card's wave band, index number and rule,
+  and stop short of its name.
+- `--side-card-h` is capped against the **viewport**, not just the page. The
+  finished stack is `3 × peek + 1 card` tall (1.825 × card height) and has to
+  clear `--stack-top` as well, so a card height chosen only for looks puts the
+  last card below the fold on shorter screens.
+- `--stack-top` is shared by the cards and the heading beside them, which is
+  what keeps the heading level with whichever card is currently on top.
+
+⚠️ The older full-bleed `stack` variant still has the per-card `.stackItem`
+wrappers and therefore still has the defect described above. It is not
+rendered today — fix its structure to match `stackSide` before selecting it
+in `content/layout.ts`.
 
 **Ecosystem `stackSide` variant (current pick)** — from Figma node 96:209.
 Same stacking mechanism as `stack`, but the cards stay confined to a

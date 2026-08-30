@@ -321,13 +321,19 @@
    sits opposite and sticks at the same `top`, so it stays level with
    whichever card is currently pinned instead of scrolling on past it.
 
-   Same containing-block rule as `stack` applies: each card needs its own
-   `.sideItem` wrapper, sized card height + one peek's worth of extra room,
-   or the whole column collapses onto itself at the very end of the last
-   card. The peek amount (`--side-peek`) is measured off Figma's own
-   storyboard frame (node 101:2): four 411-tall cards offset 113px apart,
-   so each one leaves ~27% of itself — wave band, index number and rule —
-   showing above the next before the name and body copy get covered. */
+   THE ONE RULE THAT MATTERS: all four cards are siblings of a single
+   containing block (`.sideStack`), in normal flow. A sticky box may only
+   travel inside its own containing block, so wrapping each card in its own
+   per-card div caps its travel at one peek — the cards then pin for a
+   moment each and never appear on screen together, which is not a stack at
+   all. One shared parent is what lets card 01 hold its pinned position for
+   the rest of the run while 02–04 slide up over it.
+
+   Proportions come from Figma's storyboard frame (node 101:2): four
+   411-tall cards offset 113px apart, so each leaves 27.5% of itself — wave
+   band, index number and rule — visible above the next. `--side-peek` is
+   derived from `--side-card-h` rather than set independently, so that ratio
+   survives every viewport. */
 
 .sideSection {
   position: relative;
@@ -371,6 +377,19 @@
 }
 
 .sideWrap {
+  /* Shared by the heading and the cards so they pin to the same line — the
+     heading holds level with whichever card is currently on top. */
+  --stack-top: clamp(1.25rem, 0.75rem + 1.5vw, 2.5rem);
+  /* Capped against the viewport, not just the page: the finished stack is
+     3 peeks + 1 card tall (1.825 × card height), and it has to clear
+     --stack-top and still fit on screen or the last card lands below the
+     fold. 52vh − 40px keeps 1.825 × H + top within the viewport down to
+     roughly 600px tall. */
+  --side-card-h: clamp(20rem, calc(52vh - 40px), 27rem);
+  /* 113 ÷ 411 from the Figma storyboard, held as a ratio. */
+  --side-peek: calc(var(--side-card-h) * 0.275);
+  --side-wave-h: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
+
   display: grid;
   grid-template-columns: minmax(220px, 400px) minmax(0, 1fr);
   gap: clamp(2rem, 1rem + 6vw, 8rem);
@@ -379,7 +398,7 @@
 
 .sideHead {
   position: sticky;
-  top: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  top: var(--stack-top);
 }
 
 .sideHead .headline {
@@ -387,28 +406,23 @@
 }
 
 .sideStack {
-  --side-wave-h: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
-  --side-card-h: clamp(22rem, 52vh, 27rem);
-  /* ~27% of the card height, matching the 113px-of-411px the Figma
-     storyboard sets — enough to show the wave band and the index/rule row
-     of the card underneath, not enough to reach its name. */
-  --side-peek: clamp(4.75rem, 3.75rem + 3.5vw, 7.25rem);
   position: relative;
-}
-
-.sideItem {
-  position: relative;
-  height: calc(var(--side-card-h) + var(--side-peek));
 }
 
 .sideCard {
   position: sticky;
-  top: calc(var(--i) * var(--side-peek));
+  top: calc(var(--stack-top) + var(--i) * var(--side-peek));
   display: block;
   height: var(--side-card-h);
   background: var(--accent);
   color: var(--bq-cream);
-  box-shadow: 0 -12px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* Dead space below the last card. Without it the last card arrives exactly
+   as the parent's bottom edge starts pulling everything away, so the
+   completed stack is never actually still. */
+.sideHold {
+  height: calc(var(--side-card-h) * 0.6);
 }
 
 /* The closing card sits on the page ground with ink text, exactly as the
@@ -417,7 +431,6 @@
 .sideCard[data-last] {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  box-shadow: none;
 }
 
 .sideWave {
@@ -525,12 +538,15 @@
     justify-self: start;
   }
 
-  /* No room to hold a column beside the cards, and nothing left for the
-     heading to stay level with once it isn't sticky, so it reverts to
-     ordinary flow above a single stacking column. */
+  /* One column, and the pinning comes off entirely. A four-deep stack needs
+     3 peeks plus a full card of vertical room, which a phone does not have,
+     and there is nothing beside the cards for the heading to stay level
+     with — so both revert to ordinary flow and the cards become a plain
+     list with the wave bands still separating them. */
   .sideWrap {
     grid-template-columns: 1fr;
     gap: 2rem;
+    --side-card-h: auto;
   }
 
   .sideHead {
@@ -538,7 +554,24 @@
   }
 
   .sideStack {
-    --side-card-h: 24rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sideCard {
+    position: relative;
+    top: auto;
+    height: auto;
+  }
+
+  .sideInner {
+    height: auto;
+    gap: 2.5rem;
+  }
+
+  .sideHold {
+    display: none;
   }
 
   .sideName {

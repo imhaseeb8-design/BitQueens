@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import { GridLines } from '@/components/ui/GridLines';
 import { Reveal } from '@/components/ui/Reveal';
@@ -44,45 +45,49 @@ export function Ecosystem({
               </Reveal>
             </div>
 
-            {/* Cards pin within this narrower column and stack one on top of
-                the other, each leaving only its own wave band peeking above —
-                see .sideItem for why each card needs its own wrapper. The
-                heading opposite is sticky at the same `top`, so it holds
-                level with the top card for the whole run instead of
-                scrolling past. */}
+            {/* All four cards are plain siblings of ONE containing block, in
+                normal flow, each sticky at a `top` one peek lower than the
+                last. That single shared parent is the whole trick: a sticky
+                box can only travel inside its own containing block, so giving
+                each card its own wrapper (as an earlier pass did) caps its
+                travel at one peek and the cards never coexist on screen. With
+                one parent, card 01 stays pinned for the rest of the run while
+                02, 03 and 04 slide up and cover it, leaving each one's wave
+                band and index row showing.
+
+                `.sideHold` is dead space that keeps the completed stack on
+                screen for a beat before the parent's bottom edge finally
+                carries everything away. */}
             <div className={styles.sideStack}>
               {content.pillars.map((pillar, i) => (
-                <div key={pillar.name} className={styles.sideItem}>
-                  <Reveal
-                    href={pillar.href}
-                    delay={i * 60}
-                    className={styles.sideCard}
-                    style={
-                      { '--i': i, '--accent': pillar.color } as CSSProperties
-                    }
-                    data-last={i === content.pillars.length - 1 || undefined}
-                  >
-                    <span
-                      className={styles.sideWave}
-                      style={{ '--wave-x': `${(i * 33) % 100}%` } as CSSProperties}
-                      aria-hidden="true"
-                    />
-                    <div className={styles.sideInner}>
-                      <div className={styles.sideTop}>
-                        <div className={styles.sideIndex}>
-                          <span>{String(i + 1).padStart(2, '0')}</span>
-                          <span className={styles.sideRule} />
-                        </div>
-                        <h3 className={styles.sideName}>{pillar.name}</h3>
-                        <p className={styles.sideDesc}>{pillar.description}</p>
+                <Link
+                  key={pillar.name}
+                  href={pillar.href}
+                  className={styles.sideCard}
+                  style={{ '--i': i, '--accent': pillar.color } as CSSProperties}
+                  data-last={i === content.pillars.length - 1 || undefined}
+                >
+                  <span
+                    className={styles.sideWave}
+                    style={{ '--wave-x': `${(i * 33) % 100}%` } as CSSProperties}
+                    aria-hidden="true"
+                  />
+                  <div className={styles.sideInner}>
+                    <div className={styles.sideTop}>
+                      <div className={styles.sideIndex}>
+                        <span>{String(i + 1).padStart(2, '0')}</span>
+                        <span className={styles.sideRule} />
                       </div>
-                      <span className={styles.sideCta}>
-                        {pillar.cta} <span aria-hidden="true">→</span>
-                      </span>
+                      <h3 className={styles.sideName}>{pillar.name}</h3>
+                      <p className={styles.sideDesc}>{pillar.description}</p>
                     </div>
-                  </Reveal>
-                </div>
+                    <span className={styles.sideCta}>
+                      {pillar.cta} <span aria-hidden="true">→</span>
+                    </span>
+                  </div>
+                </Link>
               ))}
+              <div className={styles.sideHold} aria-hidden="true" />
             </div>
           </div>
         </div>
