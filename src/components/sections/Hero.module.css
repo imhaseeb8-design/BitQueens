@@ -141,27 +141,56 @@
 
 /* -- the closing rule ----------------------------------------------------- */
 
+/* Figma node 75:137 ("Bottom lines"): one hairline at content width with a
+   90px accent segment at its left end. The grey line draws itself in first,
+   then the accent runs the full length of it and settles back into that 90px
+   segment — a loading pass along the line rather than a 90px fade-in, which
+   at that size was over before it registered. */
 .rule {
   position: relative;
   height: 1px;
   margin-top: clamp(2rem, 1rem + 2.6vw, 3.625rem);
   background: rgba(26, 26, 26, 0.25);
-}
-
-/* The 90px accent segment the frame sets at the left end of the rule. */
-.ruleAccent {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 90px;
-  background: var(--bq-accent);
   transform: scaleX(0);
   transform-origin: left;
-  animation: bqRuleDraw 900ms var(--bq-ease) 500ms forwards;
+  animation: bqRuleDraw 700ms var(--bq-ease) 150ms forwards;
 }
 
 @keyframes bqRuleDraw {
   to {
     transform: scaleX(1);
+  }
+}
+
+/* Width is what animates here, not transform — the one place on the site that
+   is true. The accent is `position: absolute`, so its width relayouts only
+   itself and nothing else depends on its box. That buys a sweep that stays
+   correct at every viewport: a transform version would need the 90px-to-full
+   ratio baked in as a scale factor, and that ratio changes with the width of
+   the rule. */
+.ruleAccent {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 90px;
+  background: var(--bq-accent);
+  animation: bqRuleLoad 1.5s var(--bq-ease) 800ms both;
+}
+
+@keyframes bqRuleLoad {
+  0% {
+    width: 0;
+  }
+  /* Runs the length of the line… */
+  55% {
+    width: 100%;
+  }
+  /* …holds there for a beat, so the sweep reads as completing… */
+  68% {
+    width: 100%;
+  }
+  /* …then retracts to the segment the frame actually specifies. */
+  100% {
+    width: 90px;
   }
 }
 
@@ -200,8 +229,13 @@
     animation: none;
   }
 
-  .ruleAccent {
+  .rule {
     transform: scaleX(1);
+    animation: none;
+  }
+
+  .ruleAccent {
+    width: 90px;
     animation: none;
   }
 

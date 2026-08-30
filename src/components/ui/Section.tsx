@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { GridLines } from './GridLines';
 import { Reveal } from './Reveal';
 import styles from './Section.module.css';
 
@@ -47,7 +46,6 @@ export function Section({
         .filter(Boolean)
         .join(' ')}
     >
-      <GridLines onDark={tone !== 'canvas'} />
       {rule && <div className={styles.rule} />}
       <div className={styles.inner}>{children}</div>
     </section>

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
-import { GridLines } from '@/components/ui/GridLines';
 import { Reveal } from '@/components/ui/Reveal';
 import { Section, SectionLabel } from '@/components/ui/Section';
 import type { EcosystemSection } from '@/lib/types';
@@ -30,7 +29,6 @@ export function Ecosystem({
         aria-label="The ecosystem"
         className={styles.sideSection}
       >
-        <GridLines />
         <div className={styles.sideTopRule} />
         <div className={styles.sideInnerWrap}>
           <div className={styles.sideWrap}>
@@ -128,7 +126,6 @@ export function Ecosystem({
               className={styles.stackCard}
               style={{ '--i': i, '--accent': pillar.color } as CSSProperties}
             >
-              <GridLines onDark />
               <div className={styles.stackInner}>
                 <div className={styles.stackHeader}>
                   <span className={styles.stackIndex}>

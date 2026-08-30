@@ -49,7 +49,7 @@ src/
 ├── components/
 │   ├── layout/             SiteHeader, SiteFooter
 │   ├── sections/           one folder-less pair per homepage section
-│   └── ui/                 Button, Section, Reveal, GridLines, ImageSlot
+│   └── ui/                 Button, Section, Reveal, ImageSlot
 │
 ├── content/                ← ALL copy lives here. The CMS seam.
 │   ├── site.ts             nav, CTAs, mailboxes, legal
@@ -111,9 +111,19 @@ counter-accent (forest → blush, blue → pale blue) rather than the accent.
 **Type** — Cabinet Grotesk (display) + Switzer (body), via Fontshare. The scale
 is fluid `clamp()` in `tokens.css`; use the tokens, not raw px.
 
-**Grid** — 1440px frame, 72px margins. Only the two outer rails are drawn
-(the brand file hides columns 2–11), so the structure is stated once at each
-margin instead of striped across the page.
+**Grid** — 1440px frame, 72px margins. The grid is a layout constraint only;
+**nothing draws it.** An earlier pass rendered the two outer margin rails as
+hairlines on every section (a `GridLines` component, since deleted). Stacked
+down a long page they boxed each section in and read as clutter the design
+never asked for — the Figma frames have no rails.
+
+**Lines** — the page uses **one** line treatment, and it is worth keeping it
+that way: a 1px hairline at `rgba(26,26,26,.25)`, content width, sitting
+inside the same margins as the copy it divides. The hero's closing rule
+(Figma node 75:137) is the reference, with a 90px accent segment at its left
+end. Sections that still pass `rule` to `<Section>` draw a full-bleed line in
+solid ink instead — that predates this and is the one remaining inconsistency
+if you want the page fully uniform.
 
 **Hero** (v4) — implemented from Figma node 75:135 ("Swiss International
 Style"). A full-bleed wave band, a 72px headline whose accent clause takes its
