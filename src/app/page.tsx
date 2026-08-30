@@ -5,7 +5,6 @@ import { Founder } from '@/components/sections/Founder';
 import { Hero } from '@/components/sections/Hero';
 import { Impact } from '@/components/sections/Impact';
 import { Join } from '@/components/sections/Join';
-import { Mission } from '@/components/sections/Mission';
 import { Partners } from '@/components/sections/Partners';
 import { Path } from '@/components/sections/Path';
 import { home } from '@/content/home';
@@ -14,13 +13,15 @@ import { homeLayout } from '@/content/layout';
 /**
  * The homepage.
  *
- * Order is the argument: who we are and that we are real (01, the hero
- * carries its own proof) → what the
- * ecosystem is (03) → why it exists (04) → that you can start (05) → the
- * flagship moment (06) → who is behind it (07) → who backs it (08) → what we
- * publish (09) → the two ways in (10).
+ * Order is the argument: who we are → that the numbers are real → what the
+ * ecosystem is → that you can start → the flagship moment → who is behind it
+ * → who backs it → what we publish → the two ways in.
  *
- * Sections 02 and 03 are still being compared. Switch variants in
+ * The sections used to carry numbered "NN / NAME" eyebrows and the order was
+ * described by those numbers. They are gone, so nothing renumbers when a
+ * section moves or is dropped — say what a section does, not where it sits.
+ *
+ * Ecosystem still has layout variants under review. Switch in
  * `src/content/layout.ts` — no component edits required.
  */
 export default function HomePage() {
@@ -28,12 +29,11 @@ export default function HomePage() {
     <>
       <Hero content={home.hero} />
       <Impact content={home.impact} />
-      {/* 02 Proof is hidden: the hero's second state now carries the proof
-          figures, so a separate section repeats the same job. The component
-          and its content are kept — restore this line to bring it back.
+      {/* Proof is hidden: the Impact figures above carry the same job. The
+          component and its content are kept — restore this line to bring the
+          entity register back.
           <Proof content={home.proof} variant={homeLayout.proof} /> */}
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
-      <Mission content={home.mission} />
       <Path content={home.path} />
       <Conference content={home.conference} />
       <Founder content={home.founder} />

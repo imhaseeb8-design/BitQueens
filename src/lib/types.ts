@@ -79,14 +79,6 @@ export interface EcosystemSection {
   pillars: Pillar[];
 }
 
-export interface MissionSection {
-  eyebrow: string;
-  headline: string;
-  body: string;
-  /** The escalating three-line refrain. Order carries the argument. */
-  refrain: string[];
-}
-
 export interface PathStep {
   title: string;
   description: string;
@@ -236,7 +228,6 @@ export interface HomePage {
   impact: ImpactSection;
   proof: ProofSection;
   ecosystem: EcosystemSection;
-  mission: MissionSection;
   path: PathSection;
   conference: ConferenceSection;
   founder: FounderSection;

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
-import { Section, SectionLabel } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import type { BlogSection } from '@/lib/types';
 import styles from './Blog.module.css';
 
@@ -9,7 +9,6 @@ export function Blog({ content }: { content: BlogSection }) {
 
   return (
     <Section id="blog" label="Blog" rule>
-      <SectionLabel index="09" name={content.eyebrow} />
 
       <Reveal delay={100} className={styles.head}>
         <div>

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Reveal } from '@/components/ui/Reveal';
-import { Section, SectionLabel } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import type { ConferenceSection } from '@/lib/types';
 import styles from './Conference.module.css';
 
@@ -13,7 +13,6 @@ export function Conference({ content }: { content: ConferenceSection }) {
       tone="blue"
       density="loose"
     >
-      <SectionLabel index="06" name={content.eyebrow} />
 
       {content.dateLine && (
         <Reveal as="p" delay={80} className={styles.dateLine}>

@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { Reveal } from './Reveal';
 import styles from './Section.module.css';
 
 export type SectionTone = 'canvas' | 'forest' | 'blue' | 'ink';
@@ -49,28 +48,5 @@ export function Section({
       {rule && <div className={styles.rule} />}
       <div className={styles.inner}>{children}</div>
     </section>
-  );
-}
-
-interface SectionLabelProps {
-  /** Two-digit position in the page index, e.g. "02". */
-  index: string;
-  name: string;
-  delay?: number;
-}
-
-/**
- * The numbered eyebrow. The numbering is not decoration: the page is a typed
- * index, and the hero's rail refers back to these same positions.
- */
-export function SectionLabel({ index, name, delay = 0 }: SectionLabelProps) {
-  return (
-    <Reveal variant="fade" delay={delay} className={styles.label}>
-      <span className={styles.labelIndex}>{index}</span>
-      <span className={styles.labelSlash} aria-hidden="true">
-        /
-      </span>
-      <span className={styles.labelName}>{name}</span>
-    </Reveal>
   );
 }

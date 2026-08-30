@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
-import { Section, SectionLabel } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import type { EcosystemSection } from '@/lib/types';
 import styles from './Ecosystem.module.css';
 
@@ -33,7 +33,6 @@ export function Ecosystem({
         <div className={styles.sideInnerWrap}>
           <div className={styles.sideWrap}>
             <div className={styles.sideHead}>
-              <SectionLabel index="03" name={content.eyebrow} />
               <Reveal delay={100}>
                 <h2 className={styles.headline}>
                   {content.headline}{' '}
@@ -97,7 +96,6 @@ export function Ecosystem({
     return (
       <>
         <Section id="ecosystem" label="The ecosystem" rule density="tight">
-          <SectionLabel index="03" name={content.eyebrow} />
           <Reveal delay={100} className={styles.head}>
             <h2 className={styles.headline}>
               {content.headline}{' '}
@@ -150,7 +148,6 @@ export function Ecosystem({
 
   return (
     <Section id="ecosystem" label="The ecosystem" rule>
-      <SectionLabel index="03" name={content.eyebrow} />
 
       <Reveal delay={100} className={styles.head}>
         <h2 className={styles.headline}>

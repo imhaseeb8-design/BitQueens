@@ -1,14 +1,13 @@
 import { Button } from '@/components/ui/Button';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Reveal } from '@/components/ui/Reveal';
-import { Section, SectionLabel } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import type { FounderSection } from '@/lib/types';
 import styles from './Founder.module.css';
 
 export function Founder({ content }: { content: FounderSection }) {
   return (
     <Section id="founder" label="The founder" rule>
-      <SectionLabel index="07" name={content.eyebrow} />
 
       <div className={styles.split}>
         <Reveal delay={80} variant="fade">

@@ -150,21 +150,6 @@ export const home: HomePage = {
     ],
   },
 
-  /* ------------------------------------------------------- 04 · mission -- */
-  mission: {
-    eyebrow: 'Why we exist',
-    headline: 'Technology is shaping the future.',
-    body:
-      'Millions of women remain excluded from the opportunities being created. ' +
-      'BitQueens exists to change that. Through education, innovation and ' +
-      'community, we are preparing women to participate confidently in the ' +
-      'next generation of the internet.',
-    refrain: [
-      'Access creates confidence.',
-      'Confidence creates opportunity.',
-      'Opportunity creates leaders.',
-    ],
-  },
 
   /* ---------------------------------------------------------- 05 · path -- */
   path: {

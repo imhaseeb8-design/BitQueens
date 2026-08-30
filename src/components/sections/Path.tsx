@@ -1,14 +1,13 @@
 import { Button } from '@/components/ui/Button';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Reveal } from '@/components/ui/Reveal';
-import { Section, SectionLabel } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import type { PathSection } from '@/lib/types';
 import styles from './Path.module.css';
 
 export function Path({ content }: { content: PathSection }) {
   return (
     <Section id="path" label="Where you start" rule>
-      <SectionLabel index="05" name={content.eyebrow} />
 
       <div className={styles.head}>
         <div>

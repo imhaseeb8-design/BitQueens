@@ -65,7 +65,8 @@
 @media (hover: hover) and (pointer: fine) {
   .door:hover {
     transform: translateY(-6px);
-    background: #ffffff;
+    /* The page ground, not pure white — nothing on this site is #FFF. */
+    background: var(--bq-canvas);
   }
 
   .door:hover .doorCta {

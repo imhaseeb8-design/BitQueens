@@ -1,13 +1,12 @@
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
-import { Section, SectionLabel } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import type { PartnersSection } from '@/lib/types';
 import styles from './Partners.module.css';
 
 export function Partners({ content }: { content: PartnersSection }) {
   return (
     <Section id="partners" label="Partners" rule>
-      <SectionLabel index="08" name={content.eyebrow} />
 
       {content.partners.length > 0 && (
         <div className={styles.logos}>

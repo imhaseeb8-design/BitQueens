@@ -173,22 +173,29 @@
   inset: 0 auto 0 0;
   width: 90px;
   background: var(--bq-accent);
-  animation: bqRuleLoad 1.5s var(--bq-ease) 800ms both;
+  /* Runs continuously, slowly. 9s is deliberately past the point of drawing
+     attention — at the edge of vision it reads as the page being alive, not
+     as something asking to be watched. */
+  animation: bqRuleLoad 9s var(--bq-ease) 800ms infinite;
 }
 
+/* Starts and ends on the 90px segment the frame specifies, so the loop has
+   no seam and the resting state is always the designed one. */
 @keyframes bqRuleLoad {
-  0% {
-    width: 0;
+  0%,
+  6% {
+    width: 90px;
   }
   /* Runs the length of the line… */
-  55% {
+  40% {
     width: 100%;
   }
   /* …holds there for a beat, so the sweep reads as completing… */
-  68% {
+  56% {
     width: 100%;
   }
-  /* …then retracts to the segment the frame actually specifies. */
+  /* …then retracts and rests before going again. */
+  90%,
   100% {
     width: 90px;
   }

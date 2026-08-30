@@ -1,5 +1,5 @@
 import { Reveal } from '@/components/ui/Reveal';
-import { Section, SectionLabel } from '@/components/ui/Section';
+import { Section } from '@/components/ui/Section';
 import type { EntityStatus, LegalEntity, ProofSection } from '@/lib/types';
 import styles from './Proof.module.css';
 
@@ -59,7 +59,6 @@ export function Proof({
 }) {
   return (
     <Section id="proof" label="Proof" rule density="tight">
-      <SectionLabel index="02" name={content.eyebrow} />
 
       {variant === 'band' ? (
         <>
