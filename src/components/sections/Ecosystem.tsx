@@ -110,41 +110,42 @@ export function Ecosystem({
         </Section>
 
         {/* Full-bleed sticky cards — deliberately outside Section's padded,
-            max-width frame. Each card is a plain position:sticky sibling
-            pinned at an increasing `top` offset (0, headerH, 2×headerH…);
-            the "next card slides up and covers the last one, leaving its
-            header peeking above" effect falls out of that alone — no JS,
-            no scroll listener. (Verified against avax.network's own
-            computed styles: same technique, same staggered `top` values.) */}
-        <div className={styles.stack} aria-label="The ecosystem, in detail">
+            max-width frame. All four are plain siblings of ONE containing
+            block, in normal flow, each pinned at an increasing `top` offset
+            (0, headerH, 2×headerH…). The single shared parent is what makes
+            it a stack: a sticky box can only travel inside its own
+            containing block, so wrapping each card individually caps its
+            travel at one header height and the cards never coexist on
+            screen. With one parent, card 01 holds while 02–04 slide up and
+            cover it, each leaving its header showing. No JS, no scroll
+            listener. `.stackHold` keeps the finished stack still for a beat
+            before the parent's bottom edge carries it away. */}
+        <div className={styles.stack}>
           {content.pillars.map((pillar, i) => (
-            // Each card owns its own containing block (this wrapper) — see
-            // the comment on .stackItem in the CSS for why that matters.
-            <div key={pillar.name} className={styles.stackItem}>
-              <Reveal
-                href={pillar.href}
-                delay={i * 60}
-                className={styles.stackCard}
-                style={{ '--i': i, '--accent': pillar.color } as CSSProperties}
-              >
-                <GridLines onDark />
-                <div className={styles.stackInner}>
-                  <div className={styles.stackHeader}>
-                    <span className={styles.stackIndex}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <h3 className={styles.stackName}>{pillar.name}</h3>
-                  </div>
-                  <div className={styles.stackBody}>
-                    <p className={styles.stackDesc}>{pillar.description}</p>
-                    <span className={styles.stackCta}>
-                      {pillar.cta} <span aria-hidden="true">→</span>
-                    </span>
-                  </div>
+            <Link
+              key={pillar.name}
+              href={pillar.href}
+              className={styles.stackCard}
+              style={{ '--i': i, '--accent': pillar.color } as CSSProperties}
+            >
+              <GridLines onDark />
+              <div className={styles.stackInner}>
+                <div className={styles.stackHeader}>
+                  <span className={styles.stackIndex}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className={styles.stackName}>{pillar.name}</h3>
                 </div>
-              </Reveal>
-            </div>
+                <div className={styles.stackBody}>
+                  <p className={styles.stackDesc}>{pillar.description}</p>
+                  <span className={styles.stackCta}>
+                    {pillar.cta} <span aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </div>
+            </Link>
           ))}
+          <div className={styles.stackHold} aria-hidden="true" />
         </div>
       </>
     );

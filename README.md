@@ -135,26 +135,32 @@ appear on screen together. That is not a stack; it is four cards taking turns.
 With one shared parent, card 01 stays pinned for the rest of the run while
 02–04 slide up over it, which is the whole effect.
 
-`stackSide` (the current pick, Figma node 96:209 / 103:3) is built this way
-and verified: card 01 holds its pin for ~1550px of scroll and all four are
-simultaneously pinned for ~250px. Two things worth knowing:
+Both variants are built this way and measured in the browser — card 01 holds
+its pin for the whole run, and all four are simultaneously pinned for a real
+window (`stackSide` ~250px, `stack` ~380px). Three things worth knowing:
 
-- Proportions are derived, not typed in. Figma's storyboard (node 101:2)
-  offsets four 411px cards by 113px, so `--side-peek` is
-  `calc(var(--side-card-h) * 0.275)` and that ratio survives every viewport.
-  The peek is sized to reveal each card's wave band, index number and rule,
-  and stop short of its name.
-- `--side-card-h` is capped against the **viewport**, not just the page. The
-  finished stack is `3 × peek + 1 card` tall (1.825 × card height) and has to
-  clear `--stack-top` as well, so a card height chosen only for looks puts the
-  last card below the fold on shorter screens.
-- `--stack-top` is shared by the cards and the heading beside them, which is
-  what keeps the heading level with whichever card is currently on top.
+- **Proportions are derived, not typed in.** In `stackSide`, Figma's
+  storyboard (node 101:2) offsets four 411px cards by 113px, so `--side-peek`
+  is `calc(var(--side-card-h) * 0.275)` and that ratio survives every
+  viewport. The peek reveals each card's wave band, index number and rule,
+  and stops short of its name. In `stack` the peek is the card's own header
+  (`--stack-header-h`), so number + name are what show.
+- **Card height is capped against the viewport, not just the page.** The
+  finished stack is `3 × peek + 1 card` tall and has to clear the top offset
+  too, so a card height chosen only for looks puts the last card below the
+  fold on shorter screens. Both variants derive their card height from
+  `100vh` minus the peeks; verified down to a 700px-tall window and on mobile.
+- **A hold spacer follows the last card** (`.sideHold` / `.stackHold`,
+  ~0.6 × card height). Without it the last card arrives exactly as the
+  parent's bottom edge starts carrying everything away, so the completed
+  stack is never actually still.
 
-⚠️ The older full-bleed `stack` variant still has the per-card `.stackItem`
-wrappers and therefore still has the defect described above. It is not
-rendered today — fix its structure to match `stackSide` before selecting it
-in `content/layout.ts`.
+In `stackSide` only, `--stack-top` is shared by the cards and the heading
+beside them, which is what keeps the heading level with whichever card is
+currently on top.
+
+Neither variant uses `<Reveal>` on the cards: the pinning *is* the animation,
+and the reveal's transform fights it. Cards are plain `next/link` links.
 
 **Ecosystem `stackSide` variant (current pick)** — from Figma node 96:209.
 Same stacking mechanism as `stack`, but the cards stay confined to a

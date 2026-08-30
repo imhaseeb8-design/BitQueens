@@ -204,31 +204,30 @@
 }
 
 /* -- variant: stack -------------------------------------------------------
-   Deliberately no explicit height math and no scroll listener. Each card is
-   `position: sticky` at `top: i × --stack-header-h`; the "next card slides up
-   and covers the last" effect falls out of that alone.
+   Full-bleed cards that pin at `top: i × --stack-header-h`, so each one
+   leaves its own header — number + name — showing above the next. No scroll
+   listener; the effect falls out of `position: sticky` alone.
 
-   Each card gets its OWN wrapper (`.stackItem`), not just a shared flat
-   parent — a sticky element can't stick past its containing block's bottom
-   edge, and if all four cards shared one containing block (`.stack` itself),
-   that rule applies to the *shared* bottom: near the end of the last card,
-   every card gets constrained by the same edge at once and they collapse
-   onto the same spot instead of exiting one at a time. Giving each card its
-   own appropriately-sized wrapper makes that boundary per-card again. */
+   All four cards are siblings of ONE containing block (`.stack`), in normal
+   flow. That is the load-bearing part: a sticky box can only travel inside
+   its own containing block, so the per-card `.stackItem` wrappers this
+   variant used to have capped each card's travel at one header height —
+   every card pinned for a moment, got pushed off by its own wrapper, and no
+   two were ever on screen together. Sharing one parent is what lets card 01
+   hold its pin for the rest of the run while 02–04 slide up over it. */
 
 .stack {
   --stack-header-h: clamp(4.5rem, 3.5rem + 3vw, 6.25rem);
-  --stack-card-h: clamp(30rem, 78vh, 45rem);
+  /* Capped against the viewport, not just chosen for looks: the finished
+     stack is 3 headers + 1 card tall, and a card sized only in vh puts the
+     last one below the fold on shorter screens. */
+  --stack-card-h: clamp(
+    20rem,
+    calc(100vh - 3 * var(--stack-header-h) - 2.5rem),
+    45rem
+  );
   position: relative;
   z-index: 1;
-}
-
-.stackItem {
-  position: relative;
-  /* The card's own height, plus one header's worth of extra room so it
-     genuinely holds its pinned position for a beat before the next card
-     arrives, rather than sticking and immediately unsticking. */
-  height: calc(var(--stack-card-h) + var(--stack-header-h));
 }
 
 .stackCard {
@@ -239,6 +238,13 @@
   background: var(--accent);
   color: var(--bq-cream);
   box-shadow: 0 -16px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Dead space below the last card, so the completed stack is actually still
+   for a beat instead of arriving exactly as the parent's bottom edge starts
+   carrying everything away. */
+.stackHold {
+  height: calc(var(--stack-card-h) * 0.6);
 }
 
 .stackInner {
@@ -517,15 +523,13 @@
   }
 
   /* The stack still works with zero JS at any width — sticky doesn't care
-     about viewport size — but the tallest name ("Innovations & Labs") needs
-     a smaller size to keep the header on one line, since --stack-header-h
-     assumes a uniform height across all four cards. */
+     about viewport size, and --stack-card-h is already derived from the
+     viewport, so no height override is needed here. The tallest name
+     ("Innovations & Labs") does need a smaller size to keep the header on
+     one line, since --stack-header-h assumes a uniform height across all
+     four cards. */
   .stackName {
     font-size: 1.5rem;
-  }
-
-  .stack {
-    --stack-card-h: 26rem;
   }
 
   .indexRow {
