@@ -117,13 +117,22 @@ hairlines on every section (a `GridLines` component, since deleted). Stacked
 down a long page they boxed each section in and read as clutter the design
 never asked for — the Figma frames have no rails.
 
-**Lines** — the page uses **one** line treatment, and it is worth keeping it
-that way: a 1px hairline at `rgba(26,26,26,.25)`, content width, sitting
-inside the same margins as the copy it divides. The hero's closing rule
-(Figma node 75:137) is the reference, with a 90px accent segment at its left
-end. Sections that still pass `rule` to `<Section>` draw a full-bleed line in
-solid ink instead — that predates this and is the one remaining inconsistency
-if you want the page fully uniform.
+**Lines** — every divider on the page is the same line: `--bq-rule`, 1px,
+**content width**, sitting inside the same margins as the copy it divides.
+The hero's closing rule (Figma node 75:137) is the reference, with a 90px
+accent segment at its left end that loops slowly along it.
+
+Nothing is full-bleed any more. `<Section rule>` used to draw its hairline
+outside `.inner`, so it spanned the viewport in solid ink and read as a much
+heavier, different kind of line than the hero's; Path carried a third weight
+at 0.85. All of them now point at the one token — change it there, not in a
+component.
+
+The distinction to hold on to: **standalone divider elements take
+`--bq-rule`; per-item borders do not.** The rule above each blog post and the
+opener on the partner-tier list are deliberately heavier (0.85) because they
+are an editorial device repeating down a list, not a boundary between
+sections. Making those match would flatten the blog cards.
 
 **Hero** (v4) — implemented from Figma node 75:135 ("Swiss International
 Style"). A full-bleed wave band, a 72px headline whose accent clause takes its

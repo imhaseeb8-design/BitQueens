@@ -20,6 +20,11 @@
      single value to take the whole site back to orange. */
   --bq-accent: #d8371b;
 
+  /* Every hairline on the site. The page had drifted to three weights — a
+     full-bleed solid-ink section separator, a 0.85 rule inside Path, and this
+     — which read as three different kinds of line. One token, one line. */
+  --bq-rule: rgba(26, 26, 26, 0.25);
+
   --bq-orange: #e8641c; /* brand hue; still the Innovations & Labs pillar */
   --bq-forest: #1e4a2c; /* flat solid block */
   --bq-blue-deep: #2b6ca3; /* flat solid block */

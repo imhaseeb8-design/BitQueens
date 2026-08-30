@@ -45,7 +45,7 @@
 
 .rule {
   height: 1px;
-  background: rgba(26, 26, 26, 0.85);
+  background: var(--bq-rule);
 }
 
 .list {

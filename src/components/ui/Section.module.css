@@ -45,11 +45,19 @@
 }
 
 /* The hairline that opens each light band, wiping in from the left. */
+/* Content width, inside the same margins as the copy it divides — not the
+   full-bleed edge-to-edge line this used to be. It sat outside `.inner`, so
+   it spanned the viewport and, in solid ink, read as a much heavier kind of
+   line than the hero's. Same geometry and weight as every other rule now. */
 .rule {
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
+  width: calc(100% - 2 * var(--bq-gutter));
+  max-width: calc(var(--bq-max) - 2 * var(--bq-gutter));
+  margin: 0 auto;
   height: 1px;
-  background: var(--bq-ink);
+  background: var(--bq-rule);
   transform: scaleX(0);
   transform-origin: left;
   animation: bqRuleWipe 1.1s var(--bq-ease) 0.1s forwards;

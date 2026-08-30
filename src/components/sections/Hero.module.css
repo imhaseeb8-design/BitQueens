@@ -150,7 +150,7 @@
   position: relative;
   height: 1px;
   margin-top: clamp(2rem, 1rem + 2.6vw, 3.625rem);
-  background: rgba(26, 26, 26, 0.25);
+  background: var(--bq-rule);
   transform: scaleX(0);
   transform-origin: left;
   animation: bqRuleDraw 700ms var(--bq-ease) 150ms forwards;
