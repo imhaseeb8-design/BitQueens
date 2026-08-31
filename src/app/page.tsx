@@ -12,9 +12,12 @@ import { homeLayout } from '@/content/layout';
 /**
  * The homepage.
  *
- * Order is the argument: who we are → that the numbers are real → what the
- * ecosystem is → that you can start → the flagship moment → who is behind it
- * → who backs it → what we publish → the two ways in.
+ * Order is the argument: who we are and the numbers behind it → the flagship
+ * moment → what the ecosystem is → that you can start → who is behind it →
+ * who backs it → what we publish → the two ways in.
+ *
+ * Conference sits directly under the hero because Figma 130:9 places it
+ * there, immediately after the hero's closing rule.
  *
  * The sections used to carry numbered "NN / NAME" eyebrows and the order was
  * described by those numbers. They are gone, so nothing renumbers when a
@@ -35,9 +38,9 @@ export default function HomePage() {
           component and its content are kept — restore this line to bring the
           entity register back.
           <Proof content={home.proof} variant={homeLayout.proof} /> */}
+      <Conference content={home.conference} />
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
       <Path content={home.path} />
-      <Conference content={home.conference} />
       <Founder content={home.founder} />
       <Partners content={home.partners} />
       <Blog content={home.blog} />

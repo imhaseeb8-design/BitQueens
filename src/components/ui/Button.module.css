@@ -48,13 +48,18 @@
   display: inline-flex;
   align-items: center;
   gap: var(--btn-gap);
-  /* Clips at the CONTENT box, not the button box. Clipping on `.base` is not
-     enough: this row starts inside the button's 34px padding, so an arrow
-     parked one shift to the left of it is still 10px inside the button and
-     shows up as a second arrow at rest. Clipping here also means the leading
-     arrow arrives exactly where the label starts.
-     This holds only while --btn-label-shift stays below --btn-shift, which is
-     what keeps the shifted label inside the same box. */
+}
+
+/* Clips at the CONTENT box, not the button box. Clipping on `.base` is not
+   enough: this row starts inside the button's 34px padding, so an arrow parked
+   one shift to the left of it is still 10px inside the button and shows up as
+   a second arrow at rest. Clipping here also means the leading arrow arrives
+   exactly where the label starts.
+   Only on rows that actually carry arrows: a row with none has nothing to
+   clip, and the clip would cut off the underline the link variant animates.
+   This holds only while --btn-label-shift stays below --btn-shift, which is
+   what keeps the shifted label inside the same box. */
+.hasArrow {
   overflow: hidden;
 }
 
@@ -75,18 +80,18 @@
 /* Hover states are gated: touch devices fire hover on tap, which strands the
    element in its hover style after the finger lifts. */
 @media (hover: hover) and (pointer: fine) {
-  .base:hover .arrowLead {
+  .base:hover .hasArrow .arrowLead {
     transform: translateX(0);
     /* Enters a beat after the other two leave, so the arrows do not cross in
        the middle of the label. */
     transition-delay: 100ms;
   }
 
-  .base:hover .label {
+  .base:hover .hasArrow .label {
     transform: translateX(var(--btn-label-shift));
   }
 
-  .base:hover .arrowTrail {
+  .base:hover .hasArrow .arrowTrail {
     transform: translateX(var(--btn-shift));
   }
 }
@@ -146,14 +151,55 @@
   min-height: 48px;
   padding: 12px 2px;
   border: none;
-  border-bottom: 1px solid currentColor;
   background: none;
   color: var(--bq-ink);
+}
+
+/* The underline is a pseudo-element rather than a border so it can animate on
+   its own while the label stays put. */
+.link .label {
+  position: relative;
+}
+
+.link .label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Retracts to the right, then redraws from the left. The origin flips at the
+   moment the line has no width, so the switch itself is invisible. This is the
+   hover for arrowless buttons: they have nothing to shift toward. */
+@keyframes bqUnderlineWipe {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  49% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
   .link:hover {
     color: var(--bq-accent);
+  }
+
+  .link:hover .label::after {
+    animation: bqUnderlineWipe 520ms var(--bq-ease);
   }
 }
 
@@ -185,10 +231,14 @@
     transform: none;
   }
 
-  .base:hover .arrowLead,
-  .base:hover .label,
-  .base:hover .arrowTrail {
+  .base:hover .hasArrow .arrowLead,
+  .base:hover .hasArrow .label,
+  .base:hover .hasArrow .arrowTrail {
     transform: none;
+  }
+
+  .link:hover .label::after {
+    animation: none;
   }
 
   .arrowLead {

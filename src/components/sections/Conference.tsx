@@ -1,75 +1,84 @@
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Reveal } from '@/components/ui/Reveal';
-import { Section } from '@/components/ui/Section';
 import type { ConferenceSection } from '@/lib/types';
 import styles from './Conference.module.css';
 
+/**
+ * The Conference - implemented from Figma node 130:254.
+ *
+ * A forest block inset to the content margins, not a full-bleed band: the
+ * frame sets it at x72 with the same 1296 width as the copy above it, so it
+ * reads as a card on the page rather than a stripe across it.
+ *
+ * The frame layers a photograph over the wave artwork with a 12px offset, so
+ * a sliver of the artwork shows along the bottom and right. Until a licensed
+ * photograph exists the artwork takes the front and a flat block holds the
+ * offset, which keeps the composition and ships nothing borrowed. See the
+ * note on `conference.image` in content/home.ts.
+ *
+ * No rule of its own: the hero's accent rule is the only line between the two
+ * sections.
+ */
 export function Conference({ content }: { content: ConferenceSection }) {
+  const hasPhoto = Boolean(content.image.src);
+
   return (
-    <Section
-      id="conference"
-      label="The conference"
-      tone="blue"
-      density="loose"
-    >
+    <section id="conference" aria-label="The Conference" className={styles.section}>
+      <div className={styles.block}>
+        <div className={styles.inner}>
+          <div className={styles.col}>
+            <Reveal className={styles.head}>
+              <h2 className={styles.headline}>
+                {content.headlineLines.map((line) => (
+                  <span key={line} className={styles.line}>
+                    {line}
+                  </span>
+                ))}
+              </h2>
+              <p className={styles.body}>{content.body}</p>
+            </Reveal>
 
-      {content.dateLine && (
-        <Reveal as="p" delay={80} className={styles.dateLine}>
-          {content.dateLine}
-        </Reveal>
-      )}
+            <Reveal delay={120} className={styles.details}>
+              <div className={styles.detailRule} />
+              <dl className={styles.detailRow}>
+                {content.details.map((detail) => (
+                  <div key={detail.key} className={styles.detail}>
+                    <dt className={styles.detailKey}>{detail.key}</dt>
+                    <dd className={styles.detailValue}>{detail.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
 
-      <Reveal as="h2" delay={120} className={styles.headline}>
-        {content.headline}
-      </Reveal>
-
-      <div className={styles.split}>
-        <div>
-          <Reveal as="p" delay={200} className={styles.body}>
-            {content.body}
-          </Reveal>
-          <Reveal delay={280} className={styles.note}>
-            <span className={styles.noteRule} aria-hidden="true" />
-            <span className={styles.noteText}>{content.note}</span>
-          </Reveal>
-          <Reveal delay={360} className={styles.actions}>
-            <Button href={content.primaryCta.href} onDark>
-              {content.primaryCta.label}
-            </Button>
-            <Button href={content.secondaryCta.href} variant="secondary" onDark>
-              {content.secondaryCta.label}
-            </Button>
-          </Reveal>
-        </div>
-        <Reveal delay={300} variant="fade">
-          <ImageSlot
-            content={content.image}
-            onDark
-            mark="var(--bq-blue-sky)"
-            className={styles.image}
-          />
-        </Reveal>
-      </div>
-
-      {content.speakers.length > 0 && (
-        <div className={styles.speakers}>
-          <Reveal variant="draw" className={styles.speakersRule} />
-          <p className={styles.speakersLabel}>Speakers</p>
-          <div className={styles.speakerGrid}>
-            {content.speakers.map((speaker, i) => (
-              <Reveal
-                key={speaker.name}
-                delay={i * 60}
-                className={styles.speaker}
-              >
-                <p className={styles.speakerName}>{speaker.name}</p>
-                <p className={styles.speakerRole}>{speaker.role}</p>
-              </Reveal>
-            ))}
+            <Reveal delay={200}>
+              <Button href={content.cta.href} size="compact" onDark>
+                {content.cta.label}
+              </Button>
+            </Reveal>
           </div>
+
+          <Reveal delay={160} variant="fade" className={styles.media}>
+            {/* The offset layer. Behind the artwork today; behind the photo
+                once there is one. */}
+            <span className={styles.mediaOffset} aria-hidden="true" />
+            <div className={styles.mediaFront}>
+              {hasPhoto ? (
+                <ImageSlot content={content.image} className={styles.photo} />
+              ) : (
+                <Image
+                  src={content.backdrop.src ?? ''}
+                  alt=""
+                  fill
+                  sizes="(max-width: 900px) 100vw, 621px"
+                  className={styles.photo}
+                />
+              )}
+            </div>
+          </Reveal>
         </div>
-      )}
-    </Section>
+      </div>
+    </section>
   );
 }

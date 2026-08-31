@@ -185,6 +185,45 @@ Two things that will bite you:
 - **The leading arrow is absolutely positioned**, so hovering cannot change the
   button's width. Verified identical at 193px both states. Make it part of the
   flow and every row containing a button reflows on pointer-over.
+- **A button with `arrow={false}` gets none of this**, and must not. It has
+  nothing to shift toward, and shifting the label alone walked it into the clip
+  and cut it in half, which is what "Partner with us" did on first ship. Those
+  buttons animate their underline instead: it retracts to the right and redraws
+  from the left, with the transform-origin flipping at the moment the line has
+  no width so the switch is invisible. The nav's JOIN label uses the same wipe,
+  so every underlined action on the site answers the pointer the same way.
+
+**Conference** - implemented from Figma node 130:254, and it sits directly
+under the hero because the frame places it there. A forest block **inset to the
+content margins, not a full-bleed band**: the frame gives it the same 1296
+width as the copy above, so it reads as a card on the page rather than a stripe
+across it.
+
+Verified against the frame: block 1296 at x72, padding 76/58, copy column 479,
+headline 52px over two authored lines, media 621x374 with the offset layer
+reaching 633.
+
+- **It draws no rule.** The hero's accent rule is the only line between the two
+  sections. That rule is two stacked 1px elements at identical geometry (an
+  opaque accent over a 25% ink base, per node 130:11), which reads as one line;
+  the base only shows during the 300ms before the accent draws in.
+- **The DATE / TIME / REGISTRATION row is the point of this section right now.**
+  "To be announced" is a real value, not a missing one: the row's job before the
+  event is announced is to say which facts are still open, in the shape they
+  will be answered in. Filling in a date needs no layout change.
+- **`conference.image` has no `src` on purpose.** The photograph in the frame is
+  a stock mockup template with the vendor's own marketing rendered onto the
+  screen ("Mockups by Wannathis.one" plus three feature strings). It cannot
+  ship. Cropping below the text leaves an image too short to render sharply at
+  621x374, so there is no salvage; it needs a licensed photograph. Until then
+  the wave artwork takes the front layer and a flat block holds the 12px
+  offset, which keeps the composition intact. With a real photo, the photo
+  takes the front and the artwork moves behind it, as the frame composes it.
+
+**Navbar** - Figma node 132:5. Verified: 81 tall, wordmark 22, nav links 28
+apart and right-aligned 47 clear of the red block, JOIN label bold at 0.14em
+with a 1px underline 3px beneath. The red block still bleeds off the viewport
+edge. Two dead `<div>`s that rendered a rule with no matching CSS were removed.
 
 **Accent colour** — the design paints the CTA, headline accent and nav block in
 `#D8371B`, not the site's original orange. Every accent/interactive use (primary

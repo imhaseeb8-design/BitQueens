@@ -120,15 +120,34 @@ export interface Speaker {
   role: string;
 }
 
+/** One column of the DATE / TIME / REGISTRATION row. */
+export interface ConferenceDetail {
+  /** The small caps key, e.g. "DATE". */
+  key: string;
+  /**
+   * The value. "To be announced" is a legitimate value here rather than a
+   * missing one: the row's job before the event is announced is to say which
+   * facts are still open, in the same shape they will be answered in.
+   */
+  value: string;
+}
+
 export interface ConferenceSection {
-  eyebrow: string;
-  dateLine?: string;
-  headline: string;
+  /** Set as explicit lines: the frame breaks this over two (node 130:259). */
+  headlineLines: string[];
   body: string;
-  note: string;
-  primaryCta: NavLink;
-  secondaryCta: NavLink;
+  details: ConferenceDetail[];
+  cta: NavLink;
+  /**
+   * The photograph the frame layers over the artwork. Empty today: the asset
+   * in the frame is a stock mockup template with the vendor's own marketing
+   * text rendered onto the screen, so it cannot ship. With a real photograph
+   * this takes the front layer and `backdrop` moves behind it, which is how
+   * the frame composes it.
+   */
   image: ImageSlot;
+  /** The wave artwork behind the photo, offset to show a 12px edge. */
+  backdrop: ImageSlot;
   speakers: Speaker[];
 }
 

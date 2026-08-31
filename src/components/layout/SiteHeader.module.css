@@ -14,7 +14,6 @@
   min-height: clamp(60px, 5.6vw, 81px);
   display: flex;
   align-items: center;
-  gap: clamp(1.5rem, 0.5rem + 4vw, 6rem);
 }
 
 .logo {
@@ -23,14 +22,20 @@
 }
 
 .logo img {
-  height: 19px;
+  /* 22 at the frame (node 130:20). */
+  height: clamp(17px, 1.53vw, 22px);
   width: auto;
 }
 
+/* Pushed right, then held 47px clear of the red block: the frame right-aligns
+   the links inside the white area rather than running them on after the
+   wordmark (node 132:3 is `justify-between` with 47px of right padding). */
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(1rem, 0.4rem + 1.6vw, 2rem);
+  margin-left: auto;
+  margin-right: clamp(1.25rem, 0.5rem + 2.71vw, 2.9375rem);
+  gap: clamp(1rem, 0.5rem + 1.39vw, 1.75rem);
 }
 
 .navLink {
@@ -70,21 +75,68 @@
    link. The negative margin has to clear both the container's own gutter and
    whatever leftover space centring leaves on wide screens. */
 .cta {
-  margin-left: auto;
   margin-right: calc(-1 * max(0px, (100vw - var(--bq-max)) / 2));
   flex: none;
   align-self: stretch;
   display: flex;
   align-items: center;
-  padding: 0 clamp(1.5rem, 0.5rem + 4.4vw, 7.875rem);
+  padding: 0 clamp(1.5rem, 0.5rem + 8.19vw, 7.875rem);
   background: var(--bq-accent);
   color: var(--bq-canvas);
   font-size: var(--bq-t-meta);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
   transition: background-color 300ms var(--bq-ease);
+}
+
+/* The frame underlines the label (node 130:29), 3px below it. Same wipe the
+   arrowless buttons use, so every underlined action on the site answers the
+   pointer the same way. */
+.ctaLabel {
+  position: relative;
+}
+
+.ctaLabel::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover .ctaLabel::after {
+    animation: bqNavUnderlineWipe 520ms var(--bq-ease);
+  }
+}
+
+@keyframes bqNavUnderlineWipe {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  49% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta:hover .ctaLabel::after {
+    animation: none;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -116,6 +168,10 @@
 
   .toggle {
     display: block;
+  }
+
+  .nav {
+    margin-right: 0;
   }
 
   .open .nav {

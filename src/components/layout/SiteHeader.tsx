@@ -16,8 +16,8 @@ export function SiteHeader() {
           <Image
             src="/bitqueens-logo.png"
             alt=""
-            width={376}
-            height={76}
+            width={438}
+            height={88}
             priority
           />
         </Link>
@@ -41,12 +41,8 @@ export function SiteHeader() {
         </nav>
 
         <Link href={site.primaryCta.href} className={styles.cta}>
-          {site.primaryCta.label}
+          <span className={styles.ctaLabel}>{site.primaryCta.label}</span>
         </Link>
-      </div>
-
-      <div className={styles.rule}>
-        <div className={styles.ruleLine} />
       </div>
     </header>
   );

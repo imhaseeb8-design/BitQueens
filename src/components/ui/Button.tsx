@@ -54,10 +54,14 @@ export function Button({
    * The leading arrow is absolutely positioned so it takes no layout space:
    * the button's width has to be identical hovered and not, or the whole row
    * reflows on pointer-over.
+   *
+   * A button with no arrow (`arrow={false}`) gets none of this. It has nothing
+   * to shift toward, and shifting the label alone just walked it into the clip
+   * and cut it in half. Those use the underline instead - see `.link` below.
    */
   return (
     <Link href={href} className={classes}>
-      <span className={styles.shift}>
+      <span className={`${styles.shift} ${arrow ? styles.hasArrow : ''}`.trim()}>
         {arrow && (
           <span className={`${styles.arrow} ${styles.arrowLead}`} aria-hidden="true">
             →

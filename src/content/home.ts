@@ -227,19 +227,33 @@ export const home: HomePage = {
 
   /* ---------------------------------------------------- 06 · conference -- */
   conference: {
-    eyebrow: 'The Conference',
-    headline: 'The BitQueens Conference',
+    headlineLines: ['The BitQueens', 'Conference'],
     body:
-      'Our flagship gathering brings together the women building in emerging ' +
-      'technologies, alongside the institutions, partners and technologists ' +
-      'backing them.',
-    note: 'Dates and speakers to be announced.',
-    primaryCta: { label: 'Explore the Conference', href: '/conference' },
-    secondaryCta: { label: 'Register interest', href: '/conference/register' },
+      'Our flagship event unites women in emerging tech with supporting ' +
+      'institutions, partners, and technologists.',
+    /* Says which facts are still open, in the shape they will be answered in.
+       Replacing "To be announced" with a real date needs no layout change. */
+    details: [
+      { key: 'Date', value: 'To be announced' },
+      { key: 'Time', value: 'To be announced' },
+      { key: 'Registration', value: 'Interest list open' },
+    ],
+    cta: { label: 'Explore the Conference', href: '/conference' },
+    /* NEEDS A LICENSED PHOTOGRAPH. The frame's asset is a stock mockup
+       template carrying "Mockups by Wannathis.one" and three feature-list
+       strings on the screen, so it is not shippable. Cropping below the text
+       leaves an image too short to render sharply at this size. */
     image: {
-      alt: 'The audience at a previous BitQueens gathering',
-      width: 664,
-      height: 420,
+      alt: 'The audience at a BitQueens gathering',
+      width: 621,
+      height: 374,
+    },
+    /* Shared artwork: the same wave the second path panel uses. */
+    backdrop: {
+      src: '/path-wave-02.jpg',
+      alt: '',
+      width: 1200,
+      height: 672,
     },
     speakers: [],
   },
