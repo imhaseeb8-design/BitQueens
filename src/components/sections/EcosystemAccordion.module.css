@@ -1,0 +1,389 @@
+/**
+ * Ecosystem accordion - Figma 143:140 and its three sibling variants.
+ *
+ * Measured from those frames (1440 wide, 1296 content):
+ *   header     headline at x72/y108, 64px over two lines
+ *   row        y298, 546 tall
+ *   spine      71 wide, and the collapsed width of a whole item
+ *   artwork    245 wide, sits between the spine and the panel
+ *   panel      737 wide, cream, 60px radius on the top-right only
+ *   gaps       10 between items
+ *   open item  71 + 245 + 737 = 1053, which is 1296 minus three collapsed
+ *              spines and their gaps
+ *
+ * The motion is one property: the item's width. Everything inside is laid out
+ * at the open width at all times and clipped, so no copy ever rewraps while
+ * the animation runs. `--open-w` is in container units so it resolves against
+ * the row no matter how deep it is used.
+ */
+
+.section {
+  background: var(--bq-canvas);
+  padding: clamp(3rem, 1.5rem + 5vw, 6.75rem) 0 clamp(3rem, 1.5rem + 5vw, 6rem);
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 clamp(2rem, 1rem + 3vw, 2.625rem);
+  font-family: var(--bq-display);
+  /* 64px at 1440. */
+  font-size: clamp(2.25rem, 1.15rem + 3.8vw, 4rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--bq-ink);
+}
+
+.headlineLine {
+  display: block;
+}
+
+.muted {
+  color: var(--bq-ink-42);
+}
+
+/* -- the row -------------------------------------------------------------- */
+
+.row {
+  /* Makes 100cqw below mean "the width of this row", which is what lets the
+     open width be computed once and used from inside any item. */
+  container-type: inline-size;
+
+  --gap: 10px;
+  --spine-w: clamp(52px, 5.48cqw, 71px);
+  --media-w: clamp(112px, 18.9cqw, 245px);
+  --row-h: clamp(430px, 42.1cqw, 546px);
+  --collapsed: 3;
+  --open-w: calc(100cqw - var(--collapsed) * (var(--spine-w) + var(--gap)));
+  --accordion-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  display: flex;
+  gap: var(--gap);
+  height: var(--row-h);
+}
+
+.item {
+  position: relative;
+  width: var(--spine-w);
+  height: 100%;
+  /* The clip. Without it every item would render at its full open width. */
+  overflow: hidden;
+  transition: width 500ms var(--accordion-ease);
+}
+
+.item[data-open] {
+  width: var(--open-w);
+}
+
+/* Always the open width, never the item's current width. */
+.itemInner {
+  display: flex;
+  width: var(--open-w);
+  height: 100%;
+}
+
+/* -- the spine ------------------------------------------------------------ */
+
+.spine {
+  position: relative;
+  flex: 0 0 var(--spine-w);
+  display: flex;
+  flex-direction: column;
+  /* Every label ends on the same line (y743 at the frame) and grows upward
+     from there, whatever its length. */
+  justify-content: flex-end;
+  align-items: center;
+  gap: clamp(1.75rem, 1rem + 2.6vw, 3.5rem);
+  height: 100%;
+  padding: 0 0 clamp(0.75rem, 0.5rem + 0.7vw, 1.0625rem);
+  border: 1px solid rgba(26, 26, 26, 0.18);
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  cursor: pointer;
+  transition:
+    background-color 500ms var(--accordion-ease),
+    border-color 500ms var(--accordion-ease);
+}
+
+.item[data-open] .spine {
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--bq-canvas);
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .item:not([data-open]) .spine:hover {
+    background: #f1eee4;
+    border-color: rgba(26, 26, 26, 0.32);
+  }
+}
+
+.spine:focus-visible {
+  outline: 2px solid var(--bq-accent);
+  outline-offset: -4px;
+}
+
+/* The 4px division colour along the top of a closed spine. The open one does
+   not need it: it is already painted in that colour. */
+.divisionColour {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--accent);
+  transition: opacity 400ms var(--accordion-ease);
+}
+
+.item[data-open] .divisionColour {
+  opacity: 0;
+}
+
+.spineLabel {
+  /* Reads bottom to top, which is what the reference does and what keeps the
+     first word nearest the number. */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--bq-display);
+  font-size: clamp(1.25rem, 0.9rem + 1.2vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--bq-ink-45);
+  transition: color 500ms var(--accordion-ease);
+}
+
+.spineNum {
+  font-family: var(--bq-display);
+  font-size: clamp(1rem, 0.8rem + 0.7vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: rgba(26, 26, 26, 0.35);
+  font-variant-numeric: tabular-nums;
+  transition: color 500ms var(--accordion-ease);
+}
+
+.item[data-open] .spineLabel,
+.item[data-open] .spineNum {
+  color: var(--bq-canvas);
+}
+
+/* -- artwork -------------------------------------------------------------- */
+
+.media {
+  position: relative;
+  flex: 0 0 var(--media-w);
+  height: 100%;
+  overflow: hidden;
+}
+
+.mediaImg {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* -- the panel ------------------------------------------------------------ */
+
+.panel {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  background: var(--bq-cream);
+  /* The frame rounds this one corner only (node 143:144). */
+  border-top-right-radius: 60px;
+  overflow: hidden;
+  /* Takes closed panels out of the tab order and away from screen readers
+     while leaving them laid out, which is what keeps the inner block at its
+     full width. Held until the width animation has finished closing, so the
+     copy does not vanish while the panel is still visibly open. */
+  visibility: hidden;
+  transition: visibility 0s linear 500ms;
+}
+
+.item[data-open] .panel {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.panelInner {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 1rem + 2.4vw, 2.75rem);
+  align-items: flex-start;
+  height: 100%;
+  padding: clamp(1.75rem, 1rem + 2.6vw, 2.3125rem)
+    clamp(1.5rem, 1rem + 2.6vw, 3.6875rem)
+    clamp(1.75rem, 1rem + 2.6vw, 2.3125rem)
+    clamp(1.5rem, 1rem + 2.6vw, 2.625rem);
+  /* Content arrives a beat after the width has opened, so the reader is not
+     watching type slide out from under a moving edge. */
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    opacity 360ms var(--accordion-ease),
+    transform 360ms var(--accordion-ease);
+}
+
+.item[data-open] .panelInner {
+  opacity: 1;
+  transform: none;
+  transition-delay: 180ms;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.875rem, 0.5rem + 1.2vw, 1.75rem);
+}
+
+.num {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--bq-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--bq-display);
+  /* 56px at 1440. */
+  font-size: clamp(1.75rem, 0.9rem + 3.1vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.07;
+  letter-spacing: -0.02em;
+  color: var(--bq-ink);
+  white-space: nowrap;
+}
+
+.desc {
+  margin: 0;
+  max-width: 491px;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  line-height: 1.5;
+  color: rgba(26, 26, 26, 0.75);
+  text-wrap: pretty;
+}
+
+/* -- what's inside -------------------------------------------------------- */
+
+.items {
+  width: min(360px, 100%);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.itemRow {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+  font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1.0625rem);
+  line-height: 1.3;
+  color: rgba(26, 26, 26, 0.9);
+}
+
+/* -- responsive ----------------------------------------------------------- */
+
+/* Below this the open panel has no room left once three spines and the
+   artwork are taken out, so the accordion becomes a plain stack: every panel
+   open, no spines, no clipping. */
+@media (max-width: 900px) {
+  .row {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: clamp(1.5rem, 1rem + 2vw, 2rem);
+    container-type: normal;
+  }
+
+  .item,
+  .item[data-open] {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    transition: none;
+  }
+
+  .itemInner {
+    width: 100%;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .spine {
+    flex: none;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.875rem;
+    height: auto;
+    padding: 14px 18px;
+    background: var(--accent);
+    border-color: transparent;
+    color: var(--bq-canvas);
+    cursor: default;
+  }
+
+  .spineLabel {
+    writing-mode: horizontal-tb;
+    transform: none;
+    color: var(--bq-canvas);
+    order: 2;
+  }
+
+  .spineNum {
+    color: rgba(250, 250, 248, 0.7);
+    order: 1;
+  }
+
+  .divisionColour {
+    display: none;
+  }
+
+  .media {
+    flex: none;
+    height: clamp(140px, 34vw, 220px);
+  }
+
+  .panel {
+    flex: none;
+    height: auto;
+    border-top-right-radius: 0;
+    /* Every panel is open in the stacked layout, so nothing is hidden. */
+    visibility: visible;
+    transition: none;
+  }
+
+  .panelInner {
+    height: auto;
+    opacity: 1;
+    transform: none;
+  }
+
+  .name {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .panelInner,
+  .spine,
+  .divisionColour {
+    transition: none;
+  }
+
+  .panelInner {
+    transform: none;
+  }
+}

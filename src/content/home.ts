@@ -139,6 +139,7 @@ export const home: HomePage = {
           'Community learning, cohort programmes and campus chapters. This is where you join.',
         cta: 'Join the Academy',
         href: '/academy',
+        items: ['Cohort programmes', 'Campus chapters', 'Community learning'],
         color: '#2B6CA3',
         ctaFill: 'light',
       },
@@ -148,6 +149,7 @@ export const home: HomePage = {
           'Technology products, Chainelle, BitQueens AI and skills programmes. This is where you build.',
         cta: 'Explore Labs',
         href: '/innovations',
+        items: ['Chainelle', 'BitQueens AI', 'Skills programmes'],
         color: '#E8641C',
         ctaFill: 'dark',
       },
@@ -157,6 +159,7 @@ export const home: HomePage = {
           'The Institute of Emerging Technologies — certificates, diplomas and fellowships. This is where you enrol.',
         cta: 'View programmes',
         href: '/biet',
+        items: ['Certificates', 'Diplomas', 'Fellowships'],
         color: '#1E4A2C',
         ctaFill: 'light',
       },
@@ -166,7 +169,11 @@ export const home: HomePage = {
           'Scholarships, advocacy and donations. This is where support is given and received.',
         cta: 'Support the mission',
         href: '/foundation',
-        color: '#4A9BD1',
+        items: ['Scholarships', 'Advocacy', 'Donations'],
+        /* Blush, not the sky blue this used to carry: the accordion frame
+           (143:195) needs four division colours that stay distinct as 4px
+           bars sitting side by side, and two blues did not. */
+        color: '#F3AFBC',
         ctaFill: 'dark',
       },
     ],

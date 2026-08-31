@@ -77,6 +77,12 @@ export interface Pillar {
    * not something a luminance threshold gets right at these mid-tones.
    */
   ctaFill: 'light' | 'dark';
+  /**
+   * What the division actually contains. Three per pillar in the accordion
+   * (Figma 143:150), listed as a ruled table rather than prose, so a reader
+   * scanning for one specific thing can find it without reading a sentence.
+   */
+  items: string[];
 }
 
 export interface EcosystemSection {

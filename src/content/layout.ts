@@ -16,13 +16,15 @@ import type { ProofVariant } from '@/components/sections/Proof';
  *             'stack'      four full-bleed cards that pin and stack on
  *                          scroll (the avax.network pattern)
  *             'stackSide'  a narrower stacking column beside a heading that
- *                          sticks level with it (Figma node 96:209) —
- *                          current pick
+ *                          sticks level with it (Figma node 96:209)
+ *             'accordion'  four items on one row; the open one expands to
+ *                          spine + artwork + panel while the rest stay as
+ *                          71px spines (Figma node 143:140) — current pick
  */
 export const homeLayout: {
   proof: ProofVariant;
   ecosystem: EcosystemVariant;
 } = {
   proof: 'asymmetric',
-  ecosystem: 'stackSide',
+  ecosystem: 'accordion',
 };

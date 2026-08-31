@@ -232,6 +232,41 @@ buttons, section numerals, focus rings, link hovers) now points at one token,
 back to orange. `--bq-orange` is still defined — it remains the Innovations &
 Labs pillar hue in `content/home.ts`.
 
+**Ecosystem accordion** (current pick) - Figma 143:140 plus its three sibling
+variants, one per open tab, and the interaction is modelled on pangram.com.
+Four items on one row: the open one expands to spine + artwork + panel, the
+other three stay as 71px spines with vertical labels and a 4px division colour
+along the top. The open spine wears its division colour as a background.
+
+Verified against the frame: row 1296 with 10px gaps, 546 tall, collapsed 71,
+open 1053, and inside that 71 + 245 + 737 with a 60px radius on the panel's
+top-right corner only.
+
+**The one thing to preserve if you touch this:** each item's inner block is
+always laid out at the *open* width and clipped by the item's own
+`overflow: hidden`. Only the item's `width` animates. Sizing the panel with
+flex and letting it squeeze would rewrap the copy on every frame of the
+animation; here the content is never actually narrower, only hidden. This is
+lifted from pangram, whose items animate 60px to a fixed 1080px inner over
+`0.5s cubic-bezier(.4,0,.2,1)` - the same curve and duration used here.
+
+`--open-w` is `calc(100cqw - 3 * (spine + gap))`, in **container units** so it
+resolves against the row from anywhere inside it. `100%` would resolve against
+whichever element used it, which is the wrong box for the inner block.
+
+Two more:
+- **Closed panels are hidden with `visibility`, not `inert`.** Below 900px the
+  accordion becomes a plain stack with every panel open, and an `inert` driven
+  from React state cannot see that media query: it left the mobile CTAs visible
+  but unclickable. `visibility` takes them out of the tab order and away from
+  screen readers, and a media query can override it. It is held for 500ms on
+  close so the copy does not vanish while the panel is still visibly open.
+- **Panel content fades in 180ms behind the width**, so the reader is not
+  watching type slide out from under a moving edge.
+
+Foundation moved from sky blue to **blush** here (`143:195`): the four division
+colours appear as 4px bars side by side, and two blues did not separate.
+
 **Ecosystem card stacks** — cards that pin and stack on scroll (the
 avax.network pattern: each card slides up and covers the last, leaving a
 sliver of it showing). **Pure CSS `position: sticky` at staggered `top`

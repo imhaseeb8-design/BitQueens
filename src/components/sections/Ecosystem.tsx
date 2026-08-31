@@ -1,11 +1,17 @@
 import Link from 'next/link';
+import { EcosystemAccordion } from './EcosystemAccordion';
 import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 import { Section } from '@/components/ui/Section';
 import type { EcosystemSection } from '@/lib/types';
 import styles from './Ecosystem.module.css';
 
-export type EcosystemVariant = 'doors' | 'index' | 'stack' | 'stackSide';
+export type EcosystemVariant =
+  | 'doors'
+  | 'index'
+  | 'stack'
+  | 'stackSide'
+  | 'accordion';
 
 export function Ecosystem({
   content,
@@ -14,6 +20,12 @@ export function Ecosystem({
   content: EcosystemSection;
   variant?: EcosystemVariant;
 }) {
+  /* The accordion needs state, so it is its own client leaf. Everything else
+     here stays a Server Component. */
+  if (variant === 'accordion') {
+    return <EcosystemAccordion content={content} />;
+  }
+
   if (variant === 'stackSide') {
     return (
       // Deliberately a plain <section>, not the <Section> wrapper — Section's
