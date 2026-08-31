@@ -43,14 +43,33 @@ export function Button({
     .filter(Boolean)
     .join(' ');
 
+  /*
+   * The arrow shift (mistral.ai's navbar button). There are TWO arrows, not
+   * one that slides: a leading arrow parked outside the button's left edge,
+   * and the trailing arrow you normally see. On hover the leading one slides
+   * in, the label steps right, and the trailing one slides out, so the arrow
+   * appears to cross the label. `.base` clips, which is what hides both
+   * arrows at their parked positions.
+   *
+   * The leading arrow is absolutely positioned so it takes no layout space:
+   * the button's width has to be identical hovered and not, or the whole row
+   * reflows on pointer-over.
+   */
   return (
     <Link href={href} className={classes}>
-      {children}
-      {arrow && (
-        <span className={styles.arrow} aria-hidden="true">
-          →
-        </span>
-      )}
+      <span className={styles.shift}>
+        {arrow && (
+          <span className={`${styles.arrow} ${styles.arrowLead}`} aria-hidden="true">
+            →
+          </span>
+        )}
+        <span className={styles.label}>{children}</span>
+        {arrow && (
+          <span className={`${styles.arrow} ${styles.arrowTrail}`} aria-hidden="true">
+            →
+          </span>
+        )}
+      </span>
     </Link>
   );
 }

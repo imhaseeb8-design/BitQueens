@@ -1,23 +1,17 @@
 /**
- * 01 · Hero — implemented from Figma node 75:135 ("Swiss International Style").
+ * Hero - Figma node 130:9.
  *
- * Layout is measured from that frame (1440 wide, 72px margins, nav 81px tall
- * and owned by SiteHeader):
- *   wave band   y  81 → 367   (286 tall, full-bleed)
- *   lede card   y 295 → 653   (399 wide, right-aligned; overlaps the wave by
- *                              72px, which is where the -5vw margin comes from)
- *   headline    y 438 → 654   (3 lines × 72px, left margin)
- *   rule        y 711         (full content width + a 90px accent segment)
+ * Measured from that frame (1440 wide, 72px margins, nav 81px tall and owned
+ * by SiteHeader):
+ *   band        y  81 -> 462  (381 tall, full bleed, artwork behind)
+ *   headline    x  72, y 160  (3 lines x 72px, white, over the artwork)
+ *   card        x 869, y 295  (499 x 358, overlaps the band's bottom by 167)
+ *   stats       x  72, y 523  (three 230 columns, 26 gutters)
+ *   rule        y 711         (full content width, solid accent)
  *
- * The card and the headline bottom-align (572 / 573 in the frame), so the
- * grid uses `align-items: end` and the card's own height sets the row.
- *
- * v4 note: the scroll-driven crossfade is gone. The proof figures moved into
- * their own "This is BitQueens" section (see Impact.tsx) exactly as the frame
- * draws them, so the hero no longer needs the pinned stage, the phase
- * remapping, or the two-chapter swap. What is left animates on load (the
- * masked headline lines) plus one restrained scroll touch: the wave band
- * parallaxes on `transform` only.
+ * The previous version put a wave strip ABOVE the headline. Here the artwork
+ * is the ground the headline is set on, which is why the type is reversed out
+ * and the left of the image is darkened.
  */
 
 .hero {
@@ -26,28 +20,83 @@
   padding-bottom: clamp(2rem, 1rem + 2.6vw, 3.625rem);
 }
 
-/* -- the wave band -------------------------------------------------------- */
+/* -- the band ------------------------------------------------------------- */
 
-.wave {
+.band {
   position: relative;
-  height: clamp(150px, 19.9vw, 286px);
+  /* 381 at the 1440 frame. */
+  height: clamp(260px, 26.5vw, 381px);
+}
+
+.bandImg {
+  object-fit: cover;
+  /* The frame crops to the middle of the artwork, where the sky meets the
+     hills. Cover from a 2.33:1 source into a 3.78:1 box keeps roughly the
+     centre 62% of the height. */
+  object-position: center center;
+}
+
+/* Darkens the left, where the headline lands, and clears to nothing by the
+   right so the artwork is not flattened under a full-width wash.
+   Figma 130:200: a gradient to the left, transparent to 20% black. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  pointer-events: none;
+}
+
+.bandInner {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  height: 100%;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: clamp(2rem, 1rem + 4.375vw, 4.9375rem) var(--bq-gutter) 0;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--bq-display);
+  /* 72px at 1440. */
+  font-size: clamp(2rem, 0.6rem + 4.85vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--bq-canvas);
+}
+
+/* Each line is clipped so the reveal slides up out of nothing rather than
+   fading in place. */
+.lineMask {
+  display: block;
   overflow: hidden;
 }
 
-/* Deliberately taller than its frame so the parallax can move it without
-   ever exposing an edge. Only `transform` changes on scroll. */
-.wave img {
-  position: absolute;
-  inset: -14% 0 auto 0;
-  width: 100%;
-  height: 128%;
-  object-fit: cover;
-  /* Favours the hills over the sky, matching the frame's crop. */
-  object-position: center 64%;
-  transform: translate3d(0, calc(var(--wave-shift, 0) * 1px), 0);
+.lineInner {
+  display: block;
+  /* nowrap per the frame: the breaks are authored in content, and letting a
+     line wrap on its own would put copy over the bright right of the image. */
+  white-space: nowrap;
+  animation: bqHeroLine 1s var(--bq-ease) both;
+  animation-delay: calc(var(--i) * 100ms);
 }
 
-/* -- content -------------------------------------------------------------- */
+@keyframes bqHeroLine {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* -- stats and card ------------------------------------------------------- */
 
 .body {
   position: relative;
@@ -60,73 +109,80 @@
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 399px);
-  column-gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+  grid-template-columns: minmax(0, 742fr) minmax(0, 499fr);
+  column-gap: clamp(1.5rem, 0.5rem + 3.8vw, 3.4375rem);
+  /* Bottom-aligned, so only the card is tall enough to reach back up over the
+     band's edge while the figures stay on the page ground. */
   align-items: end;
-  /* Lifts the card up over the wave — 72px of overlap at the 1440 frame. */
-  margin-top: clamp(-4.5rem, -5vw, -2.5rem);
+  /* Lifts the row so the card overlaps the band by 167 at the 1440 frame. */
+  margin-top: clamp(-10.4375rem, -11.6vw, -5rem);
 }
 
-.headline {
-  /* Caps the measure so the copy breaks where the frame breaks it:
-     "The digital" / "economy. Open to" / "every woman."
-     In Cabinet Grotesk at this size "economy. Open to" measures 7.40em and
-     "The digital economy." 8.27em, so the cap has to sit between them —
-     the frame's own font is wider, which is why this is not the 8.6em the
-     Figma geometry alone would suggest. */
-  max-width: 7.8em;
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 0.4rem + 1.8vw, 1.625rem);
+  margin: 0;
+  /* Sits on the ground below the band, not lifted with the card. */
+  padding-top: clamp(3rem, 1rem + 8vw, 10.5rem);
+}
+
+.stat {
+  min-width: 0;
+}
+
+.statLabelGroup {
+  display: block;
+}
+
+.figure {
   margin: 0;
   font-family: var(--bq-display);
-  font-size: clamp(2.25rem, 0.5rem + 4.4vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1;
+  /* 48px at 1440. */
+  font-size: clamp(2rem, 1.1rem + 2.9vw, 3rem);
+  font-weight: 500;
+  line-height: 1.1;
   letter-spacing: -0.03em;
+  color: var(--bq-ink);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
-.accent {
+.statLabel {
   display: block;
-  color: var(--bq-accent);
+  margin-top: 10px;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.2;
+  color: var(--bq-ink);
 }
 
-.lineMask {
-  display: block;
-  overflow: hidden;
-}
-
-.lineInner {
-  display: block;
-  animation: bqHeroLine 1s var(--bq-ease) both;
-}
-
-.lineMask:nth-of-type(2) .lineInner {
-  animation-delay: 0.1s;
-}
-
-@keyframes bqHeroLine {
-  from {
-    transform: translateY(110%);
-  }
-  to {
-    transform: translateY(0);
-  }
+.statSupport {
+  max-width: 30ch;
+  margin: 10px 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.47;
+  color: var(--bq-ink-45);
+  text-wrap: pretty;
 }
 
 /* -- the lede card -------------------------------------------------------- */
 
 .card {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding: clamp(2rem, 1rem + 2.8vw, 3.75rem) clamp(1.5rem, 1rem + 2.4vw, 3.5rem);
+  /* 499 x 358 with 59/71 padding at the frame. */
+  padding: clamp(1.75rem, 1rem + 3.82vw, 4.4375rem)
+    clamp(1.5rem, 1rem + 2.99vw, 3.6875rem);
   background: #f4f4f3;
   text-align: right;
 }
 
 .lede {
-  max-width: 295px;
+  max-width: 381px;
   margin: 0;
-  font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1rem);
-  line-height: 1.5;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  line-height: 1.2;
   color: var(--bq-ink);
   text-wrap: pretty;
 }
@@ -136,88 +192,69 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 16px;
-  margin-top: clamp(1.5rem, 1rem + 1.4vw, 2.125rem);
+  margin-top: clamp(1.5rem, 1rem + 1.6vw, 2.375rem);
 }
 
 /* -- the closing rule ----------------------------------------------------- */
 
-/* Figma node 75:137 ("Bottom lines"): one hairline at content width with a
-   90px accent segment at its left end. The grey line draws itself in first,
-   then the accent runs the full length of it and settles back into that 90px
-   segment — a loading pass along the line rather than a 90px fade-in, which
-   at that size was over before it registered. */
+/* Figma 130:11 stacks a solid accent rule over a 25% ink one at the same
+   width, so the line reads as fully accent. The ink underneath is what shows
+   while the accent is still drawing itself in. */
 .rule {
   position: relative;
   height: 1px;
   margin-top: clamp(2rem, 1rem + 2.6vw, 3.625rem);
   background: var(--bq-rule);
-  transform: scaleX(0);
+}
+
+.ruleAccent {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  background: var(--bq-accent);
   transform-origin: left;
-  animation: bqRuleDraw 700ms var(--bq-ease) 150ms forwards;
+  animation: bqRuleDraw 900ms var(--bq-ease) 300ms both;
 }
 
 @keyframes bqRuleDraw {
+  from {
+    transform: scaleX(0);
+  }
   to {
     transform: scaleX(1);
   }
 }
 
-/* Width is what animates here, not transform — the one place on the site that
-   is true. The accent is `position: absolute`, so its width relayouts only
-   itself and nothing else depends on its box. That buys a sweep that stays
-   correct at every viewport: a transform version would need the 90px-to-full
-   ratio baked in as a scale factor, and that ratio changes with the width of
-   the rule. */
-.ruleAccent {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 90px;
-  background: var(--bq-accent);
-  /* Runs continuously, slowly. 9s is deliberately past the point of drawing
-     attention — at the edge of vision it reads as the page being alive, not
-     as something asking to be watched. */
-  animation: bqRuleLoad 9s var(--bq-ease) 800ms infinite;
-}
-
-/* Starts and ends on the 90px segment the frame specifies, so the loop has
-   no seam and the resting state is always the designed one. */
-@keyframes bqRuleLoad {
-  0%,
-  6% {
-    width: 90px;
-  }
-  /* Runs the length of the line… */
-  40% {
-    width: 100%;
-  }
-  /* …holds there for a beat, so the sweep reads as completing… */
-  56% {
-    width: 100%;
-  }
-  /* …then retracts and rests before going again. */
-  90%,
-  100% {
-    width: 90px;
-  }
-}
-
 /* -- responsive ----------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .headline {
+    /* The frame's breaks assume a wide band. Below this the longest line no
+       longer fits, so wrapping is allowed to take over. */
+    white-space: normal;
+  }
+
+  .lineInner {
+    white-space: normal;
+  }
+}
 
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
     row-gap: clamp(2rem, 1.5rem + 3vw, 3rem);
-    /* No overlap on a single column — the card would sit on top of the
-       headline rather than beside it. */
+    /* No overlap in one column: the card would land on the headline rather
+       than beside it. */
     margin-top: clamp(2rem, 1.5rem + 3vw, 3rem);
   }
 
-  .headline {
-    max-width: none;
-    font-size: clamp(2.25rem, 1.1rem + 5.6vw, 3.25rem);
+  .stats {
+    padding-top: 0;
+    order: 2;
   }
 
   .card {
+    order: 1;
     align-items: flex-start;
     text-align: left;
   }
@@ -231,22 +268,20 @@
   }
 }
 
+@media (max-width: 620px) {
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lineInner {
     animation: none;
   }
 
-  .rule {
+  .ruleAccent {
     transform: scaleX(1);
     animation: none;
-  }
-
-  .ruleAccent {
-    width: 90px;
-    animation: none;
-  }
-
-  .wave img {
-    transform: none;
   }
 }

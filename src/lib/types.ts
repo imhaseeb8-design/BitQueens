@@ -223,14 +223,24 @@ export interface ImpactSection {
 }
 
 export interface HeroSection {
-  /** Opening clause, set in ink. Wraps within the headline's own measure. */
-  headline: string;
-  /** The closing clause, set in the accent, on its own line. */
-  headlineAccent: string;
+  /**
+   * The headline, one entry per rendered line. The breaks are explicit rather
+   * than left to a measure because the copy sits over artwork: where a line
+   * ends decides how much of it lands on the darkened left of the image, so
+   * the break is a design decision, not a wrapping accident. Figma 130:30
+   * sets all three lines `nowrap`.
+   */
+  headlineLines: string[];
   body: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
-  /** The full-bleed wave band above the headline. */
+  /**
+   * The figures under the band. These moved here from the Impact section when
+   * the hero absorbed them (Figma 132:8); `impact` in this file is kept but no
+   * longer rendered.
+   */
+  stats: ImpactStat[];
+  /** The full-bleed artwork the headline is set over. */
   media: ImageSlot;
 }
 

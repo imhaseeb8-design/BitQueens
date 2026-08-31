@@ -125,8 +125,10 @@ never asked for — the Figma frames have no rails.
 
 **Lines** — every divider on the page is the same line: `--bq-rule`, 1px,
 **content width**, sitting inside the same margins as the copy it divides.
-The hero's closing rule (Figma node 75:137) is the reference, with a 90px
-accent segment at its left end that loops slowly along it.
+The hero's closing rule is the reference. It used to be a 90px accent segment
+travelling along a grey line; Figma 130:11 makes it a solid accent rule at full
+content width, which leaves the segment nowhere to travel, so it now simply
+draws itself in once on load.
 
 Nothing is full-bleed any more. `<Section rule>` used to draw its hairline
 outside `.inner`, so it spanned the viewport in solid ink and read as a much
@@ -140,26 +142,49 @@ opener on the partner-tier list are deliberately heavier (0.85) because they
 are an editorial device repeating down a list, not a boundary between
 sections. Making those match would flatten the blog cards.
 
-**Hero** (v4) — implemented from Figma node 75:135 ("Swiss International
-Style"). A full-bleed wave band, a 72px headline whose accent clause takes its
-own line, and a grey lede card that overlaps the band by 72px and bottom-aligns
-with the headline (`align-items: end` plus a negative top margin on the grid).
-The scroll-driven crossfade is **gone** — the proof figures moved into their own
-"This is BitQueens" section (`Impact.tsx`), which is how the frame draws them,
-so the pinned stage, phase remapping and two-chapter swap are all deleted. What
-remains: the masked headline lines on load, one restrained `transform`-only
-parallax on the wave, and the count-up + clip wipe on the figures.
+**Hero** (v5) - implemented from Figma node 130:9. The artwork is now the
+ground the headline is set on, not a strip above it: full-bleed image, headline
+reversed out in white over it, and a gradient darkening the left where the type
+lands (the right stays clear so the artwork still reads as artwork). The grey
+lede card hangs up over the band's bottom edge; the three figures sit beside it
+on the page ground.
 
-Two things worth knowing if you touch it:
-- The headline's `max-width: 7.8em` is what forces the frame's line break
-  ("The digital" / "economy. Open to"). It is font-metric dependent — Cabinet
-  Grotesk is narrower than the frame's own font, so the cap has to sit between
-  `economy. Open to` (7.40em) and `The digital economy.` (8.27em). Changing the
-  display face means re-measuring it.
-- The nav's red CTA bleeds off the right edge with
-  `margin-right: calc(-1 * max(0px, (100vw - var(--bq-max)) / 2))`, which is
-  why `.inner` carries no right padding on desktop — the mobile query adds it
-  back once that block is hidden.
+Verified against the frame: band 81 to 462, headline at 72/160 at 72px with
+-2.88px tracking over 3 lines, card 499 x 358 at x869/y295 overlapping the band
+by 167, stats three 230 columns from x72, rule full content width in solid
+accent.
+
+Three things to know:
+- **The headline's line breaks are content, not CSS.** `headlineLines` is an
+  array, one entry per line, because the copy sits over artwork: where a line
+  ends decides how much of it lands on the darkened left. Below 1080px the
+  frame's breaks stop fitting and wrapping takes over.
+- **The figures moved here from Impact**, which is why `Impact` is no longer
+  composed in `app/page.tsx`. Rendering both printed 2000+ twice. The
+  component and `home.impact` are kept; restore the commented line to bring
+  the band back. The frame also hides "3 cohorts delivered", so the hero
+  carries three figures, not four.
+- **`hero-bg.jpg` is 2880px wide on purpose.** The old asset was 897px behind
+  a full-bleed band, which is where the blur came from: under 1 image pixel
+  per CSS pixel at 1x, and a quarter of that on a retina display. At 2880 a
+  1440 CSS-wide band gets 2x coverage. Do not "optimise" it back down; the
+  optimiser already serves 1920/2048 variants to the devices that want them.
+
+**Button arrow shift** - ported from mistral.ai's navbar button. There are
+**two** arrows, not one that slides: a leading arrow parked one shift to the
+left, and the trailing arrow you normally see. On hover the leading one slides
+in (100ms behind), the label steps right, and the trailing one slides out, so
+the arrow appears to cross the label.
+
+Two things that will bite you:
+- **The clip is on `.shift`, the content row, not on `.base`.** Clipping on the
+  button is not enough, because the row starts inside the button's 34px
+  padding: an arrow parked 24px to its left is still 10px inside the button and
+  shows up as a second arrow at rest. This was shipped wrong once and caught in
+  a screenshot, not in the numbers.
+- **The leading arrow is absolutely positioned**, so hovering cannot change the
+  button's width. Verified identical at 193px both states. Make it part of the
+  flow and every row containing a button reflows on pointer-over.
 
 **Accent colour** — the design paints the CTA, headline accent and nav block in
 `#D8371B`, not the site's original orange. Every accent/interactive use (primary

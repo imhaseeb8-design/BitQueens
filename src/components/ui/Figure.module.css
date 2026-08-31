@@ -1,0 +1,10 @@
+/**
+ * The trailing character on a figure, e.g. the "+" in "2000+".
+ *
+ * Sits on the numeral's own baseline at 75% of its size (Figma 130:51 sets a
+ * 48px numeral against a 36px plus), not raised like a true superscript.
+ */
+.suffix {
+  font-size: 0.75em;
+  letter-spacing: 0;
+}

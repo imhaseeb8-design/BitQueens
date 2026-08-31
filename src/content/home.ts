@@ -16,18 +16,36 @@ import type { HomePage } from '@/lib/types';
 export const home: HomePage = {
   /* ---------------------------------------------------------- 01 · hero -- */
   hero: {
-    headline: 'The digital economy. Open to',
-    headlineAccent: 'every woman.',
+    headlineLines: ['The digital', 'economy. Open to', 'every woman.'],
     body:
       'BitQueens is an ecosystem helping women learn emerging technologies, ' +
       'build careers and enter the digital economy across Africa and beyond.',
     primaryCta: { label: 'Join BitQueens', href: '/join' },
     secondaryCta: { label: 'Partner with us', href: '/partners' },
+    /* Three, not four: Figma 130:57 hides "3 cohorts delivered". The figure
+       is still true, it is just not carried here any more. */
+    stats: [
+      {
+        value: '2000+',
+        label: 'women trained',
+        support: 'Hands-on training in emerging technologies since 2023.',
+      },
+      {
+        value: '2',
+        label: 'campus chapters',
+        support: 'Student-led communities maintain momentum between cohorts.',
+      },
+      {
+        value: '8+',
+        label: 'countries reached',
+        support: 'Learners and chapters beyond where we started.',
+      },
+    ],
     media: {
-      src: '/hero-waves.png',
-      alt: 'Layered wave bands in the BitQueens palette — sky blue, grass green and orange',
-      width: 897,
-      height: 304,
+      src: '/hero-bg.jpg',
+      alt: '',
+      width: 2880,
+      height: 1234,
     },
   },
 

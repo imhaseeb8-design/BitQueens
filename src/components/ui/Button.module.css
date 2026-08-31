@@ -2,6 +2,8 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  /* Clips both arrows at their parked positions. */
+  overflow: hidden;
   min-height: 56px;
   padding: 16px 36px;
   border: 1px solid transparent;
@@ -33,15 +35,59 @@
   transform: scale(0.97);
 }
 
+/* -- the arrow shift ------------------------------------------------------
+   Ported from mistral.ai's navbar button. One shift distance drives all three
+   pieces so they stay in step: the arrow's own width plus the gap it sits
+   after. The label travels slightly less than the arrows, which is what stops
+   the move reading as one rigid block sliding sideways. */
+.shift {
+  --btn-gap: 10px;
+  --btn-shift: calc(1em + var(--btn-gap));
+  --btn-label-shift: calc(var(--btn-shift) * 0.86);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--btn-gap);
+  /* Clips at the CONTENT box, not the button box. Clipping on `.base` is not
+     enough: this row starts inside the button's 34px padding, so an arrow
+     parked one shift to the left of it is still 10px inside the button and
+     shows up as a second arrow at rest. Clipping here also means the leading
+     arrow arrives exactly where the label starts.
+     This holds only while --btn-label-shift stays below --btn-shift, which is
+     what keeps the shifted label inside the same box. */
+  overflow: hidden;
+}
+
+.label,
 .arrow {
-  transition: transform 260ms var(--bq-ease);
+  display: inline-block;
+  transition: transform 300ms var(--bq-ease);
+  will-change: transform;
+}
+
+/* Out of flow, so hovering cannot change the button's width. */
+.arrowLead {
+  position: absolute;
+  left: 0;
+  transform: translateX(calc(-1 * var(--btn-shift)));
 }
 
 /* Hover states are gated: touch devices fire hover on tap, which strands the
    element in its hover style after the finger lifts. */
 @media (hover: hover) and (pointer: fine) {
-  .base:hover .arrow {
-    transform: translateX(4px);
+  .base:hover .arrowLead {
+    transform: translateX(0);
+    /* Enters a beat after the other two leave, so the arrows do not cross in
+       the middle of the label. */
+    transition-delay: 100ms;
+  }
+
+  .base:hover .label {
+    transform: translateX(var(--btn-label-shift));
+  }
+
+  .base:hover .arrowTrail {
+    transform: translateX(var(--btn-shift));
   }
 }
 
@@ -115,12 +161,39 @@
   color: var(--bq-cream);
 }
 
+/* The frame sets this as a 19px text link, not a 48px control (node 130:42).
+   Dropping the tap target to 19px would fail on touch, so the box stays small
+   and an invisible overlay carries the hit area instead: absolutely
+   positioned, so it costs no layout. */
+.link.compact {
+  position: relative;
+  min-height: 0;
+  padding: 0 0 2px;
+  font-size: 0.875rem;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.link.compact::after {
+  content: '';
+  position: absolute;
+  inset: -13px -8px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .base:active {
     transform: none;
   }
 
-  .base:hover .arrow {
+  .base:hover .arrowLead,
+  .base:hover .label,
+  .base:hover .arrowTrail {
     transform: none;
+  }
+
+  .arrowLead {
+    /* No motion means the leading arrow never arrives, so keep it parked and
+       out of sight rather than stranded mid-button. */
+    opacity: 0;
   }
 }
