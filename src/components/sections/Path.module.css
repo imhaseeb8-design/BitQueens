@@ -1,10 +1,11 @@
 /**
- * Where you start - Figma node 111:73.
+ * Where you start - Figma node 167:2.
  *
  * Measured from that frame (1296 content width):
- *   header       headline 572 wide left, a 479-wide right column holding the
- *                intro and, 24px under it, the CTA. Both right-aligned.
- *   header gap   61 to the steps row
+ *   header       headline 572 wide left with the CTA 27 beneath it; the intro
+ *                alone on the right, 466 wide, set right, top-aligned
+ *   header gap   the steps row starts 203 down, which is 16 above the CTA's
+ *                own bottom edge; they clear each other horizontally
  *   steps        three 416 columns, 24 gutters, BOTTOM aligned
  *   column       text block, 36 gap, wave panel
  *   panels       96 / 221 / 346 tall - a 125 rise per step
@@ -15,8 +16,52 @@
  * one-line edit and the copy follows.
  */
 
+/* -- the band -------------------------------------------------------------
+   A plain section rather than <Section>: that wrapper sets `overflow: hidden`,
+   and any clipping ancestor kills `position: sticky` for its whole subtree.
+   Inside it the stage scrolled past instead of pinning. Same reason the
+   ecosystem stack sits outside <Section>. */
+
+.section {
+  position: relative;
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  padding-bottom: clamp(3rem, 1.5rem + 5vw, 6rem);
+}
+
+/* The one line treatment: content width, inside the same margins as the copy. */
+.rule {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: calc(100% - 2 * var(--bq-gutter));
+  max-width: calc(var(--bq-max) - 2 * var(--bq-gutter));
+  margin: 0 auto;
+  height: 1px;
+  background: var(--bq-rule);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: bqPathRule 1.1s var(--bq-ease) 0.1s forwards;
+}
+
+@keyframes bqPathRule {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.inner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
 /* -- header --------------------------------------------------------------- */
 
+/* Figma 167:2 moves the CTA under the headline and leaves the intro alone on
+   the right, top-aligned with it. */
 .head {
   display: flex;
   flex-wrap: wrap;
@@ -26,8 +71,16 @@
   margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
 }
 
+.headMain {
+  flex: 1 1 22rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* 27 between the headline's box and the button at the frame. */
+  gap: clamp(1.25rem, 0.75rem + 1.2vw, 1.6875rem);
+}
+
 .headline {
-  flex: 1 1 20rem;
   /* 572 at the frame. */
   max-width: 35.75rem;
   margin: 0;
@@ -35,28 +88,90 @@
   /* 64px at 1440. */
   font-size: clamp(2.25rem, 1.15rem + 3.8vw, 4rem);
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.12;
   letter-spacing: -0.045em;
   text-wrap: balance;
 }
 
-/* 479 at the frame, and the whole column is set right so the intro's ragged
-   edge and the button's edge line up against the margin. */
-.headAside {
-  flex: 0 1 29.9375rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 24px;
+/* 466 at the frame, set right so its ragged edge lands on the margin. */
+.intro {
+  flex: 0 1 29.125rem;
+  margin: 0;
+  /* 22px at 1440, up from 18 in the previous frame. */
+  font-size: clamp(1rem, 0.85rem + 0.55vw, 1.375rem);
+  line-height: 1.2;
+  color: var(--bq-ink-80);
   text-align: right;
+  text-wrap: pretty;
 }
 
-.intro {
-  margin: 0;
-  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
-  line-height: 1.22;
-  color: var(--bq-ink-80);
-  text-wrap: pretty;
+/* -- the pin --------------------------------------------------------------
+   The section holds still while the three steps arrive, then releases
+   (trionn.com/services). The wrapper is the scroll runway; the stage is what
+   sticks inside it.
+
+   Everything here is gated on `@supports (animation-timeline: view())`,
+   INCLUDING the pin itself, and that pairing is the important part. The pin is
+   plain `position: sticky` and would work anywhere, but a browser without
+   scroll-driven animation would then hold the page still for two screens while
+   nothing happened. Where the timeline is unavailable the section is an
+   ordinary block with all three steps simply visible. */
+
+.pinWrap {
+  position: relative;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+}
+
+@supports (animation-timeline: view()) {
+  /* Not on short viewports: the stage would not fit, and a pin taller than the
+     screen scrolls its own content, which is not a pin. Not on narrow ones
+     either: on a phone a held page reads as a broken one. */
+  @media (min-width: 901px) and (min-height: 760px) and
+    (prefers-reduced-motion: no-preference) {
+    .pinWrap {
+      /* 100vh of stage plus 200vh of runway. The 200 is what the three
+         reveals and the settled hold are spread across. */
+      height: 300vh;
+      view-timeline-name: --bq-path-pin;
+    }
+
+    .stage {
+      position: sticky;
+      top: 0;
+      justify-content: center;
+      min-height: 100vh;
+      padding: clamp(2rem, 1rem + 3vw, 4rem) 0;
+    }
+
+    /* `contain` on a subject taller than the viewport runs exactly from
+       top-aligned to bottom-aligned, which is the pinned phase and nothing
+       else, so 0% is the moment it pins and 100% the moment it lets go. */
+    .step {
+      animation: bqStepIn linear both;
+      animation-timeline: --bq-path-pin;
+    }
+
+    .step:nth-child(1) { animation-range: contain 4% contain 20%; }
+    .step:nth-child(2) { animation-range: contain 28% contain 44%; }
+    /* Done by 68%, leaving the last third as a settled hold before release. */
+    .step:nth-child(3) { animation-range: contain 52% contain 68%; }
+  }
+}
+
+/* A lift and a fade, not a slide. The reference travels about 14px. */
+@keyframes bqStepIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* -- the staircase -------------------------------------------------------- */
@@ -182,8 +297,7 @@
 }
 
 @media (max-width: 860px) {
-  .headAside {
-    align-items: flex-start;
+  .intro {
     text-align: left;
   }
 
