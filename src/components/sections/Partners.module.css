@@ -1,11 +1,13 @@
 .section {
-  overflow: hidden;
+  /* clip preserves the cropped wordmark without becoming a sticky scroll container. */
+  overflow: clip;
   background: var(--bq-canvas);
   color: var(--bq-ink);
   padding-bottom: clamp(7rem, 10.25vw, 9.25rem);
 }
 
 .inner {
+  isolation: isolate;
   box-sizing: border-box;
   max-width: var(--bq-max);
   margin: 0 auto;
@@ -13,6 +15,9 @@
 }
 
 .wordmark {
+  position: sticky;
+  top: max(1rem, calc(50svh - 0.55em));
+  z-index: 0;
   margin: 0;
   font-family: var(--bq-instrument-serif), Georgia, serif;
   font-size: clamp(7rem, 16.67vw, 15rem);
@@ -27,6 +32,7 @@
 
 .card {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +40,8 @@
   box-sizing: border-box;
   width: min(826px, 100%);
   min-height: 498px;
-  margin: clamp(-6.45rem, -7.15vw, -3.5rem) auto 0;
+  /* Let the wordmark settle in the viewport before the card enters below it. */
+  margin: clamp(14rem, 38svh, 34rem) auto 0;
   padding: 58px 100px;
   background: #fff;
 }
@@ -103,7 +110,6 @@
   }
 
   .card {
-    margin-top: -2.5rem;
     padding: 3.5rem clamp(1.5rem, 8vw, 4rem);
   }
 
@@ -126,7 +132,6 @@
 
   .card {
     min-height: 0;
-    margin-top: -1.25rem;
     padding: 3rem 1.25rem;
   }
 
