@@ -34,30 +34,25 @@ type AnimatedDotGlobeProps = {
   className?: string;
   /** One complete left-to-right-to-left cycle, in seconds. */
   duration?: number;
-  /** Maximum horizontal yaw in degrees. */
-  yaw?: number;
   /** Keep empty when the globe is decorative. */
   alt?: string;
 };
 
 type GlobeStyle = CSSProperties & {
   '--globe-duration': string;
-  '--globe-yaw': string;
 };
 
 /**
- * A fixed-position dotted globe with a slow, perspective-based horizontal yaw.
+ * A fixed-position dotted globe with a slow, continuous 3D spin.
  * The artwork never translates, so its centre remains anchored in the layout.
  */
 export function AnimatedDotGlobe({
   className,
   duration = 14,
-  yaw = 11,
   alt = '',
 }: AnimatedDotGlobeProps) {
   const style: GlobeStyle = {
     '--globe-duration': `${Math.max(duration, 1)}s`,
-    '--globe-yaw': `${Math.max(0, yaw)}deg`,
   };
 
   return (
