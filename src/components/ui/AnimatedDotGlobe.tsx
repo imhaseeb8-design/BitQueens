@@ -32,7 +32,7 @@ const DOTS = [
 
 type AnimatedDotGlobeProps = {
   className?: string;
-  /** One complete left-to-right-to-left cycle, in seconds. */
+  /** Duration of the single hover spin, in seconds. */
   duration?: number;
   /** Keep empty when the globe is decorative. */
   alt?: string;
@@ -43,12 +43,12 @@ type GlobeStyle = CSSProperties & {
 };
 
 /**
- * A fixed-position dotted globe with a slow, continuous 3D spin.
+ * A fixed-position dotted globe that completes one 3D spin per hover.
  * The artwork never translates, so its centre remains anchored in the layout.
  */
 export function AnimatedDotGlobe({
   className,
-  duration = 14,
+  duration = 2.4,
   alt = '',
 }: AnimatedDotGlobeProps) {
   const style: GlobeStyle = {
