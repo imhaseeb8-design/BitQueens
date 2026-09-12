@@ -26,6 +26,8 @@
   --bq-rule: rgba(26, 26, 26, 0.25);
 
   --bq-orange: #e8641c; /* brand hue; still the Innovations & Labs pillar */
+  --bq-conference-green: #2a492f; /* updated conference frame */
+  --bq-ecosystem-panel: #f9f8f3; /* updated accordion frame */
   --bq-forest: #1e4a2c; /* flat solid block */
   --bq-blue-deep: #2b6ca3; /* flat solid block */
   --bq-blue-sky: #4a9bd1;

@@ -64,6 +64,7 @@ export interface ProofSection {
 
 export interface Pillar {
   name: string;
+  spineLabel?: string;
   description: string;
   cta: string;
   href: string;
@@ -107,6 +108,7 @@ export interface PathStep {
 export interface PathSection {
   eyebrow: string;
   headline: string;
+  headlineMuted: string;
   intro: string;
   steps: PathStep[];
   cta: NavLink;
@@ -195,6 +197,7 @@ export interface Post {
   title: string;
   excerpt: string;
   category: string;
+  tags?: string[];
   date: string;
   href: string;
   image?: ImageSlot;
@@ -255,7 +258,7 @@ export interface HeroSection {
    * the break is a design decision, not a wrapping accident. Figma 130:30
    * sets all three lines `nowrap`.
    */
-  headlineLines: string[];
+  headlineLines: { text: string; font: 'sans' | 'serif' }[];
   body: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;

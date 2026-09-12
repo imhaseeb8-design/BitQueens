@@ -142,6 +142,23 @@ opener on the partner-tier list are deliberately heavier (0.85) because they
 are an editorial device repeating down a list, not a boundary between
 sections. Making those match would flatten the blog cards.
 
+**Hero typography update — Figma 185:351 / 184:346**
+
+The hero now uses locally hosted Neue Montreal Regular for its first two
+headline lines (64px at 1440), Instrument Serif Regular for “every woman.”
+(74px), and Inter Tight Regular for descriptions and statistic labels.
+Statistics use 40px Neue Montreal. The headline's content entries explicitly
+select `sans` or `serif`. Font loaders live in `src/styles/fonts.ts`; the same
+families are now used across the updated homepage sections. Neue Montreal and
+Inter Tight were copied from the project owner's installed fonts; Instrument
+Serif was downloaded from Google Fonts. The open font license files accompany
+the assets in `public/fonts/`.
+
+The description card is 499 × 358 at the design width, with a 364px text
+measure and 1.4 line-height. The existing shared Button component and hover
+styles are retained. A hero-only padding adjustment makes its compact primary
+CTA 48px tall including the border.
+
 **Hero** (v5) - implemented from Figma node 130:9. The artwork is now the
 ground the headline is set on, not a strip above it: full-bleed image, headline
 reversed out in white over it, and a gradient darkening the left where the type
@@ -193,32 +210,26 @@ Two things that will bite you:
   no width so the switch is invisible. The nav's JOIN label uses the same wipe,
   so every underlined action on the site answers the pointer the same way.
 
-**Conference** - implemented from Figma node 130:254, and it sits directly
-under the hero because the frame places it there. A forest block **inset to the
-content margins, not a full-bleed band**: the frame gives it the same 1296
-width as the copy above, so it reads as a card on the page rather than a stripe
-across it.
+**Conference — Figma 185:375**
 
-Verified against the frame: block 1296 at x72, padding 76/58, copy column 479,
-headline 52px over two authored lines, media 621x374 with the offset layer
-reaching 633.
+Updated to the 1296px inset card with 60px padding, 479px copy / 647px media
+columns and a 50px gap. Neue Montreal sets the single-line 38px headline;
+Inter Tight sets the description. The new green is `--bq-conference-green`.
+The audience image is the exact supplied Figma asset, mirrored horizontally
+as in the frame. It replaces the old wave placeholder and offset layer.
+Date/time/registration content is still editable in `content/home.ts`.
+The shared CTA hover effects remain intact.
 
-- **It draws no rule.** The hero's accent rule is the only line between the two
-  sections. That rule is two stacked 1px elements at identical geometry (an
-  opaque accent over a 25% ink base, per node 130:11), which reads as one line;
-  the base only shows during the 300ms before the accent draws in.
-- **The DATE / TIME / REGISTRATION row is the point of this section right now.**
-  "To be announced" is a real value, not a missing one: the row's job before the
-  event is announced is to say which facts are still open, in the shape they
-  will be answered in. Filling in a date needs no layout change.
-- **`conference.image` has no `src` on purpose.** The photograph in the frame is
-  a stock mockup template with the vendor's own marketing rendered onto the
-  screen ("Mockups by Wannathis.one" plus three feature strings). It cannot
-  ship. Cropping below the text leaves an image too short to render sharply at
-  621x374, so there is no salvage; it needs a licensed photograph. Until then
-  the wave artwork takes the front layer and a flat block holds the 12px
-  offset, which keeps the composition intact. With a real photo, the photo
-  takes the front and the artwork moves behind it, as the frame composes it.
+**Ecosystem update — Figma 229:30**
+
+The active accordion now uses Neue Montreal headings and spine labels,
+Instrument Serif for “Four ways in.” and spine numerals, and Inter Tight
+for descriptions. The panels are square and use `--bq-ecosystem-panel`;
+division colors are updated in the content. The faint decorative globe was
+removed from behind this section.
+Desktop panels keep at least 520px height so wrapped copy and CTAs fit; mobile
+still shows every panel in a stack. The fixed inner widths and 500ms width
+animation are retained. Earlier measurements below describe the previous frame.
 
 **Navbar** - Figma node 132:5. Verified: 81 tall, wordmark 22, nav links 28
 apart and right-aligned 47 clear of the red block, JOIN label bold at 0.14em

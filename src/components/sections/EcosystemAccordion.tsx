@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useId, useState, type CSSProperties } from 'react';
 import { Button } from '@/components/ui/Button';
 import type { EcosystemSection } from '@/lib/types';
+import { neueMontreal, instrumentSerif, interTight } from '@/styles/fonts';
 import styles from './EcosystemAccordion.module.css';
 
 /**
@@ -27,7 +28,7 @@ export function EcosystemAccordion({ content }: { content: EcosystemSection }) {
   const baseId = useId();
 
   return (
-    <section id="ecosystem" aria-label="The ecosystem" className={styles.section}>
+    <section id="ecosystem" aria-label="The ecosystem" className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}>
       <div className={styles.inner}>
         <h2 className={styles.headline}>
           <span className={styles.headlineLine}>{content.headline}</span>
@@ -60,7 +61,7 @@ export function EcosystemAccordion({ content }: { content: EcosystemSection }) {
                     {/* Only on collapsed spines: the open one is already
                         wearing its division colour as a background. */}
                     <span className={styles.divisionColour} aria-hidden="true" />
-                    <span className={styles.spineLabel}>{pillar.name}</span>
+                    <span className={styles.spineLabel}>{pillar.spineLabel ?? pillar.name}</span>
                     <span className={styles.spineNum} aria-hidden="true">
                       {num}
                     </span>
@@ -87,8 +88,10 @@ export function EcosystemAccordion({ content }: { content: EcosystemSection }) {
                     <div className={styles.panelInner}>
                       <div className={styles.head}>
                         <p className={styles.num}>{num}</p>
-                        <h3 className={styles.name}>{pillar.name}</h3>
-                        <p className={styles.desc}>{pillar.description}</p>
+                        <div className={styles.copy}>
+                          <h3 className={styles.name}>{pillar.name}</h3>
+                          <p className={styles.desc}>{pillar.description}</p>
+                        </div>
                       </div>
 
                       <ul className={styles.items}>
@@ -99,7 +102,7 @@ export function EcosystemAccordion({ content }: { content: EcosystemSection }) {
                         ))}
                       </ul>
 
-                      <Button href={pillar.href} size="compact">
+                      <Button href={pillar.href} size="compact" className={styles.cta}>
                         {pillar.cta}
                       </Button>
                     </div>

@@ -16,7 +16,11 @@ import type { HomePage } from '@/lib/types';
 export const home: HomePage = {
   /* ---------------------------------------------------------- 01 · hero -- */
   hero: {
-    headlineLines: ['The digital', 'economy. Open to', 'every woman.'],
+    headlineLines: [
+      { text: 'The digital', font: 'sans' },
+      { text: 'economy. Open to', font: 'sans' },
+      { text: 'every woman.', font: 'serif' },
+    ],
     body:
       'BitQueens is an ecosystem helping women learn emerging technologies, ' +
       'build careers and enter the digital economy across Africa and beyond.',
@@ -136,21 +140,22 @@ export const home: HomePage = {
       {
         name: 'Academy',
         description:
-          'Community learning, cohort programmes and campus chapters. This is where you join.',
+          'Cohort programmes, campus chapters and community learning, built for beginners. This is where you join.',
         cta: 'Join the Academy',
         href: '/academy',
         items: ['Cohort programmes', 'Campus chapters', 'Community learning'],
-        color: '#2B6CA3',
+        color: '#3B6C9F',
         ctaFill: 'light',
       },
       {
         name: 'Innovations & Labs',
+        spineLabel: 'Innovations and Labs',
         description:
           'Technology products, Chainelle, BitQueens AI and skills programmes. This is where you build.',
         cta: 'Explore Labs',
         href: '/innovations',
         items: ['Chainelle', 'BitQueens AI', 'Skills programmes'],
-        color: '#E8641C',
+        color: '#D96B33',
         ctaFill: 'dark',
       },
       {
@@ -160,7 +165,7 @@ export const home: HomePage = {
         cta: 'View programmes',
         href: '/biet',
         items: ['Certificates', 'Diplomas', 'Fellowships'],
-        color: '#1E4A2C',
+        color: '#2A492F',
         ctaFill: 'light',
       },
       {
@@ -188,7 +193,8 @@ export const home: HomePage = {
      it ever arrives. */
   path: {
     eyebrow: 'Where you start',
-    headline: 'You do not need a technical background.',
+    headline: 'You do not need a',
+    headlineMuted: 'Technical Background...',
     intro:
       'Most people who join BitQueens start with no experience in emerging ' +
       'technologies at all. The path is built for that.',
@@ -234,7 +240,7 @@ export const home: HomePage = {
 
   /* ---------------------------------------------------- 06 · conference -- */
   conference: {
-    headlineLines: ['The BitQueens', 'Conference'],
+    headlineLines: ['The BitQueens Conference'],
     body:
       'Our flagship event unites women in emerging tech with supporting ' +
       'institutions, partners, and technologists.',
@@ -246,14 +252,12 @@ export const home: HomePage = {
       { key: 'Registration', value: 'Interest list open' },
     ],
     cta: { label: 'Explore the Conference', href: '/conference' },
-    /* NEEDS A LICENSED PHOTOGRAPH. The frame's asset is a stock mockup
-       template carrying "Mockups by Wannathis.one" and three feature-list
-       strings on the screen, so it is not shippable. Cropping below the text
-       leaves an image too short to render sharply at this size. */
+    // Image supplied in the updated Figma frame, mirrored in presentation.
     image: {
-      alt: 'The audience at a BitQueens gathering',
-      width: 621,
-      height: 374,
+      src: '/conference-audience.png',
+      alt: 'Women listening to a speaker at a technology conference',
+      width: 1672,
+      height: 941,
     },
     /* Shared artwork: the same wave the second path panel uses. */
     backdrop: {
@@ -285,34 +289,34 @@ export const home: HomePage = {
     primaryCta: { label: 'Book Kristie as a speaker', href: '/contact' },
     secondaryCta: { label: 'Read the full story', href: '/about' },
     portrait: {
+      src: '/kristie-founder.png',
       alt: 'Kristie, founder of BitQueens',
-      width: 468,
-      height: 585,
+      width: 404,
+      height: 474,
     },
   },
 
   /* ------------------------------------------------------ 08 · partners -- */
   partners: {
     eyebrow: 'Partners',
-    headline: 'Build this with us.',
+    headline: 'Help more women enter the future of technology',
     body:
-      'BitQueens works with governments, universities, NGOs and technology ' +
-      'companies to bring emerging technology education to more women across ' +
-      'Africa and beyond.',
-    cta: { label: 'Partner with us', href: '/partners' },
+      'For universities, governments, technology companies, NGOs, funders and ' +
+      'ecosystem partners looking to expand access to emerging technology education.',
+    cta: { label: 'Partner with BitQueens', href: '/partners' },
     tiers: [
       {
-        title: 'Institutional',
+        title: 'Technology Companies',
         description: 'Governments, universities and public agencies.',
         href: '/partners#institutional',
       },
       {
-        title: 'Corporate',
+        title: 'Universities & Governments',
         description: 'Technology companies and industry partners.',
         href: '/partners#corporate',
       },
       {
-        title: 'Sponsorship',
+        title: 'Sponsors & Funders',
         description: 'Conference, programme and scholarship sponsors.',
         href: '/partners#sponsorship',
       },
@@ -323,34 +327,66 @@ export const home: HomePage = {
   /* ---------------------------------------------------------- 09 · blog -- */
   blog: {
     eyebrow: 'Blog',
-    headline: 'Read the work.',
-    intro:
-      'Articles, updates and educational content from across the ecosystem.',
-    cta: { label: 'View all articles', href: '/blog' },
+    headline:
+      'Stories, ideas, and perspectives shaping the future of women in tech.',
+    intro: 'Articles, updates and educational content from across the ecosystem.',
+    cta: { label: 'Read our latest', href: '/blog' },
     posts: [
       {
-        title: 'What “emerging technology” actually means for your career',
-        excerpt:
-          'A plain-language map of the field, and where a beginner can realistically start.',
-        category: 'Explainer',
-        date: '12 August 2026',
-        href: '/blog/emerging-technology-careers',
+        title: 'Why access matters more than ever',
+        excerpt: '',
+        category: 'Perspective',
+        tags: ['Perspective'],
+        date: '',
+        href: '/blog/why-access-matters',
+        image: {
+          src: '/insight-perspective.png',
+          alt: 'Africa’s next tech leaders are already here',
+          width: 316,
+          height: 316,
+        },
       },
       {
-        title: 'Inside a BitQueens cohort: eight weeks, no prior experience',
-        excerpt:
-          'What the programme actually looks like week by week, from the people who took it.',
-        category: 'Programmes',
-        date: '29 July 2026',
-        href: '/blog/inside-a-cohort',
-      },
-      {
-        title: 'Why campus chapters change who gets into tech',
-        excerpt:
-          'Reaching women where they already are turns out to matter more than any curriculum.',
+        title: 'Meet the women building what comes next',
+        excerpt: '',
         category: 'Community',
-        date: '15 July 2026',
-        href: '/blog/campus-chapters',
+        tags: ['Community'],
+        date: '',
+        href: '/blog/women-building-what-comes-next',
+        image: {
+          src: '/insight-community.png',
+          alt: 'Abstract portrait titled From learner to builder',
+          width: 316,
+          height: 316,
+        },
+      },
+      {
+        title: 'What emerging technology means for Africa’s next generation',
+        excerpt: '',
+        category: 'AI',
+        tags: ['AI', 'Web3'],
+        date: '',
+        href: '/blog/emerging-technology-africa',
+        image: {
+          src: '/insight-ai-web3.png',
+          alt: 'AI, Web3 and Africa editorial artwork',
+          width: 316,
+          height: 316,
+        },
+      },
+      {
+        title: 'How partnerships can expand opportunity across Africa',
+        excerpt: '',
+        category: 'Impact',
+        tags: ['Impact'],
+        date: '',
+        href: '/blog/partnerships-expand-opportunity',
+        image: {
+          src: '/insight-impact.png',
+          alt: 'Building access, one community at a time',
+          width: 316,
+          height: 316,
+        },
       },
     ],
   },

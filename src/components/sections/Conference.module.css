@@ -1,22 +1,9 @@
-/**
- * The Conference - Figma node 130:254.
- *
- * Measured from that frame:
- *   block      1296 wide at x72, inset to the content margins (NOT full bleed)
- *   padding    76 left, 58 right, 60 top and bottom
- *   row        gap 50, vertically centred
- *   copy       479 wide; headline 52px over two lines, then 26 to the details
- *   details    a hairline, 24, then three equal columns
- *   CTA        58 below the details block
- *   media      621 x 374, with a second layer offset 12/12 behind it
- *
- * Deliberately draws no rule of its own. The hero's accent rule is the single
- * line between the two sections.
- */
-
+/* Conference — Figma 185:375: 1296px card, 60px padding, 479/647 columns. */
 .section {
+  --bq-cream: var(--bq-canvas);
   background: var(--bq-canvas);
-  padding-bottom: clamp(3rem, 1.5rem + 5vw, 6rem);
+  position: relative;
+  z-index: 1;
 }
 
 .block {
@@ -28,22 +15,19 @@
 
 .inner {
   display: grid;
-  grid-template-columns: minmax(0, 479fr) minmax(0, 633fr);
+  grid-template-columns: minmax(0, 479fr) minmax(0, 647fr);
   gap: clamp(2rem, 1rem + 3.5vw, 3.125rem);
   align-items: center;
-  background: var(--bq-forest);
-  color: var(--bq-cream);
-  padding: clamp(2.5rem, 1.5rem + 4.2vw, 3.75rem)
-    clamp(1.5rem, 1rem + 2.92vw, 3.625rem)
-    clamp(2.5rem, 1.5rem + 4.2vw, 3.75rem)
-    clamp(1.75rem, 1rem + 4.17vw, 4.75rem);
+  background: var(--bq-conference-green);
+  color: var(--bq-canvas);
+  padding: clamp(1.5rem, 4.167vw, 3.75rem);
 }
 
 .col {
   display: flex;
   flex-direction: column;
   /* 58 between the details block and the CTA at the frame. */
-  gap: clamp(2rem, 1.25rem + 3.4vw, 3.625rem);
+  gap: 0;
   min-width: 0;
 }
 
@@ -58,13 +42,13 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: var(--bq-display);
-  /* 52px at 1440. */
-  font-size: clamp(1.875rem, 0.9rem + 3.4vw, 3.25rem);
-  font-weight: 500;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  /* 38px at the design width. */
+  font-size: clamp(1.5rem, 2.639vw, 2.375rem);
+  font-weight: 400;
   line-height: 1.1;
-  letter-spacing: -0.045em;
-  color: var(--bq-cream);
+  letter-spacing: -0.025em;
+  color: var(--bq-canvas);
 }
 
 .line {
@@ -73,7 +57,7 @@
 
 .body {
   margin: 0;
-  max-width: 30ch;
+  font-family: var(--bq-inter-tight), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
   line-height: 1.22;
   color: rgba(250, 250, 248, 0.9);
@@ -98,8 +82,9 @@
 .detailRow {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 0;
   margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 .detail {
@@ -110,6 +95,7 @@
 }
 
 .detailKey {
+  line-height: 13px;
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -121,27 +107,16 @@
   margin: 0;
   font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1rem);
   line-height: 1.25;
-  color: var(--bq-cream);
+  color: var(--bq-canvas);
 }
 
 /* -- the media panel ------------------------------------------------------ */
 
 .media {
   position: relative;
-  /* 621 x 374 at the frame. The column it sits in is 633: the extra 12 is the
-     offset layer sticking out to the right, so the image itself stops short. */
-  width: calc(100% - 12px);
-  aspect-ratio: 621 / 374;
+  width: 100%;
+  aspect-ratio: 647 / 374;
   min-width: 0;
-}
-
-/* The frame offsets two layers by 12 so an edge of the one behind shows along
-   the bottom and right. Holding the offset with a flat block rather than a
-   second image keeps the device readable while the photograph is outstanding. */
-.mediaOffset {
-  position: absolute;
-  inset: 12px -12px -12px 12px;
-  background: var(--bq-cream-22);
 }
 
 .mediaFront {
@@ -172,9 +147,14 @@
   }
 }
 
-@media (max-width: 620px) {
-  /* The offset would hang past the block's own padding on a narrow screen. */
-  .mediaOffset {
-    display: none;
-  }
+
+.audience { transform: scaleX(-1); }
+
+.cta {
+  margin-top: clamp(2rem, 4.028vw, 3.625rem);
+  padding-block: 15px;
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .detailRow { grid-template-columns: 1fr; gap: 16px; }
 }

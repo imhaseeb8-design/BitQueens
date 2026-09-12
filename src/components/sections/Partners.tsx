@@ -1,61 +1,39 @@
 import { Button } from '@/components/ui/Button';
-import { Reveal } from '@/components/ui/Reveal';
-import { Section } from '@/components/ui/Section';
 import type { PartnersSection } from '@/lib/types';
+import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './Partners.module.css';
 
+/** Organization invitation from Figma node 223:330. */
 export function Partners({ content }: { content: PartnersSection }) {
   return (
-    <Section id="partners" label="Partners" rule>
+    <section
+      id="partners"
+      aria-label="For organizations"
+      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+    >
+      <div className={styles.inner}>
+        <p className={styles.wordmark} aria-hidden="true">
+          Build with us
+        </p>
 
-      {content.partners.length > 0 && (
-        <div className={styles.logos}>
-          <div className={styles.logoRail}>
-            {content.partners.map((partner) => (
-              <a
-                key={partner.name}
-                href={partner.url}
-                className={styles.logo}
-                rel="noreferrer"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={partner.logo} alt={partner.name} />
-              </a>
+        <div className={styles.card}>
+          <div className={styles.main}>
+            <p className={styles.eyebrow}>For Organizations</p>
+            <h2 className={styles.headline}>
+              Help more <span>women</span> enter the future of{' '}
+              <span>technology</span>
+            </h2>
+            <p className={styles.body}>{content.body}</p>
+            <Button href={content.cta.href}>{content.cta.label}</Button>
+          </div>
+
+          <ul className={styles.audiences} aria-label="Organization types">
+            {content.tiers.map((tier) => (
+              <li key={tier.title}>{tier.title}</li>
             ))}
-          </div>
-        </div>
-      )}
-
-      <div className={styles.split}>
-        <Reveal delay={100}>
-          <h2 className={styles.headline}>{content.headline}</h2>
-          <p className={styles.body}>{content.body}</p>
-          <div className={styles.action}>
-            <Button href={content.cta.href} variant="primary">
-              {content.cta.label}
-            </Button>
-          </div>
-        </Reveal>
-
-        <div className={styles.tiers}>
-          {content.tiers.map((tier, i) => (
-            <Reveal
-              key={tier.title}
-              href={tier.href}
-              delay={180 + i * 80}
-              className={styles.tier}
-            >
-              <span>
-                <h3 className={styles.tierTitle}>{tier.title}</h3>
-                <p className={styles.tierDesc}>{tier.description}</p>
-              </span>
-              <span className={styles.tierArrow} aria-hidden="true">
-                →
-              </span>
-            </Reveal>
-          ))}
+          </ul>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

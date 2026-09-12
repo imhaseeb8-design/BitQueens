@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/Button';
 import { Figure } from '@/components/ui/Figure';
 import { Reveal } from '@/components/ui/Reveal';
 import type { HeroSection } from '@/lib/types';
+import { neueMontreal, instrumentSerif, interTight } from '@/styles/fonts';
 import styles from './Hero.module.css';
 
 /**
- * Hero - implemented from Figma node 130:9.
+ * Hero - implemented from Figma node 185:351 (headline 184:346).
  *
  * The band is no longer a strip above the headline: the artwork is full bleed
  * and the headline is set over it in white, with a gradient darkening the left
@@ -22,7 +23,10 @@ import styles from './Hero.module.css';
  */
 export function Hero({ content }: { content: HeroSection }) {
   return (
-    <section className={styles.hero} aria-label="BitQueens">
+    <section
+      className={`${styles.hero} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      aria-label="BitQueens"
+    >
       <div className={styles.band}>
         <Image
           src={content.media.src ?? ''}
@@ -39,12 +43,12 @@ export function Hero({ content }: { content: HeroSection }) {
         <div className={styles.bandInner}>
           <h1 className={styles.headline}>
             {content.headlineLines.map((line, i) => (
-              <span key={line} className={styles.lineMask}>
+              <span key={line.text} className={styles.lineMask} data-font={line.font}>
                 <span
                   className={styles.lineInner}
                   style={{ '--i': i } as CSSProperties}
                 >
-                  {line}
+                  {line.text}
                 </span>
               </span>
             ))}
@@ -77,7 +81,7 @@ export function Hero({ content }: { content: HeroSection }) {
           <Reveal delay={140} className={styles.card}>
             <p className={styles.lede}>{content.body}</p>
             <div className={styles.ctas}>
-              <Button href={content.primaryCta.href} size="compact">
+              <Button href={content.primaryCta.href} size="compact" className={styles.primaryCta}>
                 {content.primaryCta.label}
               </Button>
               {/* No arrow on this one: the frame sets it as a plain underlined
