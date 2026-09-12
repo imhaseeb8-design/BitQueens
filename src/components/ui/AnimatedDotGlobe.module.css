@@ -30,8 +30,11 @@
   transform: rotateX(4deg) rotateY(-8deg) rotateZ(0deg);
   transform-origin: 50% 50%;
   transform-style: preserve-3d;
-  animation: globeSpin var(--globe-duration) linear infinite;
   will-change: transform;
+}
+
+.root:hover .globe {
+  animation: globeSpin var(--globe-duration) cubic-bezier(0.4, 0, 0.2, 1) 1 both;
 }
 
 .art {
@@ -51,7 +54,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .globe {
+  .root:hover .globe {
     animation: none;
   }
 
