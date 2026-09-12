@@ -1,0 +1,51 @@
+/**
+ * One 3D turn per hover, for the small marks that sit in card corners.
+ *
+ * The mark is tilted a few degrees at rest so the spin reads as a turn in
+ * space rather than a flat rotation. It never translates, so its centre stays
+ * anchored in the layout. The trigger is the mark itself or, when a parent
+ * carries `data-spin-group`, that whole parent: a card that turns green on
+ * hover spins its mark from anywhere on the card.
+ */
+
+.root {
+  display: grid;
+  place-items: center;
+  perspective: 1000px;
+}
+
+.object {
+  width: 100%;
+  height: 100%;
+  transform: rotateX(4deg) rotateY(-8deg) rotateZ(0deg);
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.root:hover .object,
+[data-spin-group]:hover .object {
+  animation: bqHoverSpin var(--spin-duration, 2.4s) cubic-bezier(0.4, 0, 0.2, 1) 1 both;
+}
+
+.object > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--mark-color, currentColor);
+  transition: color 400ms var(--bq-ease);
+}
+
+@keyframes bqHoverSpin {
+  to {
+    transform: rotateX(4deg) rotateY(-8deg) rotateZ(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root:hover .object,
+  [data-spin-group]:hover .object {
+    animation: none;
+  }
+}

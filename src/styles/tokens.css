@@ -29,6 +29,17 @@
   --bq-conference-green: #2a492f; /* updated conference frame */
   --bq-ecosystem-panel: #f9f8f3; /* updated accordion frame */
   --bq-forest: #1e4a2c; /* flat solid block */
+  /* The hero's green (Figma 260:232, "Trust Bar Variant"): wordmark,
+     headline, both Join buttons. Its tint is the trust-bar pill behind
+     "A women-first community". */
+  --bq-green-deep: #06503c;
+  --bq-green-tint: #eaf3ee;
+  /* Text-on-green: the conference card's eyebrow, keys and hairline
+     (Figma 268:149). */
+  --bq-green-mint: #dcebe5;
+  /* The slate blue the ecosystem and path frames use for eyebrows and step
+     labels (268:285, 288:442); also the Academy's division colour. */
+  --bq-blue-slate: #3b6c9f;
   --bq-blue-deep: #2b6ca3; /* flat solid block */
   --bq-blue-sky: #4a9bd1;
   --bq-blue-pale: #b9dcf2;

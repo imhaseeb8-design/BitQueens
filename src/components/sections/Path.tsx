@@ -1,10 +1,27 @@
-import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
-import type { PathSection } from '@/lib/types';
+import { DotFieldMark, DotGlobeMark, NetworkMark } from '@/components/ui/PathMarks';
+import { Reveal } from '@/components/ui/Reveal';
+import type { PathSection, PathStep } from '@/lib/types';
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './Path.module.css';
 
-/** Three-step beginner path from Figma nodes 190:692 and 190:635–637. */
+const MARKS: Record<PathStep['mark'], typeof DotGlobeMark> = {
+  globe: DotGlobeMark,
+  dots: DotFieldMark,
+  network: NetworkMark,
+};
+
+/**
+ * The three-step beginner path — Figma 288:442.
+ *
+ * A two-line headline on the left, the intro and CTA right-aligned opposite
+ * it, then three flat cards in a row. Every card rests on the warm white; the
+ * frame paints the first one green to show the hover state, which is what a
+ * card becomes under the pointer — and its corner mark takes one turn while
+ * it does. Below, one centred line closes the section.
+ *
+ * Server Component: the hover and the spin are CSS.
+ */
 export function Path({ content }: { content: PathSection }) {
   return (
     <section
@@ -14,46 +31,46 @@ export function Path({ content }: { content: PathSection }) {
     >
       <div className={styles.inner}>
         <div className={styles.head}>
-          <div className={styles.heading}>
-            <h2 className={styles.headline}>{content.headline}</h2>
-            <p className={styles.headlineMuted}>
-              <span aria-hidden="true" className={styles.dash} />
-              {content.headlineMuted}
-            </p>
-          </div>
+          <Reveal className={styles.heading}>
+            <h2 className={styles.headline}>
+              <span className={styles.headlineLine}>{content.headline}</span>
+              <span className={`${styles.headlineLine} ${styles.serif}`}>
+                {content.headlineMuted}
+              </span>
+            </h2>
+          </Reveal>
 
-          <div className={styles.introBlock}>
+          <Reveal delay={120} className={styles.introBlock}>
             <p className={styles.intro}>{content.intro}</p>
-            <Button href={content.cta.href} size="compact">
+            <Button href={content.cta.href} variant="green" size="compact" className={styles.cta}>
               {content.cta.label}
             </Button>
-          </div>
+          </Reveal>
         </div>
 
         <ol className={styles.cards}>
-          {content.steps.map((step, index) => (
-            <li key={step.title} className={styles.card}>
-              <div className={styles.folder}>
-                <span className={styles.number} aria-hidden="true">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <div className={styles.copy}>
-                  <h3>{step.title}</h3>
-                  <p>{step.description}</p>
-                </div>
-              </div>
-              <div className={styles.imageWrap} aria-hidden="true">
-                <Image
-                  src={step.image.src ?? ''}
-                  alt=""
-                  fill
-                  sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 416px"
-                  className={styles.image}
-                />
-              </div>
-            </li>
-          ))}
+          {content.steps.map((step, i) => {
+            const Mark = MARKS[step.mark];
+            return (
+              <Reveal
+                key={step.title}
+                as="li"
+                delay={i * 90}
+                className={styles.card}
+                data-spin-group=""
+              >
+                <p className={styles.step}>Step {String(i + 1).padStart(2, '0')}</p>
+                <Mark className={styles.mark} />
+                <h3 className={styles.title}>{step.title}</h3>
+                <p className={styles.desc}>{step.description}</p>
+              </Reveal>
+            );
+          })}
         </ol>
+
+        <Reveal delay={200} as="p" className={styles.closing}>
+          {content.closing}
+        </Reveal>
       </div>
     </section>
   );

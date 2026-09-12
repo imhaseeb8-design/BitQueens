@@ -1,9 +1,20 @@
-/* Conference — Figma 185:375: 1296px card, 60px padding, 479/647 columns. */
+/**
+ * Conference — Figma 268:149 ("Conference story and image").
+ *
+ * A 1296 × 520 card inside the gutters, split 656 / 640. In the left column,
+ * measured from the card: eyebrow y39; headline y82, 52px over 60; body y225,
+ * 18px over 27; hairline y313; detail keys y349, values y369; CTA y426,
+ * 55 tall; 39 below it, so the block sits centred (274:319 rebalanced the
+ * earlier 45/33). Everything is inset 52 from the left. The photo fills the
+ * right column edge to edge.
+ */
+
 .section {
+  /* The shared Button's on-dark cream is this page's off-white. */
   --bq-cream: var(--bq-canvas);
-  background: var(--bq-canvas);
   position: relative;
   z-index: 1;
+  background: var(--bq-canvas);
 }
 
 .block {
@@ -13,41 +24,53 @@
   padding: 0 var(--bq-gutter);
 }
 
-.inner {
+.card {
   display: grid;
-  grid-template-columns: minmax(0, 479fr) minmax(0, 647fr);
-  gap: clamp(2rem, 1rem + 3.5vw, 3.125rem);
-  align-items: center;
-  background: var(--bq-conference-green);
+  grid-template-columns: minmax(0, 656fr) minmax(0, 640fr);
+  overflow: hidden;
+  background: var(--bq-green-deep);
   color: var(--bq-canvas);
-  padding: clamp(1.5rem, 4.167vw, 3.75rem);
 }
+
+/* -- the story ------------------------------------------------------------ */
 
 .col {
   display: flex;
   flex-direction: column;
-  /* 58 between the details block and the CTA at the frame. */
-  gap: 0;
+  align-items: flex-start;
+  justify-content: center;
   min-width: 0;
+  /* 39 / 56 / 39 / 52 at the frame. */
+  padding: clamp(1.75rem, 2.708vw, 2.4375rem) clamp(1.5rem, 3.889vw, 3.5rem)
+    clamp(1.75rem, 2.708vw, 2.4375rem) clamp(1.5rem, 3.611vw, 3.25rem);
 }
 
 .head {
   display: flex;
   flex-direction: column;
-  /* 12 between the headline and the body copy. */
-  gap: 12px;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0.138em;
+  text-transform: uppercase;
+  color: var(--bq-green-mint);
 }
 
 .headline {
   display: flex;
   flex-direction: column;
-  margin: 0;
+  margin: 27px 0 0;
   font-family: var(--bq-neue-montreal), sans-serif;
-  /* 38px at the design width. */
-  font-size: clamp(1.5rem, 2.639vw, 2.375rem);
+  /* 52 at the frame. */
+  font-size: clamp(2rem, 3.611vw, 3.25rem);
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  line-height: 1.154;
+  letter-spacing: -0.035em;
   color: var(--bq-canvas);
 }
 
@@ -56,35 +79,35 @@
 }
 
 .body {
-  margin: 0;
+  max-width: 530px;
+  margin: 23px 0 0;
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
-  line-height: 1.22;
-  color: rgba(250, 250, 248, 0.9);
+  line-height: 1.5;
+  color: var(--bq-canvas);
   text-wrap: pretty;
 }
 
 /* -- the detail row ------------------------------------------------------- */
 
-/* 26 from the body copy to the hairline, then 24 to the values. */
+/* 34 from the body to the hairline, 35 from the hairline to the keys. */
 .details {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-top: clamp(1.25rem, 0.75rem + 1.4vw, 1.625rem);
+  width: 100%;
+  max-width: 550px;
+  margin-top: 34px;
 }
 
 .detailRule {
   height: 1px;
-  background: rgba(250, 250, 248, 0.3);
+  background: var(--bq-green-mint);
 }
 
+/* The second column starts 266 in (x318 against the 52 inset). */
 .detailRow {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  margin: 0;
-  font-family: Arial, sans-serif;
+  grid-template-columns: minmax(0, 266fr) minmax(0, 284fr);
+  margin: 35px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
 }
 
 .detail {
@@ -95,66 +118,90 @@
 }
 
 .detailKey {
-  line-height: 13px;
   font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  line-height: 1.2;
+  letter-spacing: 0.145em;
   text-transform: uppercase;
-  color: rgba(250, 250, 248, 0.65);
+  color: var(--bq-green-mint);
 }
 
 .detailValue {
   margin: 0;
-  font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1rem);
-  line-height: 1.25;
+  font-size: 1rem;
+  line-height: 1.2;
   color: var(--bq-canvas);
 }
 
-/* -- the media panel ------------------------------------------------------ */
+/* -- the CTA -------------------------------------------------------------- */
+
+.ctaRow {
+  margin-top: 38px;
+}
+
+/* On top of the shared Button: the frame's green label, the 4px corner and
+   the 55px box (node 268:159). The arrow keeps the Button's own 10px gap to
+   the label rather than the frame's far-right placement. The `.card .ctaRow`
+   prefix outranks the Button module's `.onDark.primary`. */
+.card .ctaRow .cta {
+  min-height: 0;
+  padding: 17px 24px;
+  border: 0;
+  border-radius: 4px;
+  color: var(--bq-green-deep);
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card .ctaRow .cta:hover {
+    background: var(--bq-green-mint);
+  }
+}
+
+/* -- the photo ------------------------------------------------------------ */
 
 .media {
   position: relative;
-  width: 100%;
-  aspect-ratio: 647 / 374;
   min-width: 0;
+  min-height: 100%;
 }
 
-.mediaFront {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
+/* Mirrored so the woman in front faces the copy (the frame flips the
+   image). The frame's crop starts 6% in from the image's left edge before
+   the flip, which is what the object-position carries. */
 .photo {
   object-fit: cover;
+  object-position: 13% 50%;
+  transform: scaleX(-1);
 }
 
 /* -- responsive ----------------------------------------------------------- */
 
 @media (max-width: 900px) {
-  .inner {
+  .card {
     grid-template-columns: 1fr;
-    gap: clamp(2rem, 1.5rem + 3vw, 2.75rem);
   }
 
-  .body {
-    max-width: none;
+  .media {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .headline {
+    margin-top: 20px;
+  }
+
+  .details,
+  .ctaRow {
+    margin-top: 28px;
   }
 
   .detailRow {
     grid-template-columns: 1fr;
     gap: 1.25rem;
+    margin-top: 24px;
   }
-}
-
-
-.audience { transform: scaleX(-1); }
-
-.cta {
-  margin-top: clamp(2rem, 4.028vw, 3.625rem);
-  padding-block: 15px;
-}
-
-@media (min-width: 901px) and (max-width: 1100px) {
-  .detailRow { grid-template-columns: 1fr; gap: 16px; }
 }

@@ -1,25 +1,24 @@
-import Image from 'next/image';
 import type { CSSProperties } from 'react';
 import { Button } from '@/components/ui/Button';
-import { Figure } from '@/components/ui/Figure';
-import { Reveal } from '@/components/ui/Reveal';
+import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import type { HeroSection } from '@/lib/types';
 import { neueMontreal, instrumentSerif, interTight } from '@/styles/fonts';
 import styles from './Hero.module.css';
 
 /**
- * Hero - implemented from Figma node 185:351 (headline 184:346).
+ * Hero - implemented from Figma node 260:232 ("Swiss International Style /
+ * Trust Bar Variant").
  *
- * The band is no longer a strip above the headline: the artwork is full bleed
- * and the headline is set over it in white, with a gradient darkening the left
- * where the type lands. Below it the grey lede card overlaps the band's bottom
- * edge, and the three figures sit beside it on the page ground.
+ * The page ground carries everything: no band, no artwork. A dotted world map
+ * sits to the right and bleeds off the frame; the trust-bar pill, the
+ * three-line headline and the two CTAs stack down the left at the gutter.
  *
- * The figures moved here from the Impact section, which is why `Impact` is no
- * longer composed in `app/page.tsx`. Rendering both would print 2000+ twice.
+ * The map is the frame's static PNG replaced by the canvas `GlobalDotMap`, at
+ * the PNG's exact box (1160 x 653 at x612 / y25 in the 1440 frame). Its
+ * geometry is expressed in `cqw` against `.inner`, so it holds that position
+ * at every width up to 1440 and stops scaling past it, like the frame.
  *
- * Server Component: everything here is CSS, and the count-up lives in the one
- * client leaf (`Figure`).
+ * Server Component: the only client leaf is the map's canvas.
  */
 export function Hero({ content }: { content: HeroSection }) {
   return (
@@ -27,20 +26,15 @@ export function Hero({ content }: { content: HeroSection }) {
       className={`${styles.hero} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
       aria-label="BitQueens"
     >
-      <div className={styles.band}>
-        <Image
-          src={content.media.src ?? ''}
-          alt={content.media.alt}
-          fill
-          priority
-          sizes="100vw"
-          className={styles.bandImg}
-        />
-        {/* Darkens the left, where the headline sits. The right stays clear so
-            the artwork still reads as artwork. */}
-        <span className={styles.scrim} aria-hidden="true" />
+      <div className={styles.inner}>
+        <GlobalDotMap className={styles.map} />
 
-        <div className={styles.bandInner}>
+        <div className={styles.content}>
+          <p className={styles.eyebrow}>
+            <span className={styles.signal} aria-hidden="true" />
+            {content.eyebrow}
+          </p>
+
           <h1 className={styles.headline}>
             {content.headlineLines.map((line, i) => (
               <span key={line.text} className={styles.lineMask} data-font={line.font}>
@@ -53,53 +47,18 @@ export function Hero({ content }: { content: HeroSection }) {
               </span>
             ))}
           </h1>
-        </div>
-      </div>
 
-      <div className={styles.body}>
-        {/* `align-items: end` is what lets the card hang up into the band while
-            the figures stay on the ground: both are bottom-aligned, and only
-            the card is tall enough to reach back over the edge. */}
-        <div className={styles.grid}>
-          <dl className={styles.stats}>
-            {content.stats.map((stat, i) => (
-              <Reveal
-                key={stat.label}
-                delay={i * 90}
-                className={styles.stat}
-                style={{ '--i': i } as CSSProperties}
-              >
-                <dt className={styles.statLabelGroup}>
-                  <Figure value={stat.value} className={styles.figure} />
-                  <span className={styles.statLabel}>{stat.label}</span>
-                </dt>
-                <dd className={styles.statSupport}>{stat.support}</dd>
-              </Reveal>
-            ))}
-          </dl>
-
-          <Reveal delay={140} className={styles.card}>
-            <p className={styles.lede}>{content.body}</p>
-            <div className={styles.ctas}>
-              <Button href={content.primaryCta.href} size="compact" className={styles.primaryCta}>
-                {content.primaryCta.label}
-              </Button>
-              {/* No arrow on this one: the frame sets it as a plain underlined
-                  link (node 130:42). */}
-              <Button
-                href={content.secondaryCta.href}
-                variant="link"
-                size="compact"
-                arrow={false}
-              >
-                {content.secondaryCta.label}
-              </Button>
-            </div>
-          </Reveal>
-        </div>
-
-        <div className={styles.rule}>
-          <span className={styles.ruleAccent} />
+          {/* Both are the shared Button so they carry the site's arrow shift
+              on hover; the frame's green, corner and type are set in the
+              module. */}
+          <div className={styles.ctas}>
+            <Button href={content.primaryCta.href} size="compact" className={styles.primaryCta}>
+              {content.primaryCta.label}
+            </Button>
+            <Button href={content.secondaryCta.href} variant="link" className={styles.secondaryCta}>
+              {content.secondaryCta.label}
+            </Button>
+          </div>
         </div>
       </div>
     </section>

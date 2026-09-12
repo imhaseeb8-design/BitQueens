@@ -1,15 +1,21 @@
 /**
- * Ecosystem accordion - Figma 229:30 and its three sibling variants.
+ * Ecosystem accordion - Figma 274:324 (header) and 268:279 (the row).
  *
- * Measured from those frames (1440 wide, 1296 content):
- *   header     headline at x72/y108, 64px over two lines
- *   row        y298, 546 tall
- *   spine      71 wide, and the collapsed width of a whole item
- *   artwork    245 wide, sits between the spine and the panel
- *   panel      737 wide, warm white, square corners
+ * Measured at 1440 wide, 1296 content, from the bottom of the conference
+ * card above:
+ *   globe      849 square, centred, its top 110 below the card (50 at the
+ *              frame, plus the extra 60); 9% opacity;
+ *              cut off where the row begins
+ *   headline   centred, 226 below the card (166 at the frame, plus 60):
+ *              75px sans over 82, then 88px
+ *              serif over 94, both the deep green
+ *   row        47 below the headline, 525 tall
+ *   spine      71 wide, and the collapsed width of a whole item; the open
+ *              one is solid green, the closed ones carry a 5px division bar
+ *   panel      982 wide, warm white, 56 in from each side, 47 top and bottom
  *   gaps       10 between items
- *   open item  71 + 245 + 737 = 1053, which is 1296 minus three collapsed
- *              spines and their gaps
+ *   open item  71 + 982 = 1053, which is 1296 minus three closed spines and
+ *              their gaps
  *
  * The motion is one property: the item's width. Everything inside is laid out
  * at the open width at all times and clipped, so no copy ever rewraps while
@@ -20,8 +26,62 @@
 .section {
   position: relative;
   background: var(--bq-canvas);
-  padding: clamp(4rem, 10.0695vw, 9.0625rem) 0 clamp(3rem, 1.5rem + 5vw, 6rem);
+  padding-bottom: clamp(3rem, 1.5rem + 5vw, 6rem);
 }
+
+/* -- the header ----------------------------------------------------------- */
+
+/* Clips the globe at the row's top edge. The frame puts the headline 166
+   under the conference card; this adds 60 more so the card has room to
+   breathe before the globe starts. */
+.header {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(6rem, 15.694vw, 14.125rem) var(--bq-gutter) 47px;
+  text-align: center;
+}
+
+.globe {
+  position: absolute;
+  top: clamp(3rem, 7.639vw, 6.875rem);
+  left: 50%;
+  width: clamp(560px, 58.958vw, 849px);
+  height: auto;
+  aspect-ratio: 1;
+  max-width: none;
+  transform: translateX(-50%);
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+.headline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  /* 75 at the frame. */
+  font-size: clamp(2.75rem, 5.208vw, 4.6875rem);
+  font-weight: 400;
+  line-height: 1.0933;
+  letter-spacing: -0.04em;
+  color: var(--bq-green-deep);
+}
+
+.headlineLine {
+  display: block;
+}
+
+/* 88 over 94 at the frame. */
+.serif {
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-size: 1.17333em;
+  line-height: 1.0682;
+  letter-spacing: 0;
+}
+
+/* -- the row -------------------------------------------------------------- */
 
 .inner {
   position: relative;
@@ -32,41 +92,15 @@
   padding: 0 var(--bq-gutter);
 }
 
-.headline {
-  display: flex;
-  flex-direction: column;
-  margin: 0 0 35px;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  /* 64px at 1440. */
-  font-size: clamp(2.25rem, 4.306vw, 3.875rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--bq-ink);
-}
-
-.headlineLine {
-  display: block;
-}
-
-.muted {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.032258em;
-  color: var(--bq-ink-42);
-}
-
-/* -- the row -------------------------------------------------------------- */
-
 .row {
   /* Makes 100cqw below mean "the width of this row", which is what lets the
      open width be computed once and used from inside any item. */
   container-type: inline-size;
 
   --gap: 10px;
-  --spine-w: clamp(52px, 5.48cqw, 71px);
-  --media-w: clamp(112px, 18.9cqw, 245px);
-  /* Keep room for wrapped copy at narrow desktop widths. */
-  --row-h: clamp(520px, 42.1cqw, 546px);
+  --spine-w: clamp(52px, 5.478cqw, 71px);
+  /* 525 at the frame; a floor so wrapped copy still fits at narrow desktop. */
+  --row-h: clamp(520px, 40.5cqw, 525px);
   --collapsed: 3;
   --open-w: calc(100cqw - var(--collapsed) * (var(--spine-w) + var(--gap)));
   --accordion-ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -82,6 +116,7 @@
   height: 100%;
   /* The clip. Without it every item would render at its full open width. */
   overflow: hidden;
+  background: var(--bq-ecosystem-panel);
   transition: width 500ms var(--accordion-ease);
 }
 
@@ -103,33 +138,29 @@
   flex: 0 0 var(--spine-w);
   display: flex;
   flex-direction: column;
-  /* Every label ends on the same line (y743 at the frame) and grows upward
-     from there, whatever its length. */
+  /* Every label ends on the same line and grows upward from there, whatever
+     its length; the number sits under it. */
   justify-content: flex-end;
   align-items: center;
-  gap: 34px;
+  gap: 24px;
   height: 100%;
-  padding: 0 0 clamp(0.75rem, 0.5rem + 0.7vw, 1.0625rem);
-  border: 1px solid rgba(26, 26, 26, 0.18);
-  background: var(--bq-canvas);
-  color: var(--bq-ink);
+  padding: 0 0 clamp(0.75rem, 0.5rem + 0.5vw, 0.9375rem);
+  border: 0;
+  background: var(--bq-ecosystem-panel);
+  color: var(--bq-green-deep);
   cursor: pointer;
-  transition:
-    background-color 500ms var(--accordion-ease),
-    border-color 500ms var(--accordion-ease);
+  transition: background-color 500ms var(--accordion-ease);
 }
 
 .item[data-open] .spine {
-  background: var(--accent);
-  border-color: transparent;
+  background: var(--bq-green-deep);
   color: var(--bq-canvas);
   cursor: default;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .item:not([data-open]) .spine:hover {
-    background: #f1eee4;
-    border-color: rgba(26, 26, 26, 0.32);
+    background: var(--bq-green-tint);
   }
 }
 
@@ -138,12 +169,12 @@
   outline-offset: -4px;
 }
 
-/* The 4px division colour along the top of a closed spine. The open one does
-   not need it: it is already painted in that colour. */
+/* The 5px division colour along the top of a closed spine. The open one does
+   not need it: it is solid green. */
 .divisionColour {
   position: absolute;
   inset: 0 0 auto 0;
-  height: 4px;
+  height: 5px;
   background: var(--accent);
   transition: opacity 400ms var(--accordion-ease);
 }
@@ -153,48 +184,26 @@
 }
 
 .spineLabel {
-  /* Reads bottom to top, which is what the reference does and what keeps the
+  /* Reads bottom to top, which is what the frame does and what keeps the
      first word nearest the number. */
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(1.25rem, 1.806vw, 1.625rem);
+  font-family: var(--bq-inter-tight), sans-serif;
+  /* 23 closed, 25 open at the frame. */
+  font-size: clamp(1.125rem, 1.667vw, 1.5rem);
   font-weight: 400;
-  letter-spacing: -0.02em;
   line-height: 1;
   white-space: nowrap;
-  color: var(--bq-ink-45);
-  transition: color 500ms var(--accordion-ease);
+  color: inherit;
 }
 
 .spineNum {
   font-family: var(--bq-instrument-serif), Georgia, serif;
-  line-height: 1.2;
-  font-size: clamp(1.25rem, 1.667vw, 1.5rem);
+  font-size: clamp(1.25rem, 1.736vw, 1.5625rem);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  color: var(--bq-accent);
+  line-height: 1.2;
+  color: inherit;
   font-variant-numeric: tabular-nums;
-  transition: color 500ms var(--accordion-ease);
-}
-
-.item[data-open] .spineLabel,
-.item[data-open] .spineNum {
-  color: var(--bq-canvas);
-}
-
-/* -- artwork -------------------------------------------------------------- */
-
-.media {
-  position: relative;
-  flex: 0 0 var(--media-w);
-  height: 100%;
-  overflow: hidden;
-}
-
-.mediaImg {
-  object-fit: cover;
-  object-position: center;
 }
 
 /* -- the panel ------------------------------------------------------------ */
@@ -219,16 +228,14 @@
 }
 
 .panelInner {
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: clamp(1.5rem, 1rem + 2.4vw, 2.75rem);
   align-items: flex-start;
   height: 100%;
-  padding: clamp(1.5rem, 3.125vw, 2.8125rem)
-    clamp(1.5rem, 3.958vw, 3.5625rem)
-    clamp(1.5rem, 3.125vw, 2.8125rem)
-    clamp(1.5rem, 3.056vw, 2.75rem);
+  /* 47 / 56 at the frame. */
+  padding: clamp(1.5rem, 3.264vw, 2.9375rem) clamp(1.5rem, 3.889vw, 3.5rem);
   /* Content arrives a beat after the width has opened, so the reader is not
      watching type slide out from under a moving edge. */
   opacity: 0;
@@ -244,68 +251,143 @@
   transition-delay: 180ms;
 }
 
-.head {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.875rem, 0.5rem + 1.2vw, 1.75rem);
+/* A small tag pinned to the panel's top-right corner, on the same 47/56
+   inset as the eyebrow opposite it. Same pill as the hero's trust bar. */
+.comingSoon {
+  position: absolute;
+  top: clamp(1.5rem, 3.264vw, 2.9375rem);
+  right: clamp(1.5rem, 3.889vw, 3.5rem);
+  padding: 6px 10px;
+  border-radius: 4px;
+  background: var(--bq-green-tint);
+  color: var(--bq-green-deep);
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.num {
+/* "01  /  LEARN" in the division colour (node 268:285). */
+.eyebrow {
   margin: 0;
-  line-height: 13px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--bq-accent);
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 
+.eyebrowSlash {
+  margin: 0 0.75em;
+}
+
 .name {
-  margin: 0;
+  margin: 26px 0 0;
   font-family: var(--bq-neue-montreal), sans-serif;
-  /* 46px / 60px at 1440. */
-  font-size: clamp(1.75rem, 3.1945vw, 2.875rem);
+  /* 56 over 67 at the frame. */
+  font-size: clamp(1.75rem, 3.889vw, 3.5rem);
   font-weight: 400;
-  line-height: 1.304348;
-  letter-spacing: -0.02em;
-  color: var(--bq-ink);
+  line-height: 1.196;
+  letter-spacing: -0.036em;
+  color: var(--bq-green-deep);
   white-space: nowrap;
 }
 
 .desc {
+  max-width: 505px;
+  margin: 13px 0 0;
   font-family: var(--bq-inter-tight), sans-serif;
-  margin: 0;
-  max-width: 491px;
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
-  line-height: 1.5;
-  color: rgba(26, 26, 26, 0.75);
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.667;
+  color: var(--bq-ink);
   text-wrap: pretty;
 }
 
 /* -- what's inside -------------------------------------------------------- */
 
-.items {
-  width: min(360px, 100%);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid rgba(26, 26, 26, 0.12);
+/* Hairline 38 under the copy, then the label 23 under that. */
+.explore {
+  width: 100%;
+  margin-top: 38px;
+  padding-top: 23px;
+  border-top: 1px solid #d9ded9;
 }
 
-.itemRow {
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(26, 26, 26, 0.12);
-  font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1.0625rem);
-  line-height: 20px;
-  color: rgba(26, 26, 26, 0.9);
+.exploreLabel {
+  margin: 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--bq-green-deep);
+}
+
+/* Three numbered cells on one line, 50 apart (x56 / x268 / x458). */
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px clamp(1.5rem, 1rem + 2vw, 3.125rem);
+  margin: 25px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.itemCell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.2;
+  color: var(--bq-green-deep);
+  white-space: nowrap;
+}
+
+.itemNum {
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -- the CTA -------------------------------------------------------------- */
+
+/* On top of the shared Button (arrow shift and all): the frame's green
+   208 × 52 block (node 268:298), 16/23 padding, with the site's 4px corner.
+   `.panelInner .cta` outranks the Button module's single-class rules. */
+.panelInner .cta {
+  margin-top: 43px;
+  min-height: 0;
+  padding: 16px 23px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--bq-green-deep);
+  color: var(--bq-canvas);
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0;
+  flex-shrink: 0;
 }
 
 /* -- responsive ----------------------------------------------------------- */
 
-/* Below this the open panel has no room left once three spines and the
-   artwork are taken out, so the accordion becomes a plain stack: every panel
-   open, no spines, no clipping. */
+/* Below this the open panel has no room left once three spines are taken
+   out, so the accordion becomes a plain stack: every panel open, no
+   clipping. */
 @media (max-width: 900px) {
+  .header {
+    padding-bottom: 32px;
+  }
+
   .row {
     display: flex;
     flex-direction: column;
@@ -335,8 +417,7 @@
     gap: 0.875rem;
     height: auto;
     padding: 14px 18px;
-    background: var(--accent);
-    border-color: transparent;
+    background: var(--bq-green-deep);
     color: var(--bq-canvas);
     cursor: default;
   }
@@ -344,28 +425,21 @@
   .spineLabel {
     writing-mode: horizontal-tb;
     transform: none;
-    color: var(--bq-canvas);
     order: 2;
   }
 
   .spineNum {
-    color: rgba(250, 250, 248, 0.7);
     order: 1;
+    opacity: 0.7;
   }
 
   .divisionColour {
     display: none;
   }
 
-  .media {
-    flex: none;
-    height: clamp(140px, 34vw, 220px);
-  }
-
   .panel {
     flex: none;
     height: auto;
-    border-top-right-radius: 0;
     /* Every panel is open in the stacked layout, so nothing is hidden. */
     visibility: visible;
     transition: none;
@@ -379,6 +453,20 @@
 
   .name {
     white-space: normal;
+  }
+
+  .items {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .panelInner .cta {
+    margin-top: 32px;
+  }
+
+  .comingSoon {
+    top: 1.5rem;
+    right: 1.5rem;
   }
 }
 
@@ -394,6 +482,3 @@
     transform: none;
   }
 }
-
-.copy { display: flex; flex-direction: column; gap: 12px; }
-.cta { padding-block: 15px; flex-shrink: 0; }

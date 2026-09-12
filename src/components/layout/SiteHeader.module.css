@@ -4,13 +4,13 @@
   background: var(--bq-canvas);
 }
 
-/* The bar is a fixed height rather than padded, so the red CTA block can
-   stretch edge-to-edge vertically (81px in the Figma frame). */
+/* Figma 260:245: an 81px bar, 72 in from the left and 47 from the right,
+   the wordmark then the links, and the green button held at the far right. */
 .inner {
   box-sizing: border-box;
   max-width: var(--bq-max);
   margin: 0 auto;
-  padding: 0 0 0 var(--bq-gutter);
+  padding: 0 clamp(1rem, 0.5rem + 2.5vw, 2.9375rem) 0 var(--bq-gutter);
   min-height: clamp(60px, 5.6vw, 81px);
   display: flex;
   align-items: center;
@@ -22,24 +22,23 @@
 }
 
 .logo img {
-  /* 22 at the frame (node 130:20). */
-  height: clamp(17px, 1.53vw, 22px);
+  /* 120 × 24 at the frame (node 260:346). */
+  height: clamp(19px, 1.667vw, 24px);
   width: auto;
 }
 
-/* Pushed right, then held 47px clear of the red block: the frame right-aligns
-   the links inside the white area rather than running them on after the
-   wordmark (node 132:3 is `justify-between` with 47px of right padding). */
+/* The links run on 33px after the wordmark (node 260:247 starts at x225);
+   the button alone is pushed to the right edge. */
 .nav {
   display: flex;
   flex-wrap: wrap;
-  margin-left: auto;
-  margin-right: clamp(1.25rem, 0.5rem + 2.71vw, 2.9375rem);
+  margin-left: clamp(1.25rem, 0.5rem + 1.6vw, 2.0625rem);
   gap: clamp(1rem, 0.5rem + 1.39vw, 1.75rem);
 }
 
 .navLink {
   position: relative;
+  font-family: var(--bq-inter-tight), sans-serif;
   font-size: var(--bq-t-meta);
   letter-spacing: 0.02em;
   padding: 6px 0;
@@ -63,7 +62,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .navLink:hover {
-    color: var(--bq-accent);
+    color: var(--bq-green-deep);
   }
 
   .navLink:hover::after {
@@ -71,77 +70,46 @@
   }
 }
 
-/* A solid block that bleeds off the right edge of the viewport, not a text
-   link. The negative margin has to clear both the container's own gutter and
-   whatever leftover space centring leaves on wide screens. */
+/* A 167 × 42 green button with 4px corners (node 260:254), the same shape
+   as the hero's primary CTA one size down. */
 .cta {
-  margin-right: calc(-1 * max(0px, (100vw - var(--bq-max)) / 2));
+  margin-left: auto;
   flex: none;
-  align-self: stretch;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 0 clamp(1.5rem, 0.5rem + 8.19vw, 7.875rem);
-  background: var(--bq-accent);
+  justify-content: center;
+  min-width: 167px;
+  min-height: 42px;
+  padding: 0 24px;
+  border-radius: 4px;
+  background: var(--bq-green-deep);
   color: var(--bq-canvas);
-  font-size: var(--bq-t-meta);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
   white-space: nowrap;
-  transition: background-color 300ms var(--bq-ease);
+  transition:
+    background-color 300ms var(--bq-ease),
+    transform var(--bq-dur-press) var(--bq-ease);
 }
 
-/* The frame underlines the label (node 130:29), 3px below it. Same wipe the
-   arrowless buttons use, so every underlined action on the site answers the
-   pointer the same way. */
 .ctaLabel {
   position: relative;
 }
 
-.ctaLabel::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3px;
-  height: 1px;
-  background: currentColor;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .cta:hover .ctaLabel::after {
-    animation: bqNavUnderlineWipe 520ms var(--bq-ease);
-  }
-}
-
-@keyframes bqNavUnderlineWipe {
-  0% {
-    transform: scaleX(1);
-    transform-origin: right;
-  }
-  49% {
-    transform: scaleX(0);
-    transform-origin: right;
-  }
-  50% {
-    transform: scaleX(0);
-    transform-origin: left;
-  }
-  100% {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cta:hover .ctaLabel::after {
-    animation: none;
-  }
+.cta:active {
+  transform: scale(0.97);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .cta:hover {
     background: var(--bq-ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta:active {
+    transform: none;
   }
 }
 
@@ -171,7 +139,7 @@
   }
 
   .nav {
-    margin-right: 0;
+    margin-left: 0;
   }
 
   .open .nav {
@@ -191,21 +159,16 @@
 
   .open .cta {
     display: flex;
-    justify-content: center;
     order: 4;
     flex-basis: 100%;
-    /* The bleed only makes sense on the desktop bar; in the stacked menu it
-       is a full-width block instead. */
+    /* In the stacked menu the button is a full-width block. */
     margin: 1.5rem 0 0;
     padding: 16px 24px;
-    align-self: stretch;
     width: auto;
   }
 
   .inner {
     flex-wrap: wrap;
-    /* Desktop drops the right padding so the CTA can bleed off the edge; the
-       hamburger needs it back once that block is hidden. */
     padding-right: var(--bq-gutter);
     padding-bottom: 0;
   }

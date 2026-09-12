@@ -30,9 +30,9 @@ export default function HomePage() {
   return (
     <>
       <Hero content={home.hero} />
-      {/* Impact is hidden: the hero now carries these same three figures
-          (Figma 132:8), and rendering both prints 2000+ twice. The component
-          and its content are kept - restore this line to bring the band back.
+      {/* Impact is hidden. The 130:9 hero carried these figures; the 260:232
+          hero does not, so the band could come back. The component and its
+          content are kept - restore this line to bring it back.
           <Impact content={home.impact} /> */}
       {/* Proof is hidden: the Impact figures above carry the same job. The
           component and its content are kept — restore this line to bring the

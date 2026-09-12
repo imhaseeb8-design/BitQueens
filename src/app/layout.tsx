@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
+import { SmoothScroll } from '@/components/ui/SmoothScroll';
 import { site } from '@/content/site';
 import './globals.css';
 
@@ -41,6 +42,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <SmoothScroll />
         <a href="#main" className="bq-skip-link">
           Skip to content
         </a>

@@ -1,7 +1,18 @@
+/**
+ * Path — Figma 288:442.
+ *
+ * At 1440, from the section's top: headline 74px sans over 82 then 84px serif
+ * over 91, pitched 81 apart; the intro right-aligned at 535 wide, its top 20
+ * below the headline's; the CTA 197 × 54, 25 under it; cards 66 under the
+ * headline block, 416 × 283 on a 24 gap, padded 33 / 32 with the mark 56
+ * square at 28 / 32 from the top-right; the closing line 46 under the cards.
+ */
+
 .section {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: clamp(5rem, 8vw, 8.75rem) 0 clamp(5rem, 8.6vw, 9.5rem);
+  /* 156 above the headline at the frame, after the ecosystem's own 96. */
+  padding: clamp(5rem, 10.833vw, 9.75rem) 0 clamp(5rem, 8.6vw, 9.5rem);
 }
 
 .inner {
@@ -11,186 +22,223 @@
   padding: 0 var(--bq-gutter);
 }
 
+/* -- the head ------------------------------------------------------------- */
+
 .head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(22rem, 29.125rem);
-  gap: clamp(3rem, 10vw, 12rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 33.4375rem);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
 }
 
 .heading {
   min-width: 0;
 }
 
-.headline,
-.headlineMuted {
+.headline {
+  display: flex;
+  flex-direction: column;
   margin: 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  /* 74 at the frame. */
+  font-size: clamp(2.75rem, 5.139vw, 4.625rem);
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.108;
+  letter-spacing: -0.0405em;
+  color: var(--bq-green-deep);
+}
+
+.headlineLine {
+  display: block;
   white-space: nowrap;
 }
 
-.headline {
-  font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(2.8rem, 4.31vw, 3.875rem);
-}
-
-.headlineMuted {
-  display: flex;
-  align-items: center;
-  gap: clamp(1.25rem, 2.6vw, 2.5rem);
-  margin-top: 0.12em;
+/* 84 over 91 at the frame; the lines are pitched 81, one tighter than the
+   first line's box. */
+.serif {
+  margin-top: -1px;
   font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: clamp(3rem, 4.45vw, 4rem);
-  color: var(--bq-ink-42);
-}
-
-.dash {
-  width: clamp(2rem, 3.2vw, 2.875rem);
-  height: 3px;
-  flex: none;
-  background: var(--bq-ink-20);
+  font-size: 1.1351em;
+  line-height: 1.083;
+  letter-spacing: 0;
 }
 
 .introBlock {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 28px;
+  gap: 25px;
+  /* The intro's top sits 20 under the headline's at the frame. */
+  padding-top: clamp(0.5rem, 1.389vw, 1.25rem);
+  text-align: right;
 }
 
 .intro {
+  max-width: 535px;
   margin: 0;
   font-family: var(--bq-inter-tight), sans-serif;
-  font-size: clamp(1rem, 1.25vw, 1.125rem);
-  line-height: 1.2;
-  color: var(--bq-ink-80);
-  text-align: right;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  line-height: 1.474;
+  color: var(--bq-ink);
   text-wrap: pretty;
 }
+
+/* The frame's 197 × 54 block on the shared green Button. */
+.introBlock .cta {
+  min-height: 0;
+  padding: 17px 24px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+/* -- the cards ------------------------------------------------------------ */
 
 .cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--bq-col-gap);
-  margin: clamp(4.5rem, 8vw, 7rem) 0 0;
+  gap: 24px;
+  margin: clamp(2.5rem, 4.583vw, 4.125rem) 0 0;
   padding: 0;
   list-style: none;
 }
 
+/* Every card rests on the warm white. Under the pointer it turns the deep
+   green — the state the frame paints on its first card — and every colour
+   inside follows on the same clock, mark included. */
 .card {
-  min-width: 0;
-}
-
-.folder {
+  --mark-color: var(--bq-ink-14);
   position: relative;
-  height: 207px;
-  background: #fff;
-  clip-path: polygon(0 0, 21% 0, 28% 14%, 100% 14%, 100% 100%, 0 100%);
+  box-sizing: border-box;
+  min-height: 283px;
+  padding: 33px 32px 32px;
+  background: var(--bq-ecosystem-panel);
+  transition: background-color 400ms var(--bq-ease);
 }
 
-.number {
-  position: absolute;
-  top: 18px;
-  left: 38px;
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.25rem;
-  line-height: 1;
-  color: var(--bq-accent);
-}
-
-.copy {
-  position: absolute;
-  inset: 96px 38px auto;
-  font-family: var(--bq-inter-tight), sans-serif;
-}
-
-.copy h3 {
+.step {
   margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bq-blue-slate);
+  transition: color 400ms var(--bq-ease);
+}
+
+.mark {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+}
+
+.title {
+  margin: 36px 0 0;
   font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(1.75rem, 2.22vw, 2rem);
+  /* 42 over 55 at the frame. */
+  font-size: clamp(2rem, 2.917vw, 2.625rem);
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.31;
+  letter-spacing: -0.036em;
+  color: var(--bq-green-deep);
+  transition: color 400ms var(--bq-ease);
 }
 
-.copy p {
-  margin: 14px 0 0;
-  font-size: clamp(1rem, 1.25vw, 1.125rem);
-  line-height: 1.24;
-  color: var(--bq-ink-72);
+.desc {
+  max-width: 350px;
+  margin: 24px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.5;
+  color: var(--bq-ink);
   text-wrap: pretty;
-}
-
-.imageWrap {
-  position: relative;
-  height: 167px;
-  overflow: hidden;
-}
-
-.image {
-  object-fit: cover;
-  object-position: center;
-  transition: transform 700ms var(--bq-ease);
+  transition: color 400ms var(--bq-ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .card:hover .image {
-    transform: scale(1.025);
+  .card:hover {
+    --mark-color: var(--bq-canvas);
+    background: var(--bq-green-deep);
+  }
+
+  .card:hover .step,
+  .card:hover .desc {
+    color: var(--bq-green-mint);
+  }
+
+  .card:hover .title {
+    color: var(--bq-canvas);
   }
 }
 
-@media (max-width: 980px) {
+/* -- the closing line ----------------------------------------------------- */
+
+.closing {
+  margin: 46px 0 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--bq-green-deep);
+}
+
+/* -- responsive ----------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .headlineLine {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 900px) {
   .head {
     grid-template-columns: 1fr;
-    gap: 2.25rem;
+    gap: 1.75rem;
   }
 
   .introBlock {
     align-items: flex-start;
-  }
-
-  .intro {
-    max-width: 34rem;
+    padding-top: 0;
     text-align: left;
   }
 
   .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .headline,
-  .headlineMuted {
-    white-space: normal;
-  }
-
-  .headlineMuted {
-    align-items: flex-start;
-  }
-
-  .dash {
-    margin-top: 0.55em;
-  }
-
-  .cards {
     grid-template-columns: 1fr;
-    margin-top: 3.75rem;
+    gap: 16px;
   }
 
-  .folder {
-    height: 196px;
+  .card {
+    min-height: 0;
+    padding: 28px 24px 28px;
   }
 
-  .imageWrap {
-    height: clamp(150px, 45vw, 210px);
+  .mark {
+    top: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .title {
+    margin-top: 28px;
+  }
+
+  .desc {
+    max-width: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card:hover .image {
-    transform: none;
+  .card,
+  .step,
+  .title,
+  .desc {
+    transition: none;
   }
 }

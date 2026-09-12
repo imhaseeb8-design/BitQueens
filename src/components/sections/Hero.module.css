@@ -1,299 +1,263 @@
 /**
- * Hero — Figma 185:351, headline 184:346.
- * At 1440px: band y81–462; headline x72/y167, 64px sans / 74px serif;
- * card x869/y295, 499×358; stats x72/y523; closing rule y711.
- * Typography is scoped here while the rest of the page is migrated section by section.
+ * Hero — Figma 260:232 ("Swiss International Style / Trust Bar Variant").
+ *
+ * At the 1440 frame, measured from the top of this section (the 81px header
+ * sits above it): map 1160×653 at x612 / y25; trust bar x72 / y231; headline
+ * x72 / y288, 79px sans ×2 then 92px serif, 86px line pitch; CTAs y592; the
+ * section ends at y760 where the conference block begins.
+ *
+ * `.inner` is a size container, so every 1440-frame measure below is written
+ * as its share of the frame in `cqw` (value ÷ 1440 × 100). That keeps the map
+ * and the type in the frame's proportion at any width and freezes them at
+ * 1440, where `.inner` stops growing.
  */
 
 .hero {
   position: relative;
   background: var(--bq-canvas);
-  padding-bottom: clamp(2rem, 4.028vw, 3.625rem);
+  /* The map runs off the right of the frame; `clip` so the page does not grow
+     a horizontal scrollbar for it. */
+  overflow: clip;
 }
 
-/* -- the band ------------------------------------------------------------- */
-
-.band {
+.inner {
   position: relative;
-  /* 381 at the 1440 frame. */
-  height: clamp(260px, 26.5vw, 381px);
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  container-type: inline-size;
 }
 
-.bandImg {
-  object-fit: cover;
-  /* The frame crops to the middle of the artwork, where the sky meets the
-     hills. Cover from a 2.33:1 source into a 3.78:1 box keeps roughly the
-     centre 62% of the height. */
-  object-position: center center;
-}
+/* -- the map ------------------------------------------------------------- */
 
-/* Darkens the left, where the headline lands, and clears to nothing by the
-   right so the artwork is not flattened under a full-width wash.
-   Figma 130:200: a gradient to the left, transparent to 20% black. */
-.scrim {
+.map {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to left,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.2) 100%
-  );
+  z-index: 0;
+  top: 1.736cqw;
+  left: 42.5cqw;
+  width: 80.556cqw;
+  height: auto;
+  aspect-ratio: 2048 / 1153;
   pointer-events: none;
+  animation: bqHeroFade 1.2s var(--bq-ease) 200ms both;
 }
 
-.bandInner {
+/* -- the column ---------------------------------------------------------- */
+
+.content {
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  height: 100%;
-  max-width: var(--bq-max);
-  margin: 0 auto;
-  padding: clamp(2rem, 5.972vw, 5.375rem) var(--bq-gutter) 0;
+  padding: 16.042cqw var(--bq-gutter) 5.694cqw;
 }
 
-.headline {
+/* Trust bar: a tinted pill with a live dot (node 260:242). */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
+  padding: 9px 12px;
+  border-radius: 4px;
+  background: var(--bq-green-tint);
+  color: var(--bq-green-deep);
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  animation: bqHeroRise 800ms var(--bq-ease) both;
+}
+
+.signal {
+  position: relative;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bq-green-deep);
+}
+
+/* A ring breathes out of the dot every few seconds: the pill says the
+   community is live, so the dot behaves like it. */
+.signal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--bq-green-deep);
+  animation: bqSignal 2.8s ease-out 1s infinite;
+}
+
+@keyframes bqSignal {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  60%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* -- the headline -------------------------------------------------------- */
+
+.headline {
+  margin: 24px 0 0;
   font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(2rem, 4.444vw, 4rem);
+  /* 79.186 at the frame. */
+  font-size: 5.499cqw;
   font-weight: 400;
-  line-height: 1.125;
+  /* The frame pitches the three lines 86px apart, tighter than their 89px
+     line box. */
+  line-height: 1.086;
   letter-spacing: -0.025em;
-  color: var(--bq-canvas);
+  color: var(--bq-green-deep);
 }
 
 /* Each line is clipped so the reveal slides up out of nothing rather than
-   fading in place. */
+   fading in place. The clip box is let down 0.25em and pulled back by the same
+   margin: the 86px pitch is tighter than the glyphs, and without the room the
+   serif "y" loses its tail. */
 .lineMask {
   display: block;
   overflow: hidden;
-}
-
-.lineMask + .lineMask {
-  margin-top: -0.078125em;
-}
-
-.lineMask[data-font='serif'] .lineInner {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.15625em;
-  line-height: 0.972973;
+  padding-bottom: 0.25em;
+  margin-bottom: -0.25em;
 }
 
 .lineInner {
   display: block;
-  /* nowrap per the frame: the breaks are authored in content, and letting a
-     line wrap on its own would put copy over the bright right of the image. */
+  /* nowrap per the frame: the breaks are authored in content. */
   white-space: nowrap;
   animation: bqHeroLine 1s var(--bq-ease) both;
   animation-delay: calc(var(--i) * 100ms);
 }
 
+/* Serif at 91.559 over the sans 79.186 = 1.15625; the line-height is divided
+   by the same so all three lines keep the 86px pitch. */
+.lineMask[data-font='serif'] .lineInner {
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-size: 1.15625em;
+  line-height: 0.93924;
+}
+
 @keyframes bqHeroLine {
   from {
-    transform: translateY(110%);
+    /* Past the clip box's extra 0.25em, so nothing shows before the slide. */
+    transform: translateY(130%);
   }
   to {
     transform: translateY(0);
   }
 }
 
-/* -- stats and card ------------------------------------------------------- */
-
-.body {
-  position: relative;
-  z-index: 1;
-  box-sizing: border-box;
-  max-width: var(--bq-max);
-  margin: 0 auto;
-  padding: 0 var(--bq-gutter);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 742fr) minmax(0, 499fr);
-  column-gap: clamp(1.5rem, 0.5rem + 3.8vw, 3.4375rem);
-  /* Bottom-aligned, so only the card is tall enough to reach back up over the
-     band's edge while the figures stay on the page ground. */
-  align-items: end;
-  /* Lifts the row so the card overlaps the band by 167 at the 1440 frame. */
-  margin-top: clamp(-10.4375rem, -11.6vw, -5rem);
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: minmax(0, 210fr) repeat(2, minmax(0, 230fr));
-  max-width: 722px;
-  font-family: var(--bq-inter-tight), sans-serif;
-  gap: clamp(1rem, 0.4rem + 1.8vw, 1.625rem);
-  margin: 0;
-  /* Sits on the ground below the band, not lifted with the card. */
-  padding-top: clamp(3rem, 1rem + 8vw, 10.5rem);
-  padding-bottom: 7px;
-}
-
-.stat {
-  min-width: 0;
-}
-
-.statLabelGroup {
-  display: block;
-}
-
-.figure {
-  margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(2rem, 2.778vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  color: var(--bq-ink);
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.statLabel {
-  display: block;
-  margin-top: 0;
-  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
-  line-height: 1.2;
-  color: var(--bq-ink);
-}
-
-.statSupport {
-  max-width: 30ch;
-  margin: 10px 0 0;
-  font-size: 0.9375rem;
-  line-height: 1.47;
-  color: var(--bq-ink-45);
-  text-wrap: pretty;
-}
-
-/* -- the lede card -------------------------------------------------------- */
-
-.card {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  /* 66px top, 59px right, 65px bottom, 76px left at the frame. */
-  min-height: 358px;
-  padding: clamp(1.75rem, 4.583vw, 4.125rem)
-    clamp(1.5rem, 4.097vw, 3.6875rem)
-    clamp(1.75rem, 4.514vw, 4.0625rem)
-    clamp(1.5rem, 5.278vw, 4.75rem);
-  background: #f4f4f3;
-  text-align: right;
-}
-
-.lede {
-  max-width: 364px;
-  font-family: var(--bq-inter-tight), sans-serif;
-  margin: 0;
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
-  line-height: 1.4;
-  color: var(--bq-ink);
-  text-wrap: pretty;
-}
+/* -- the CTAs ------------------------------------------------------------ */
 
 .ctas {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 16px;
-  margin-top: 32px;
+  margin-top: 46px;
+  animation: bqHeroRise 800ms var(--bq-ease) 350ms both;
 }
 
-/* Match the frame's 48px CTA including its border; shared hover rules stay intact. */
-.primaryCta {
-  padding-block: 15px;
+/* Only what the frame changes on the shared Button: colour, corner and type.
+   The arrow shift and press feedback come from Button.module.css. Written as
+   `.ctas .x` so these outrank that module's single-class rules regardless of
+   which stylesheet the bundle emits first. */
+.ctas .primaryCta {
+  border: 0;
+  border-radius: 4px;
+  background: var(--bq-green-deep);
+  color: var(--bq-canvas);
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
 }
 
-/* -- the closing rule ----------------------------------------------------- */
-
-/* Figma 130:11 stacks a solid accent rule over a 25% ink one at the same
-   width, so the line reads as fully accent. The ink underneath is what shows
-   while the accent is still drawing itself in. */
-.rule {
-  position: relative;
-  height: 1px;
-  margin-top: clamp(2rem, 4.028vw, 3.625rem);
-  background: var(--bq-rule);
+/* A 16px text link (node 260:240), not a 48px control: the box shrinks to
+   its label so the column measures as the frame does. */
+.ctas .secondaryCta {
+  min-height: 0;
+  padding: 0 0 2px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--bq-ink-72);
 }
 
-.ruleAccent {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 100%;
-  background: var(--bq-accent);
-  transform-origin: left;
-  animation: bqRuleDraw 900ms var(--bq-ease) 300ms both;
+@media (hover: hover) and (pointer: fine) {
+  .ctas .primaryCta:hover {
+    background: var(--bq-ink);
+  }
+
+  .ctas .secondaryCta:hover {
+    color: var(--bq-green-deep);
+  }
 }
 
-@keyframes bqRuleDraw {
+/* -- entrance ------------------------------------------------------------ */
+
+@keyframes bqHeroRise {
   from {
-    transform: scaleX(0);
+    opacity: 0;
+    transform: translateY(14px);
   }
   to {
-    transform: scaleX(1);
+    opacity: 1;
+    transform: none;
   }
 }
 
-/* -- responsive ----------------------------------------------------------- */
+@keyframes bqHeroFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
-@media (max-width: 1080px) {
+/* -- responsive ---------------------------------------------------------- */
+
+/* Below this the frame's proportions stop working: 5.5cqw of headline is too
+   small to lead and the map's left edge lands on the copy. The map moves into
+   flow above the column, full width, and the type takes a floor. */
+@media (max-width: 720px) {
+  .map {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    margin-top: clamp(1rem, 4vw, 2rem);
+  }
+
+  .content {
+    padding-top: clamp(1.5rem, 5vw, 2.5rem);
+    padding-bottom: clamp(3rem, 10vw, 4.5rem);
+  }
+
   .headline {
-    /* The frame's breaks assume a wide band. Below this the longest line no
-       longer fits, so wrapping is allowed to take over. */
-    white-space: normal;
+    font-size: clamp(2.5rem, 11.5vw, 3.75rem);
   }
 
   .lineInner {
     white-space: normal;
   }
-}
-
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-    row-gap: clamp(2rem, 1.5rem + 3vw, 3rem);
-    /* No overlap in one column: the card would land on the headline rather
-       than beside it. */
-    margin-top: clamp(2rem, 1.5rem + 3vw, 3rem);
-  }
-
-  .stats {
-    padding-top: 0;
-    order: 2;
-  }
-
-  .card {
-    min-height: 0;
-    order: 1;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .lede {
-    max-width: none;
-  }
 
   .ctas {
-    align-items: flex-start;
-  }
-}
-
-@media (max-width: 620px) {
-  .stats {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    margin-top: 32px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lineInner {
-    animation: none;
-  }
-
-  .ruleAccent {
-    transform: scaleX(1);
+  .signal::after {
     animation: none;
   }
 }

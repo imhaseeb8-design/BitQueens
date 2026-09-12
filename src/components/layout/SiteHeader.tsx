@@ -4,20 +4,22 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { site } from '@/content/site';
+import { neueMontreal, interTight } from '@/styles/fonts';
 import styles from './SiteHeader.module.css';
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${neueMontreal.variable} ${interTight.variable}`}>
       <div className={`${styles.inner} ${open ? styles.open : ''}`}>
         <Link href="/" className={styles.logo} aria-label={`${site.name} home`}>
+          {/* The wordmark from Figma 260:346, as its vector. */}
           <Image
-            src="/bitqueens-logo.png"
+            src="/bitqueens-wordmark.svg"
             alt=""
-            width={438}
-            height={88}
+            width={120}
+            height={24}
             priority
           />
         </Link>

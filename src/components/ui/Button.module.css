@@ -108,6 +108,20 @@
   }
 }
 
+/* -- green: the deep-green block with the 4px corner (Figma 260:238 onward) */
+.green {
+  border: 0;
+  border-radius: 4px;
+  background: var(--bq-green-deep);
+  color: var(--bq-canvas);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .green:hover {
+    background: var(--bq-ink);
+  }
+}
+
 /* -- secondary: outlined, sits beside a primary -------------------------- */
 .secondary {
   background: transparent;

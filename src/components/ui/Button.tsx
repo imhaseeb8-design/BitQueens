@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import styles from './Button.module.css';
 
-type Variant = 'primary' | 'secondary' | 'link';
+type Variant = 'primary' | 'green' | 'secondary' | 'link';
 type Size = 'default' | 'compact';
 
 interface ButtonProps {

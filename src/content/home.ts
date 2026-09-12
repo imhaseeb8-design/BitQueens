@@ -16,41 +16,14 @@ import type { HomePage } from '@/lib/types';
 export const home: HomePage = {
   /* ---------------------------------------------------------- 01 · hero -- */
   hero: {
+    eyebrow: 'A women-first community',
     headlineLines: [
       { text: 'The digital', font: 'sans' },
       { text: 'economy. Open to', font: 'sans' },
       { text: 'every woman.', font: 'serif' },
     ],
-    body:
-      'BitQueens is an ecosystem helping women learn emerging technologies, ' +
-      'build careers and enter the digital economy across Africa and beyond.',
     primaryCta: { label: 'Join BitQueens', href: '/join' },
     secondaryCta: { label: 'Partner with us', href: '/partners' },
-    /* Three, not four: Figma 130:57 hides "3 cohorts delivered". The figure
-       is still true, it is just not carried here any more. */
-    stats: [
-      {
-        value: '2000+',
-        label: 'women trained',
-        support: 'Hands-on training in emerging technologies since 2023.',
-      },
-      {
-        value: '2',
-        label: 'campus chapters',
-        support: 'Student-led communities maintain momentum between cohorts.',
-      },
-      {
-        value: '8+',
-        label: 'countries reached',
-        support: 'Learners and chapters beyond where we started.',
-      },
-    ],
-    media: {
-      src: '/hero-bg.jpg',
-      alt: '',
-      width: 2880,
-      height: 1234,
-    },
   },
 
   /* ------------------------------------------------------- 02 · impact -- */
@@ -131,7 +104,7 @@ export const home: HomePage = {
   /* ----------------------------------------------------- 03 · ecosystem -- */
   ecosystem: {
     eyebrow: 'The Ecosystem',
-    headline: 'One ecosystem.',
+    headline: 'One ecosystem',
     headlineMuted: 'Four ways in.',
     intro:
       'Four divisions, one route each. Pick the door that matches where you ' +
@@ -139,116 +112,105 @@ export const home: HomePage = {
     pillars: [
       {
         name: 'Academy',
+        tag: 'Learn',
         description:
           'Cohort programmes, campus chapters and community learning, built for beginners. This is where you join.',
         cta: 'Join the Academy',
         href: '/academy',
+        itemsLabel: 'Explore the Academy',
         items: ['Cohort programmes', 'Campus chapters', 'Community learning'],
         color: '#3B6C9F',
         ctaFill: 'light',
       },
       {
         name: 'Innovations & Labs',
-        spineLabel: 'Innovations and Labs',
+        tag: 'Build',
         description:
           'Technology products, Chainelle, BitQueens AI and skills programmes. This is where you build.',
         cta: 'Explore Labs',
         href: '/innovations',
+        itemsLabel: 'Inside the Labs',
         items: ['Chainelle', 'BitQueens AI', 'Skills programmes'],
-        color: '#D96B33',
+        /* The 5px bars on the closed spines, from Figma 268:279: brand
+           orange, the blue, blush. */
+        color: '#E8641C',
         ctaFill: 'dark',
       },
       {
         name: 'BIET',
+        tag: 'Enrol',
         description:
           'The Institute of Emerging Technologies — certificates, diplomas and fellowships. This is where you enrol.',
         cta: 'View programmes',
         href: '/biet',
+        itemsLabel: 'Explore the programmes',
         items: ['Certificates', 'Diplomas', 'Fellowships'],
-        color: '#2A492F',
+        color: '#3B6C9F',
         ctaFill: 'light',
+        comingSoon: true,
       },
       {
         name: 'Foundation',
+        tag: 'Support',
         description:
           'Scholarships, advocacy and donations. This is where support is given and received.',
         cta: 'Support the mission',
         href: '/foundation',
+        itemsLabel: 'Explore the Foundation',
         items: ['Scholarships', 'Advocacy', 'Donations'],
-        /* Blush, not the sky blue this used to carry: the accordion frame
-           (143:195) needs four division colours that stay distinct as 4px
-           bars sitting side by side, and two blues did not. */
         color: '#F3AFBC',
         ctaFill: 'dark',
+        comingSoon: true,
       },
     ],
   },
 
 
   /* ---------------------------------------------------------- 05 · path -- */
-  /* The closing quote ("I belong here...") was dropped here when the section
-     was rebuilt from Figma 111:73, which does not include it. It was set in
-     quote marks with no attributor, so it read as a testimonial while
-     claiming nothing checkable. It is in git history if a named version of
-     it ever arrives. */
+  /* Rebuilt from Figma 288:442: three flat cards with a corner mark each,
+     no wave panels. The earlier closing quote ("I belong here...") stays
+     dropped: it was set in quote marks with no attributor. */
   path: {
-    eyebrow: 'Where you start',
-    headline: 'You do not need a',
-    headlineMuted: 'Technical Background...',
+    headline: 'Start where you are.',
+    headlineMuted: 'Grow into what’s next.',
     intro:
-      'Most people who join BitQueens start with no experience in emerging ' +
-      'technologies at all. The path is built for that.',
-    /* Panel heights rise across these three, which is what builds the
-       staircase. Order is load-bearing. */
+      'Most women who join BitQueens start with no experience in emerging ' +
+      'technology. The path is built for that.',
     steps: [
       {
         title: 'Join',
         description:
-          'Enter the community and pick a learning track that fits where you are.',
-        image: {
-          src: '/path-wave-01.jpg',
-          alt: '',
-          width: 1200,
-          height: 514,
-        },
+          'Enter the community and choose a learning track that fits where you are.',
+        mark: 'globe',
       },
       {
         title: 'Learn',
         description:
-          'Cohort programmes, mentorship and campus chapters, taught in plain language.',
-        image: {
-          src: '/path-wave-02.jpg',
-          alt: '',
-          width: 1200,
-          height: 672,
-        },
+          'Grow through cohort programmes, mentorship and campus chapters, taught in plain language.',
+        mark: 'dots',
       },
       {
         title: 'Build',
         description:
-          'Apply what you learn to real projects, careers and businesses.',
-        image: {
-          src: '/path-wave-03.jpg',
-          alt: '',
-          width: 1200,
-          height: 672,
-        },
+          'Put your learning to work in real projects, careers and businesses.',
+        mark: 'network',
       },
     ],
     cta: { label: 'Join BitQueens', href: '/join' },
+    closing: 'No experience required. Just a place to begin.',
   },
 
   /* ---------------------------------------------------- 06 · conference -- */
   conference: {
-    headlineLines: ['The BitQueens Conference'],
+    eyebrow: 'The BitQueens Conference',
+    headlineLines: ['A seat at the', 'future of tech.'],
     body:
-      'Our flagship event unites women in emerging tech with supporting ' +
-      'institutions, partners, and technologists.',
+      'Our flagship gathering connects women in emerging tech with the ' +
+      'people, ideas and opportunities shaping what comes next.',
     /* Says which facts are still open, in the shape they will be answered in.
        Replacing "To be announced" with a real date needs no layout change. */
     details: [
-      { key: 'Date', value: 'To be announced' },
-      { key: 'Time', value: 'To be announced' },
+      { key: 'Next edition', value: 'To be announced' },
       { key: 'Registration', value: 'Interest list open' },
     ],
     cta: { label: 'Explore the Conference', href: '/conference' },
@@ -271,28 +233,24 @@ export const home: HomePage = {
 
   /* ------------------------------------------------------- 07 · founder -- */
   founder: {
-    eyebrow: 'The Founder',
-    headline: 'Founded by Kristie.',
+    headline: 'The story behind',
+    headlineSerif: 'BitQueens.',
     name: 'Kristie',
     role: 'Founder, BitQueens',
+    storyLines: ['Kristie built the on-ramp', 'she couldn’t find.'],
     // NEEDS CONFIRMATION — placeholder bio, awaiting Kristie's own copy.
     bio:
       'Kristie founded BitQueens after watching capable women be priced and ' +
       'talked out of an industry that badly needs them. She builds the on-ramp ' +
-      'she could not find: programmes that assume no prior knowledge, taught in ' +
+      'she couldn’t find: programmes that assume no prior knowledge, taught in ' +
       'plain language, with a community attached.',
-    credentials: [],
-    // Deliberately empty: "The future should not be built without women" is
-    // the closing headline in section 10, and repeating it three sections
-    // earlier blunts both. Add a different line in Kristie's own words.
-    quote: undefined,
     primaryCta: { label: 'Book Kristie as a speaker', href: '/contact' },
     secondaryCta: { label: 'Read the full story', href: '/about' },
     portrait: {
-      src: '/kristie-founder.png',
+      src: '/kristie-portrait.jpg',
       alt: 'Kristie, founder of BitQueens',
-      width: 404,
-      height: 474,
+      width: 1250,
+      height: 1300,
     },
   },
 

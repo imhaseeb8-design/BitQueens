@@ -231,6 +231,22 @@ Desktop panels keep at least 520px height so wrapped copy and CTAs fit; mobile
 still shows every panel in a stack. The fixed inner widths and 500ms width
 animation are retained. Earlier measurements below describe the previous frame.
 
+**Ecosystem globe — code, turning**
+
+The dotted globe behind the ecosystem headline is now drawn by
+`ui/DottedGlobe` (a canvas) instead of `public/globe-dotted.png`, and it turns
+slowly left to right. The dots are the PNG's own: `scripts/extract-globe-dots.py`
+(python3 + numpy, nothing else) reads the PNG, finds every dot, fits the sphere
+and its tilted polar axis, lifts each dot back onto the sphere as (lat, lon) and
+mirrors the front hemisphere onto the back so the loop is seamless. At rest the
+canvas is the PNG dot for dot; edge dots squash into the same hairline arcs and
+open out as they turn to the front. Output goes to `ui/dottedGlobeData.ts`
+(~30 KB, base64 int16 pairs) — regenerate by re-running the script, never by
+hand. The PNG stays in `public/` only as the script's source. Motion pauses
+off screen and is off entirely under `prefers-reduced-motion`. Props: `period`
+(seconds per turn, default 150) and `color`; opacity and placement still come
+from the section's `.globe` rule.
+
 **Navbar** - Figma node 132:5. Verified: 81 tall, wordmark 22, nav links 28
 apart and right-aligned 47 clear of the red block, JOIN label bold at 0.14em
 with a 1px underline 3px beneath. The red block still bleeds off the viewport

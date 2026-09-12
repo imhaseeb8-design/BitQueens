@@ -65,6 +65,8 @@ export interface ProofSection {
 export interface Pillar {
   name: string;
   spineLabel?: string;
+  /** The one-word verb after the number in the panel eyebrow: "01 / LEARN". */
+  tag: string;
   description: string;
   cta: string;
   href: string;
@@ -78,9 +80,13 @@ export interface Pillar {
    * not something a luminance threshold gets right at these mid-tones.
    */
   ctaFill: 'light' | 'dark';
+  /** Heading over the items row: "Explore the Academy" (node 268:289). */
+  itemsLabel: string;
+  /** Shows a small "Coming soon" tag in the panel's top-right corner. */
+  comingSoon?: boolean;
   /**
    * What the division actually contains. Three per pillar in the accordion
-   * (Figma 143:150), listed as a ruled table rather than prose, so a reader
+   * (Figma 268:279), set as a numbered row rather than prose, so a reader
    * scanning for one specific thing can find it without reading a sentence.
    */
   items: string[];
@@ -97,21 +103,19 @@ export interface EcosystemSection {
 export interface PathStep {
   title: string;
   description: string;
-  /**
-   * The wave panel under this step. Their heights are what build the
-   * staircase: bottom-aligned columns plus a taller panel each time is what
-   * lifts the copy above it. Decorative, so `alt` is empty by design.
-   */
-  image: ImageSlot;
+  /** Which of the three corner marks the card carries (see PathMarks.tsx). */
+  mark: 'globe' | 'dots' | 'network';
 }
 
 export interface PathSection {
-  eyebrow: string;
   headline: string;
+  /** The serif second line. */
   headlineMuted: string;
   intro: string;
   steps: PathStep[];
   cta: NavLink;
+  /** The one centred line under the cards. */
+  closing: string;
 }
 
 export interface ImageSlot {
@@ -141,7 +145,8 @@ export interface ConferenceDetail {
 }
 
 export interface ConferenceSection {
-  /** Set as explicit lines: the frame breaks this over two (node 130:259). */
+  eyebrow: string;
+  /** Set as explicit lines: the frame breaks this over two (node 268:152). */
   headlineLines: string[];
   body: string;
   details: ConferenceDetail[];
@@ -160,13 +165,14 @@ export interface ConferenceSection {
 }
 
 export interface FounderSection {
-  eyebrow: string;
+  /** The centred section title: sans, then the serif word. */
   headline: string;
+  headlineSerif: string;
   name: string;
   role: string;
+  /** The panel's own headline, one entry per line (node 281:415). */
+  storyLines: string[];
   bio: string;
-  credentials: string[];
-  quote?: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
   portrait: ImageSlot;
@@ -251,25 +257,17 @@ export interface ImpactSection {
 }
 
 export interface HeroSection {
+  /** The trust-bar pill above the headline ("A women-first community"). */
+  eyebrow: string;
   /**
    * The headline, one entry per rendered line. The breaks are explicit rather
-   * than left to a measure because the copy sits over artwork: where a line
-   * ends decides how much of it lands on the darkened left of the image, so
-   * the break is a design decision, not a wrapping accident. Figma 130:30
-   * sets all three lines `nowrap`.
+   * than left to a measure: the copy sits beside the dotted map, so where a
+   * line ends decides how far it runs under the dots. Figma 260:232 sets all
+   * three lines `nowrap`.
    */
   headlineLines: { text: string; font: 'sans' | 'serif' }[];
-  body: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
-  /**
-   * The figures under the band. These moved here from the Impact section when
-   * the hero absorbed them (Figma 132:8); `impact` in this file is kept but no
-   * longer rendered.
-   */
-  stats: ImpactStat[];
-  /** The full-bleed artwork the headline is set over. */
-  media: ImageSlot;
 }
 
 export interface HomePage {
