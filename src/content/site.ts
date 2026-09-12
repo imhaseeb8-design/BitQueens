@@ -19,6 +19,9 @@ export const site: SiteConfig = {
   description:
     'BitQueens is an ecosystem helping women learn emerging technologies, ' +
     'build careers and enter the digital economy — across Africa and beyond.',
+  purpose:
+    'A women-first ecosystem for learning, building and creating ' +
+    'opportunities in emerging technology.',
 
   nav: [
     { label: 'Academy', href: '/academy' },
@@ -58,14 +61,13 @@ export const footerLinks = {
     { label: 'BIET', href: '/biet' },
     { label: 'Foundation', href: '/foundation' },
   ],
-  company: [
+  /* The footer's second column (Figma 298:51). Contact lives in the third,
+     with the mailbox. */
+  explore: [
+    { label: 'About', href: '/about' },
     { label: 'Conference', href: '/conference' },
     { label: 'Partners', href: '/partners' },
     { label: 'Blog', href: '/blog' },
-    { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Brand assets', href: '/brand' },
-    { label: 'Careers', href: '/careers' },
   ],
 };
 

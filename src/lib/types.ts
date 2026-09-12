@@ -19,6 +19,8 @@ export interface SiteConfig {
   name: string;
   tagline: string;
   description: string;
+  /** The one line under the wordmark in the footer (Figma 298:44). */
+  purpose: string;
   nav: NavLink[];
   primaryCta: NavLink;
   secondaryCta: NavLink;
@@ -181,22 +183,18 @@ export interface FounderSection {
 export interface PartnerTier {
   title: string;
   description: string;
-  href: string;
-}
-
-export interface Partner {
-  name: string;
-  logo: string;
-  url: string;
+  /** The 4px bar along the top of the tile (Figma 293:458). */
+  color: Hex;
 }
 
 export interface PartnersSection {
-  eyebrow: string;
+  /** The two-line headline: sans, then the serif line. */
   headline: string;
+  headlineSerif: string;
   body: string;
-  cta: NavLink;
+  /** The green invitation card under the copy (node 293:477). */
+  invitation: { title: string; body: string; cta: NavLink };
   tiers: PartnerTier[];
-  partners: Partner[];
 }
 
 export interface Post {
@@ -211,23 +209,33 @@ export interface Post {
 
 /** Produced by BitQueens Media, but visitors only ever see "Blog". */
 export interface BlogSection {
-  eyebrow: string;
+  /** The two-line headline: sans, then the serif line (Figma 295:746). */
   headline: string;
-  intro: string;
+  headlineSerif: string;
   cta: NavLink;
   posts: Post[];
 }
 
-export interface JoinDoor {
-  title: string;
+export interface PlaceCard {
+  /** After the number in the eyebrow: "01 / FOR LEARNERS". */
+  tag: string;
+  /** One entry per line (node 297:755 breaks the title by hand). */
+  titleLines: string[];
   body: string;
   cta: NavLink;
+  /** The green card carries a cream button; the cream one a green button. */
+  tone: 'green' | 'cream';
+}
+
+export interface PlaceSection {
+  /** The one serif line that pins mid-screen before the cards slide over it. */
+  headline: string;
+  cards: [PlaceCard, PlaceCard];
 }
 
 export interface JoinSection {
   eyebrow: string;
   headline: string;
-  doors: [JoinDoor, JoinDoor];
   newsletter: {
     label: string;
     placeholder: string;
@@ -280,5 +288,6 @@ export interface HomePage {
   founder: FounderSection;
   partners: PartnersSection;
   blog: BlogSection;
+  place: PlaceSection;
   join: JoinSection;
 }

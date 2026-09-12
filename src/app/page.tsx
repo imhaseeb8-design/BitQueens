@@ -3,9 +3,9 @@ import { Conference } from '@/components/sections/Conference';
 import { Ecosystem } from '@/components/sections/Ecosystem';
 import { Founder } from '@/components/sections/Founder';
 import { Hero } from '@/components/sections/Hero';
-import { Join } from '@/components/sections/Join';
 import { Partners } from '@/components/sections/Partners';
 import { Path } from '@/components/sections/Path';
+import { Place } from '@/components/sections/Place';
 import { home } from '@/content/home';
 import { homeLayout } from '@/content/layout';
 
@@ -13,8 +13,8 @@ import { homeLayout } from '@/content/layout';
  * The homepage.
  *
  * Order is the argument: who we are and the numbers behind it → the flagship
- * moment → what the ecosystem is → that you can start → who is behind it →
- * who backs it → what we publish → the two ways in.
+ * moment → what the ecosystem is → that you can start → who can build with
+ * us → who is behind it → what we publish → your place, and the two doors.
  *
  * Conference sits directly under the hero because Figma 130:9 places it
  * there, immediately after the hero's closing rule.
@@ -41,10 +41,14 @@ export default function HomePage() {
       <Conference content={home.conference} />
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
       <Path content={home.path} />
-      <Founder content={home.founder} />
       <Partners content={home.partners} />
+      <Founder content={home.founder} />
       <Blog content={home.blog} />
-      <Join content={home.join} />
+      {/* Join is hidden: the two doors it held are the Place cards, and the
+          footer (297:783) follows them directly. The component and its
+          content are kept - restore this line to bring the newsletter back.
+          <Join content={home.join} /> */}
+      <Place content={home.place} />
     </>
   );
 }

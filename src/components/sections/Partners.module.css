@@ -1,147 +1,252 @@
+/**
+ * Partners — Figma 295:491.
+ *
+ * At 1440, from the section's top: the left column at x72, 572 wide —
+ * headline 74px sans over 82 then 83px serif over 90, pitched 80; the body
+ * 21 under it, 18px over 28; the green card 53 under that, 533 × 223, padded
+ * 33 / 38 / 32, title 33px over 40, subline 12 under it, CTA 28 under that at
+ * 254 × 54. The right column at x800, 568 wide: four tiles 165 tall on a 43
+ * gap, each with a 4px colour bar, the number at x31 / y29 and the copy at
+ * x80, title 31px over 37 at y25, description 18px over 27 at y72.
+ */
+
 .section {
-  /* clip preserves the cropped wordmark without becoming a sticky scroll container. */
-  overflow: clip;
+  /* The shared Button's on-dark cream is this page's off-white. */
+  --bq-cream: var(--bq-canvas);
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding-bottom: clamp(7rem, 10.25vw, 9.25rem);
+  /* 87 above the headline at the frame, after the path's own bottom padding;
+     the same below so the founder lands the distance it did before. */
+  padding: clamp(4rem, 6.042vw, 5.4375rem) 0 clamp(5rem, 8.6vw, 9.5rem);
 }
 
 .inner {
-  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 572fr) minmax(0, 568fr);
+  column-gap: clamp(2.5rem, 10.833vw, 9.75rem);
+  align-items: start;
   box-sizing: border-box;
   max-width: var(--bq-max);
   margin: 0 auto;
   padding: 0 var(--bq-gutter);
 }
 
-.wordmark {
+/* -- the lead ------------------------------------------------------------- */
+
+/* Pinned while the tiles scroll past it. The grid row is as tall as the
+   tile column, and a sticky item can only travel inside its own grid area,
+   so the lead holds until its bottom meets the last tile's bottom and then
+   the whole section leaves together. The offset centres it in the viewport
+   where there is room (280 is half its height at the frame) and never lets
+   it closer than 2rem to the top. */
+.lead {
   position: sticky;
-  top: max(1rem, calc(50svh - 0.55em));
-  z-index: 0;
-  margin: 0;
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: clamp(7rem, 16.67vw, 15rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: rgba(0, 0, 0, 0.1);
-  text-align: center;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.card {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: min(826px, 100%);
-  min-height: 498px;
-  /* Let the wordmark settle in the viewport before the card enters below it. */
-  margin: clamp(14rem, 38svh, 34rem) auto 0;
-  padding: 58px 100px;
-  background: #fff;
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.eyebrow {
-  margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: 1.125rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--bq-conference-green);
+  top: max(2rem, calc(50vh - 280px));
+  align-self: start;
+  min-width: 0;
 }
 
 .headline {
-  max-width: 574px;
-  margin: 20px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(2.25rem, 3.2vw, 2.875rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.headline span {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.174em;
-  color: var(--bq-accent);
-}
-
-.body {
-  max-width: 626px;
-  margin: 14px 0 38px;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 1.125rem;
-  line-height: 1.4;
-  letter-spacing: -0.02em;
-  color: rgba(0, 0, 0, 0.6);
-  text-wrap: pretty;
-}
-
-.audiences {
   display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin: 40px 0 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 1rem;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-  color: rgba(0, 0, 0, 0.5);
+  flex-direction: column;
+  margin: 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  /* 74 at the frame. */
+  font-size: clamp(2.75rem, 5.139vw, 4.625rem);
+  font-weight: 400;
+  line-height: 1.108;
+  letter-spacing: -0.0405em;
+  color: var(--bq-green-deep);
+}
+
+.headlineLine {
+  display: block;
   white-space: nowrap;
 }
 
-@media (max-width: 860px) {
-  .wordmark {
-    font-size: clamp(5rem, 17vw, 9rem);
-  }
+/* 83 over 90 at the frame; pitched 80, two tighter than the first line's box. */
+.serif {
+  margin-top: -2px;
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-size: 1.1216em;
+  line-height: 1.0843;
+  letter-spacing: 0;
+}
 
-  .card {
-    padding: 3.5rem clamp(1.5rem, 8vw, 4rem);
-  }
+.body {
+  max-width: 572px;
+  margin: 21px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.556;
+  color: var(--bq-ink);
+  text-wrap: pretty;
+}
 
-  .audiences {
-    flex-wrap: wrap;
-    row-gap: 10px;
+/* -- the invitation card -------------------------------------------------- */
+
+.invitation {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 533px;
+  min-height: 223px;
+  margin-top: 53px;
+  /* 33 / 38 / 32 at the frame. */
+  padding: 33px 38px 32px;
+  background: var(--bq-green-deep);
+  color: var(--bq-canvas);
+}
+
+.invitationTitle {
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  /* 33 over 40, light, at the frame. */
+  font-size: clamp(1.5rem, 2.292vw, 2.0625rem);
+  font-weight: 300;
+  line-height: 1.212;
+  letter-spacing: -0.024em;
+  color: var(--bq-canvas);
+}
+
+.invitationBody {
+  margin: 12px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.412;
+  color: var(--bq-green-mint);
+  text-wrap: pretty;
+}
+
+/* On top of the shared Button (arrow shift and all): the frame's cream
+   254 × 54 block with a green label (node 293:480) and the site's 4px corner.
+   `.invitation .cta` outranks the Button module's `.onDark.primary`. */
+.invitation .cta {
+  margin-top: 28px;
+  min-height: 0;
+  padding: 17px 22px;
+  border: 0;
+  border-radius: 4px;
+  color: var(--bq-green-deep);
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .invitation .cta:hover {
+    background: var(--bq-green-mint);
+  }
+}
+
+/* -- the tiles ------------------------------------------------------------ */
+
+.tiles {
+  display: flex;
+  flex-direction: column;
+  gap: 43px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.tile {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  /* The number column is 49 wide (copy starts at x80 against the 31 inset). */
+  grid-template-columns: 49px minmax(0, 1fr);
+  align-items: start;
+  min-height: 165px;
+  padding: 25px 40px 32px 31px;
+  background: var(--bq-ecosystem-panel);
+}
+
+/* The partner's colour, 4px along the top edge. */
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--accent);
+}
+
+.tileNum {
+  /* Its box sits 4 lower than the title's so the two share a baseline. */
+  padding-top: 4px;
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-size: 1.125rem;
+  line-height: 1.2;
+  color: var(--bq-green-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.tileCopy {
+  min-width: 0;
+}
+
+.tileTitle {
+  margin: 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  /* 31 over 37 at the frame. */
+  font-size: clamp(1.5rem, 2.153vw, 1.9375rem);
+  font-weight: 400;
+  line-height: 1.194;
+  letter-spacing: -0.0226em;
+  color: var(--bq-green-deep);
+}
+
+.tileDesc {
+  max-width: 428px;
+  margin: 10px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.5;
+  color: var(--bq-ink);
+  text-wrap: pretty;
+}
+
+/* -- responsive ----------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .headlineLine {
     white-space: normal;
   }
 }
 
-@media (max-width: 540px) {
-  .section {
-    padding-top: 2rem;
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
   }
 
-  .wordmark {
-    font-size: 4.75rem;
-    text-align: left;
+  /* One column: nothing to pin against. */
+  .lead {
+    position: static;
   }
 
-  .card {
+  .invitation {
+    max-width: none;
     min-height: 0;
-    padding: 3rem 1.25rem;
+    margin-top: 32px;
+    padding: 28px 24px;
   }
 
-  .body {
-    margin-bottom: 2rem;
+  .tiles {
+    gap: 16px;
   }
 
-  .audiences {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+  .tile {
+    min-height: 0;
+    padding: 22px 24px 24px;
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .tileDesc {
+    max-width: none;
   }
 }

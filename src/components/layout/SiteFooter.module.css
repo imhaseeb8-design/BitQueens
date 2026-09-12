@@ -1,104 +1,212 @@
+/**
+ * Footer — Figma 297:783, block 298:41.
+ *
+ * At 1440, 1296 wide, from the top hairline: wordmark 132 × 26 at y35 and
+ * the purpose line 16px over 25 at y72, 391 wide; the social marks 24px at
+ * y186, 43 apart. Columns at x526 / x791 / x1050: 12px headers at y35, 16px
+ * links from y79 on a 38 pitch. Legal hairline at y285, the 13px legal row
+ * at y306, 40 under it. Then the large wordmark, 51 below, with its lower
+ * 91px past the bottom of the page.
+ *
+ * The top padding is the 172 between the place cards and the hairline in
+ * the frame; it lives here so every page ends the same distance from it.
+ */
+
 .footer {
+  position: relative;
+  overflow: hidden;
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  border-top: 1px solid var(--bq-ink-14);
+  padding-top: clamp(5rem, 11.944vw, 10.75rem);
 }
 
 .inner {
   box-sizing: border-box;
   max-width: var(--bq-max);
   margin: 0 auto;
-  padding: clamp(3rem, 2rem + 3vw, 5rem) var(--bq-gutter)
-    clamp(2rem, 1.5rem + 2vw, 3rem);
+  padding: 0 var(--bq-gutter);
 }
 
-.top {
+/* The hairline is on the grid, so it runs the 1296 content width. */
+.grid {
   display: grid;
-  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
-  gap: clamp(2rem, 1rem + 5vw, 5rem);
+  grid-template-columns: minmax(0, 526fr) minmax(0, 265fr) minmax(0, 259fr) minmax(0, 246fr);
   align-items: start;
+  padding-top: 35px;
+  border-top: 1px solid var(--bq-green-deep);
+}
+
+/* -- brand ---------------------------------------------------------------- */
+
+.brand {
+  min-width: 0;
+}
+
+/* Block, so the link is exactly the wordmark's 26px and nothing sits on a
+   baseline under it. */
+.logo {
+  display: block;
+  width: 132px;
 }
 
 .logo img {
-  height: 22px;
-  width: auto;
+  width: 132px;
+  height: auto;
 }
 
-.tagline {
-  max-width: 30ch;
-  margin: 1.5rem 0 0;
-  font-size: var(--bq-t-body-sm);
-  line-height: 1.55;
-  color: var(--bq-ink-66);
+.purpose {
+  max-width: 391px;
+  margin: 11px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  line-height: 1.5625;
+  color: var(--bq-green-deep);
+  text-wrap: pretty;
 }
 
-.columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+.social {
+  display: flex;
+  gap: 19px;
+  /* y186 against the purpose line's box ending at y122. */
+  margin: 64px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socialLink {
+  display: block;
+  padding: 2px;
+  margin: -2px;
+  color: var(--bq-green-deep);
+  transition: color 300ms var(--bq-ease);
+}
+
+.socialLink svg {
+  display: block;
+}
+
+/* -- columns -------------------------------------------------------------- */
+
+.column {
+  min-width: 0;
 }
 
 .colTitle {
-  margin: 0 0 18px;
-  font-size: var(--bq-t-eyebrow);
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  line-height: 1.25;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--bq-ink-42);
+  color: var(--bq-green-deep);
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
+  margin: 29px 0 0;
+  padding: 0;
+  list-style: none;
 }
 
+/* Block, so each row is the link's own 22px and the 38 pitch holds. */
 .link {
-  font-size: var(--bq-t-body-sm);
-  color: var(--bq-ink-72);
-  transition: color 250ms var(--bq-ease);
-  width: fit-content;
+  display: block;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  line-height: 1.375;
+  color: var(--bq-ink);
+  transition: color 300ms var(--bq-ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .link:hover {
-    color: var(--bq-accent);
+  .link:hover,
+  .socialLink:hover {
+    color: var(--bq-green-deep);
+  }
+
+  .socialLink:hover {
+    color: var(--bq-blue-slate);
   }
 }
 
-.bottom {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 2rem;
-  align-items: baseline;
-  margin-top: clamp(2.5rem, 2rem + 3vw, 4rem);
-  padding-top: 24px;
-  border-top: 1px solid var(--bq-ink-14);
-}
+/* -- legal ---------------------------------------------------------------- */
 
 .legal {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  flex-wrap: wrap;
+  /* The hairline sits 70 under the columns' last row; 21 to the text and 40
+     under it. */
+  margin-top: 70px;
+  padding: 21px 0 40px;
+  border-top: 1px solid var(--bq-green-deep);
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.46;
+  color: #53645d;
+}
+
+.entities,
+.copyright {
   margin: 0;
-  font-size: var(--bq-t-meta);
-  line-height: 1.7;
-  letter-spacing: 0.04em;
-  color: var(--bq-ink-50);
 }
 
-.jurisdiction {
-  margin-left: auto;
-  font-size: var(--bq-t-meta);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--bq-ink-42);
+.legalSep {
+  margin: 0 0.9em;
 }
 
-@media (max-width: 820px) {
-  .top {
-    grid-template-columns: 1fr;
+.legalDot {
+  margin: 0 0.6em;
+}
+
+/* -- the large wordmark ---------------------------------------------------- */
+
+/* Set at the content width and let run off the bottom: 165 of its 256px
+   show. Clipped by the footer's own overflow. */
+.mark {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  height: clamp(60px, 11.458vw, 165px);
+  margin: clamp(1.5rem, 3.542vw, 3.1875rem) auto 0;
+  padding: 0 var(--bq-gutter);
+  overflow: hidden;
+}
+
+.markImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* -- responsive ----------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem 1.5rem;
   }
 
-  .jurisdiction {
-    margin-left: 0;
+  .brand {
+    grid-column: 1 / -1;
+  }
+
+  .social {
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 540px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .legal {
+    margin-top: 48px;
+    padding-bottom: 32px;
   }
 }

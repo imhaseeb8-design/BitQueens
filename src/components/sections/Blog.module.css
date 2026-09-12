@@ -18,29 +18,48 @@
   gap: 3rem;
 }
 
+/* The hero's headline, one size for one: 79.186 sans over 91.559 serif,
+   pitched 86 (Figma 295:746). */
 .headline {
-  max-width: 651px;
+  display: flex;
+  flex-direction: column;
   margin: 0;
   font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(2.25rem, 2.92vw, 2.625rem);
+  font-size: clamp(2.75rem, 5.499vw, 4.95rem);
   font-weight: 400;
-  line-height: 1.07;
-  letter-spacing: -0.028em;
-  text-wrap: balance;
+  line-height: 1.086;
+  letter-spacing: -0.025em;
+  color: var(--bq-green-deep);
 }
 
+.headlineLine {
+  display: block;
+  white-space: nowrap;
+}
+
+.serif {
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-size: 1.15625em;
+  line-height: 0.93924;
+}
+
+/* Sits against the headline's bottom edge (node 295:496 ends 13 above the
+   serif line's box). */
 .latest {
   flex: none;
+  margin-bottom: 13px;
   font-family: var(--bq-neue-montreal), sans-serif;
   font-size: 0.75rem;
+  color: #111;
   text-transform: uppercase;
 }
 
+/* 49 under the headline at the frame; 12 between cards. */
 .posts {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 48px;
+  margin-top: 49px;
 }
 
 .post {
@@ -101,11 +120,15 @@
   }
 
   .post:hover .title {
-    color: var(--bq-accent);
+    color: var(--bq-green-deep);
   }
 }
 
 @media (max-width: 980px) {
+  .headlineLine {
+    white-space: normal;
+  }
+
   .posts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 3.5rem 16px;

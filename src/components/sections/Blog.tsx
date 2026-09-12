@@ -2,10 +2,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import type { BlogSection } from '@/lib/types';
-import { interTight, neueMontreal } from '@/styles/fonts';
+import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './Blog.module.css';
 
-/** Insights grid from Figma nodes 219:58 and 219:65–96. */
+/**
+ * Blog — Figma 295:748.
+ *
+ * The hero's two-line headline treatment (sans over serif, 86px pitch) with
+ * the "read our latest" link tucked against its bottom-right, then four story
+ * cards: square artwork, tag pills, title. The artwork PNGs carry their own
+ * arrow badge.
+ */
 export function Blog({ content }: { content: BlogSection }) {
   if (content.posts.length === 0) return null;
 
@@ -13,11 +20,16 @@ export function Blog({ content }: { content: BlogSection }) {
     <section
       id="blog"
       aria-label="Stories and perspectives"
-      className={`${styles.section} ${neueMontreal.variable} ${interTight.variable}`}
+      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.head}>
-          <h2 className={styles.headline}>{content.headline}</h2>
+          <h2 className={styles.headline}>
+            <span className={styles.headlineLine}>{content.headline}</span>
+            <span className={`${styles.headlineLine} ${styles.serif}`}>
+              {content.headlineSerif}
+            </span>
+          </h2>
           <Button
             href={content.cta.href}
             variant="link"

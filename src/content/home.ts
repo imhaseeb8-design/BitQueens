@@ -256,38 +256,48 @@ export const home: HomePage = {
 
   /* ------------------------------------------------------ 08 · partners -- */
   partners: {
-    eyebrow: 'Partners',
-    headline: 'Help more women enter the future of technology',
+    headline: 'The future opens',
+    headlineSerif: 'when we build together.',
     body:
-      'For universities, governments, technology companies, NGOs, funders and ' +
-      'ecosystem partners looking to expand access to emerging technology education.',
-    cta: { label: 'Partner with BitQueens', href: '/partners' },
+      'If you share knowledge, host a space, open networks, or support access, ' +
+      'you belong here. Together, we help more women learn and build in tech.',
+    invitation: {
+      title: 'Have another idea? Let’s talk.',
+      body: 'There’s no single way to build with BitQueens.',
+      cta: { label: 'Partner with BitQueens', href: '/partners' },
+    },
+    /* In number order. The frame (295:491) stacks 04 above 03; the numbers
+       are what the reader follows, so they ascend here. */
     tiers: [
       {
-        title: 'Technology Companies',
-        description: 'Governments, universities and public agencies.',
-        href: '/partners#institutional',
+        title: 'Companies',
+        description: 'Share expertise, tools, mentors, and real-world opportunities.',
+        color: '#3B6C9F',
       },
       {
-        title: 'Universities & Governments',
-        description: 'Technology companies and industry partners.',
-        href: '/partners#corporate',
+        title: 'Universities',
+        description:
+          'Bring learning and community to campus through chapters and programmes.',
+        color: '#2A492F',
       },
       {
-        title: 'Sponsors & Funders',
-        description: 'Conference, programme and scholarship sponsors.',
-        href: '/partners#sponsorship',
+        title: 'Communities & networks',
+        description: 'Co-host gatherings and connect women to wider networks.',
+        color: '#E8641C',
+      },
+      {
+        title: 'Funders & institutions',
+        description:
+          'Support accessible learning and the partnerships that help it grow.',
+        color: '#F3AFBC',
       },
     ],
-    partners: [],
   },
 
   /* ---------------------------------------------------------- 09 · blog -- */
   blog: {
-    eyebrow: 'Blog',
-    headline:
-      'Stories, ideas, and perspectives shaping the future of women in tech.',
-    intro: 'Articles, updates and educational content from across the ecosystem.',
+    headline: 'Stories, Ideas and',
+    headlineSerif: 'Perspectives...',
     cta: { label: 'Read our latest', href: '/blog' },
     posts: [
       {
@@ -349,24 +359,37 @@ export const home: HomePage = {
     ],
   },
 
+  /* --------------------------------------------------------- 09b · place -- */
+  place: {
+    headline: 'Your place is here',
+    /* Figma 297:850: the two doors, learners then partners. */
+    cards: [
+      {
+        tag: 'For learners',
+        titleLines: ['Start learning.', 'Find your people.'],
+        body:
+          'Explore emerging technology with a community that welcomes you ' +
+          'from day one. No technical background needed.',
+        cta: { label: 'Join BitQueens', href: '/join' },
+        tone: 'green',
+      },
+      {
+        tag: 'For partners',
+        titleLines: ['Help open', 'more doors.'],
+        body:
+          'Bring your expertise, networks, space, or support to help more ' +
+          'women learn and build in technology.',
+        cta: { label: 'Partner with BitQueens', href: '/partners' },
+        tone: 'cream',
+      },
+    ],
+  },
+
   /* ---------------------------------------------------------- 10 · join -- */
   join: {
     eyebrow: 'Join',
     headline: 'The future should not be built without women.',
-    doors: [
-      {
-        title: 'Start learning.',
-        body:
-          'Join the community, pick a track and begin with no technical background.',
-        cta: { label: 'Join BitQueens', href: '/join' },
-      },
-      {
-        title: 'Work with us.',
-        body:
-          'For governments, universities, NGOs, technology companies and sponsors.',
-        cta: { label: 'Partner with us', href: '/partners' },
-      },
-    ],
+    /* The two doors moved up into `place` (Figma 297:850). */
     newsletter: {
       label: 'Stay updated',
       placeholder: 'Your email address',

@@ -1,0 +1,238 @@
+/**
+ * Place — "Your place is here", then the two doors (Figma 297:850).
+ *
+ * At 1440: the globe 640 across, centred, 9% like the ecosystem's; the line
+ * in Instrument Serif caps at 180px, which sets it to the 1296 content width,
+ * centred on the globe's equator. The cards: two at 636 × 376 on a 24 gap,
+ * padded 33 / 38 / 29; eyebrow 12px, title 43px over 50, body 18px over 27
+ * at 548 wide, CTA 53 tall.
+ *
+ * The pin: `.stage` is sticky with its top offset chosen so its centre lands
+ * on the viewport's centre; the line and the globe are centred in it. `.band`
+ * follows in flow with room above it, so the stage holds while the cards
+ * rise over the line. A sticky box can only travel inside its containing
+ * block, and the band is the last thing in the section's content box, so the
+ * pin releases when the band's bottom meets the stage's bottom. The stage's
+ * height is what sets where that happens: with the cards 376 tall, a stage
+ * of 2 × (376 + d) releases when the cards' top is d below the line's
+ * centre — d is chosen so they cover the last 17px of the letters (Figma
+ * 297:783 has the cards 17 into the caps), and then everything scrolls.
+ */
+
+.section {
+  --line-size: clamp(2.5rem, 12.5vw, 11.25rem);
+  --globe-h: clamp(260px, 44.444vw, 640px);
+  --cards-h: 376px;
+  /* The cap height is ~0.7em; half of it less the 17px overlap. */
+  --stage-h: calc(2 * (var(--cards-h) + 0.35 * var(--line-size) - 17px));
+  position: relative;
+  background: var(--bq-canvas);
+  color: var(--bq-green-deep);
+  padding-top: clamp(2rem, 4.167vw, 3.75rem);
+}
+
+/* -- the pinned line ------------------------------------------------------ */
+
+.stage {
+  position: sticky;
+  top: calc(50vh - var(--stage-h) / 2);
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  height: var(--stage-h);
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+/* Centred on the stage, so the line sits on its equator. */
+.globe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--globe-h);
+  height: auto;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+.headline {
+  position: relative;
+  margin: 0;
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  /* 180 at the frame, which sets "YOUR PLACE IS HERE" to the 1296 content
+     width. Fluid, so it stays one line and stays edge to edge. */
+  font-size: var(--line-size);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* -- the band that slides over it ----------------------------------------- */
+
+/* Above the stage but see-through: only the cards themselves cover the
+   line, so it shows between them. The top margin is the hold: how far the
+   reader scrolls with the line pinned before the cards enter. No bottom
+   padding — the band's bottom is the release point, and the footer carries
+   the space below. */
+.band {
+  position: relative;
+  z-index: 1;
+  margin-top: 40vh;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+  list-style: none;
+}
+
+.card {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: var(--cards-h);
+  /* 33 / 38 / 29 / 38 at the frame. */
+  padding: 33px 38px 29px;
+  min-width: 0;
+}
+
+.card[data-tone='green'] {
+  background: var(--bq-green-deep);
+  color: var(--bq-canvas);
+}
+
+.card[data-tone='cream'] {
+  background: var(--bq-cream);
+  color: var(--bq-green-deep);
+}
+
+/* The partners card wears the slate blue as a 5px bar along its top
+   (node 297:761). */
+.card[data-tone='cream']::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: var(--bq-blue-slate);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.card[data-tone='green'] .eyebrow {
+  color: var(--bq-green-mint);
+}
+
+.eyebrowSlash {
+  margin: 0 0.75em;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 0 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  /* 43 over 50 at the frame. */
+  font-size: clamp(1.75rem, 2.986vw, 2.6875rem);
+  font-weight: 400;
+  line-height: 1.163;
+  letter-spacing: -0.026em;
+  color: inherit;
+}
+
+.titleLine {
+  display: block;
+}
+
+.body {
+  max-width: 548px;
+  margin: 28px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.card[data-tone='cream'] .body {
+  color: var(--bq-ink);
+}
+
+/* On top of the shared Button (arrow shift and all): the frame's 53px block
+   with a 16px label (nodes 297:757 / 297:765) and the site's 4px corner.
+   `.card .cta` outranks the Button module's `.onDark.primary`. The green
+   card's cream button is this page's off-white with a green label. */
+.card .cta {
+  margin-top: 32px;
+  min-height: 0;
+  padding: 16px 22px;
+  border: 0;
+  border-radius: 4px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.card[data-tone='green'] .cta {
+  background: var(--bq-canvas);
+  color: var(--bq-green-deep);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card[data-tone='green'] .cta:hover {
+    background: var(--bq-green-mint);
+  }
+}
+
+/* -- responsive ----------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* One column and no pin: the line is small here and the cards are tall. */
+  .stage {
+    position: static;
+  }
+
+  .band {
+    margin-top: clamp(2rem, 6vw, 3.5rem);
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 0;
+    padding: 28px 24px;
+  }
+
+  .title {
+    margin-top: 24px;
+  }
+
+  .body {
+    max-width: none;
+  }
+}
