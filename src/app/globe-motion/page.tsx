@@ -6,7 +6,7 @@ export default function GlobeMotionPage() {
     <main className={styles.page}>
       <AnimatedDotGlobe
         className={styles.globe}
-        duration={14}
+        duration={2.4}
         alt="BitQueens dotted globe"
       />
     </main>
