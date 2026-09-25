@@ -38,7 +38,7 @@
   height: auto;
   aspect-ratio: 2048 / 1153;
   transform: translateX(-50%);
-  opacity: 0.22;
+  opacity: 0.3;
   pointer-events: none;
   animation: bqHeroFade 1.2s var(--bq-ease) 200ms both;
 }
@@ -287,7 +287,7 @@
     opacity: 0;
   }
   to {
-    opacity: 0.22;
+    opacity: 0.3;
   }
 }
 

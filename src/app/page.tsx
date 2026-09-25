@@ -1,4 +1,4 @@
-import { AudienceProvider } from '@/components/audience/AudienceProvider';
+import { AudienceOnly, AudienceProvider } from '@/components/audience/AudienceProvider';
 import { Blog } from '@/components/sections/Blog';
 import { Conference } from '@/components/sections/Conference';
 import { Ecosystem } from '@/components/sections/Ecosystem';
@@ -42,7 +42,11 @@ export default function HomePage() {
       <Conference content={home.conference} />
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
       <Path content={home.path} />
-      <Partners content={home.partners} />
+      {/* Learners only: on the partner side the ecosystem accordion already
+          names these same four, so the section would say it twice. */}
+      <AudienceOnly audience="learn">
+        <Partners content={home.partners} />
+      </AudienceOnly>
       <Founder content={home.founder} />
       <Blog content={home.blog} />
       {/* Join is hidden: the two doors it held are the Place cards, and the

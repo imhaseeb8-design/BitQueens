@@ -35,6 +35,23 @@ export function AudienceProvider({ children }: { children: ReactNode }) {
   return <AudienceContext.Provider value={value}>{children}</AudienceContext.Provider>;
 }
 
+/**
+ * Renders its children only for one side of the switch.
+ *
+ * The children are still Server Components — they arrive already rendered
+ * and this only decides whether to mount them — so a section can be dropped
+ * for one audience without being rewritten as a client component.
+ */
+export function AudienceOnly({
+  audience,
+  children,
+}: {
+  audience: Audience;
+  children: ReactNode;
+}) {
+  return useAudience().audience === audience ? <>{children}</> : null;
+}
+
 export function useAudience(): AudienceValue {
   const value = useContext(AudienceContext);
   if (!value) {
