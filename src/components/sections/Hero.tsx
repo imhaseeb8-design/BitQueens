@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useId, useState } from 'react';
+import { useId } from 'react';
+import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
 import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import type { HeroSection } from '@/lib/types';
@@ -17,10 +18,12 @@ import styles from './Hero.module.css';
  * with a wash over its lower half so the copy never fights the dots. A
  * centred caption and a row of collaborator logos close the section.
  *
- * Client Component: the switch is the one piece of state on the page.
+ * Client Component. The switch does not keep its own state: it sets the
+ * page's audience, so a section further down can answer the same question.
  */
 export function Hero({ content }: { content: HeroSection }) {
-  const [active, setActive] = useState(0);
+  const { audience: id, setAudience } = useAudience();
+  const active = Math.max(0, content.audiences.findIndex((a) => a.id === id));
   const audience = content.audiences[active];
   const baseId = useId();
 
@@ -47,7 +50,7 @@ export function Hero({ content }: { content: HeroSection }) {
                 aria-controls={`${baseId}-panel`}
                 tabIndex={i === active ? 0 : -1}
                 className={styles.option}
-                onClick={() => setActive(i)}
+                onClick={() => setAudience(item.id)}
               >
                 {item.switchLabel}
               </button>

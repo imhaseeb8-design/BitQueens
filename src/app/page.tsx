@@ -1,3 +1,4 @@
+import { AudienceProvider } from '@/components/audience/AudienceProvider';
 import { Blog } from '@/components/sections/Blog';
 import { Conference } from '@/components/sections/Conference';
 import { Ecosystem } from '@/components/sections/Ecosystem';
@@ -28,7 +29,7 @@ import { homeLayout } from '@/content/layout';
  */
 export default function HomePage() {
   return (
-    <>
+    <AudienceProvider>
       <Hero content={home.hero} />
       {/* Impact is hidden. The 130:9 hero carried these figures; the 260:232
           hero does not, so the band could come back. The component and its
@@ -49,6 +50,6 @@ export default function HomePage() {
           content are kept - restore this line to bring the newsletter back.
           <Join content={home.join} /> */}
       <Place content={home.place} />
-    </>
+    </AudienceProvider>
   );
 }

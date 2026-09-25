@@ -128,67 +128,139 @@ export const home: HomePage = {
   },
 
   /* ----------------------------------------------------- 03 · ecosystem -- */
+  /* Two sets, one per audience: the hero's switch picks which the
+     accordion shows (Figma 268:279 for learners, 333:28 for partners). */
   ecosystem: {
-    eyebrow: 'The Ecosystem',
-    headline: 'One ecosystem',
-    headlineMuted: 'Four ways in.',
-    intro:
-      'Four divisions, one route each. Pick the door that matches where you ' +
-      'are today.',
-    pillars: [
-      {
-        name: 'Academy',
-        tag: 'Learn',
-        description:
-          'Cohort programmes, campus chapters and community learning, built for beginners. This is where you join.',
-        cta: 'Join the Academy',
-        href: '/academy',
-        itemsLabel: 'Explore the Academy',
-        items: ['Cohort programmes', 'Campus chapters', 'Community learning'],
-        color: '#3B6C9F',
-        ctaFill: 'light',
-      },
-      {
-        name: 'Innovations & Labs',
-        tag: 'Build',
-        description:
-          'Technology products, Chainelle, BitQueens AI and skills programmes. This is where you build.',
-        cta: 'Explore Labs',
-        href: '/innovations',
-        itemsLabel: 'Inside the Labs',
-        items: ['Chainelle', 'BitQueens AI', 'Skills programmes'],
-        /* The 5px bars on the closed spines, from Figma 268:279: brand
-           orange, the blue, blush. */
-        color: '#E8641C',
-        ctaFill: 'dark',
-      },
-      {
-        name: 'BIET',
-        tag: 'Enrol',
-        description:
-          'The Institute of Emerging Technologies — certificates, diplomas and fellowships. This is where you enrol.',
-        cta: 'View programmes',
-        href: '/biet',
-        itemsLabel: 'Explore the programmes',
-        items: ['Certificates', 'Diplomas', 'Fellowships'],
-        color: '#3B6C9F',
-        ctaFill: 'light',
-        comingSoon: true,
-      },
-      {
-        name: 'Foundation',
-        tag: 'Support',
-        description:
-          'Scholarships, advocacy and donations. This is where support is given and received.',
-        cta: 'Support the mission',
-        href: '/foundation',
-        itemsLabel: 'Explore the Foundation',
-        items: ['Scholarships', 'Advocacy', 'Donations'],
-        color: '#F3AFBC',
-        ctaFill: 'dark',
-        comingSoon: true,
-      },
-    ],
+    learn: {
+      eyebrow: 'The Ecosystem',
+      headline: 'One ecosystem',
+      headlineMuted: 'Four ways in.',
+      intro:
+        'Four divisions, one route each. Pick the door that matches where you ' +
+        'are today.',
+      pillars: [
+        {
+          name: 'Academy',
+          tag: 'Learn',
+          description:
+            'Cohort programmes, campus chapters and community learning, built for beginners. This is where you join.',
+          cta: 'Join the Academy',
+          href: '/academy',
+          itemsLabel: 'Explore the Academy',
+          items: ['Cohort programmes', 'Campus chapters', 'Community learning'],
+          color: '#3B6C9F',
+          ctaFill: 'light',
+        },
+        {
+          name: 'Innovations & Labs',
+          tag: 'Build',
+          description:
+            'Technology products, Chainelle, BitQueens AI and skills programmes. This is where you build.',
+          cta: 'Explore Labs',
+          href: '/innovations',
+          itemsLabel: 'Inside the Labs',
+          items: ['Chainelle', 'BitQueens AI', 'Skills programmes'],
+          /* The 5px bars on the closed spines, from Figma 268:279: brand
+             orange, the blue, blush. */
+          color: '#E8641C',
+          ctaFill: 'dark',
+        },
+        {
+          name: 'BIET',
+          tag: 'Enrol',
+          description:
+            'The Institute of Emerging Technologies — certificates, diplomas and fellowships. This is where you enrol.',
+          cta: 'View programmes',
+          href: '/biet',
+          itemsLabel: 'Explore the programmes',
+          items: ['Certificates', 'Diplomas', 'Fellowships'],
+          color: '#3B6C9F',
+          ctaFill: 'light',
+          comingSoon: true,
+        },
+        {
+          name: 'Foundation',
+          tag: 'Support',
+          description:
+            'Scholarships, advocacy and donations. This is where support is given and received.',
+          cta: 'Support the mission',
+          href: '/foundation',
+          itemsLabel: 'Explore the Foundation',
+          items: ['Scholarships', 'Advocacy', 'Donations'],
+          color: '#F3AFBC',
+          ctaFill: 'dark',
+          comingSoon: true,
+        },
+      ],
+    },
+
+    /* Figma 333:28 ("Partner paths / Accordion"). Only Companies is open in
+       that frame; the other three take their descriptions from the partner
+       tiles in 295:491, which name the same four audiences in Kristie's own
+       words. Their three "ways to contribute" are drafted from those lines
+       and want a read before launch. */
+    partner: {
+      eyebrow: 'Partner paths',
+      headline: 'Build together',
+      headlineMuted: 'Four ways in.',
+      intro:
+        'Four kinds of partner, one route each. Pick the one that matches ' +
+        'what you can offer.',
+      pillars: [
+        {
+          name: 'Companies',
+          tag: 'Partner',
+          description:
+            'Create practical pathways into emerging technology through ' +
+            'mentors, projects, sponsored programmes and career opportunities.',
+          cta: 'Partner with us',
+          href: '/partners',
+          itemsLabel: 'Ways to contribute',
+          items: ['Sponsor programmes', 'Share expertise', 'Open career paths'],
+          color: '#3B6C9F',
+          ctaFill: 'light',
+        },
+        {
+          name: 'Universities',
+          tag: 'Host',
+          description:
+            'Bring learning and community to campus through chapters and ' +
+            'programmes, taught alongside what students already study.',
+          cta: 'Partner with us',
+          href: '/partners',
+          itemsLabel: 'Ways to contribute',
+          items: ['Campus chapters', 'Host a programme', 'Faculty collaboration'],
+          color: '#E8641C',
+          ctaFill: 'dark',
+        },
+        {
+          name: 'Networks',
+          tag: 'Convene',
+          description:
+            'Co-host gatherings and connect women to wider networks, so a ' +
+            'cohort does not end when the programme does.',
+          cta: 'Partner with us',
+          href: '/partners',
+          itemsLabel: 'Ways to contribute',
+          items: ['Co-host gatherings', 'Open your network', 'Amplify cohorts'],
+          color: '#3B6C9F',
+          ctaFill: 'light',
+        },
+        {
+          name: 'Funders',
+          tag: 'Fund',
+          description:
+            'Support accessible learning and the partnerships that help it ' +
+            'grow, from single scholarships to a whole cohort.',
+          cta: 'Partner with us',
+          href: '/partners',
+          itemsLabel: 'Ways to contribute',
+          items: ['Fund scholarships', 'Back a cohort', 'Support operations'],
+          color: '#F3AFBC',
+          ctaFill: 'dark',
+        },
+      ],
+    },
   },
 
 
@@ -197,33 +269,70 @@ export const home: HomePage = {
      no wave panels. The earlier closing quote ("I belong here...") stays
      dropped: it was set in quote marks with no attributor. */
   path: {
-    headline: 'Start where you are.',
-    headlineMuted: 'Grow into what’s next.',
-    intro:
-      'Most women who join BitQueens start with no experience in emerging ' +
-      'technology. The path is built for that.',
-    steps: [
-      {
-        title: 'Join',
-        description:
-          'Enter the community and choose a learning track that fits where you are.',
-        mark: 'globe',
-      },
-      {
-        title: 'Learn',
-        description:
-          'Grow through cohort programmes, mentorship and campus chapters, taught in plain language.',
-        mark: 'dots',
-      },
-      {
-        title: 'Build',
-        description:
-          'Put your learning to work in real projects, careers and businesses.',
-        mark: 'network',
-      },
-    ],
-    cta: { label: 'Join BitQueens', href: '/join' },
-    closing: 'No experience required. Just a place to begin.',
+    learn: {
+      headline: 'Start where you are.',
+      headlineMuted: 'Grow into what’s next.',
+      intro:
+        'Most women who join BitQueens start with no experience in emerging ' +
+        'technology. The path is built for that.',
+      steps: [
+        {
+          title: 'Join',
+          description:
+            'Enter the community and choose a learning track that fits where you are.',
+          mark: 'globe',
+        },
+        {
+          title: 'Learn',
+          description:
+            'Grow through cohort programmes, mentorship and campus chapters, taught in plain language.',
+          mark: 'dots',
+        },
+        {
+          title: 'Build',
+          description:
+            'Put your learning to work in real projects, careers and businesses.',
+          mark: 'network',
+        },
+      ],
+      cta: { label: 'Join BitQueens', href: '/join' },
+      closing: 'No experience required. Just a place to begin.',
+    },
+
+    /* Figma 335:28 ("Partner process / Three steps"). The marks repeat in the
+       same order; only the words change. */
+    partner: {
+      headline: 'Start with alignment.',
+      headlineMuted: 'Build for what lasts.',
+      intro:
+        'A clear process turns shared intent into practical delivery and ' +
+        'lasting value.',
+      steps: [
+        {
+          title: 'Align',
+          description:
+            'Agree the outcome, audience, roles, timeline and what success ' +
+            'should look like.',
+          mark: 'globe',
+        },
+        {
+          title: 'Co-create',
+          description:
+            'Shape the programme around your resources, the community’s ' +
+            'needs and the opportunity you want to create.',
+          mark: 'dots',
+        },
+        {
+          title: 'Deliver',
+          description:
+            'Launch the work, stay close to progress and learn together from ' +
+            'the outcome.',
+          mark: 'network',
+        },
+      ],
+      cta: { label: 'Talk with us', href: '/contact' },
+      closing: 'Clear scope. Shared ownership. Lasting value.',
+    },
   },
 
   /* ---------------------------------------------------- 06 · conference -- */

@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react';
+import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
 import { DottedGlobe } from '@/components/ui/DottedGlobe';
-import type { EcosystemSection } from '@/lib/types';
+import type { EcosystemByAudience } from '@/lib/types';
 import { neueMontreal, instrumentSerif, interTight } from '@/styles/fonts';
 import styles from './EcosystemAccordion.module.css';
 
@@ -19,6 +20,9 @@ const AUTO_ADVANCE_MS = 3000;
  * the open width and clipped by its own `overflow: hidden`; only the width
  * animates, so no copy rewraps mid-motion.
  *
+ * Which four it shows follows the hero's switch: the learner set names the
+ * divisions, the partner set names the kinds of partner (Figma 333:28).
+ *
  * The tabs also turn on their own, every 3s, so the row reads as a loop
  * rather than a control someone has to discover. That stops the moment it
  * would fight the reader: while the pointer or keyboard focus is inside the
@@ -26,8 +30,18 @@ const AUTO_ADVANCE_MS = 3000;
  * motion. A click restarts the clock from that tab, so a chosen tab holds for
  * a full beat before the loop moves on.
  */
-export function EcosystemAccordion({ content }: { content: EcosystemSection }) {
+export function EcosystemAccordion({ content: byAudience }: { content: EcosystemByAudience }) {
+  const { audience } = useAudience();
+  const content = byAudience[audience];
   const [active, setActive] = useState(0);
+  // A different audience is a different set of pillars, so open the first
+  // one again. Adjusted during render rather than in an effect: React
+  // re-runs this pass before painting, so the old pillar never shows.
+  const [lastAudience, setLastAudience] = useState(audience);
+  if (lastAudience !== audience) {
+    setLastAudience(audience);
+    setActive(0);
+  }
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(false);
   const rowRef = useRef<HTMLDivElement>(null);

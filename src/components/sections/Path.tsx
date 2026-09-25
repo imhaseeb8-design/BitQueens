@@ -1,7 +1,10 @@
+'use client';
+
+import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
 import { DotFieldMark, DotGlobeMark, NetworkMark } from '@/components/ui/PathMarks';
 import { Reveal } from '@/components/ui/Reveal';
-import type { PathSection, PathStep } from '@/lib/types';
+import type { PathByAudience, PathStep } from '@/lib/types';
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './Path.module.css';
 
@@ -20,9 +23,14 @@ const MARKS: Record<PathStep['mark'], typeof DotGlobeMark> = {
  * card becomes under the pointer — and its corner mark takes one turn while
  * it does. Below, one centred line closes the section.
  *
- * Server Component: the hover and the spin are CSS.
+ * Which three it shows follows the hero's switch: the learner path is the
+ * way into the community, the partner path the way into a programme (Figma
+ * 335:28). The hover and the spin are still pure CSS.
  */
-export function Path({ content }: { content: PathSection }) {
+export function Path({ content: byAudience }: { content: PathByAudience }) {
+  const { audience } = useAudience();
+  const content = byAudience[audience];
+
   return (
     <section
       id="path"

@@ -102,6 +102,12 @@ export interface EcosystemSection {
   pillars: Pillar[];
 }
 
+/** The accordion is written twice, once per side of the hero's switch. */
+export interface EcosystemByAudience {
+  learn: EcosystemSection;
+  partner: EcosystemSection;
+}
+
 export interface PathStep {
   title: string;
   description: string;
@@ -118,6 +124,12 @@ export interface PathSection {
   cta: NavLink;
   /** The one centred line under the cards. */
   closing: string;
+}
+
+/** The path is written twice, once per side of the hero's switch. */
+export interface PathByAudience {
+  learn: PathSection;
+  partner: PathSection;
 }
 
 export interface ImageSlot {
@@ -299,8 +311,8 @@ export interface HomePage {
   hero: HeroSection;
   impact: ImpactSection;
   proof: ProofSection;
-  ecosystem: EcosystemSection;
-  path: PathSection;
+  ecosystem: EcosystemByAudience;
+  path: PathByAudience;
   conference: ConferenceSection;
   founder: FounderSection;
   partners: PartnersSection;

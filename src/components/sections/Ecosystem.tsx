@@ -3,7 +3,7 @@ import { EcosystemAccordion } from './EcosystemAccordion';
 import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 import { Section } from '@/components/ui/Section';
-import type { EcosystemSection } from '@/lib/types';
+import type { EcosystemByAudience } from '@/lib/types';
 import styles from './Ecosystem.module.css';
 
 export type EcosystemVariant =
@@ -14,17 +14,20 @@ export type EcosystemVariant =
   | 'accordion';
 
 export function Ecosystem({
-  content,
+  content: byAudience,
   variant = 'doors',
 }: {
-  content: EcosystemSection;
+  content: EcosystemByAudience;
   variant?: EcosystemVariant;
 }) {
-  /* The accordion needs state, so it is its own client leaf. Everything else
-     here stays a Server Component. */
+  /* The accordion needs state — both its own and the page's audience — so it
+     is its own client leaf, and it takes both sets. Everything else here
+     stays a Server Component, and shows the learner set. */
   if (variant === 'accordion') {
-    return <EcosystemAccordion content={content} />;
+    return <EcosystemAccordion content={byAudience} />;
   }
+
+  const content = byAudience.learn;
 
   if (variant === 'stackSide') {
     return (
