@@ -264,18 +264,35 @@ export interface ImpactSection {
   stats: ImpactStat[];
 }
 
-export interface HeroSection {
-  /** The trust-bar pill above the headline ("A women-first community"). */
-  eyebrow: string;
+export interface HeroAudience {
+  id: 'learn' | 'partner';
+  /** Its label in the switch above the headline. */
+  switchLabel: string;
   /**
-   * The headline, one entry per rendered line. The breaks are explicit rather
-   * than left to a measure: the copy sits beside the dotted map, so where a
-   * line ends decides how far it runs under the dots. Figma 260:232 sets all
-   * three lines `nowrap`.
+   * One string, not authored lines: the frame (322:127) lets the headline
+   * wrap inside a 684 measure rather than breaking it by hand.
    */
-  headlineLines: { text: string; font: 'sans' | 'serif' }[];
+  headline: string;
+  body: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
+}
+
+export interface Collaborator {
+  name: string;
+  logo: string;
+  width: number;
+  height: number;
+}
+
+export interface HeroSection {
+  /** The two sides of the switch: learners first (Figma 322:107 / 322:153). */
+  audiences: [HeroAudience, HeroAudience];
+  collaborators: {
+    /** One line, centred above the logo row. */
+    label: string;
+    logos: Collaborator[];
+  };
 }
 
 export interface HomePage {

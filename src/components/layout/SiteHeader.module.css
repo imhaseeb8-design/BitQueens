@@ -70,26 +70,29 @@
   }
 }
 
-/* A 167 × 42 green button with 4px corners (node 260:254), the same shape
-   as the hero's primary CTA one size down. */
+/* A 146 × 42 outlined button with 4px corners (node 322:120). It was a solid
+   green block; the 322:107 homepage lightens it so the hero's own primary CTA
+   is the only filled green thing above the fold. */
 .cta {
   margin-left: auto;
   flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 167px;
+  min-width: 146px;
   min-height: 42px;
-  padding: 0 24px;
+  padding: 0 20px;
+  border: 1px solid var(--bq-green-deep);
   border-radius: 4px;
-  background: var(--bq-green-deep);
-  color: var(--bq-canvas);
-  font-family: var(--bq-neue-montreal), sans-serif;
+  background: transparent;
+  color: var(--bq-green-deep);
+  font-family: var(--bq-inter-tight), sans-serif;
   font-size: 0.875rem;
   letter-spacing: 0.02em;
   white-space: nowrap;
   transition:
     background-color 300ms var(--bq-ease),
+    color 300ms var(--bq-ease),
     transform var(--bq-dur-press) var(--bq-ease);
 }
 
@@ -103,7 +106,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .cta:hover {
-    background: var(--bq-ink);
+    background: var(--bq-green-deep);
+    color: var(--bq-canvas);
   }
 }
 

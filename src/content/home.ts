@@ -16,14 +16,40 @@ import type { HomePage } from '@/lib/types';
 export const home: HomePage = {
   /* ---------------------------------------------------------- 01 · hero -- */
   hero: {
-    eyebrow: 'A women-first community',
-    headlineLines: [
-      { text: 'The digital', font: 'sans' },
-      { text: 'economy. Open to', font: 'sans' },
-      { text: 'every woman.', font: 'serif' },
+    audiences: [
+      {
+        id: 'learn',
+        switchLabel: 'I’m here to learn',
+        headline: 'Learn emerging tech. Build what comes next.',
+        body:
+          'Gain practical skills, build real projects, and grow with a ' +
+          'women-first community across Africa and beyond.',
+        primaryCta: { label: 'Explore the Academy', href: '/academy' },
+        secondaryCta: { label: 'Join the community', href: '/join' },
+      },
+      {
+        id: 'partner',
+        switchLabel: 'I’m here to partner',
+        headline: 'Back women building Africa’s digital future.',
+        body:
+          'Partner with BitQueens to bring practical emerging-tech education, ' +
+          'community, and opportunity to more women.',
+        primaryCta: { label: 'Partner with BitQueens', href: '/partners' },
+        secondaryCta: { label: 'See our impact', href: '/about' },
+      },
     ],
-    primaryCta: { label: 'Join BitQueens', href: '/join' },
-    secondaryCta: { label: 'Partner with us', href: '/partners' },
+    collaborators: {
+      label: 'Organizations we’ve worked with',
+      /* Real logos, supplied in the frame (322:139). Each at its artwork's
+         own ratio, sized so the four carry one optical weight: the crests
+         stand taller than the wordmarks to hold the same presence. */
+      logos: [
+        { name: 'SI<3>', logo: '/partner-si3.png', width: 120, height: 30 },
+        { name: 'FUT Minna', logo: '/partner-fut-minna.png', width: 45, height: 48 },
+        { name: 'Women Biz', logo: '/partner-women-biz.png', width: 48, height: 48 },
+        { name: 'Women of Web3', logo: '/partner-women-of-web3.png', width: 110, height: 46 },
+      ],
+    },
   },
 
   /* ------------------------------------------------------- 02 · impact -- */

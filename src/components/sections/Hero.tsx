@@ -1,65 +1,104 @@
-import type { CSSProperties } from 'react';
+'use client';
+
+import Image from 'next/image';
+import { useId, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import type { HeroSection } from '@/lib/types';
-import { neueMontreal, instrumentSerif, interTight } from '@/styles/fonts';
+import { interTight, neueMontreal } from '@/styles/fonts';
 import styles from './Hero.module.css';
 
 /**
- * Hero - implemented from Figma node 260:232 ("Swiss International Style /
- * Trust Bar Variant").
+ * Hero — Figma 322:107 ("Homepage / Learners") and 322:153 ("/ Partners").
  *
- * The page ground carries everything: no band, no artwork. A dotted world map
- * sits to the right and bleeds off the frame; the trust-bar pill, the
- * three-line headline and the two CTAs stack down the left at the gutter.
+ * Everything is centred on the page ground: a switch that names who the
+ * reader is, then the headline, the lede and two CTAs, all of which the
+ * switch swaps. The animated dotted map sits behind them, centred and faint,
+ * with a wash over its lower half so the copy never fights the dots. A
+ * centred caption and a row of collaborator logos close the section.
  *
- * The map is the frame's static PNG replaced by the canvas `GlobalDotMap`, at
- * the PNG's exact box (1160 x 653 at x612 / y25 in the 1440 frame). Its
- * geometry is expressed in `cqw` against `.inner`, so it holds that position
- * at every width up to 1440 and stops scaling past it, like the frame.
- *
- * Server Component: the only client leaf is the map's canvas.
+ * Client Component: the switch is the one piece of state on the page.
  */
 export function Hero({ content }: { content: HeroSection }) {
+  const [active, setActive] = useState(0);
+  const audience = content.audiences[active];
+  const baseId = useId();
+
   return (
     <section
-      className={`${styles.hero} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.hero} ${neueMontreal.variable} ${interTight.variable}`}
       aria-label="BitQueens"
     >
-      <div className={styles.inner}>
+      <div className={styles.band}>
         <GlobalDotMap className={styles.map} />
+        {/* Clears at the top and thickens downward, so the map fades into the
+            ground rather than stopping at an edge (node 322:110). */}
+        <span className={styles.wash} aria-hidden="true" />
 
-        <div className={styles.content}>
-          <p className={styles.eyebrow}>
-            <span className={styles.signal} aria-hidden="true" />
-            {content.eyebrow}
-          </p>
-
-          <h1 className={styles.headline}>
-            {content.headlineLines.map((line, i) => (
-              <span key={line.text} className={styles.lineMask} data-font={line.font}>
-                <span
-                  className={styles.lineInner}
-                  style={{ '--i': i } as CSSProperties}
-                >
-                  {line.text}
-                </span>
-              </span>
+        <div className={styles.inner}>
+          <div className={styles.switch} role="tablist" aria-label="Who you are">
+            {content.audiences.map((item, i) => (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                id={`${baseId}-tab-${item.id}`}
+                aria-selected={i === active}
+                aria-controls={`${baseId}-panel`}
+                tabIndex={i === active ? 0 : -1}
+                className={styles.option}
+                onClick={() => setActive(i)}
+              >
+                {item.switchLabel}
+              </button>
             ))}
-          </h1>
+          </div>
 
-          {/* Both are the shared Button so they carry the site's arrow shift
-              on hover; the frame's green, corner and type are set in the
-              module. */}
-          <div className={styles.ctas}>
-            <Button href={content.primaryCta.href} size="compact" className={styles.primaryCta}>
-              {content.primaryCta.label}
-            </Button>
-            <Button href={content.secondaryCta.href} variant="link" className={styles.secondaryCta}>
-              {content.secondaryCta.label}
-            </Button>
+          {/* Keyed on the audience so the entrance replays on every switch;
+              React remounts the panel rather than mutating it in place. */}
+          <div
+            key={audience.id}
+            id={`${baseId}-panel`}
+            role="tabpanel"
+            aria-labelledby={`${baseId}-tab-${audience.id}`}
+            className={styles.panel}
+          >
+            <h1 className={styles.headline}>{audience.headline}</h1>
+            <p className={styles.body}>{audience.body}</p>
+
+            <div className={styles.ctas}>
+              <Button href={audience.primaryCta.href} size="compact" className={styles.primaryCta}>
+                {audience.primaryCta.label}
+              </Button>
+              <Button
+                href={audience.secondaryCta.href}
+                variant="secondary"
+                size="compact"
+                className={styles.secondaryCta}
+              >
+                {audience.secondaryCta.label}
+              </Button>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className={styles.strip}>
+        <p className={styles.stripLabel}>{content.collaborators.label}</p>
+
+        <ul className={styles.logos}>
+          {content.collaborators.logos.map((logo) => (
+            <li key={logo.name} className={styles.logo}>
+              <Image
+                src={logo.logo}
+                alt={logo.name}
+                width={logo.width}
+                height={logo.height}
+                className={styles.logoImg}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
