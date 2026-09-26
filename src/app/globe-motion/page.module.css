@@ -1,0 +1,14 @@
+.page {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(1.5rem, 5vw, 5rem);
+  background:
+    radial-gradient(circle at 52% 44%, rgba(67, 125, 102, 0.34), transparent 38%),
+    #063f34;
+}
+
+.globe {
+  width: min(78vw, 620px);
+}
