@@ -378,6 +378,15 @@
   flex-shrink: 0;
 }
 
+/* A coming-soon pillar's CTA is not a link: same block, muted, and
+   explicitly non-interactive so nobody tabs into a dead control. Sits after
+   `.cta` so it wins at equal specificity. */
+.panelInner .ctaDisabled {
+  background: var(--bq-ink-14);
+  color: var(--bq-ink-50);
+  cursor: not-allowed;
+}
+
 /* -- responsive ----------------------------------------------------------- */
 
 /* Below this the open panel has no room left once three spines are taken

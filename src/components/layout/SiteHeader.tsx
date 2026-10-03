@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { site } from '@/content/site';
+import { PartnerLink } from '@/components/ui/PartnerLink';
 import { neueMontreal, interTight } from '@/styles/fonts';
 import styles from './SiteHeader.module.css';
 
@@ -35,11 +36,20 @@ export function SiteHeader() {
         </button>
 
         <nav id="bq-nav" className={styles.nav} aria-label="Main">
-          {site.nav.map((link) => (
-            <Link key={link.href} href={link.href} className={styles.navLink}>
-              {link.label}
-            </Link>
-          ))}
+          {site.nav.map((link) =>
+            link.href === '/#partners' ? (
+              <PartnerLink
+                key={link.href}
+                className={styles.navLink}
+              >
+                {link.label}
+              </PartnerLink>
+            ) : (
+              <Link key={link.href} href={link.href} className={styles.navLink}>
+                {link.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <Link href={site.primaryCta.href} className={styles.cta}>

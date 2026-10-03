@@ -1,4 +1,4 @@
-import { AudienceOnly, AudienceProvider } from '@/components/audience/AudienceProvider';
+import { AudienceOnly } from '@/components/audience/AudienceProvider';
 import { Blog } from '@/components/sections/Blog';
 import { Conference } from '@/components/sections/Conference';
 import { Ecosystem } from '@/components/sections/Ecosystem';
@@ -29,7 +29,7 @@ import { homeLayout } from '@/content/layout';
  */
 export default function HomePage() {
   return (
-    <AudienceProvider>
+    <>
       <Hero content={home.hero} />
       {/* Impact is hidden. The 130:9 hero carried these figures; the 260:232
           hero does not, so the band could come back. The component and its
@@ -42,9 +42,10 @@ export default function HomePage() {
       <Conference content={home.conference} />
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
       <Path content={home.path} />
-      {/* Learners only: on the partner side the ecosystem accordion already
-          names these same four, so the section would say it twice. */}
-      <AudienceOnly audience="learn">
+      {/* Partner side only: the learner journey stays learner-only, and the
+          partner side's ecosystem accordion already introduces the four
+          partner kinds — this section is where the full pitch lives. */}
+      <AudienceOnly audience="partner">
         <Partners content={home.partners} />
       </AudienceOnly>
       <Founder content={home.founder} />
@@ -54,6 +55,6 @@ export default function HomePage() {
           content are kept - restore this line to bring the newsletter back.
           <Join content={home.join} /> */}
       <Place content={home.place} />
-    </AudienceProvider>
+    </>
   );
 }

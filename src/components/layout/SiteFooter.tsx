@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { PartnerLink } from '@/components/ui/PartnerLink';
 import { SocialIcon, type SocialName } from '@/components/ui/SocialIcon';
 import { footerLinks, mailboxes, site } from '@/content/site';
 import { interTight } from '@/styles/fonts';
@@ -49,13 +50,21 @@ export function SiteFooter() {
             <div key={column.title} className={styles.column}>
               <h2 className={styles.colTitle}>{column.title}</h2>
               <ul className={styles.list}>
-                {column.links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className={styles.link}>
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {column.links.map((link) =>
+                  link.href === '/#partners' ? (
+                    <li key={link.href}>
+                      <PartnerLink className={styles.link}>
+                        {link.label}
+                      </PartnerLink>
+                    </li>
+                  ) : (
+                    <li key={link.href}>
+                      <Link href={link.href} className={styles.link}>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
           ))}

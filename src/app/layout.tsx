@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { AudienceProvider } from '@/components/audience/AudienceProvider';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SmoothScroll } from '@/components/ui/SmoothScroll';
@@ -46,9 +47,14 @@ export default function RootLayout({
         <a href="#main" className="bq-skip-link">
           Skip to content
         </a>
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <SiteFooter />
+        {/* The audience switch lives here (not per page) so the header and
+            footer can answer it too — partner links flip the switch before
+            scrolling to the partner sections. */}
+        <AudienceProvider>
+          <SiteHeader />
+          <main id="main">{children}</main>
+          <SiteFooter />
+        </AudienceProvider>
       </body>
     </html>
   );

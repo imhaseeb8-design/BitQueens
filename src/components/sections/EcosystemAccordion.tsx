@@ -133,9 +133,6 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                       the media query. */}
                   <div id={panelId} className={styles.panel}>
                     <div className={styles.panelInner}>
-                      {pillar.comingSoon && (
-                        <span className={styles.comingSoon}>Coming soon</span>
-                      )}
                       <p className={styles.eyebrow}>
                         {num}
                         <span className={styles.eyebrowSlash} aria-hidden="true">
@@ -160,9 +157,22 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                         </ol>
                       </div>
 
-                      <Button href={pillar.href} size="compact" className={styles.cta}>
-                        {pillar.cta}
-                      </Button>
+                      {/* Coming-soon pillars get a disabled CTA instead of a
+                          link: the destination doesn't exist yet, so there is
+                          nothing to navigate to. The top-right tag is gone —
+                          the button itself now carries the message. */}
+                      {pillar.comingSoon ? (
+                        <span
+                          className={`${styles.cta} ${styles.ctaDisabled}`}
+                          aria-disabled="true"
+                        >
+                          Coming soon
+                        </span>
+                      ) : (
+                        <Button href={pillar.href} size="compact" className={styles.cta}>
+                          {pillar.cta}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
