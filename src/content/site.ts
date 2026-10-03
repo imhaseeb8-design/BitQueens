@@ -74,9 +74,9 @@ export const footerLinks = {
   ],
 };
 
-/** Contact routing from the brief. */
+/** Contact routing: Kristie's public contact email from LinkedIn. */
 export const mailboxes = {
-  general: 'hello@bitqueens.org',
+  general: 'immanuelkristie@gmail.com',
   partnerships: 'partnerships@bitqueens.org',
   events: 'events@bitqueens.org',
 } as const;
