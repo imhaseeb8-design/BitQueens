@@ -1,0 +1,104 @@
+/**
+ * AcademyTracks — the four learning-track cards.
+ */
+
+.section {
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  padding: clamp(4rem, 8vw, 8rem) 0;
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--bq-col-gap);
+  margin: clamp(2.5rem, 4.5vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  padding: 32px 28px;
+  background: var(--bq-ecosystem-panel);
+  border-top: 4px solid var(--bq-blue-slate);
+}
+
+.access {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.access.free {
+  background: var(--bq-green-tint);
+  color: var(--bq-green-deep);
+}
+
+.access.paid {
+  background: var(--bq-blue-pale);
+  color: var(--bq-blue-deep);
+}
+
+.title {
+  margin: 24px 0 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: clamp(1.5rem, 1.9vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--bq-green-deep);
+}
+
+.desc {
+  margin: 14px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--bq-ink-80);
+  text-wrap: pretty;
+}
+
+.meta {
+  margin: auto 0 0;
+  padding-top: 24px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  color: var(--bq-ink-50);
+}
+
+@media (max-width: 1100px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 0;
+  }
+}

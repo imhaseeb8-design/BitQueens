@@ -1,0 +1,135 @@
+/**
+ * AcademyCohorts — the cohort rows.
+ *
+ * Rows, not cards: a cohort is a set of facts (dates, format, level) plus one
+ * action, and the row keeps those facts in the same left-to-right order every
+ * time so they scan like a timetable.
+ */
+
+.section {
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  padding: clamp(4rem, 8vw, 8rem) 0;
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+.rows {
+  display: grid;
+  gap: 16px;
+  margin: clamp(2.5rem, 4.5vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr) auto;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: center;
+  padding: 28px 32px;
+  background: var(--bq-ecosystem-panel);
+  border-left: 4px solid var(--bq-blue-slate);
+}
+
+.main {
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: clamp(1.25rem, 1.6vw, 1.625rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--bq-green-deep);
+}
+
+.track {
+  margin: 6px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.9375rem;
+  color: var(--bq-ink-50);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.fact {
+  display: grid;
+  gap: 4px;
+}
+
+.fact dt {
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bq-ink-45);
+}
+
+.fact dd {
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--bq-ink);
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.access {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.access.free {
+  background: var(--bq-green-tint);
+  color: var(--bq-green-deep);
+}
+
+.access.paid {
+  background: var(--bq-blue-pale);
+  color: var(--bq-blue-deep);
+}
+
+@media (max-width: 1000px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .side {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 560px) {
+  .facts {
+    grid-template-columns: 1fr 1fr;
+  }
+}

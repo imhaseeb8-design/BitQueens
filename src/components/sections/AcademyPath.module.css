@@ -1,0 +1,116 @@
+/**
+ * AcademyPath — the four-step "how it works" cards.
+ */
+
+.section {
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  padding: clamp(4rem, 8vw, 8rem) 0;
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--bq-col-gap);
+  margin: clamp(2.5rem, 4.5vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  box-sizing: border-box;
+  min-height: 260px;
+  padding: 32px 28px;
+  background: var(--bq-ecosystem-panel);
+  transition: background-color var(--bq-dur-hover) var(--bq-ease);
+}
+
+.numeral {
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.15em;
+  color: var(--bq-blue-slate);
+  transition: color var(--bq-dur-hover) var(--bq-ease);
+}
+
+.title {
+  margin: 28px 0 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: clamp(1.5rem, 1.9vw, 2rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--bq-green-deep);
+  transition: color var(--bq-dur-hover) var(--bq-ease);
+}
+
+.desc {
+  margin: 16px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--bq-ink-80);
+  text-wrap: pretty;
+  transition: color var(--bq-dur-hover) var(--bq-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    background: var(--bq-green-deep);
+  }
+
+  .card:hover .numeral,
+  .card:hover .desc {
+    color: var(--bq-green-mint);
+  }
+
+  .card:hover .title {
+    color: var(--bq-canvas);
+  }
+}
+
+.closing {
+  margin: 44px 0 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--bq-green-deep);
+}
+
+@media (max-width: 1100px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 0;
+    padding: 28px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .numeral,
+  .title,
+  .desc {
+    transition: none;
+  }
+}

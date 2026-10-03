@@ -1,0 +1,158 @@
+/**
+ * Shared form styles for the Academy flows (Join, Enroll, Chapter).
+ *
+ * One visual language for every form on the site: paper fields on the warm
+ * canvas, slate-blue focus (the Academy's division colour), and status
+ * messaging that says plainly what happened. New forms reuse these classes —
+ * do not restyle fields per form.
+ */
+
+.form {
+  display: grid;
+  gap: 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bq-ink-66);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bq-canvas);
+  border: 1px solid var(--bq-rule);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--bq-ink);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231a1a1a' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 44px;
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--bq-blue-slate);
+  outline-offset: 2px;
+}
+
+.input[aria-invalid='true'],
+.select[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-color: var(--bq-accent);
+}
+
+.fieldError {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--bq-accent);
+}
+
+.submit {
+  justify-self: start;
+  padding: 16px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bq-green-deep);
+  color: var(--bq-cream);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: background-color var(--bq-dur-hover) var(--bq-ease);
+}
+
+.submit:hover {
+  background: var(--bq-forest);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* -- status -------------------------------------------------------------- */
+
+.status {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.status[data-tone='error'] {
+  color: var(--bq-accent);
+}
+
+.success {
+  display: grid;
+  gap: 12px;
+  padding: 32px;
+  border-radius: 16px;
+  background: var(--bq-green-tint);
+}
+
+.successTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--bq-green-deep);
+}
+
+.successBody {
+  margin: 0;
+  color: var(--bq-ink-80);
+}
+
+.successNote {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--bq-ink-50);
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .submit {
+    justify-self: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submit {
+    transition: none;
+  }
+}

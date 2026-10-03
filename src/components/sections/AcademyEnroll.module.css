@@ -1,0 +1,45 @@
+/**
+ * AcademyEnroll — the application form band.
+ *
+ * A quiet paper panel holds the form so the page's rhythm (canvas, cards,
+ * canvas) gets one calm, deliberate pause exactly where the commitment
+ * happens.
+ */
+
+.section {
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  padding: clamp(4rem, 8vw, 8rem) 0;
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.copy {
+  position: sticky;
+  top: 120px;
+}
+
+.panel {
+  background: var(--bq-paper);
+  border-radius: 20px;
+  padding: clamp(28px, 3vw, 44px);
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .copy {
+    position: static;
+  }
+}

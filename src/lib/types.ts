@@ -320,3 +320,186 @@ export interface HomePage {
   place: PlaceSection;
   join: JoinSection;
 }
+
+/* ------------------------------------------------------------ academy --- */
+
+/**
+ * The Academy page — "this is where you join" (brief).
+ *
+ * Track and cohort names are provisional until the BitQueens team confirms
+ * the programme list. "To be announced" is a legitimate value for cohort
+ * dates, following the Conference section's convention.
+ */
+
+export interface AcademyHero {
+  eyebrow: string;
+  headline: string;
+  /** The serif second line. */
+  headlineSerif: string;
+  body: string;
+  primaryCta: NavLink;
+  secondaryCta: NavLink;
+  /** Generated abstract brand artwork — never photography of people. */
+  art: ImageSlot;
+  /** Real photography lands here; renders a labelled slot until then. */
+  photo: ImageSlot;
+}
+
+export interface AcademyStep {
+  title: string;
+  description: string;
+}
+
+export interface AcademyPath {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  intro: string;
+  steps: AcademyStep[];
+  /** The one centred line under the cards. */
+  closing: string;
+}
+
+export interface AcademyTrack {
+  name: string;
+  description: string;
+  level: string;
+  length: string;
+  /** "Free" or "Paid" — exact pricing is still being finalised. */
+  access: string;
+}
+
+export interface AcademyTracks {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  intro: string;
+  tracks: AcademyTrack[];
+}
+
+export interface AcademyCohort {
+  name: string;
+  track: string;
+  dates: string;
+  format: string;
+  level: string;
+  access: string;
+  cta: NavLink;
+}
+
+export interface AcademyCohorts {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  intro: string;
+  cohorts: AcademyCohort[];
+}
+
+export interface AcademyEnroll {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  submitLabel: string;
+  successTitle: string;
+  successBody: string;
+}
+
+export interface AcademyChapter {
+  name: string;
+  city: string;
+}
+
+export interface AcademyChapters {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  /** Renders only when populated. */
+  chapters: AcademyChapter[];
+  formEyebrow: string;
+  formHeadline: string;
+  submitLabel: string;
+  successTitle: string;
+  successBody: string;
+}
+
+export interface AcademyCommunity {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  includes: string[];
+  cta: NavLink;
+}
+
+/** The one clarifier the brief demands: Academy ≠ BIET. */
+export interface AcademyVsBiet {
+  headline: string;
+  academy: { title: string; body: string };
+  biet: { title: string; body: string; cta: NavLink };
+}
+
+export interface AcademyStory {
+  quote: string;
+  name: string;
+  detail: string;
+}
+
+export interface AcademyStories {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  /** Renders nothing when empty — real stories land here. */
+  stories: AcademyStory[];
+}
+
+export interface AcademyFaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface AcademyFaq {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  items: AcademyFaqItem[];
+}
+
+export interface AcademyClosing {
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  primaryCta: NavLink;
+  secondaryCta: NavLink;
+}
+
+export interface AcademyPage {
+  hero: AcademyHero;
+  path: AcademyPath;
+  tracks: AcademyTracks;
+  cohorts: AcademyCohorts;
+  enroll: AcademyEnroll;
+  chapters: AcademyChapters;
+  community: AcademyCommunity;
+  vsBiet: AcademyVsBiet;
+  stories: AcademyStories;
+  faq: AcademyFaq;
+  closing: AcademyClosing;
+}
+
+/* --------------------------------------------------------------- join --- */
+
+/** The /join page — the single destination for every "Join" CTA on the site. */
+export interface JoinPage {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  tracks: string[];
+  levels: string[];
+  submitLabel: string;
+  successTitle: string;
+  successBody: string;
+  privacy: string;
+}

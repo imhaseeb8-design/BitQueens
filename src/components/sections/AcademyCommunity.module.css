@@ -1,0 +1,79 @@
+/**
+ * AcademyCommunity — the free-tier band.
+ *
+ * Flat deep-blue solid (the Academy's division colour). Cream text, cream
+ * button via the Button's onDark inversion. The checklist is the whole
+ * argument for "free forever", so it gets the roomier column.
+ */
+
+.section {
+  background: var(--bq-blue-deep);
+  color: var(--bq-cream);
+  padding: clamp(4.5rem, 9vw, 9rem) 0;
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
+}
+
+.copy {
+  display: grid;
+  gap: 32px;
+  align-content: start;
+}
+
+.list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--bq-cream-22);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--bq-cream-22);
+}
+
+.tick {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--bq-cream);
+  color: var(--bq-blue-deep);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.text {
+  padding-top: 4px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  line-height: 1.5;
+  color: var(--bq-cream);
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+}

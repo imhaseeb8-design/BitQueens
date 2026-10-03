@@ -1,0 +1,80 @@
+/**
+ * SectionHead — the shared section header.
+ *
+ * Eyebrow in slate blue (the Academy's division colour; on the homepage this
+ * role is the same token), headline in deep green sans with an Instrument
+ * Serif second line, intro in body text. On dark bands everything inverts.
+ */
+
+.head {
+  display: grid;
+  gap: 18px;
+  max-width: 56rem;
+}
+
+.head.center {
+  margin-inline: auto;
+  text-align: center;
+  justify-items: center;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: var(--bq-t-eyebrow);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bq-blue-slate);
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: var(--bq-t-lg);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: var(--bq-green-deep);
+  text-wrap: balance;
+}
+
+.line {
+  display: block;
+}
+
+.serif {
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-size: 1.12em;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.intro {
+  margin: 0;
+  max-width: 38rem;
+  font-size: var(--bq-t-body-lg);
+  line-height: 1.55;
+  color: var(--bq-ink-80);
+  text-wrap: pretty;
+}
+
+.head.center .intro {
+  margin-inline: auto;
+}
+
+/* -- on dark ------------------------------------------------------------- */
+
+.onDark .eyebrow {
+  color: var(--bq-blue-pale);
+}
+
+.onDark .headline {
+  color: var(--bq-cream);
+}
+
+.onDark .intro {
+  color: var(--bq-cream-82);
+}
