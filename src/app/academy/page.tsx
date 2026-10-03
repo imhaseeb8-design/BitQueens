@@ -9,7 +9,6 @@ import { AcademyHero } from '@/components/sections/AcademyHero';
 import { AcademyPath } from '@/components/sections/AcademyPath';
 import { AcademyStories } from '@/components/sections/AcademyStories';
 import { AcademyTracks } from '@/components/sections/AcademyTracks';
-import { AcademyVsBiet } from '@/components/sections/AcademyVsBiet';
 import { academy } from '@/content/academy';
 
 export const metadata: Metadata = {
@@ -38,7 +37,6 @@ export default function AcademyPage() {
       />
       <AcademyChapters content={academy.chapters} />
       <AcademyCommunity content={academy.community} />
-      <AcademyVsBiet content={academy.vsBiet} />
       <AcademyStories content={academy.stories} />
       <AcademyFaq content={academy.faq} />
       <AcademyClosing content={academy.closing} />
