@@ -602,3 +602,99 @@ export interface InnovationsPage {
   quote: InnovationsQuote;
   closing: InnovationsClosing;
 }
+
+/* -------------------------------------------------------------- about --- */
+
+/**
+ * The About page (brief): origin story, vision & mission, the women-first
+ * positioning, leadership, and the evolution to a Group of companies.
+ *
+ * Founder details come from Kristie's public LinkedIn profile; anything not
+ * confirmed there stays out.
+ */
+
+export interface AboutHero {
+  eyebrow: string;
+  headline: string;
+  /** The serif second line. */
+  headlineSerif: string;
+  body: string;
+  primaryCta: NavLink;
+  secondaryCta: NavLink;
+  /** Generated abstract brand artwork — never photography of people. */
+  art: ImageSlot;
+}
+
+export interface AboutStory {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  paragraphs: string[];
+}
+
+export interface AboutVisionMission {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  vision: { title: string; body: string };
+  mission: { title: string; body: string };
+  /** The brand promise: five "I can" lines. */
+  promise: { title: string; lines: string[] };
+}
+
+/** The women-first positioning, including what BitQueens is NOT. */
+export interface AboutPosition {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  notTitle: string;
+  notItems: string[];
+}
+
+/** The evolution to a Group: the registered companies that make BitQueens
+ *  a real institution, not just a community project. Reuses LegalEntity. */
+export interface AboutGroup {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  intro: string;
+  entities: LegalEntity[];
+  closing: string;
+}
+
+export interface FounderFact {
+  label: string;
+  value: string;
+}
+
+export interface AboutFounder {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  name: string;
+  role: string;
+  /** Short paragraphs, in her voice where the facts allow. */
+  bio: string[];
+  facts: FounderFact[];
+  portrait: ImageSlot;
+  cta: NavLink;
+}
+
+export interface AboutClosing {
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  primaryCta: NavLink;
+  secondaryCta: NavLink;
+}
+
+export interface AboutPage {
+  hero: AboutHero;
+  story: AboutStory;
+  vision: AboutVisionMission;
+  position: AboutPosition;
+  group: AboutGroup;
+  founder: AboutFounder;
+  closing: AboutClosing;
+}

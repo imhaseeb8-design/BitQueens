@@ -1,0 +1,103 @@
+.group {
+  padding: clamp(3.5rem, 7vw, 5.5rem) 1.5rem;
+  background: var(--ink);
+  color: #fff;
+}
+
+.inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold, #d9a441);
+  margin: 0 0 1rem;
+}
+
+.headline {
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  line-height: 1.15;
+  margin: 0 0 1.25rem;
+  font-weight: 700;
+}
+
+.serif {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold, #d9a441);
+}
+
+.intro {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 2.5rem;
+  max-width: 42rem;
+}
+
+.register {
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.name {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.rc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.status {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+}
+
+.registered {
+  background: rgba(46, 125, 87, 0.25);
+  color: #9fe0bd;
+  border: 1px solid rgba(46, 125, 87, 0.6);
+}
+
+.inProgress {
+  background: rgba(217, 164, 65, 0.18);
+  color: #f0c979;
+  border: 1px solid rgba(217, 164, 65, 0.5);
+}
+
+.planned {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.closing {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}
