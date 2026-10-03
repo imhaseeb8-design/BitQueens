@@ -503,3 +503,102 @@ export interface JoinPage {
   successBody: string;
   privacy: string;
 }
+
+/* -------------------------------------------------------- innovations --- */
+
+/**
+ * The Innovations & Labs page — "this is where you build" (brief).
+ *
+ * Two commercial shapes: products & consulting ("request a quote", no prices
+ * shown) and skills programmes (e-commerce-style product grid with price
+ * cards — price confirmed on enquiry until pricing is finalised).
+ *
+ * Product and programme names are provisional until the BitQueens team
+ * confirms the catalogue.
+ */
+
+export interface InnovationsHero {
+  eyebrow: string;
+  headline: string;
+  /** The serif second line. */
+  headlineSerif: string;
+  body: string;
+  primaryCta: NavLink;
+  secondaryCta: NavLink;
+  /** Generated abstract brand artwork — never photography of people. */
+  art: ImageSlot;
+}
+
+export interface InnovationsStep {
+  title: string;
+  description: string;
+}
+
+export interface InnovationsHow {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  steps: InnovationsStep[];
+}
+
+export interface InnovationsProduct {
+  name: string;
+  tagline: string;
+  description: string;
+  points: string[];
+  cta: NavLink;
+}
+
+export interface InnovationsProducts {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  intro: string;
+  products: InnovationsProduct[];
+}
+
+export interface InnovationsSkill {
+  name: string;
+  description: string;
+  level: string;
+  length: string;
+  /** Shown on the price card until pricing is finalised. */
+  priceNote: string;
+  cta: NavLink;
+}
+
+export interface InnovationsSkills {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  intro: string;
+  skills: InnovationsSkill[];
+}
+
+export interface InnovationsQuote {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  interests: string[];
+  submitLabel: string;
+  successTitle: string;
+  successBody: string;
+}
+
+export interface InnovationsClosing {
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  primaryCta: NavLink;
+  secondaryCta: NavLink;
+}
+
+export interface InnovationsPage {
+  hero: InnovationsHero;
+  how: InnovationsHow;
+  products: InnovationsProducts;
+  skills: InnovationsSkills;
+  quote: InnovationsQuote;
+  closing: InnovationsClosing;
+}

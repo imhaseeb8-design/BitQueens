@@ -1,0 +1,108 @@
+/**
+ * InnovationsProducts — the product cards.
+ */
+
+.section {
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  padding: clamp(4rem, 8vw, 8rem) 0;
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--bq-col-gap);
+  margin-top: clamp(2.5rem, 4.5vw, 4rem);
+}
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(32px, 3.5vw, 52px);
+  background: var(--bq-ecosystem-panel);
+  border-radius: 20px;
+  border-top: 4px solid var(--bq-orange);
+}
+
+.kicker {
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: var(--bq-t-eyebrow);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bq-orange);
+}
+
+.name {
+  margin: 18px 0 0;
+  font-family: var(--bq-neue-montreal), sans-serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--bq-green-deep);
+}
+
+.desc {
+  margin: 16px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: var(--bq-t-body-lg);
+  line-height: 1.55;
+  color: var(--bq-ink-80);
+  text-wrap: pretty;
+}
+
+.points {
+  display: grid;
+  gap: 12px;
+  margin: 28px 0 0;
+  padding: 28px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--bq-rule);
+  width: 100%;
+}
+
+.point {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--bq-ink);
+}
+
+.tick {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--bq-green-tint);
+  color: var(--bq-green-deep);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cta {
+  margin-top: 32px;
+}
+
+@media (max-width: 800px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
