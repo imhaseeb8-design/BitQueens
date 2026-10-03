@@ -26,13 +26,16 @@ export const site: SiteConfig = {
   nav: [
     { label: 'Academy', href: '/academy' },
     { label: 'Conference', href: '/conference' },
-    { label: 'Partners', href: '/partners' },
+    /* No dedicated /partners page (decision 2026-10-03): the homepage's
+       #partners section carries the pitch, so every partner CTA lands
+       there instead of a separate route. */
+    { label: 'Partners', href: '/#partners' },
     { label: 'Blog', href: '/blog' },
     { label: 'About', href: '/about' },
   ],
 
   primaryCta: { label: 'Join BitQueens', href: '/join' },
-  secondaryCta: { label: 'Partner with us', href: '/partners' },
+  secondaryCta: { label: 'Partner with us', href: '/#partners' },
 
   legal: {
     entities: [
@@ -66,7 +69,7 @@ export const footerLinks = {
   explore: [
     { label: 'About', href: '/about' },
     { label: 'Conference', href: '/conference' },
-    { label: 'Partners', href: '/partners' },
+    { label: 'Partners', href: '/#partners' },
     { label: 'Blog', href: '/blog' },
   ],
 };
