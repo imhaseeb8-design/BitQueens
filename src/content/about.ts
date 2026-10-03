@@ -36,6 +36,10 @@ export const about: AboutPage = {
       'In August 2023, after seven years in the blockchain space, she stopped waiting for someone else to build the on-ramp and launched BitQueens: blockchain education that is simple, accessible, and welcoming for women.',
       'Since then, more than 500 women have begun their blockchain journey through BitQueens — learning in plain language, connecting with opportunities, and building real skills through training, workshops, and mentorship.',
     ],
+    videoCta: {
+      label: 'Watch the BitQueens story',
+      href: 'https://youtu.be/IDMBhvd0ndA',
+    },
   },
 
   vision: {

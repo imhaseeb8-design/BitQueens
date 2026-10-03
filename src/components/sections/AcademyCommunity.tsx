@@ -43,6 +43,38 @@ export function AcademyCommunity({
               {content.cta.label}
             </Button>
           </Reveal>
+          {content.secondaryCta && (
+            <Reveal delay={260}>
+              <a
+                href={content.secondaryCta.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.secondary}
+              >
+                {content.secondaryCta.label} →
+              </a>
+            </Reveal>
+          )}
+          {content.sessions && content.sessions.length > 0 && (
+            <div className={styles.sessions}>
+              <p className={styles.sessionsTitle}>Live training, every week</p>
+              <ul className={styles.sessionsList}>
+                {content.sessions.map((session) => (
+                  <li key={session.day}>
+                    <a
+                      href={session.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.session}
+                    >
+                      <span className={styles.sessionDay}>{session.day}</span>
+                      <span className={styles.sessionTime}>{session.time}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <ul className={styles.list}>

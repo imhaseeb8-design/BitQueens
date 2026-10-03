@@ -178,6 +178,19 @@ export const academy: AcademyPage = {
       'First access to cohorts, chapters, and events',
     ],
     cta: { label: 'Join free', href: '/join' },
+    secondaryCta: { label: 'Join our WhatsApp community', href: 'https://bit.ly/BitQueens' },
+    sessions: [
+      {
+        day: 'Fridays',
+        time: '8:00 PM WAT · 7:00 PM GMT · 3:00 PM EST',
+        href: 'https://us02web.zoom.us/j/81229055699',
+      },
+      {
+        day: 'Sundays',
+        time: '8:00 PM WAT · 7:00 PM GMT · 3:00 PM EST',
+        href: 'https://us02web.zoom.us/j/81595873470',
+      },
+    ],
   },
 
   vsBiet: {

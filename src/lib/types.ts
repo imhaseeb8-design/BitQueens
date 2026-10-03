@@ -424,6 +424,14 @@ export interface AcademyChapters {
   successBody: string;
 }
 
+export interface AcademySession {
+  /** e.g. "Fridays". */
+  day: string;
+  /** e.g. "8:00 PM WAT". */
+  time: string;
+  href: string;
+}
+
 export interface AcademyCommunity {
   eyebrow: string;
   headline: string;
@@ -431,6 +439,10 @@ export interface AcademyCommunity {
   body: string;
   includes: string[];
   cta: NavLink;
+  /** The live weekly training sessions (from the community's Linktree). */
+  sessions?: AcademySession[];
+  /** Direct community path, e.g. the WhatsApp group. */
+  secondaryCta?: NavLink;
 }
 
 /** The one clarifier the brief demands: Academy ≠ BIET. */
@@ -630,6 +642,8 @@ export interface AboutStory {
   headline: string;
   headlineSerif: string;
   paragraphs: string[];
+  /** Link to the BitQueens story video on YouTube. */
+  videoCta?: NavLink;
 }
 
 export interface AboutVisionMission {

@@ -14,6 +14,17 @@ export default function AboutStory({ story }: { story: AboutStory }) {
             <p key={index}>{paragraph}</p>
           ))}
         </div>
+        {story.videoCta && (
+          <a
+            href={story.videoCta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.videoCta}
+          >
+            <span className={styles.play} aria-hidden="true">▶</span>
+            {story.videoCta.label}
+          </a>
+        )}
       </div>
     </section>
   );

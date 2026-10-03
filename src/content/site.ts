@@ -46,9 +46,9 @@ export const site: SiteConfig = {
   },
 
   social: [
-    { label: 'LinkedIn', href: '#' },
-    { label: 'X', href: '#' },
-    { label: 'Instagram', href: '#' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/bitqueenshq/' },
+    { label: 'X', href: 'https://x.com/bitqueens_' },
+    { label: 'Instagram', href: 'https://www.instagram.com/bitqueens_' },
   ],
 };
 
