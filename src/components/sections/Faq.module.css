@@ -1,5 +1,14 @@
 /**
- * AcademyFaq — the accordion.
+ * Faq — the shared accordion.
+ *
+ * Each question is a card on the canvas rather than a row between hairlines.
+ * The corner is the site's 4px — the one the buttons and the conference card
+ * use — not the pill radius the reference for this had; a 4px card and a 4px
+ * button read as the same material, which a 24px card would not.
+ *
+ * The ground is `--bq-paper`, not `--bq-ecosystem-panel`: the panel token is
+ * #f9f8f3 against a #fafaf8 canvas, a difference of three values, so the
+ * cards would have been invisible.
  */
 
 .section {
@@ -28,12 +37,21 @@
 }
 
 .list {
+  display: grid;
+  gap: 10px;
   min-width: 0;
-  border-top: 1px solid var(--bq-rule);
 }
 
 .item {
-  border-bottom: 1px solid var(--bq-rule);
+  border-radius: 4px;
+  background: var(--bq-paper);
+  transition: background-color var(--bq-dur-hover) var(--bq-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .item:not([open]):hover {
+    background: var(--bq-green-tint);
+  }
 }
 
 .question {
@@ -41,7 +59,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 24px 4px;
+  padding: 22px 24px;
   font-family: var(--bq-neue-montreal), sans-serif;
   font-size: clamp(1.125rem, 1.4vw, 1.375rem);
   line-height: 1.35;
@@ -65,7 +83,7 @@
   place-items: center;
   width: 36px;
   height: 36px;
-  border: 1px solid var(--bq-rule);
+  border: 1px solid var(--bq-ink-14);
   border-radius: 999px;
   font-size: 1.25rem;
   font-weight: 400;
@@ -80,7 +98,7 @@
 
 .answer {
   margin: 0;
-  padding: 0 4px 28px;
+  padding: 0 24px 26px;
   max-width: 42rem;
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: var(--bq-t-body-lg);
@@ -100,7 +118,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .icon {
+  .icon,
+  .item {
     transition: none;
   }
 }

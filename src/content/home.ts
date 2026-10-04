@@ -52,6 +52,25 @@ export const home: HomePage = {
     },
   },
 
+  /* Campus chapters — partner side only. Lived on /academy until the chapter
+     form started interrupting a learner's run to the cohort application; the
+     reader who wants to run a chapter is not the reader who wants to join
+     one. */
+  chapters: {
+    eyebrow: 'Campus chapters',
+    headline: 'Bring BitQueens',
+    headlineSerif: 'to your campus.',
+    body: 'Start a chapter at your university and bring emerging-tech learning to women on your campus. You get the playbook, the community, and our support — you bring the energy.',
+    chapters: [],
+    formEyebrow: 'Start a chapter',
+    formHeadline: 'Tell us about your campus.',
+    submitLabel: 'Apply to start a chapter',
+    successTitle: 'Application received.',
+    successBody:
+      'Thank you — the community team will review your application and reply by email.',
+  },
+
+
   /* ------------------------------------------------------- 02 · impact -- */
   /* The real reported figures, straight from the Figma frame — these replace
      the earlier placeholder set (6,000+ / 14 countries / 3 entities) that the
@@ -348,6 +367,56 @@ export const home: HomePage = {
   },
 
   /* ---------------------------------------------------- 06 · conference -- */
+  /* General questions, both sides of the audience switch. Every answer here
+     restates something the site already says — the free community, the
+     beginner tracks, the four partner routes, the campus chapters — rather
+     than introducing a commitment nobody has signed off on.
+     TODO (BitQueens team): partnerships@bitqueens.org is the address in
+     site.ts. Confirm it is monitored before launch. */
+  faq: {
+    headline: 'The questions',
+    headlineSerif: 'we get most.',
+    intro:
+      'About BitQueens, about joining, and about building with us. If yours is not here, write to us — a person answers.',
+    items: [
+      {
+        question: 'What is BitQueens?',
+        answer:
+          'A women-first ecosystem for learning, building and creating opportunities in emerging technology. It runs an Academy of cohort programmes and campus chapters, a free learning community, a conference, and an innovations arm that builds products.',
+      },
+      {
+        question: 'Who is it for?',
+        answer:
+          'Women across Africa and beyond, from complete beginners upward. Nothing assumes a technical background, a degree or prior experience — everything is taught in plain language.',
+      },
+      {
+        question: 'Does it cost anything to join?',
+        answer:
+          'Joining the community is free, always — weekly live sessions, a peer community, and a library of beginner resources. Some Academy cohorts are paid; those are clearly marked, and pricing is confirmed with you personally before anything is charged.',
+      },
+      {
+        question: 'Where should I start?',
+        answer:
+          'Join free, then pick a track in the Academy. The first one starts at the very beginning, and the live trainings run every Friday and Sunday.',
+      },
+      {
+        question: 'How can an organisation work with BitQueens?',
+        answer:
+          'Four ways, and you do not have to fit neatly into one: share knowledge by teaching or mentoring, host a space for a cohort or a chapter, open your networks, or support access through funding. If you share knowledge, host a space, open networks or support access, you belong here.',
+      },
+      {
+        question: 'Can my university host a chapter?',
+        answer:
+          'Yes. Campus chapters are student-led communities that bring emerging-tech learning to women on campus. You get the playbook, the community and our support — you bring the energy. Apply from the partner side of this page.',
+      },
+      {
+        question: 'How do we start a conversation?',
+        answer:
+          'Write to partnerships@bitqueens.org with who you are and what you have in mind. Every enquiry is read and answered by a person, not a form.',
+      },
+    ],
+  },
+
   conference: {
     eyebrow: 'The BitQueens Conference',
     headlineLines: ['A seat at the', 'future of tech.'],
@@ -359,6 +428,23 @@ export const home: HomePage = {
     details: [
       { key: 'Next edition', value: 'To be announced' },
       { key: 'Registration', value: 'Interest list open' },
+    ],
+    /* The weekly trainings, straight from linktr.ee/BitQueens — the Zoom
+       rooms and the full zone labels, daylight-saving halves included. This
+       is the canonical copy; the Academy's community band reads it from
+       here rather than keeping a second one. */
+    sessionsLabel: 'Live training, every week',
+    sessions: [
+      {
+        day: 'Fridays',
+        time: '8:00 PM WAT/BST · 7:00 PM GMT/UTC · 3:00 PM EST/EDT',
+        href: 'https://us02web.zoom.us/j/81229055699',
+      },
+      {
+        day: 'Sundays',
+        time: '8:00 PM WAT/BST · 7:00 PM GMT/UTC · 3:00 PM EST/EDT',
+        href: 'https://us02web.zoom.us/j/81595873470',
+      },
     ],
     cta: { label: 'Explore the Conference', href: '/conference' },
     // Image supplied in the updated Figma frame, mirrored in presentation.

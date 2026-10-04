@@ -14,9 +14,24 @@ import styles from './Conference.module.css';
  *
  * The CTA is the shared Button so it carries the site's arrow shift; the
  * frame's cream-on-green colouring and 4px corner are set in the module.
+ *
+ * Under the details, the weekly live trainings. The card's own two facts are
+ * both still open — "to be announced", "interest list open" — so the section
+ * was promising a gathering and giving a reader nothing to actually turn up
+ * to. These are real, dated and happening twice a week, and each day links
+ * straight into its room.
+ *
+ * Both sessions run at the same hour, so the time is printed once and the
+ * days carry the links. If the times ever diverge the per-row form comes
+ * back on its own.
  */
 export function Conference({ content }: { content: ConferenceSection }) {
   const photo = content.image.src ? content.image : content.backdrop;
+  const sessions = content.sessions ?? [];
+  const sharedTime =
+    sessions.length > 1 && sessions.every((s) => s.time === sessions[0].time)
+      ? sessions[0].time
+      : null;
 
   return (
     <section
@@ -50,6 +65,33 @@ export function Conference({ content }: { content: ConferenceSection }) {
                 ))}
               </dl>
             </Reveal>
+
+            {sessions.length > 0 && (
+              <Reveal delay={160} className={styles.sessions}>
+                <div className={styles.detailRule} />
+                <p className={styles.detailKey}>{content.sessionsLabel}</p>
+                {sharedTime && <p className={styles.sessionsTime}>{sharedTime}</p>}
+                <ul className={styles.sessionsList}>
+                  {sessions.map((session) => (
+                    <li key={session.day}>
+                      <a
+                        href={session.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.session}
+                      >
+                        <span className={styles.sessionDay}>{session.day}</span>
+                        {!sharedTime && (
+                          <span className={styles.sessionTime}>
+                            {session.time}
+                          </span>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            )}
 
             <Reveal delay={200} className={styles.ctaRow}>
               <Button href={content.cta.href} size="compact" onDark className={styles.cta}>

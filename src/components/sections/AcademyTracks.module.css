@@ -1,11 +1,14 @@
 /**
  * AcademyTracks — the four learning-track cards.
  *
- * Numeral at the top, hairline at the bottom. The footer rule is what makes
+ * Numeral at the top, hairlines at the bottom. The footer rule is what makes
  * the row read as a set: level, length and access sit on it, pinned down by
  * `margin-top: auto`, so four cards with four different copy lengths still
- * end on one line. The hover is the site's: green ground, cream title, mint
- * everything else.
+ * end on one line. Under it, the track's next intake — the cohort list used
+ * to be a section of its own, naming the same programmes a second time.
+ *
+ * The whole card is the link now, so the hover is the site's: green ground,
+ * cream title, mint everything else, and an arrow at the end.
  */
 
 /* Meets the ledger above it halfway — see AcademyPath for why the seam
@@ -63,10 +66,17 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  height: 100%;
   min-height: 330px;
   padding: 28px 26px 24px;
   background: var(--bq-ecosystem-panel);
+  text-decoration: none;
   transition: background-color 400ms var(--bq-ease);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--bq-green-deep);
+  outline-offset: -2px;
 }
 
 .numeral {
@@ -119,6 +129,37 @@
     border-color 400ms var(--bq-ease);
 }
 
+/* Under the rule, not on it: the facts above are what the track is, this is
+   when you can take it. */
+.intake {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--bq-green-deep);
+  transition: color 400ms var(--bq-ease);
+}
+
+/* A date nobody has set is not the same kind of fact as one that is. */
+.pending {
+  font-style: italic;
+  color: var(--bq-ink-45);
+  transition: color 400ms var(--bq-ease);
+}
+
+.arrow {
+  flex: none;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 300ms var(--bq-ease),
+    transform 300ms var(--bq-ease);
+}
+
 .access {
   flex: none;
   font-size: 0.6875rem;
@@ -141,12 +182,19 @@
   .card:hover .numeral,
   .card:hover .desc,
   .card:hover .foot,
-  .card:hover .access {
+  .card:hover .access,
+  .card:hover .intake,
+  .card:hover .pending {
     color: var(--bq-green-mint);
   }
 
   .card:hover .foot {
     border-color: var(--bq-cream-30);
+  }
+
+  .card:hover .arrow {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -187,7 +235,10 @@
   .title,
   .desc,
   .foot,
-  .access {
+  .access,
+  .intake,
+  .pending,
+  .arrow {
     transition: none;
   }
 }

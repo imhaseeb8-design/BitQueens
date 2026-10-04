@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import { AcademyChapters } from '@/components/sections/AcademyChapters';
-import { AcademyCohorts } from '@/components/sections/AcademyCohorts';
 import { AcademyCommunity } from '@/components/sections/AcademyCommunity';
 import { AcademyEnroll } from '@/components/sections/AcademyEnroll';
-import { AcademyFaq } from '@/components/sections/AcademyFaq';
+import { Faq } from '@/components/sections/Faq';
 import { AcademyHero } from '@/components/sections/AcademyHero';
 import { AcademyPath } from '@/components/sections/AcademyPath';
 import { AcademyProof } from '@/components/sections/AcademyProof';
@@ -22,19 +20,23 @@ export const metadata: Metadata = {
  * /academy — "this is where you join" (brief).
  *
  * Order is the argument: the invitation → what we have actually done → how it
- * works → what you can learn → the free tier → who teaches you → the guided
- * cohorts → the side door → stories → answers → the one ask.
+ * works → what you can learn and when you can take it → the free tier → who
+ * teaches you → stories → answers → the one ask.
  *
  * The record and the people come before the ask. A beginner is being asked to
  * apply to a cohort whose dates and price are still "to be announced", so the
  * page has to earn that before it reaches the form.
  *
- * Three things the earlier order got wrong. The enroll form and the chapter
- * form sat back to back, two near-identical panels in a row. The FAQ came
- * after the ask, so objections were answered only once someone had already
- * decided. And a closing band followed the form, which meant the page asked
- * twice and then ended on a link pointing back up at the cohorts. The form is
- * the last thing now, and the only ending.
+ * Things the earlier versions got wrong. Two forms sat back to back as
+ * near-identical panels. The FAQ came after the ask, so objections were
+ * answered only once someone had already decided. A closing band followed the
+ * form, so the page asked twice and ended on a link pointing back up. And the
+ * tracks and the cohorts were two lists of the same programmes — a track is a
+ * subject, a cohort is a date, and the tracks section now carries both.
+ *
+ * Campus chapters have moved to the homepage's partner side. Recruiting
+ * someone to run a chapter is a different ask, to a different reader, and it
+ * was interrupting a learner's run to the form.
  */
 export default function AcademyPage() {
   return (
@@ -42,23 +44,16 @@ export default function AcademyPage() {
       <AcademyHero content={academy.hero} />
       <AcademyProof content={academy.proof} />
       <AcademyPath content={academy.path} />
-      <AcademyTracks content={academy.tracks} />
+      <AcademyTracks content={academy.tracks} cohorts={academy.cohorts} />
       {/* The free tier comes before the paid ask: the hero's own CTA is
           "Join free", so the page has to honour that before it asks anyone
           to apply for an undated cohort. */}
       <AcademyCommunity content={academy.community} />
       <AcademyTeachers content={academy.teachers} />
-      <AcademyCohorts content={academy.cohorts} />
-      {/* A different reader — someone who wants to run a chapter, not join a
-          cohort — so it sits clear of the learner's run to the form. */}
-      <AcademyChapters content={academy.chapters} />
       <AcademyStories content={academy.stories} />
       {/* Before the ask, not after it: this is objection handling. */}
-      <AcademyFaq content={academy.faq} />
-      <AcademyEnroll
-        content={academy.enroll}
-        cohorts={academy.cohorts.cohorts}
-      />
+      <Faq content={academy.faq} name="academy-faq" />
+      <AcademyEnroll content={academy.enroll} cohorts={academy.cohorts} />
     </>
   );
 }

@@ -12,10 +12,14 @@
    the tracks below are the answer to "pick a track" rather than a new
    subject, so the two should read as one run. Both sections paying a full
    8vw put ~230px of nothing between them at 1440. */
+/* Short at both ends. Above: the proof card has a hard edge that closes
+   itself. Below: the ledger's last rule closes this one, and the tracks are
+   the answer to "pick a track" rather than a new subject, so the two read as
+   one run. Full 8vw at each seam was putting ~200px of nothing there. */
 .section {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0 clamp(2.5rem, 4vw, 4rem);
+  padding: clamp(2.5rem, 4.5vw, 4.5rem) 0 clamp(2.5rem, 4vw, 4rem);
 }
 
 .inner {

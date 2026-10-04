@@ -1,11 +1,11 @@
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
-import type { AcademyFaq as AcademyFaqContent } from '@/lib/types';
+import type { FaqSection } from '@/lib/types';
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
-import styles from './AcademyFaq.module.css';
+import styles from './Faq.module.css';
 
 /**
- * FAQ — the beginner questions, answered plainly.
+ * The shared FAQ accordion — used by the homepage and by /academy.
  *
  * Native <details> accordion: no JS, keyboard-accessible by default, and the
  * first item ships open so the section never reads as an empty list of
@@ -14,8 +14,18 @@ import styles from './AcademyFaq.module.css';
  * The head holds the left column and stays put while the answers scroll past
  * it. Centred over a 48rem list, this section used to leave a third of the
  * page empty down either side.
+ *
+ * `name` groups the <details> so only one is open at a time. It has to differ
+ * per instance: two accordions sharing a name would close each other's items
+ * across sections.
  */
-export function AcademyFaq({ content }: { content: AcademyFaqContent }) {
+export function Faq({
+  content,
+  name = 'faq',
+}: {
+  content: FaqSection;
+  name?: string;
+}) {
   return (
     <section
       id="faq"
@@ -37,7 +47,7 @@ export function AcademyFaq({ content }: { content: AcademyFaqContent }) {
               <details
                 className={styles.item}
                 open={i === 0}
-                name="academy-faq"
+                name={name}
               >
                 <summary className={styles.question}>
                   <span>{item.question}</span>

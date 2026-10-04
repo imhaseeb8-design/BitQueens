@@ -1,6 +1,9 @@
+import { AudienceOnly } from '@/components/audience/AudienceProvider';
 import { Blog } from '@/components/sections/Blog';
+import { CampusChapters } from '@/components/sections/CampusChapters';
 import { Conference } from '@/components/sections/Conference';
 import { Ecosystem } from '@/components/sections/Ecosystem';
+import { Faq } from '@/components/sections/Faq';
 import { Founder } from '@/components/sections/Founder';
 import { Hero } from '@/components/sections/Hero';
 import { Path } from '@/components/sections/Path';
@@ -13,7 +16,13 @@ import { homeLayout } from '@/content/layout';
  *
  * Order is the argument: who we are and the numbers behind it → the flagship
  * moment → what the ecosystem is → that you can start → who can build with
- * us → who is behind it → what we publish → your place, and the two doors.
+ * us → who is behind it → what we publish → the questions both audiences
+ * ask → your place, and the two doors.
+ *
+ * Campus chapters sit on the partner side only. Starting a chapter is a
+ * partner-shaped ask — you bring a campus, we bring the playbook — and on
+ * /academy, where it used to live, its form interrupted a learner on the way
+ * to the cohort application.
  *
  * Conference sits directly under the hero because Figma 130:9 places it
  * there, immediately after the hero's closing rule.
@@ -40,6 +49,9 @@ export default function HomePage() {
       <Conference content={home.conference} />
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
       <Path content={home.path} />
+      <AudienceOnly audience="partner">
+        <CampusChapters content={home.chapters} />
+      </AudienceOnly>
       {/* Partners is hidden: on the partner side the ecosystem accordion
           already names Companies, Universities, Networks and Funders, so
           this section said the same four a second time. The component and
@@ -53,6 +65,9 @@ export default function HomePage() {
           footer (297:783) follows them directly. The component and its
           content are kept - restore this line to bring the newsletter back.
           <Join content={home.join} /> */}
+      {/* Before the closing: the last doubts, answered, while there is still
+          a door underneath them. */}
+      <Faq content={home.faq} name="home-faq" />
       <Place content={home.place} />
     </>
   );

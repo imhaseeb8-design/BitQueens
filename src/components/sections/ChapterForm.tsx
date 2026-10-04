@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import type { AcademyChapters } from '@/lib/types';
+import type { CampusChapters } from '@/lib/types';
 import form from '@/components/ui/Form.module.css';
 
 type Status = 'idle' | 'submitting' | 'success';
@@ -20,7 +20,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * Campus chapter application form (#chapters on the Academy page).
  * No backend yet — same honest local resolve as the other Academy forms.
  */
-export function ChapterForm({ content }: { content: AcademyChapters }) {
+export function ChapterForm({ content }: { content: CampusChapters }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [university, setUniversity] = useState('');

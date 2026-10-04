@@ -1,15 +1,18 @@
 /**
- * AcademyProof — the four reported figures, as one ruled row.
+ * AcademyProof — the four reported figures, on a green card.
  *
  * Typographic rather than decorated: the figure carries the weight, the label
- * names it, and one sentence says what it counts. Hairlines top and bottom
- * tie it to the section rules the rest of the page uses.
+ * names it, and one sentence says what it counts. The card closes on a ruled
+ * row of collaborator logos — the figures are the claim, the logos are the
+ * corroboration.
  */
 
+/* Short at the bottom: the card has a hard edge, so it closes itself and does
+   not need the page's full section gap after it. */
 .section {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: 0 0 clamp(3rem, 6vw, 6rem);
+  padding: clamp(1.5rem, 3vw, 3rem) 0 clamp(2rem, 3.4vw, 3.5rem);
 }
 
 .inner {
@@ -19,22 +22,26 @@
   padding: 0 var(--bq-gutter);
 }
 
+.card {
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--bq-green-deep);
+  color: var(--bq-cream);
+}
+
+/* The caption above this row is gone, so the row draws the card's top padding
+   itself. */
 .stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 3rem);
   margin: 0;
-  padding: clamp(2rem, 3.5vw, 3rem) 0;
-  border-top: 1px solid var(--bq-ink-14);
-  border-bottom: 1px solid var(--bq-ink-14);
+  padding: clamp(2.25rem, 3.8vw, 3.25rem) clamp(1.5rem, 3.889vw, 3.5rem)
+    clamp(1.75rem, 3vw, 2.5rem);
 }
 
 .stat {
   min-width: 0;
-}
-
-.group {
-  display: block;
 }
 
 .figure {
@@ -44,7 +51,7 @@
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.035em;
-  color: var(--bq-green-deep);
+  color: var(--bq-canvas);
   font-variant-numeric: tabular-nums lining-nums;
 }
 
@@ -54,7 +61,7 @@
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.0625rem);
   line-height: 1.3;
-  color: var(--bq-green-deep);
+  color: var(--bq-canvas);
 }
 
 .support {
@@ -63,9 +70,59 @@
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: var(--bq-ink-50);
+  color: var(--bq-green-mint);
   text-wrap: pretty;
 }
+
+/* -- the corroboration ---------------------------------------------------- */
+
+/* On the green, under a hairline — the stats make the claim above the rule,
+   the logos sign it below. */
+.credits {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px clamp(1.5rem, 3vw, 3rem);
+  margin: 0 clamp(1.5rem, 3.889vw, 3.5rem);
+  padding: clamp(1.25rem, 2vw, 1.75rem) 0 clamp(2rem, 3.5vw, 3rem);
+  border-top: 1px solid var(--bq-cream-30);
+}
+
+.creditsLabel {
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bq-green-mint);
+}
+
+.logoList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px clamp(1.5rem, 3vw, 2.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Capped rather than rescaled per logo: the content's own width/height stay
+   the source of each one's ratio, and the caps bring the set down together
+   without touching the homepage's copy of them. */
+.logo {
+  width: auto;
+  height: auto;
+  max-width: 96px;
+  max-height: 36px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.88;
+}
+
+/* -- responsive ----------------------------------------------------------- */
 
 @media (max-width: 900px) {
   .stats {

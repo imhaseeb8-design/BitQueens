@@ -160,6 +160,10 @@ export interface ConferenceDetail {
 
 export interface ConferenceSection {
   eyebrow: string;
+  /** Heading for the weekly-training block under the details. */
+  sessionsLabel: string;
+  /** The weekly live trainings — the canonical copy of this list. */
+  sessions: TrainingSession[];
   /** Set as explicit lines: the frame breaks this over two (node 268:152). */
   headlineLines: string[];
   body: string;
@@ -307,7 +311,91 @@ export interface HeroSection {
   };
 }
 
+export interface CampusChapters {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  /** Renders only when populated. */
+  chapters: AcademyChapter[];
+  formEyebrow: string;
+  formHeadline: string;
+  submitLabel: string;
+  successTitle: string;
+  successBody: string;
+}
+
+/* --------------------------------------------------------- conference -- */
+
+export interface ConferenceSpeaker {
+  name: string;
+  role: string;
+  portrait: ImageSlot;
+}
+
+/** One edition of the conference. */
+export interface ConferenceEvent {
+  /** Stable key for the board's selection. */
+  id: string;
+  name: string;
+  location: string;
+  /** e.g. "Monday, 29 June 2026". */
+  date: string;
+  /** e.g. "10:00 AM – 11:30 AM UTC". */
+  time: string;
+  /** "Virtual", "In person", "Hybrid". */
+  format: string;
+  /** Past editions stay on the board, quieted, with no seat to take. */
+  past?: boolean;
+  about: string;
+  tags: string[];
+  speakers: ConferenceSpeaker[];
+  image: ImageSlot;
+  /** Omitted for a past edition. */
+  cta?: NavLink;
+}
+
+export interface ConferenceBoard {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  /** Sits over the list column. */
+  listLabel: string;
+  events: ConferenceEvent[];
+  /** Replaces the whole board while `events` is empty — which is the honest
+   *  state until the team confirms an edition. */
+  emptyTitle: string;
+  emptyBody: string;
+  emptyCta: NavLink;
+}
+
+export interface ConferenceHeroSection {
+  eyebrow: string;
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  primaryCta: NavLink;
+  secondaryCta: NavLink;
+}
+
+export interface ConferenceClosingSection {
+  headline: string;
+  headlineSerif: string;
+  body: string;
+  cta: NavLink;
+}
+
+export interface ConferencePage {
+  hero: ConferenceHeroSection;
+  board: ConferenceBoard;
+  closing: ConferenceClosingSection;
+}
+
 export interface HomePage {
+  /** General questions — about BitQueens, and about partnering. */
+  faq: FaqSection;
+  /** The campus-chapter pitch and form — partner side only. */
+  chapters: CampusChapters;
   hero: HeroSection;
   impact: ImpactSection;
   proof: ProofSection;
@@ -409,13 +497,6 @@ export interface AcademyCohort {
   cta: NavLink;
 }
 
-export interface AcademyCohorts {
-  eyebrow: string;
-  headline: string;
-  headlineSerif: string;
-  intro: string;
-  cohorts: AcademyCohort[];
-}
 
 export interface AcademyEnroll {
   eyebrow: string;
@@ -432,24 +513,13 @@ export interface AcademyChapter {
   city: string;
 }
 
-export interface AcademyChapters {
-  eyebrow: string;
-  headline: string;
-  headlineSerif: string;
-  body: string;
-  /** Renders only when populated. */
-  chapters: AcademyChapter[];
-  formEyebrow: string;
-  formHeadline: string;
-  submitLabel: string;
-  successTitle: string;
-  successBody: string;
-}
 
-export interface AcademySession {
+/** One recurring live training session. Shown on the homepage's Conference
+ *  card and in the Academy's community band — one array, two readers. */
+export interface TrainingSession {
   /** e.g. "Fridays". */
   day: string;
-  /** e.g. "8:00 PM WAT". */
+  /** e.g. "8:00 PM WAT/BST · 7:00 PM GMT/UTC · 3:00 PM EST/EDT". */
   time: string;
   href: string;
 }
@@ -462,7 +532,7 @@ export interface AcademyCommunity {
   includes: string[];
   cta: NavLink;
   /** The live weekly training sessions (from the community's Linktree). */
-  sessions?: AcademySession[];
+  sessions?: TrainingSession[];
   /** Direct community path, e.g. the WhatsApp group. */
   secondaryCta?: NavLink;
 }
@@ -488,16 +558,16 @@ export interface AcademyStories {
   stories: AcademyStory[];
 }
 
-export interface AcademyFaqItem {
+export interface FaqItem {
   question: string;
   answer: string;
 }
 
-export interface AcademyFaq {
+export interface FaqSection {
   headline: string;
   headlineSerif: string;
   intro: string;
-  items: AcademyFaqItem[];
+  items: FaqItem[];
 }
 
 export interface AcademyPage {
@@ -506,13 +576,13 @@ export interface AcademyPage {
   teachers: AcademyTeachers;
   path: AcademyPath;
   tracks: AcademyTracks;
-  cohorts: AcademyCohorts;
+  /** Scheduled intakes, matched to their track by name. */
+  cohorts: AcademyCohort[];
   enroll: AcademyEnroll;
-  chapters: AcademyChapters;
   community: AcademyCommunity;
   vsBiet: AcademyVsBiet;
   stories: AcademyStories;
-  faq: AcademyFaq;
+  faq: FaqSection;
 }
 
 /* --------------------------------------------------------------- join --- */

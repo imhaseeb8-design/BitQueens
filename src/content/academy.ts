@@ -19,7 +19,7 @@ export const academy: AcademyPage = {
     headlineSerif: 'No experience needed.',
     body: 'The Academy is where you join BitQueens. Cohort programmes, campus chapters, and a free learning community — taught in plain language and built for absolute beginners.',
     primaryCta: { label: 'Join free', href: '/join' },
-    secondaryCta: { label: 'Explore programmes', href: '#cohorts' },
+    secondaryCta: { label: 'Explore programmes', href: '#tracks' },
   },
 
   /* The same four reported figures the homepage carries — imported, not
@@ -90,7 +90,7 @@ export const academy: AcademyPage = {
     headlineSerif: 'starting point.',
     intro:
       'Four tracks, one rule: everything is taught in plain language. Start at the very beginning, or jump to the skills that match your goals.',
-    cta: { label: 'Browse all programmes', href: '#cohorts' },
+    cta: { label: 'Apply to a cohort', href: '#enroll' },
     tracks: [
       {
         name: 'Web3 Foundations',
@@ -127,42 +127,40 @@ export const academy: AcademyPage = {
     ],
   },
 
-  cohorts: {
-    eyebrow: 'Cohort programmes',
-    headline: 'Learn together,',
-    headlineSerif: 'in small groups.',
-    intro:
-      'Cohorts are guided, time-bound programmes with mentors and peers. Seats are limited so everyone gets real attention.',
-    cohorts: [
-      {
-        name: 'Web3 Foundations — Cohort 4',
-        track: 'Web3 Foundations',
-        dates: 'To be announced',
-        format: 'Online',
-        level: 'Beginner',
-        access: 'Free',
-        cta: { label: 'Enroll', href: '#enroll' },
-      },
-      {
-        name: 'AI for Work — Cohort 2',
-        track: 'AI for Work',
-        dates: 'To be announced',
-        format: 'Online',
-        level: 'Beginner',
-        access: 'Paid',
-        cta: { label: 'Enroll', href: '#enroll' },
-      },
-      {
-        name: 'Build & Earn — Cohort 1',
-        track: 'Build & Earn',
-        dates: 'To be announced',
-        format: 'Hybrid',
-        level: 'Intermediate',
-        access: 'Paid',
-        cta: { label: 'Enroll', href: '#enroll' },
-      },
-    ],
-  },
+  /* The scheduled intakes. These are not a section of their own any more —
+     the tracks section carries them, matched by `track`, because a track is a
+     subject and a cohort is a date, and listing both separately meant naming
+     the same programmes twice. The enroll form builds its select from this
+     same array. */
+  cohorts: [
+    {
+      name: 'Web3 Foundations — Cohort 4',
+      track: 'Web3 Foundations',
+      dates: 'To be announced',
+      format: 'Online',
+      level: 'Beginner',
+      access: 'Free',
+      cta: { label: 'Enroll', href: '#enroll' },
+    },
+    {
+      name: 'AI for Work — Cohort 2',
+      track: 'AI for Work',
+      dates: 'To be announced',
+      format: 'Online',
+      level: 'Beginner',
+      access: 'Paid',
+      cta: { label: 'Enroll', href: '#enroll' },
+    },
+    {
+      name: 'Build & Earn — Cohort 1',
+      track: 'Build & Earn',
+      dates: 'To be announced',
+      format: 'Hybrid',
+      level: 'Intermediate',
+      access: 'Paid',
+      cta: { label: 'Enroll', href: '#enroll' },
+    },
+  ],
 
   enroll: {
     eyebrow: 'Enroll',
@@ -173,20 +171,6 @@ export const academy: AcademyPage = {
     successTitle: 'Application received.',
     successBody:
       'Thank you — your application is with the Academy team. We will be in touch by email with next steps.',
-  },
-
-  chapters: {
-    eyebrow: 'Campus chapters',
-    headline: 'Bring BitQueens',
-    headlineSerif: 'to your campus.',
-    body: 'Start a chapter at your university and bring emerging-tech learning to women on your campus. You get the playbook, the community, and our support — you bring the energy.',
-    chapters: [],
-    formEyebrow: 'Start a chapter',
-    formHeadline: 'Tell us about your campus.',
-    submitLabel: 'Apply to start a chapter',
-    successTitle: 'Application received.',
-    successBody:
-      'Thank you — the community team will review your application and reply by email.',
   },
 
   community: {
@@ -202,18 +186,8 @@ export const academy: AcademyPage = {
     ],
     cta: { label: 'Join free', href: '/join' },
     secondaryCta: { label: 'Join our WhatsApp community', href: 'https://bit.ly/BitQueens' },
-    sessions: [
-      {
-        day: 'Fridays',
-        time: '8:00 PM WAT · 7:00 PM GMT · 3:00 PM EST',
-        href: 'https://us02web.zoom.us/j/81229055699',
-      },
-      {
-        day: 'Sundays',
-        time: '8:00 PM WAT · 7:00 PM GMT · 3:00 PM EST',
-        href: 'https://us02web.zoom.us/j/81595873470',
-      },
-    ],
+    /* One list, defined with the Conference card that also shows it. */
+    sessions: home.conference.sessions,
   },
 
   vsBiet: {
