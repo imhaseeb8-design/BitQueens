@@ -37,7 +37,7 @@ export function SiteHeader() {
 
         <nav id="bq-nav" className={styles.nav} aria-label="Main">
           {site.nav.map((link) =>
-            link.href === '/#partners' ? (
+            link.href === '/#ecosystem' ? (
               <PartnerLink
                 key={link.href}
                 className={styles.navLink}

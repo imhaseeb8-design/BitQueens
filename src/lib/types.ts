@@ -187,8 +187,8 @@ export interface FounderSection {
   /** The panel's own headline, one entry per line (node 281:415). */
   storyLines: string[];
   bio: string;
-  primaryCta: NavLink;
-  secondaryCta: NavLink;
+  /** One CTA, into the About page where the full story lives. */
+  cta: NavLink;
   portrait: ImageSlot;
 }
 
@@ -339,25 +339,45 @@ export interface AcademyHero {
   body: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
-  /** Generated abstract brand artwork — never photography of people. */
-  art: ImageSlot;
-  /** Real photography lands here; renders a labelled slot until then. */
-  photo: ImageSlot;
+}
+
+/** The four reported figures, repeated from the homepage's single source. */
+export interface AcademyProof {
+  headline: string;
+  stats: ImpactStat[];
+}
+
+/** Who stands in front of a cohort, and what they have actually done. */
+export interface AcademyTeachers {
+  headline: string;
+  headlineSerif: string;
+  intro: string;
+  lead: {
+    name: string;
+    role: string;
+    /** Her own words, lifted from the About page so the two never drift. */
+    bio: string;
+    /** Label/value pairs — each one checkable. */
+    facts: { label: string; value: string }[];
+    portrait: ImageSlot;
+    cta: NavLink;
+  };
 }
 
 export interface AcademyStep {
   title: string;
   description: string;
+  /** Which dotted mark stands in for the step (see PathMarks.tsx). */
+  mark: 'track' | 'globe' | 'dots' | 'network';
 }
 
 export interface AcademyPath {
-  eyebrow: string;
   headline: string;
   headlineSerif: string;
   intro: string;
+  /** Sits under the intro, above the ledger: the way on. */
+  cta: NavLink;
   steps: AcademyStep[];
-  /** The one centred line under the cards. */
-  closing: string;
 }
 
 export interface AcademyTrack {
@@ -375,6 +395,8 @@ export interface AcademyTracks {
   headlineSerif: string;
   intro: string;
   tracks: AcademyTrack[];
+  /** Right of the intro: the way through to the cohort dates. */
+  cta: NavLink;
 }
 
 export interface AcademyCohort {
@@ -488,6 +510,8 @@ export interface AcademyClosing {
 
 export interface AcademyPage {
   hero: AcademyHero;
+  proof: AcademyProof;
+  teachers: AcademyTeachers;
   path: AcademyPath;
   tracks: AcademyTracks;
   cohorts: AcademyCohorts;

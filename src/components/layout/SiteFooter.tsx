@@ -51,7 +51,7 @@ export function SiteFooter() {
               <h2 className={styles.colTitle}>{column.title}</h2>
               <ul className={styles.list}>
                 {column.links.map((link) =>
-                  link.href === '/#partners' ? (
+                  link.href === '/#ecosystem' ? (
                     <li key={link.href}>
                       <PartnerLink className={styles.link}>
                         {link.label}

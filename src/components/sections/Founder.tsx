@@ -10,7 +10,7 @@ import styles from './Founder.module.css';
  *
  * A centred one-line title, then a green card split 500 / 796: Kristie's
  * portrait fills the left edge to edge, the story sits on the right with its
- * hairline and the two CTAs held at the bottom. The wax seal hangs off the
+ * hairline and one CTA held at the bottom, into the About page. The wax seal hangs off the
  * card's top-right corner, with the "B" set over it.
  *
  * Server Component: nothing here needs state.
@@ -51,11 +51,8 @@ export function Founder({ content }: { content: FounderSection }) {
             <div className={styles.actions}>
               <div className={styles.rule} />
               <div className={styles.ctas}>
-                <Button href={content.primaryCta.href} size="compact" onDark className={styles.primaryCta}>
-                  {content.primaryCta.label}
-                </Button>
-                <Button href={content.secondaryCta.href} variant="link" onDark className={styles.secondaryCta}>
-                  {content.secondaryCta.label}
+                <Button href={content.cta.href} size="compact" onDark className={styles.primaryCta}>
+                  {content.cta.label}
                 </Button>
               </div>
             </div>

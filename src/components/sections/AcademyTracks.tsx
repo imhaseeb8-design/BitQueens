@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { AcademyTracks as AcademyTracksContent } from '@/lib/types';
@@ -7,9 +8,13 @@ import styles from './AcademyTracks.module.css';
 /**
  * Learning tracks — the four starting points.
  *
- * Flat cards with a meta row (level · length) and an access pill. Free reads
- * green, Paid reads blue; the pill is the only colour on the card, so the
- * free/paid distinction scans instantly.
+ * A serif numeral opens each card and a hairline closes it: level, length and
+ * whether it costs anything sit on that rule, pinned to the bottom, so all
+ * four cards end on the same line however long the copy runs. The card turns
+ * deep green under the pointer, the answer every card on the site gives.
+ *
+ * The way through to the cohort dates sits right of the intro, on its line,
+ * filling the column the headline leaves empty.
  */
 export function AcademyTracks({ content }: { content: AcademyTracksContent }) {
   return (
@@ -19,14 +24,21 @@ export function AcademyTracks({ content }: { content: AcademyTracksContent }) {
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
       <div className={styles.inner}>
-        <SectionHead
-          eyebrow={content.eyebrow}
-          headline={content.headline}
-          headlineSerif={content.headlineSerif}
-          intro={content.intro}
-        />
+        <div className={styles.head}>
+          <SectionHead
+            eyebrow={content.eyebrow}
+            headline={content.headline}
+            headlineSerif={content.headlineSerif}
+            intro={content.intro}
+          />
+          <Reveal delay={180} className={styles.ctaRow}>
+            <Button href={content.cta.href} variant="quiet" className={styles.cta}>
+              {content.cta.label}
+            </Button>
+          </Reveal>
+        </div>
 
-        <ul className={styles.cards}>
+        <ol className={styles.cards}>
           {content.tracks.map((track, i) => (
             <Reveal
               key={track.name}
@@ -34,21 +46,20 @@ export function AcademyTracks({ content }: { content: AcademyTracksContent }) {
               delay={i * 90}
               className={styles.card}
             >
-              <span
-                className={`${styles.access} ${
-                  track.access === 'Free' ? styles.free : styles.paid
-                }`}
-              >
-                {track.access}
-              </span>
+              <p className={styles.numeral} aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </p>
               <h3 className={styles.title}>{track.name}</h3>
               <p className={styles.desc}>{track.description}</p>
-              <p className={styles.meta}>
-                {track.level} · {track.length}
+              <p className={styles.foot}>
+                <span>
+                  {track.level} · {track.length}
+                </span>
+                <span className={styles.access}>{track.access}</span>
               </p>
             </Reveal>
           ))}
-        </ul>
+        </ol>
       </div>
     </section>
   );

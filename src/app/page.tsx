@@ -1,10 +1,8 @@
-import { AudienceOnly } from '@/components/audience/AudienceProvider';
 import { Blog } from '@/components/sections/Blog';
 import { Conference } from '@/components/sections/Conference';
 import { Ecosystem } from '@/components/sections/Ecosystem';
 import { Founder } from '@/components/sections/Founder';
 import { Hero } from '@/components/sections/Hero';
-import { Partners } from '@/components/sections/Partners';
 import { Path } from '@/components/sections/Path';
 import { Place } from '@/components/sections/Place';
 import { home } from '@/content/home';
@@ -42,12 +40,13 @@ export default function HomePage() {
       <Conference content={home.conference} />
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
       <Path content={home.path} />
-      {/* Partner side only: the learner journey stays learner-only, and the
-          partner side's ecosystem accordion already introduces the four
-          partner kinds — this section is where the full pitch lives. */}
-      <AudienceOnly audience="partner">
-        <Partners content={home.partners} />
-      </AudienceOnly>
+      {/* Partners is hidden: on the partner side the ecosystem accordion
+          already names Companies, Universities, Networks and Funders, so
+          this section said the same four a second time. The component and
+          its content are kept — restore these lines to bring it back.
+          <AudienceOnly audience="partner">
+            <Partners content={home.partners} />
+          </AudienceOnly> */}
       <Founder content={home.founder} />
       <Blog content={home.blog} />
       {/* Join is hidden: the two doors it held are the Place cards, and the

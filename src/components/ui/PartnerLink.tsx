@@ -6,12 +6,12 @@ import type { MouseEvent, ReactNode } from 'react';
 import { useAudience } from '@/components/audience/AudienceProvider';
 
 /**
- * A link to the homepage's Partners section.
+ * A link to the partner view of the homepage's ecosystem accordion.
  *
- * The section only renders on the partner side of the hero's audience
- * switch, so a plain anchor would land on nothing for a learner-side reader.
- * This flips the switch first, then navigates, then scrolls once the section
- * has mounted.
+ * The accordion shows the four partner kinds only on the partner side of the
+ * hero's switch, so a plain anchor would land a learner-side reader on the
+ * four divisions instead. This flips the switch first, then navigates, then
+ * scrolls once the accordion has re-rendered.
  */
 export function PartnerLink({
   children,
@@ -26,17 +26,17 @@ export function PartnerLink({
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
     setAudience('partner');
-    router.push('/#partners');
+    router.push('/#ecosystem');
     window.setTimeout(() => {
       document
-        .getElementById('partners')
+        .getElementById('ecosystem')
         ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 150);
   }
 
   return (
     <Link
-      href="/#partners"
+      href="/#ecosystem"
       scroll={false}
       onClick={handleClick}
       className={className}

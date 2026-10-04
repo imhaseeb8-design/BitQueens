@@ -1,4 +1,6 @@
 import type { AcademyPage } from '@/lib/types';
+import { about } from './about';
+import { home } from './home';
 
 /**
  * Academy page copy.
@@ -18,48 +20,68 @@ export const academy: AcademyPage = {
     body: 'The Academy is where you join BitQueens. Cohort programmes, campus chapters, and a free learning community — taught in plain language and built for absolute beginners.',
     primaryCta: { label: 'Join free', href: '/join' },
     secondaryCta: { label: 'Explore programmes', href: '#cohorts' },
-    art: {
-      src: '/academy-hero-art.png',
-      alt: 'Abstract dotted world map in slate blue on warm cream',
-      width: 1920,
-      height: 1280,
-    },
-    photo: {
-      alt: 'Women learning together at a BitQueens Academy session',
-      width: 880,
-      height: 660,
+  },
+
+  /* The same four reported figures the homepage carries — imported, not
+     retyped, so a corrected number is corrected everywhere at once. */
+  proof: {
+    headline: 'What the Academy has done so far.',
+    stats: home.impact.stats,
+  },
+
+  /* Every claim here is from the About page's founder block, which is the
+     one place her credentials are written down. Nothing is added.
+     TODO (BitQueens team): cohort mentors are not named yet. When the roster
+     is confirmed, they belong in this section beside Kristie. */
+  teachers: {
+    headline: 'Taught by women',
+    headlineSerif: 'doing the work.',
+    intro:
+      'The Academy is led by a working blockchain educator, not a course library. Every cohort is taught live, by someone who has stood where you are standing.',
+    lead: {
+      name: about.founder.name,
+      role: about.founder.role,
+      bio: about.founder.bio[1],
+      facts: about.founder.facts,
+      portrait: about.founder.portrait,
+      /* Not her LinkedIn: the page should keep a reader on the site, and the
+         About page is where her full story already lives. */
+      cta: { label: 'Read the full story', href: '/about' },
     },
   },
 
   path: {
-    eyebrow: 'How it works',
     headline: 'Start where you are.',
     headlineSerif: 'Grow from there.',
     intro:
       'You do not need a technical background, a degree, or any prior experience. The path is built for exactly where you are today.',
+    cta: { label: 'Start with step one', href: '/join' },
     steps: [
       {
         title: 'Pick a track',
+        mark: 'track',
         description:
           'Choose what you want to learn first — from the absolute basics to job-ready skills.',
       },
       {
         title: 'Join free',
+        mark: 'globe',
         description:
           'Enter the community and meet women learning the same things, at the same pace.',
       },
       {
         title: 'Learn in a cohort',
+        mark: 'dots',
         description:
           'Study in small, guided groups with mentors who explain everything in plain language.',
       },
       {
         title: 'Build and earn',
+        mark: 'network',
         description:
           'Turn what you learn into real projects, freelance work, or a new career.',
       },
     ],
-    closing: 'Most women who join BitQueens start with zero experience in emerging technology.',
   },
 
   tracks: {
@@ -68,6 +90,7 @@ export const academy: AcademyPage = {
     headlineSerif: 'starting point.',
     intro:
       'Four tracks, one rule: everything is taught in plain language. Start at the very beginning, or jump to the skills that match your goals.',
+    cta: { label: 'Browse all programmes', href: '#cohorts' },
     tracks: [
       {
         name: 'Web3 Foundations',

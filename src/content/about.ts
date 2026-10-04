@@ -152,6 +152,6 @@ export const about: AboutPage = {
     headlineSerif: 'with us.',
     body: 'Whether you’re here to learn, to build, or to open doors for others — there’s a place for you in this ecosystem.',
     primaryCta: { label: 'Join BitQueens', href: '/join' },
-    secondaryCta: { label: 'Partner with us', href: '/#partners' },
+    secondaryCta: { label: 'Partner with us', href: '/#ecosystem' },
   },
 };

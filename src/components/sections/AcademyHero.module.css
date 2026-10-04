@@ -1,34 +1,65 @@
 /**
- * AcademyHero.
+ * AcademyHero — the homepage hero's shape, one page in.
  *
- * Copy left, visual right on the 1440 frame; stacks on small screens. The
- * dotted-map artwork fills the visual panel and the photography slot overlaps
- * its lower-left corner — the homepage hero's collage language, in the
- * Academy's slate blue.
+ * Everything centred on the page ground: eyebrow, the sans/serif headline
+ * pair, the lede and two CTAs, over the animated dotted map at the same 30%
+ * under the same wash. The measures match the homepage's (684 headline, 668
+ * lede, 15 between the buttons) so the two heroes read as one family.
  */
 
 .section {
+  position: relative;
   background: var(--bq-canvas);
-  color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0 clamp(4rem, 7vw, 7rem);
+}
+
+/* -- the band ------------------------------------------------------------- */
+
+.band {
+  position: relative;
+  overflow: clip;
+}
+
+.map {
+  position: absolute;
+  top: clamp(1.5rem, 2.847vw, 2.5625rem);
+  left: 50%;
+  z-index: 0;
+  width: min(1160px, 80.556vw);
+  height: auto;
+  aspect-ratio: 2048 / 1153;
+  transform: translateX(-50%);
+  opacity: 0.3;
+  pointer-events: none;
+  animation: bqAcademyHeroFade 1.2s var(--bq-ease) 200ms both;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(250, 250, 248, 0) 0%,
+    rgba(250, 250, 248, 0.8) 100%
+  );
+  pointer-events: none;
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: var(--bq-max);
   margin: 0 auto;
-  padding: 0 var(--bq-gutter);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: center;
+  padding: clamp(3rem, 8.542vw, 7.6875rem) var(--bq-gutter)
+    clamp(4rem, 10vw, 9rem);
+  text-align: center;
 }
 
-.copy {
-  display: grid;
-  gap: 22px;
-  align-content: start;
-}
+/* -- the copy -------------------------------------------------------------- */
 
 .eyebrow {
   margin: 0;
@@ -44,12 +75,14 @@
 .headline {
   display: flex;
   flex-direction: column;
-  margin: 0;
+  max-width: 684px;
+  margin: 22px 0 0;
   font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: var(--bq-t-hero);
+  /* The homepage hero's 64 at the 1440 frame. */
+  font-size: clamp(2.25rem, 4.444vw, 4rem);
   font-weight: 400;
-  line-height: 1.04;
-  letter-spacing: -0.045em;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
   color: var(--bq-green-deep);
   text-wrap: balance;
 }
@@ -60,68 +93,80 @@
 
 .serif {
   font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.1em;
-  line-height: 1.02;
+  font-size: 1.15625em;
+  line-height: 0.95;
   letter-spacing: 0;
 }
 
 .body {
-  margin: 0;
-  max-width: 34rem;
+  max-width: 668px;
+  margin: 24px 0 0;
   font-family: var(--bq-inter-tight), sans-serif;
-  font-size: var(--bq-t-body-lg);
-  line-height: 1.55;
-  color: var(--bq-ink-80);
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.8);
   text-wrap: pretty;
 }
 
 .ctas {
   display: flex;
-  align-items: center;
-  gap: 28px;
   flex-wrap: wrap;
-  margin-top: 6px;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 40px;
 }
 
-/* -- visual -------------------------------------------------------------- */
-
-.visual {
-  position: relative;
-  min-height: 420px;
+/* Both sit on the shared Button, so they carry the site's arrow shift; only
+   the frame's colour, corner and type are set here — the same pair the
+   homepage hero uses. */
+.ctas .primaryCta,
+.ctas .secondaryCta {
+  min-height: 0;
+  padding: 16px 34px;
+  border-radius: 4px;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.19;
+  letter-spacing: 0;
 }
 
-.art {
-  width: 100%;
-  height: auto;
-  border-radius: 20px;
+.ctas .primaryCta {
+  border: 0;
+  background: var(--bq-green-deep);
+  color: var(--bq-canvas);
 }
 
-.photo {
-  position: absolute;
-  left: -32px;
-  bottom: -32px;
-  width: min(62%, 420px);
-  border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(26, 26, 26, 0.14);
+.ctas .secondaryCta {
+  border: 1px solid var(--bq-green-deep);
+  background: transparent;
+  color: var(--bq-green-deep);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctas .primaryCta:hover {
+    background: var(--bq-ink);
+  }
+
+  .ctas .secondaryCta:hover {
+    border-color: var(--bq-green-deep);
+    background: var(--bq-green-tint);
+  }
+}
+
+@keyframes bqAcademyHeroFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.3;
+  }
 }
 
 /* -- responsive ----------------------------------------------------------- */
 
 @media (max-width: 900px) {
-  .inner {
-    grid-template-columns: 1fr;
-  }
-
-  .visual {
-    min-height: 0;
-  }
-
-  .photo {
-    position: relative;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    margin-top: -48px;
-    margin-left: 24px;
+  .map {
+    width: 140vw;
   }
 }

@@ -1,6 +1,5 @@
-import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
-import { ImageSlot } from '@/components/ui/ImageSlot';
+import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import { Reveal } from '@/components/ui/Reveal';
 import type { AcademyHero as AcademyHeroContent } from '@/lib/types';
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
@@ -9,9 +8,12 @@ import styles from './AcademyHero.module.css';
 /**
  * Academy hero — "this is where you join".
  *
- * Copy left, visual right: the generated dotted-map artwork sits behind and
- * the photography slot overlaps it, the same collage language as the homepage
- * hero. The photo slot renders labelled until real Academy photography lands.
+ * The homepage hero's shape: everything centred on the page ground over the
+ * animated dotted map, faint and washed out toward the bottom so the copy
+ * never fights the dots. No artwork panel — the page opens on the sentence,
+ * not on a picture.
+ *
+ * Server Component: the only client leaf is the map's canvas.
  */
 export function AcademyHero({ content }: { content: AcademyHeroContent }) {
   return (
@@ -19,12 +21,16 @@ export function AcademyHero({ content }: { content: AcademyHeroContent }) {
       aria-label="BitQueens Academy"
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
-      <div className={styles.inner}>
-        <div className={styles.copy}>
-          <Reveal>
+      <div className={styles.band}>
+        <GlobalDotMap className={styles.map} />
+        <span className={styles.wash} aria-hidden="true" />
+
+        <div className={styles.inner}>
+          <Reveal variant="fade">
             <p className={styles.eyebrow}>{content.eyebrow}</p>
           </Reveal>
-          <Reveal delay={80}>
+
+          <Reveal delay={80} variant="fade">
             <h1 className={styles.headline}>
               <span className={styles.line}>{content.headline}</span>
               <span className={`${styles.line} ${styles.serif}`}>
@@ -32,40 +38,25 @@ export function AcademyHero({ content }: { content: AcademyHeroContent }) {
               </span>
             </h1>
           </Reveal>
-          <Reveal delay={140}>
+
+          <Reveal delay={140} variant="fade">
             <p className={styles.body}>{content.body}</p>
           </Reveal>
+
           <Reveal delay={200} className={styles.ctas}>
-            <Button href={content.primaryCta.href} variant="green">
+            <Button href={content.primaryCta.href} size="compact" className={styles.primaryCta}>
               {content.primaryCta.label}
             </Button>
             <Button
               href={content.secondaryCta.href}
-              variant="link"
-              arrow={false}
+              variant="secondary"
+              size="compact"
+              className={styles.secondaryCta}
             >
               {content.secondaryCta.label}
             </Button>
           </Reveal>
         </div>
-
-        <Reveal delay={160} className={styles.visual}>
-          {content.art.src ? (
-            <Image
-              src={content.art.src}
-              alt={content.art.alt}
-              width={content.art.width}
-              height={content.art.height}
-              className={styles.art}
-              priority
-            />
-          ) : null}
-          <ImageSlot
-            content={content.photo}
-            mark="var(--bq-blue-slate)"
-            className={styles.photo}
-          />
-        </Reveal>
       </div>
     </section>
   );

@@ -34,7 +34,7 @@ export const home: HomePage = {
         body:
           'Partner with BitQueens to bring practical emerging-tech education, ' +
           'community, and opportunity to more women.',
-        primaryCta: { label: 'Partner with BitQueens', href: '/#partners' },
+        primaryCta: { label: 'Partner with BitQueens', href: '/#ecosystem' },
         secondaryCta: { label: 'See our impact', href: '/about' },
       },
     ],
@@ -214,7 +214,10 @@ export const home: HomePage = {
             'Create practical pathways into emerging technology through ' +
             'mentors, projects, sponsored programmes and career opportunities.',
           cta: 'Partner with us',
-          href: '/#partners',
+          /* These four sit inside #ecosystem, so they cannot link to it.
+             Until there is a /partners page or a partner form, they open a
+             mail to the address the footer already publishes. */
+          href: 'mailto:immanuelkristie@gmail.com?subject=Partnering%20with%20BitQueens',
           itemsLabel: 'Ways to contribute',
           items: ['Sponsor programmes', 'Share expertise', 'Open career paths'],
           color: '#3B6C9F',
@@ -227,7 +230,10 @@ export const home: HomePage = {
             'Bring learning and community to campus through chapters and ' +
             'programmes, taught alongside what students already study.',
           cta: 'Partner with us',
-          href: '/#partners',
+          /* These four sit inside #ecosystem, so they cannot link to it.
+             Until there is a /partners page or a partner form, they open a
+             mail to the address the footer already publishes. */
+          href: 'mailto:immanuelkristie@gmail.com?subject=Partnering%20with%20BitQueens',
           itemsLabel: 'Ways to contribute',
           items: ['Campus chapters', 'Host a programme', 'Faculty collaboration'],
           color: '#E8641C',
@@ -240,7 +246,10 @@ export const home: HomePage = {
             'Co-host gatherings and connect women to wider networks, so a ' +
             'cohort does not end when the programme does.',
           cta: 'Partner with us',
-          href: '/#partners',
+          /* These four sit inside #ecosystem, so they cannot link to it.
+             Until there is a /partners page or a partner form, they open a
+             mail to the address the footer already publishes. */
+          href: 'mailto:immanuelkristie@gmail.com?subject=Partnering%20with%20BitQueens',
           itemsLabel: 'Ways to contribute',
           items: ['Co-host gatherings', 'Open your network', 'Amplify cohorts'],
           color: '#3B6C9F',
@@ -253,7 +262,10 @@ export const home: HomePage = {
             'Support accessible learning and the partnerships that help it ' +
             'grow, from single scholarships to a whole cohort.',
           cta: 'Partner with us',
-          href: '/#partners',
+          /* These four sit inside #ecosystem, so they cannot link to it.
+             Until there is a /partners page or a partner form, they open a
+             mail to the address the footer already publishes. */
+          href: 'mailto:immanuelkristie@gmail.com?subject=Partnering%20with%20BitQueens',
           itemsLabel: 'Ways to contribute',
           items: ['Fund scholarships', 'Back a cohort', 'Support operations'],
           color: '#F3AFBC',
@@ -379,8 +391,7 @@ export const home: HomePage = {
       'talked out of an industry that badly needs them. She builds the on-ramp ' +
       'she couldn’t find: programmes that assume no prior knowledge, taught in ' +
       'plain language, with a community attached.',
-    primaryCta: { label: 'Book Kristie as a speaker', href: '/contact' },
-    secondaryCta: { label: 'Read the full story', href: '/about' },
+    cta: { label: 'Read the full story', href: '/about' },
     portrait: {
       src: '/kristie-portrait.jpg',
       alt: 'Kristie, founder of BitQueens',
@@ -399,7 +410,7 @@ export const home: HomePage = {
     invitation: {
       title: 'Have another idea? Let’s talk.',
       body: 'There’s no single way to build with BitQueens.',
-      cta: { label: 'Partner with BitQueens', href: '/#partners' },
+      cta: { label: 'Partner with BitQueens', href: '/#ecosystem' },
     },
     /* In number order. The frame (295:491) stacks 04 above 03; the numbers
        are what the reader follows, so they ascend here. */
@@ -514,7 +525,7 @@ export const home: HomePage = {
         body:
           'Bring your expertise, networks, space, or support to help more ' +
           'women learn and build in technology.',
-        cta: { label: 'Partner with BitQueens', href: '/#partners' },
+        cta: { label: 'Partner with BitQueens', href: '/#ecosystem' },
         tone: 'cream',
       },
     ],

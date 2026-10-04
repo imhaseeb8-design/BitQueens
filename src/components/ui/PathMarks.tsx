@@ -83,6 +83,32 @@ export function DotFieldMark({ className }: MarkProps) {
   );
 }
 
+/** Pick a track — one dotted run that fans into three ways up. */
+export function TrackMark({ className }: MarkProps) {
+  return (
+    <HoverSpin className={className}>
+      <svg viewBox="0 0 168 168" fill="currentColor">
+        {/* Where you stand, then the three ways on. */}
+        <circle cx="84" cy="124" r="8" />
+        <circle cx="84" cy="108" r="5" />
+          <circle cx="84" cy="94" r="5" />
+          <circle cx="70" cy="76" r="5" />
+          <circle cx="58" cy="66" r="5" />
+          <circle cx="46" cy="56" r="5" />
+          <circle cx="34" cy="46" r="5" />
+          <circle cx="84" cy="78" r="5" />
+          <circle cx="84" cy="64" r="5" />
+          <circle cx="84" cy="50" r="5" />
+          <circle cx="84" cy="36" r="5" />
+          <circle cx="98" cy="76" r="5" />
+          <circle cx="110" cy="66" r="5" />
+          <circle cx="122" cy="56" r="5" />
+          <circle cx="134" cy="46" r="5" />
+      </svg>
+    </HoverSpin>
+  );
+}
+
 /** Build — a hub with eight spokes. */
 export function NetworkMark({ className }: MarkProps) {
   return (

@@ -1,5 +1,11 @@
 /**
  * AcademyTracks — the four learning-track cards.
+ *
+ * Numeral at the top, hairline at the bottom. The footer rule is what makes
+ * the row read as a set: level, length and access sit on it, pinned down by
+ * `margin-top: auto`, so four cards with four different copy lengths still
+ * end on one line. The hover is the site's: green ground, cream title, mint
+ * everything else.
  */
 
 .section {
@@ -15,10 +21,37 @@
   padding: 0 var(--bq-gutter);
 }
 
+/* -- the head ------------------------------------------------------------- */
+
+/* Two columns: the head keeps the left, the CTA takes the column the headline
+   leaves empty. `align-items: end` lands it on the intro's last line rather
+   than floating at the top of the row. */
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+}
+
+.ctaRow {
+  justify-self: end;
+  padding-bottom: 4px;
+}
+
+.ctaRow .cta {
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+/* -- the cards ------------------------------------------------------------ */
+
 .cards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--bq-col-gap);
+  gap: 16px;
   margin: clamp(2.5rem, 4.5vw, 4rem) 0 0;
   padding: 0;
   list-style: none;
@@ -28,63 +61,94 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  min-height: 300px;
-  padding: 32px 28px;
+  min-height: 330px;
+  padding: 28px 26px 24px;
   background: var(--bq-ecosystem-panel);
-  border-top: 4px solid var(--bq-blue-slate);
+  transition: background-color 400ms var(--bq-ease);
 }
 
-.access {
-  align-self: flex-start;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.access.free {
-  background: var(--bq-green-tint);
-  color: var(--bq-green-deep);
-}
-
-.access.paid {
-  background: var(--bq-blue-pale);
-  color: var(--bq-blue-deep);
+.numeral {
+  margin: 0;
+  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--bq-blue-slate);
+  font-variant-numeric: tabular-nums;
+  transition: color 400ms var(--bq-ease);
 }
 
 .title {
-  margin: 24px 0 0;
+  margin: 22px 0 0;
   font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(1.5rem, 1.9vw, 2rem);
+  font-size: clamp(1.375rem, 1.74vw, 1.5rem);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
   color: var(--bq-green-deep);
+  transition: color 400ms var(--bq-ease);
 }
 
 .desc {
   margin: 14px 0 0;
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: 1rem;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--bq-ink-80);
   text-wrap: pretty;
+  transition: color 400ms var(--bq-ease);
 }
 
-.meta {
+/* `margin-top: auto` is the load-bearing part: it pushes the rule to the
+   bottom of whichever card is tallest, and the rest follow. */
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin: auto 0 0;
-  padding-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--bq-ink-14);
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: 0.875rem;
-  font-weight: 500;
   line-height: 1.4;
-  letter-spacing: 0.06em;
   color: var(--bq-ink-50);
+  transition:
+    color 400ms var(--bq-ease),
+    border-color 400ms var(--bq-ease);
 }
+
+.access {
+  flex: none;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bq-green-deep);
+  transition: color 400ms var(--bq-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    background: var(--bq-green-deep);
+  }
+
+  .card:hover .title {
+    color: var(--bq-canvas);
+  }
+
+  .card:hover .numeral,
+  .card:hover .desc,
+  .card:hover .foot,
+  .card:hover .access {
+    color: var(--bq-green-mint);
+  }
+
+  .card:hover .foot {
+    border-color: var(--bq-cream-30);
+  }
+}
+
+/* -- responsive ----------------------------------------------------------- */
 
 @media (max-width: 1100px) {
   .cards {
@@ -92,13 +156,36 @@
   }
 }
 
+/* No room for two columns: the CTA drops under the intro, on its left. */
+@media (max-width: 900px) {
+  .head {
+    grid-template-columns: 1fr;
+    gap: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  .ctaRow {
+    justify-self: start;
+    padding-bottom: 0;
+  }
+}
+
 @media (max-width: 640px) {
   .cards {
     grid-template-columns: 1fr;
-    gap: 16px;
   }
 
   .card {
     min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .numeral,
+  .title,
+  .desc,
+  .foot,
+  .access {
+    transition: none;
   }
 }

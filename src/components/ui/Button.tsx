@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import styles from './Button.module.css';
 
-type Variant = 'primary' | 'green' | 'secondary' | 'link';
+type Variant = 'primary' | 'green' | 'secondary' | 'link' | 'quiet';
 type Size = 'default' | 'compact';
 
 interface ButtonProps {
@@ -19,7 +19,10 @@ interface ButtonProps {
    * make on purpose, not a side effect of one section.
    */
   size?: Size;
-  /** Show the trailing arrow. On by default. */
+  /**
+   * Show the trailing arrow. On by default, and ignored by `quiet`, which
+   * draws its own arrow so it can arrive on hover rather than sit there.
+   */
   arrow?: boolean;
   className?: string;
 }
@@ -33,6 +36,10 @@ export function Button({
   arrow = true,
   className = '',
 }: ButtonProps) {
+  // `quiet` has no box to clip, and its arrow is a pseudo-element, so none of
+  // the crossing-arrow machinery below applies to it.
+  const showArrow = arrow && variant !== 'quiet';
+
   const classes = [
     styles.base,
     styles[variant],
@@ -61,14 +68,14 @@ export function Button({
    */
   return (
     <Link href={href} className={classes}>
-      <span className={`${styles.shift} ${arrow ? styles.hasArrow : ''}`.trim()}>
-        {arrow && (
+      <span className={`${styles.shift} ${showArrow ? styles.hasArrow : ''}`.trim()}>
+        {showArrow && (
           <span className={`${styles.arrow} ${styles.arrowLead}`} aria-hidden="true">
             →
           </span>
         )}
         <span className={styles.label}>{children}</span>
-        {arrow && (
+        {showArrow && (
           <span className={`${styles.arrow} ${styles.arrowTrail}`} aria-hidden="true">
             →
           </span>

@@ -2,8 +2,12 @@
  * AcademyCommunity — the free-tier band.
  *
  * Flat deep-blue solid (the Academy's division colour). Cream text, cream
- * button via the Button's onDark inversion. The checklist is the whole
- * argument for "free forever", so it gets the roomier column.
+ * button via the Button's onDark inversion.
+ *
+ * Two columns with one job each: the ask on the left, what you get on the
+ * right. The right column runs the full height now — checklist, then the
+ * session schedule under its last rule — which is what closes the dead space
+ * the four-item list used to leave below itself.
  */
 
 .section {
@@ -20,84 +24,50 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: center;
+  /* `start`, not `center`: the two columns are different lengths and both
+     should begin on the same line. */
+  align-items: start;
 }
+
+/* -- the ask -------------------------------------------------------------- */
 
 .copy {
   display: grid;
   gap: 32px;
   align-content: start;
+  min-width: 0;
+}
+
+/* One filled button, one quiet link under it — in that order, so the column
+   reads as a single ask with a footnote rather than a choice of doors. The
+   gap is wide enough that the link reads as its own action rather than as a
+   caption stuck to the button. */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
 }
 
 .secondary {
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--bq-cream);
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-color: var(--bq-cream-22);
+  transition: text-decoration-color 300ms var(--bq-ease);
 }
 
 .secondary:hover {
   text-decoration-color: var(--bq-cream);
 }
 
-.sessions {
-  border-top: 1px solid var(--bq-cream-22);
-  padding-top: 24px;
-}
+/* -- what you get --------------------------------------------------------- */
 
-.sessionsTitle {
-  margin: 0 0 12px;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--bq-cream);
-  opacity: 0.75;
-}
-
-.sessionsList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 8px;
-}
-
-.session {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  text-decoration: none;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--bq-cream-22);
-}
-
-.session:last-child {
-  border-bottom: none;
-}
-
-.sessionDay {
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 1.0625rem;
-  font-weight: 700;
-  color: var(--bq-cream);
-  min-width: 5.5rem;
-}
-
-.sessionTime {
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.95rem;
-  color: var(--bq-cream);
-  opacity: 0.8;
-}
-
-.session:hover .sessionDay {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+.gets {
+  min-width: 0;
 }
 
 .list {
@@ -143,8 +113,79 @@
   text-wrap: pretty;
 }
 
+/* -- when it runs --------------------------------------------------------- */
+
+/* Sits under the checklist's closing rule, aligned to the copy column so the
+   days line up with the list text rather than with the ticks. */
+.sessions {
+  padding: 28px 0 0 48px;
+}
+
+.sessionsTitle {
+  margin: 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bq-cream-50);
+}
+
+/* Printed once for both days. */
+.sessionsTime {
+  margin: 10px 0 0;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  color: var(--bq-cream);
+}
+
+.sessionsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.session {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.sessionDay {
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--bq-cream);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--bq-cream-22);
+  transition: text-decoration-color 300ms var(--bq-ease);
+}
+
+.session:hover .sessionDay {
+  text-decoration-color: var(--bq-cream);
+}
+
+/* Only rendered when the two days run at different times. */
+.sessionTime {
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.9375rem;
+  color: var(--bq-cream-50);
+}
+
+/* -- responsive ----------------------------------------------------------- */
+
 @media (max-width: 900px) {
   .inner {
     grid-template-columns: 1fr;
+  }
+
+  .sessions {
+    padding-left: 0;
   }
 }

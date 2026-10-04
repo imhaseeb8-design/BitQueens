@@ -160,6 +160,39 @@
   }
 }
 
+/* -- quiet: a text action with no box ------------------------------------
+   The arrow waits for the pointer: it holds its space at rest so nothing
+   reflows when it arrives, and slides the last few pixels into place. Use
+   where a bordered button would compete with the page's real primary. */
+.quiet {
+  min-height: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--bq-green-deep);
+}
+
+.quiet::after {
+  content: '\2192';
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 300ms var(--bq-ease),
+    transform 300ms var(--bq-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .quiet:hover {
+    color: var(--bq-ink);
+  }
+
+  .quiet:hover::after {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* -- link: underlined text action ---------------------------------------- */
 .link {
   min-height: 48px;

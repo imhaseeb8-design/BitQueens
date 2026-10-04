@@ -2,7 +2,8 @@ import { Reveal } from './Reveal';
 import styles from './SectionHead.module.css';
 
 interface SectionHeadProps {
-  eyebrow: string;
+  /** Omit where the headline carries the section on its own. */
+  eyebrow?: string;
   headline: string;
   /** The serif second line. Omit when the headline is one line. */
   headlineSerif?: string;
@@ -14,9 +15,9 @@ interface SectionHeadProps {
 }
 
 /**
- * The shared section header: slate-blue eyebrow, two-line headline
- * (sans over serif), optional intro. Every Academy section uses this —
- * do not hand-roll another header.
+ * The shared section header: an optional slate-blue eyebrow, two-line
+ * headline (sans over serif), optional intro. Every Academy section uses
+ * this — do not hand-roll another header.
  */
 export function SectionHead({
   eyebrow,
@@ -36,9 +37,11 @@ export function SectionHead({
         .filter(Boolean)
         .join(' ')}
     >
-      <Reveal>
-        <p className={styles.eyebrow}>{eyebrow}</p>
-      </Reveal>
+      {eyebrow && (
+        <Reveal>
+          <p className={styles.eyebrow}>{eyebrow}</p>
+        </Reveal>
+      )}
       <Reveal delay={80}>
         <h2 className={styles.headline}>
           <span className={styles.line}>{headline}</span>
