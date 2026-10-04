@@ -8,10 +8,12 @@
  * everything else.
  */
 
+/* Meets the ledger above it halfway — see AcademyPath for why the seam
+   between these two is tighter than the page's usual rhythm. */
 .section {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0;
+  padding: clamp(2.5rem, 4vw, 4rem) 0 clamp(4rem, 8vw, 8rem);
 }
 
 .inner {

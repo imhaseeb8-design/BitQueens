@@ -94,6 +94,7 @@ interface DotGradientFieldProps {
   shape?: DotFieldShape;
   /** Where the field is densest, in 0–1 of the box. Default: centred. */
   focusX?: number;
+  /** Also the line 'wave' runs along, so the ribbon can be dropped down. */
   focusY?: number;
   /** How far the falloff reaches from the focus, in 0–1 of the box. */
   spreadX?: number;
@@ -172,8 +173,10 @@ export function DotGradientField({
           for (let col = 0; col < cols; col += 1) {
             const u = cols > 1 ? col / (cols - 1) : 0.5;
             const v = rows > 1 ? row / (rows - 1) : 0.5;
+            // `focusY` sets the line the ribbon runs along, so it can be
+            // dropped down the frame to sit behind something.
             const centre =
-              0.5 +
+              focusY +
               0.17 * Math.sin(u * Math.PI * 4.1 + 0.7) +
               0.05 * Math.sin(u * Math.PI * 7.3 + 2.4);
             const half = 0.085 + 0.045 * Math.sin(u * Math.PI * 3.1 + 1.2);

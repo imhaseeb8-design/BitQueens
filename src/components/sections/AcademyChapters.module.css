@@ -1,5 +1,9 @@
 /**
  * AcademyChapters.
+ *
+ * One row: the pitch holds the left column, the form panel the right. The
+ * form's own heading moved inside the panel — it was the only thing in a
+ * column of its own, which is what left the band looking half-empty.
  */
 
 .section {
@@ -13,13 +17,25 @@
   max-width: var(--bq-max);
   margin: 0 auto;
   padding: 0 var(--bq-gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+
+/* Sticky: the form is the taller column, and the pitch should still be on
+   screen while someone fills it in. */
+.pitch {
+  position: sticky;
+  top: 120px;
+  min-width: 0;
 }
 
 .list {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin: clamp(2rem, 3.5vw, 3rem) 0 0;
+  margin: clamp(1.75rem, 3vw, 2.5rem) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -46,14 +62,12 @@
   color: var(--bq-ink-50);
 }
 
-.formRow {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: start;
-  margin-top: clamp(3rem, 5vw, 5rem);
-  padding-top: clamp(3rem, 5vw, 5rem);
-  border-top: 1px solid var(--bq-rule);
+.panel {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: clamp(28px, 3vw, 44px);
+  border-radius: 20px;
+  background: var(--bq-paper);
 }
 
 .formEyebrow {
@@ -68,9 +82,9 @@
 }
 
 .formHeadline {
-  margin: 18px 0 0;
+  margin: 12px 0 clamp(1.5rem, 2.5vw, 2rem);
   font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: var(--bq-t-md);
+  font-size: clamp(1.5rem, 2.1vw, 1.875rem);
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.03em;
@@ -78,14 +92,12 @@
   text-wrap: balance;
 }
 
-.panel {
-  background: var(--bq-paper);
-  border-radius: 20px;
-  padding: clamp(28px, 3vw, 44px);
-}
-
 @media (max-width: 900px) {
-  .formRow {
+  .inner {
     grid-template-columns: 1fr;
+  }
+
+  .pitch {
+    position: static;
   }
 }

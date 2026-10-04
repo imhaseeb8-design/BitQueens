@@ -1,4 +1,5 @@
 import { EnrollForm } from '@/components/sections/EnrollForm';
+import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type {
@@ -9,11 +10,16 @@ import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './AcademyEnroll.module.css';
 
 /**
- * #enroll — the cohort application form.
+ * #enroll — the application form, and the page's last word.
  *
- * Copy left, form right on a paper panel. Every Enroll button on the page
- * lands here; the cohort select is pre-filled from the same content so the
- * options never drift from the rows above.
+ * Centred, with the hero's dot map behind it. It used to be copy left and
+ * form right, which left a tall empty column beside a panel, and it used to
+ * sit mid-page with a second closing band after it — so the page asked twice
+ * and ended on a link pointing back up at the cohorts. One ending is better
+ * than two, and the ending should be the form.
+ *
+ * Every Enroll row on the page lands here, and the cohort select is built
+ * from the same content as those rows so the options never drift.
  */
 export function AcademyEnroll({
   content,
@@ -28,15 +34,18 @@ export function AcademyEnroll({
       aria-label="Enroll in a cohort"
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
+      {/* The same map the hero carries, at the same width and opacity, so the
+          page opens and closes on one image. */}
+      <GlobalDotMap className={styles.ground} />
+
       <div className={styles.inner}>
-        <div className={styles.copy}>
-          <SectionHead
-            eyebrow={content.eyebrow}
-            headline={content.headline}
-            headlineSerif={content.headlineSerif || undefined}
-            intro={content.body}
-          />
-        </div>
+        <SectionHead
+          align="center"
+          headline={content.headline}
+          headlineSerif={content.headlineSerif || undefined}
+          intro={content.body}
+        />
+
         <Reveal delay={120} className={styles.panel}>
           <EnrollForm content={content} cohorts={cohorts} />
         </Reveal>

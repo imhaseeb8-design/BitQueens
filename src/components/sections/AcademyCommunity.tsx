@@ -11,6 +11,10 @@ import styles from './AcademyCommunity.module.css';
  * The one full blue band on the page: the Academy's division colour, used as
  * a flat solid per the palette rules.
  *
+ * It is a card inside the gutters rather than a full-bleed band, the way the
+ * homepage's Conference section is: the blue should read as a block on the
+ * page, not as the page changing colour.
+ *
  * The left column is the ask and nothing else — one filled button, one quiet
  * link under it. The right column is what membership actually gets you: the
  * checklist, and under its last rule, when the live sessions run. The
@@ -39,68 +43,70 @@ export function AcademyCommunity({
       aria-label="The free community"
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
-      <div className={styles.inner}>
-        <div className={styles.copy}>
-          <SectionHead
-            eyebrow={content.eyebrow}
-            headline={content.headline}
-            headlineSerif={content.headlineSerif}
-            intro={content.body}
-            onDark
-          />
+      <div className={styles.block}>
+        <div className={styles.card}>
+          <div className={styles.copy}>
+            <SectionHead
+              eyebrow={content.eyebrow}
+              headline={content.headline}
+              headlineSerif={content.headlineSerif}
+              intro={content.body}
+              onDark
+            />
 
-          <Reveal delay={200} className={styles.actions}>
-            <Button href={content.cta.href} variant="primary" onDark arrow={false}>
-              {content.cta.label}
-            </Button>
-            {content.secondaryCta && (
-              <a
-                href={content.secondaryCta.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.secondary}
-              >
-                {content.secondaryCta.label} →
-              </a>
-            )}
-          </Reveal>
-        </div>
-
-        <div className={styles.gets}>
-          <ul className={styles.list}>
-            {content.includes.map((item, i) => (
-              <Reveal key={item} as="li" delay={i * 80} className={styles.item}>
-                <span className={styles.tick} aria-hidden="true">
-                  ✓
-                </span>
-                <span className={styles.text}>{item}</span>
-              </Reveal>
-            ))}
-          </ul>
-
-          {sessions.length > 0 && (
-            <Reveal delay={320} className={styles.sessions}>
-              <p className={styles.sessionsTitle}>Live training, every week</p>
-              {sharedTime && <p className={styles.sessionsTime}>{sharedTime}</p>}
-              <ul className={styles.sessionsList}>
-                {sessions.map((session) => (
-                  <li key={session.day}>
-                    <a
-                      href={session.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.session}
-                    >
-                      <span className={styles.sessionDay}>{session.day}</span>
-                      {!sharedTime && (
-                        <span className={styles.sessionTime}>{session.time}</span>
-                      )}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            <Reveal delay={200} className={styles.actions}>
+              <Button href={content.cta.href} variant="primary" onDark arrow={false}>
+                {content.cta.label}
+              </Button>
+              {content.secondaryCta && (
+                <a
+                  href={content.secondaryCta.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.secondary}
+                >
+                  {content.secondaryCta.label} →
+                </a>
+              )}
             </Reveal>
-          )}
+          </div>
+
+          <div className={styles.gets}>
+            <ul className={styles.list}>
+              {content.includes.map((item, i) => (
+                <Reveal key={item} as="li" delay={i * 80} className={styles.item}>
+                  <span className={styles.tick} aria-hidden="true">
+                    ✓
+                  </span>
+                  <span className={styles.text}>{item}</span>
+                </Reveal>
+              ))}
+            </ul>
+
+            {sessions.length > 0 && (
+              <Reveal delay={320} className={styles.sessions}>
+                <p className={styles.sessionsTitle}>Live training, every week</p>
+                {sharedTime && <p className={styles.sessionsTime}>{sharedTime}</p>}
+                <ul className={styles.sessionsList}>
+                  {sessions.map((session) => (
+                    <li key={session.day}>
+                      <a
+                        href={session.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.session}
+                      >
+                        <span className={styles.sessionDay}>{session.day}</span>
+                        {!sharedTime && (
+                          <span className={styles.sessionTime}>{session.time}</span>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            )}
+          </div>
         </div>
       </div>
     </section>

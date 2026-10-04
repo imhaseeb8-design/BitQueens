@@ -8,10 +8,14 @@
  * move has a direction. The way on sits above the ledger, under the intro.
  */
 
+/* Short at the bottom: the ledger's last rule already closes the section, and
+   the tracks below are the answer to "pick a track" rather than a new
+   subject, so the two should read as one run. Both sections paying a full
+   8vw put ~230px of nothing between them at 1440. */
 .section {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0;
+  padding: clamp(4rem, 8vw, 8rem) 0 clamp(2.5rem, 4vw, 4rem);
 }
 
 .inner {
@@ -19,6 +23,29 @@
   max-width: var(--bq-max);
   margin: 0 auto;
   padding: 0 var(--bq-gutter);
+}
+
+/* -- the head ------------------------------------------------------------- */
+
+/* Two columns: the copy keeps the left, the crown takes the width the
+   headline was leaving empty. Centred on each other so the mark sits against
+   the block rather than hanging off its top. */
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.copy {
+  min-width: 0;
+}
+
+/* Positioned, because the field's canvas lays itself out against its root. */
+.crown {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
 }
 
 /* -- the ledger ----------------------------------------------------------- */
@@ -113,6 +140,16 @@
 /* -- responsive ----------------------------------------------------------- */
 
 @media (max-width: 900px) {
+  /* One column, and the crown goes: it is decoration, and decoration should
+     not cost a phone a screenful before the steps start. */
+  .head {
+    grid-template-columns: 1fr;
+  }
+
+  .crown {
+    display: none;
+  }
+
   /* The three columns stop fitting: the numeral stays beside the step and
      the description drops under both. */
   .row {

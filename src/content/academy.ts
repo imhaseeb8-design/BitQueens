@@ -168,7 +168,7 @@ export const academy: AcademyPage = {
     eyebrow: 'Enroll',
     headline: 'Save your seat.',
     headlineSerif: '',
-    body: 'Tell us which cohort you want to join and a little about yourself. Every application is confirmed personally — and because pricing is still being finalised, paid cohorts are application-only for now. No payment is taken here.',
+    body: 'Tell us your desired cohort and a bit about yourself. Applications are confirmed personally. Paid cohorts need application only; no payment here.',
     submitLabel: 'Submit application',
     successTitle: 'Application received.',
     successBody:
@@ -236,10 +236,14 @@ export const academy: AcademyPage = {
     stories: [],
   },
 
+  /* Sat right before the form, this section's job is the last doubt, and the
+     doubts below are all one doubt: "am I too far behind for this?" The head
+     answers that rather than labelling the list. */
   faq: {
-    eyebrow: 'Questions',
-    headline: 'Asked',
-    headlineSerif: 'often.',
+    headline: 'No question',
+    headlineSerif: 'is too basic.',
+    intro:
+      'The questions women ask us most before they join — answered plainly, with nothing assumed.',
     items: [
       {
         question: 'Do I need any technical experience?',
@@ -272,13 +276,5 @@ export const academy: AcademyPage = {
           'Yes. The community is women-first and borderless — members learn together from across Africa and beyond.',
       },
     ],
-  },
-
-  closing: {
-    headline: 'Your place',
-    headlineSerif: 'is here.',
-    body: 'Join a community of women learning, building, and earning across Africa and beyond. It starts with one free step.',
-    primaryCta: { label: 'Join BitQueens', href: '/join' },
-    secondaryCta: { label: 'Explore programmes', href: '#cohorts' },
   },
 };

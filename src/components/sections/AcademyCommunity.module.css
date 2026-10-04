@@ -1,7 +1,9 @@
 /**
  * AcademyCommunity — the free-tier band.
  *
- * Flat deep-blue solid (the Academy's division colour). Cream text, cream
+ * A flat deep-blue card inside the gutters, not a full-bleed band — the same
+ * shape the homepage's Conference section takes, so the blue reads as a block
+ * on the page rather than as the page changing colour. Cream text, cream
  * button via the Button's onDark inversion.
  *
  * Two columns with one job each: the ask on the left, what you get on the
@@ -11,22 +13,31 @@
  */
 
 .section {
-  background: var(--bq-blue-deep);
-  color: var(--bq-cream);
-  padding: clamp(4.5rem, 9vw, 9rem) 0;
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  padding: clamp(3rem, 6vw, 6rem) 0;
 }
 
-.inner {
+.block {
   box-sizing: border-box;
   max-width: var(--bq-max);
   margin: 0 auto;
   padding: 0 var(--bq-gutter);
+}
+
+/* The padding that used to belong to the section now belongs to the card:
+   with the blue inset, the space inside it has to be drawn by the card. */
+.card {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2.5rem, 6vw, 6rem);
+  gap: clamp(2.5rem, 5vw, 5rem);
   /* `start`, not `center`: the two columns are different lengths and both
      should begin on the same line. */
   align-items: start;
+  padding: clamp(2.5rem, 4.5vw, 4.5rem) clamp(1.5rem, 3.889vw, 3.5rem);
+  background: var(--bq-blue-deep);
+  color: var(--bq-cream);
 }
 
 /* -- the ask -------------------------------------------------------------- */
@@ -181,7 +192,7 @@
 /* -- responsive ----------------------------------------------------------- */
 
 @media (max-width: 900px) {
-  .inner {
+  .card {
     grid-template-columns: 1fr;
   }
 

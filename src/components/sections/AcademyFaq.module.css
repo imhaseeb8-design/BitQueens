@@ -13,11 +13,22 @@
   max-width: var(--bq-max);
   margin: 0 auto;
   padding: 0 var(--bq-gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+
+/* Stays on screen while the answers move past it — the questions are the
+   thing being read, so they get the taller column and the motion. */
+.head {
+  position: sticky;
+  top: 120px;
+  min-width: 0;
 }
 
 .list {
-  max-width: 48rem;
-  margin: clamp(2.5rem, 4.5vw, 4rem) auto 0;
+  min-width: 0;
   border-top: 1px solid var(--bq-rule);
 }
 
@@ -76,6 +87,16 @@
   line-height: 1.6;
   color: var(--bq-ink-80);
   text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .head {
+    position: static;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

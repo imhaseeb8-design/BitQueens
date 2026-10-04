@@ -1,45 +1,51 @@
 /**
- * AcademyEnroll — the application form band.
+ * AcademyEnroll — the closing ask.
  *
- * A quiet paper panel holds the form so the page's rhythm (canvas, cards,
- * canvas) gets one calm, deliberate pause exactly where the commitment
- * happens.
+ * A paper panel centred on the canvas with the wave field behind it. The
+ * panel is held to a reading measure rather than the full grid: a form this
+ * short looks abandoned at 1296px wide, and the wave needs room either side
+ * of it to read as anything at all.
  */
 
 .section {
+  position: relative;
+  overflow: hidden;
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0;
+  padding: clamp(4rem, 8vw, 8rem) 0 clamp(5rem, 9vw, 9rem);
+}
+
+/* The hero's own numbers — min(1160px, 80.556vw) at 0.3 — so the two map
+   instances on this page are the same size and weight. Dropped below the head
+   so the continents sit behind the form rather than behind the headline.
+   Decorative, so it never takes a pointer. */
+.ground {
+  position: absolute;
+  z-index: 0;
+  top: 22%;
+  left: 50%;
+  width: min(1160px, 80.556vw);
+  height: auto;
+  aspect-ratio: 2048 / 1153;
+  transform: translateX(-50%);
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   box-sizing: border-box;
   max-width: var(--bq-max);
   margin: 0 auto;
   padding: 0 var(--bq-gutter);
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: start;
-}
-
-.copy {
-  position: sticky;
-  top: 120px;
 }
 
 .panel {
-  background: var(--bq-paper);
-  border-radius: 20px;
+  box-sizing: border-box;
+  max-width: 42rem;
+  margin: clamp(2.5rem, 4.5vw, 4rem) auto 0;
   padding: clamp(28px, 3vw, 44px);
-}
-
-@media (max-width: 900px) {
-  .inner {
-    grid-template-columns: 1fr;
-  }
-
-  .copy {
-    position: static;
-  }
+  border-radius: 20px;
+  background: var(--bq-paper);
 }

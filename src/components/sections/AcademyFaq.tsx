@@ -10,6 +10,10 @@ import styles from './AcademyFaq.module.css';
  * Native <details> accordion: no JS, keyboard-accessible by default, and the
  * first item ships open so the section never reads as an empty list of
  * closed doors.
+ *
+ * The head holds the left column and stays put while the answers scroll past
+ * it. Centred over a 48rem list, this section used to leave a third of the
+ * page empty down either side.
  */
 export function AcademyFaq({ content }: { content: AcademyFaqContent }) {
   return (
@@ -19,12 +23,13 @@ export function AcademyFaq({ content }: { content: AcademyFaqContent }) {
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
       <div className={styles.inner}>
-        <SectionHead
-          eyebrow={content.eyebrow}
-          headline={content.headline}
-          headlineSerif={content.headlineSerif}
-          align="center"
-        />
+        <div className={styles.head}>
+          <SectionHead
+            headline={content.headline}
+            headlineSerif={content.headlineSerif}
+            intro={content.intro}
+          />
+        </div>
 
         <div className={styles.list}>
           {content.items.map((item, i) => (

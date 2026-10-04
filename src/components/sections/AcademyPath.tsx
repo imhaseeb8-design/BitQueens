@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/Button';
+import { DotGradientField } from '@/components/ui/DotGradientField';
 import {
   DotFieldMark,
   DotGlobeMark,
@@ -31,6 +32,10 @@ const MARKS: Record<AcademyStep['mark'], typeof TrackMark> = {
  * target: it turns deep green and its mark takes one turn, the same answer
  * the homepage's cards give. The way on sits under the intro, before the
  * steps, so it is there for a reader who already knows she wants in.
+ *
+ * The crown fills the column the headline leaves empty — the same dot
+ * material as the hero map above it, so the head reads as one block rather
+ * than as copy with a hole beside it.
  */
 export function AcademyPath({ content }: { content: AcademyPathContent }) {
   return (
@@ -40,17 +45,27 @@ export function AcademyPath({ content }: { content: AcademyPathContent }) {
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
       <div className={styles.inner}>
-        <SectionHead
-          headline={content.headline}
-          headlineSerif={content.headlineSerif}
-          intro={content.intro}
-        />
+        <div className={styles.head}>
+          <div className={styles.copy}>
+            <SectionHead
+              headline={content.headline}
+              headlineSerif={content.headlineSerif}
+              intro={content.intro}
+            />
 
-        <Reveal delay={180} className={styles.ctaRow}>
-          <Button href={content.cta.href} variant="quiet" className={styles.cta}>
-            {content.cta.label}
-          </Button>
-        </Reveal>
+            <Reveal delay={180} className={styles.ctaRow}>
+              <Button
+                href={content.cta.href}
+                variant="quiet"
+                className={styles.cta}
+              >
+                {content.cta.label}
+              </Button>
+            </Reveal>
+          </div>
+
+          <DotGradientField shape="crown" className={styles.crown} />
+        </div>
 
         <ol className={styles.ledger}>
           {content.steps.map((step, i) => {
@@ -70,7 +85,6 @@ export function AcademyPath({ content }: { content: AcademyPathContent }) {
             );
           })}
         </ol>
-
       </div>
     </section>
   );

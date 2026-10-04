@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { AcademyChapters } from '@/components/sections/AcademyChapters';
-import { AcademyClosing } from '@/components/sections/AcademyClosing';
 import { AcademyCohorts } from '@/components/sections/AcademyCohorts';
 import { AcademyCommunity } from '@/components/sections/AcademyCommunity';
 import { AcademyEnroll } from '@/components/sections/AcademyEnroll';
@@ -24,11 +23,18 @@ export const metadata: Metadata = {
  *
  * Order is the argument: the invitation → what we have actually done → how it
  * works → what you can learn → the free tier → who teaches you → the guided
- * cohorts → enroll → chapters → stories → answers → the final door.
+ * cohorts → the side door → stories → answers → the one ask.
  *
  * The record and the people come before the ask. A beginner is being asked to
  * apply to a cohort whose dates and price are still "to be announced", so the
  * page has to earn that before it reaches the form.
+ *
+ * Three things the earlier order got wrong. The enroll form and the chapter
+ * form sat back to back, two near-identical panels in a row. The FAQ came
+ * after the ask, so objections were answered only once someone had already
+ * decided. And a closing band followed the form, which meant the page asked
+ * twice and then ended on a link pointing back up at the cohorts. The form is
+ * the last thing now, and the only ending.
  */
 export default function AcademyPage() {
   return (
@@ -43,14 +49,16 @@ export default function AcademyPage() {
       <AcademyCommunity content={academy.community} />
       <AcademyTeachers content={academy.teachers} />
       <AcademyCohorts content={academy.cohorts} />
+      {/* A different reader — someone who wants to run a chapter, not join a
+          cohort — so it sits clear of the learner's run to the form. */}
+      <AcademyChapters content={academy.chapters} />
+      <AcademyStories content={academy.stories} />
+      {/* Before the ask, not after it: this is objection handling. */}
+      <AcademyFaq content={academy.faq} />
       <AcademyEnroll
         content={academy.enroll}
         cohorts={academy.cohorts.cohorts}
       />
-      <AcademyChapters content={academy.chapters} />
-      <AcademyStories content={academy.stories} />
-      <AcademyFaq content={academy.faq} />
-      <AcademyClosing content={academy.closing} />
     </>
   );
 }

@@ -113,13 +113,11 @@
   color: var(--bq-green-deep);
 }
 
+/* The one filled button in this band — the trust section earns a real action,
+   not a footnote. The type overrides the quiet link needed are gone; the
+   button brings its own. */
 .body .cta {
-  margin-top: 28px;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 1.0625rem;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: 0;
+  margin-top: 30px;
 }
 
 /* Same hang as the homepage Founder card: off the top-right corner, into the

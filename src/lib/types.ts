@@ -494,18 +494,10 @@ export interface AcademyFaqItem {
 }
 
 export interface AcademyFaq {
-  eyebrow: string;
   headline: string;
   headlineSerif: string;
+  intro: string;
   items: AcademyFaqItem[];
-}
-
-export interface AcademyClosing {
-  headline: string;
-  headlineSerif: string;
-  body: string;
-  primaryCta: NavLink;
-  secondaryCta: NavLink;
 }
 
 export interface AcademyPage {
@@ -521,7 +513,6 @@ export interface AcademyPage {
   vsBiet: AcademyVsBiet;
   stories: AcademyStories;
   faq: AcademyFaq;
-  closing: AcademyClosing;
 }
 
 /* --------------------------------------------------------------- join --- */
