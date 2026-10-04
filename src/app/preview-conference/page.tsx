@@ -1,11 +1,21 @@
 import type { Metadata } from 'next';
 import { ConferenceBoard } from '@/components/sections/ConferenceBoard';
+import { ConferenceClosing } from '@/components/sections/ConferenceClosing';
+import { ConferenceHero } from '@/components/sections/ConferenceHero';
 import { conference } from '@/content/conference';
 import type { ConferenceEvent } from '@/lib/types';
 
-/* Temporary preview route — sample editions so the board can be looked at
-   before real ones exist. NOT content: delete this route once the team
-   confirms an edition and it goes into src/content/conference.ts. */
+/**
+ * /conference, exactly as it renders once editions exist.
+ *
+ * The same three sections in the same order as the real page — only the
+ * board's `events` differ. This is where a populated conference page is
+ * looked at, so that the real one can keep telling the truth: it says no
+ * edition is scheduled, because none is.
+ *
+ * NOT content. Delete this route once a confirmed edition goes into
+ * src/content/conference.ts; the real page needs no other change.
+ */
 
 export const metadata: Metadata = {
   title: 'Conference board preview',
@@ -84,6 +94,10 @@ const SAMPLE: ConferenceEvent[] = [
 
 export default function PreviewConference() {
   return (
-    <ConferenceBoard content={{ ...conference.board, events: SAMPLE }} />
+    <>
+      <ConferenceHero content={conference.hero} />
+      <ConferenceBoard content={{ ...conference.board, events: SAMPLE }} />
+      <ConferenceClosing content={conference.closing} />
+    </>
   );
 }
