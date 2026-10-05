@@ -106,3 +106,19 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Selected product studio layout. */
+.heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: clamp(2rem, 5vw, 4.5rem); }
+.intro { margin: 0; font-family: var(--bq-inter-tight), sans-serif; font-size: 1.125rem; line-height: 1.55; color: var(--bq-ink-80); text-wrap: pretty; }
+.cards { gap: 1.5rem; margin-top: 2.75rem; }
+.card { border-radius: 4px; border: 1px solid var(--bq-rule); padding: clamp(1.75rem, 3vw, 2.75rem); }
+.name { font-size: clamp(2.5rem, 4.4vw, 4rem); }
+.desc { font-size: 1rem; }
+.cta { border-radius: 4px; }
+.featured { background: var(--bq-green-deep); border-color: var(--bq-green-deep); }
+.featured .kicker, .featured .name, .featured .point { color: var(--bq-canvas); }
+.featured .desc { color: var(--bq-cream-82); }
+.featured .points { border-color: rgba(250,250,248,.25); }
+@media (max-width: 800px) { .heading { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+.featured .cta { color: var(--bq-green-deep); }

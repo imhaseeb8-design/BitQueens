@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
+import { prepareEmailEnquiry } from '@/lib/email-enquiry';
+import { EmailDraftNotice } from './EmailDraftNotice';
 import type { InnovationsQuote } from '@/lib/types';
 import form from '@/components/ui/Form.module.css';
 
@@ -15,13 +17,7 @@ interface Errors {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * The quote/enquiry form (#quote on the Innovations page).
- *
- * One form for both commercial shapes: products & consulting and skills
- * programmes. No backend yet — same honest local resolve as the other
- * site forms.
- */
+/** QuoteForm: validates details and prepares an email draft without sending. */
 export function QuoteForm({ content }: { content: InnovationsQuote }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,6 +26,18 @@ export function QuoteForm({ content }: { content: InnovationsQuote }) {
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>('idle');
+
+  useEffect(() => {
+    function select(event:Event) {
+      const choice = (event as CustomEvent<{kind:string;value:string;message?:string}>).detail;
+      if(choice.kind !== 'quote' || !content.interests.includes(choice.value)) return;
+      setInterest(choice.value);
+      if(choice.message) setMessage(choice.message);
+      setErrors({}); setStatus('idle');
+    }
+    window.addEventListener('bq:form-selection',select);
+    return () => window.removeEventListener('bq:form-selection',select);
+  },[content.interests]);
 
   function validate(): Errors {
     const next: Errors = {};
@@ -42,29 +50,17 @@ export function QuoteForm({ content }: { content: InnovationsQuote }) {
     return next;
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const next = validate();
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
-    setStatus('submitting');
-    // TODO: replace with the real quote-request endpoint.
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    prepareEmailEnquiry('Labs enquiry', {Name:name, Email:email, Organisation:org, Interest:interest, Message:message});
     setStatus('success');
   }
 
-  if (status === 'success') {
-    return (
-      <div className={form.success} aria-live="polite">
-        <h3 className={form.successTitle}>{content.successTitle}</h3>
-        <p className={form.successBody}>{content.successBody}</p>
-        <p className={form.successNote}>
-          Requests are not connected yet, so nothing was sent. We will wire this up before launch.
-        </p>
-      </div>
-    );
-  }
+  if (status === 'success') return <EmailDraftNotice onBack={() => setStatus('idle')} />;
 
   const describedBy = (key: keyof Errors, id: string) =>
     errors[key] ? id : undefined;
@@ -84,7 +80,7 @@ export function QuoteForm({ content }: { content: InnovationsQuote }) {
             className={form.input}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, name: validate().name }))}
             aria-invalid={Boolean(errors.name)}
             aria-describedby={describedBy('name', 'quote-name-error')}
           />
@@ -109,7 +105,7 @@ export function QuoteForm({ content }: { content: InnovationsQuote }) {
             className={form.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, email: validate().email }))}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={describedBy('email', 'quote-email-error')}
           />
@@ -147,7 +143,7 @@ export function QuoteForm({ content }: { content: InnovationsQuote }) {
             className={form.select}
             value={interest}
             onChange={(e) => setInterest(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, interest: validate().interest }))}
             aria-invalid={Boolean(errors.interest)}
             aria-describedby={describedBy('interest', 'quote-interest-error')}
           >
@@ -177,7 +173,7 @@ export function QuoteForm({ content }: { content: InnovationsQuote }) {
           placeholder="A sentence or two about your goal, timeline, or team."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onBlur={() => setErrors(validate())}
+          onBlur={() => setErrors(previous => ({ ...previous, message: validate().message }))}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={describedBy('message', 'quote-message-error')}
         />
@@ -195,6 +191,7 @@ export function QuoteForm({ content }: { content: InnovationsQuote }) {
       >
         {status === 'submitting' ? 'Submitting…' : content.submitLabel}
       </button>
+      <p className={form.status}>This opens a draft in your email app. Review and send it to complete your request.</p>
     </form>
   );
 }

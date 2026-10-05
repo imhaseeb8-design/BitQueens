@@ -1,4 +1,5 @@
 import { AudienceOnly } from '@/components/audience/AudienceProvider';
+import { AcademyProof } from '@/components/sections/AcademyProof';
 import { Blog } from '@/components/sections/Blog';
 import { CampusChapters } from '@/components/sections/CampusChapters';
 import { Conference } from '@/components/sections/Conference';
@@ -24,8 +25,8 @@ import { homeLayout } from '@/content/layout';
  * /academy, where it used to live, its form interrupted a learner on the way
  * to the cohort application.
  *
- * Conference sits directly under the hero because Figma 130:9 places it
- * there, immediately after the hero's closing rule.
+ * The impact band restores the brief's homepage numbers. Partner logos stay
+ * in the hero; the conference follows the impact band.
  *
  * The sections used to carry numbered "NN / NAME" eyebrows and the order was
  * described by those numbers. They are gone, so nothing renumbers when a
@@ -38,10 +39,7 @@ export default function HomePage() {
   return (
     <>
       <Hero content={home.hero} />
-      {/* Impact is hidden. The 130:9 hero carried these figures; the 260:232
-          hero does not, so the band could come back. The component and its
-          content are kept - restore this line to bring it back.
-          <Impact content={home.impact} /> */}
+      <AcademyProof content={{headline:'Our impact so far.',stats:home.impact.stats}} showPartners={false} />
       {/* Proof is hidden: the Impact figures above carry the same job. The
           component and its content are kept — restore this line to bring the
           entity register back.
@@ -49,9 +47,6 @@ export default function HomePage() {
       <Conference content={home.conference} />
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
       <Path content={home.path} />
-      <AudienceOnly audience="partner">
-        <CampusChapters content={home.chapters} />
-      </AudienceOnly>
       {/* Partners is hidden: on the partner side the ecosystem accordion
           already names Companies, Universities, Networks and Funders, so
           this section said the same four a second time. The component and
@@ -60,6 +55,9 @@ export default function HomePage() {
             <Partners content={home.partners} />
           </AudienceOnly> */}
       <Founder content={home.founder} />
+      <AudienceOnly audience="partner">
+        <CampusChapters content={home.chapters} />
+      </AudienceOnly>
       <Blog content={home.blog} />
       {/* Join is hidden: the two doors it held are the Place cards, and the
           footer (297:783) follows them directly. The component and its

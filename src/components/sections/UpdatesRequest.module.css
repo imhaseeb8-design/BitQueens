@@ -1,0 +1,9 @@
+.band { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:center; padding:2rem; margin-bottom:3rem; background:var(--bq-paper); border-radius:20px; }
+.eyebrow { text-transform:uppercase; color:var(--bq-blue-slate); letter-spacing:.12em; font-size:.75rem; margin-bottom:.75rem; }
+.band h2 { font-size:clamp(1.5rem,2.5vw,2.25rem); font-weight:400; color:var(--bq-green-deep); letter-spacing:-.025em; line-height:1.2; margin-bottom:.5rem; }
+.band p { color:var(--bq-ink-66); }
+.row { display:flex; align-items:stretch; gap:.75rem; margin-top:.5rem; }
+.row input { min-width:0; }
+.row button { flex:none; font-size:.9rem; padding:.75rem 1.15rem; }
+.note { font-size:.8rem; margin-top:.6rem; }
+@media(max-width:950px){.band{grid-template-columns:1fr;}.row{flex-wrap:wrap;}.row input{flex:1;min-width:10rem;}}

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import { prepareEmailEnquiry } from '@/lib/email-enquiry';
+import { EmailDraftNotice } from './EmailDraftNotice';
 import type { CampusChapters } from '@/lib/types';
 import form from '@/components/ui/Form.module.css';
 
@@ -16,10 +18,7 @@ interface Errors {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * Campus chapter application form (#chapters on the Academy page).
- * No backend yet — same honest local resolve as the other Academy forms.
- */
+/** ChapterForm: validates details and prepares an email draft without sending. */
 export function ChapterForm({ content }: { content: CampusChapters }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,29 +40,17 @@ export function ChapterForm({ content }: { content: CampusChapters }) {
     return next;
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const next = validate();
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
-    setStatus('submitting');
-    // TODO: replace with the real chapter-application endpoint.
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    prepareEmailEnquiry('Campus chapter application', {Name:name, Email:email, University:university, City:city, Reason:why});
     setStatus('success');
   }
 
-  if (status === 'success') {
-    return (
-      <div className={form.success} aria-live="polite">
-        <h3 className={form.successTitle}>{content.successTitle}</h3>
-        <p className={form.successBody}>{content.successBody}</p>
-        <p className={form.successNote}>
-          Applications are not connected yet, so nothing was sent. We will wire this up before launch.
-        </p>
-      </div>
-    );
-  }
+  if (status === 'success') return <EmailDraftNotice onBack={() => setStatus('idle')} />;
 
   const describedBy = (key: keyof Errors, id: string) =>
     errors[key] ? id : undefined;
@@ -83,7 +70,7 @@ export function ChapterForm({ content }: { content: CampusChapters }) {
             className={form.input}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, name: validate().name }))}
             aria-invalid={Boolean(errors.name)}
             aria-describedby={describedBy('name', 'chapter-name-error')}
           />
@@ -108,7 +95,7 @@ export function ChapterForm({ content }: { content: CampusChapters }) {
             className={form.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, email: validate().email }))}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={describedBy('email', 'chapter-email-error')}
           />
@@ -133,7 +120,7 @@ export function ChapterForm({ content }: { content: CampusChapters }) {
             className={form.input}
             value={university}
             onChange={(e) => setUniversity(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, university: validate().university }))}
             aria-invalid={Boolean(errors.university)}
             aria-describedby={describedBy('university', 'chapter-university-error')}
           />
@@ -156,7 +143,7 @@ export function ChapterForm({ content }: { content: CampusChapters }) {
             className={form.input}
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, city: validate().city }))}
             aria-invalid={Boolean(errors.city)}
             aria-describedby={describedBy('city', 'chapter-city-error')}
           />
@@ -179,7 +166,7 @@ export function ChapterForm({ content }: { content: CampusChapters }) {
           placeholder="A sentence or two about your campus and the women you want to bring together."
           value={why}
           onChange={(e) => setWhy(e.target.value)}
-          onBlur={() => setErrors(validate())}
+          onBlur={() => setErrors(previous => ({ ...previous, why: validate().why }))}
           aria-invalid={Boolean(errors.why)}
           aria-describedby={describedBy('why', 'chapter-why-error')}
         />
@@ -197,6 +184,7 @@ export function ChapterForm({ content }: { content: CampusChapters }) {
       >
         {status === 'submitting' ? 'Submitting…' : content.submitLabel}
       </button>
+      <p className={form.status}>This opens a draft in your email app. Review and send it to complete your request.</p>
     </form>
   );
 }

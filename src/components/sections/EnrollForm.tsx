@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
+import { prepareEmailEnquiry } from '@/lib/email-enquiry';
+import { EmailDraftNotice } from './EmailDraftNotice';
 import type { AcademyCohort, AcademyEnroll } from '@/lib/types';
 import form from '@/components/ui/Form.module.css';
 
@@ -14,13 +16,7 @@ interface Errors {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * Cohort application form (#enroll on the Academy page).
- *
- * Application-only, not checkout: pricing is still being finalised, so paid
- * cohorts take applications here and confirm personally. No backend yet —
- * same honest local resolve as the other Academy forms.
- */
+/** EnrollForm: validates details and prepares an email draft without sending. */
 export function EnrollForm({
   content,
   cohorts,
@@ -35,6 +31,16 @@ export function EnrollForm({
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>('idle');
 
+  useEffect(() => {
+    function select(event:Event) {
+      const choice = (event as CustomEvent<{kind:string;value:string}>).detail;
+      if(choice.kind !== 'cohort' || !cohorts.some(c=>c.name===choice.value)) return;
+      setCohort(choice.value); setErrors({}); setStatus('idle');
+    }
+    window.addEventListener('bq:form-selection',select);
+    return () => window.removeEventListener('bq:form-selection',select);
+  },[cohorts]);
+
   function validate(): Errors {
     const next: Errors = {};
     if (cohort === '') next.cohort = 'Choose the cohort you want to join.';
@@ -44,29 +50,17 @@ export function EnrollForm({
     return next;
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const next = validate();
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
-    setStatus('submitting');
-    // TODO: replace with the real enrollment endpoint.
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    prepareEmailEnquiry('Academy cohort application', {Cohort:cohort, Name:name, Email:email, About:about});
     setStatus('success');
   }
 
-  if (status === 'success') {
-    return (
-      <div className={form.success} aria-live="polite">
-        <h3 className={form.successTitle}>{content.successTitle}</h3>
-        <p className={form.successBody}>{content.successBody}</p>
-        <p className={form.successNote}>
-          Applications are not connected yet, so nothing was sent. We will wire this up before launch.
-        </p>
-      </div>
-    );
-  }
+  if (status === 'success') return <EmailDraftNotice onBack={() => setStatus('idle')} />;
 
   return (
     <form className={form.form} onSubmit={handleSubmit} noValidate>
@@ -80,7 +74,7 @@ export function EnrollForm({
           className={form.select}
           value={cohort}
           onChange={(e) => setCohort(e.target.value)}
-          onBlur={() => setErrors(validate())}
+          onBlur={() => setErrors(previous => ({ ...previous, cohort: validate().cohort }))}
           aria-invalid={Boolean(errors.cohort)}
           aria-describedby={errors.cohort ? 'cohort-error' : undefined}
         >
@@ -111,7 +105,7 @@ export function EnrollForm({
             className={form.input}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, name: validate().name }))}
             aria-invalid={Boolean(errors.name)}
             aria-describedby={errors.name ? 'enroll-name-error' : undefined}
           />
@@ -136,7 +130,7 @@ export function EnrollForm({
             className={form.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, email: validate().email }))}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? 'enroll-email-error' : undefined}
           />
@@ -169,6 +163,7 @@ export function EnrollForm({
       >
         {status === 'submitting' ? 'Submitting…' : content.submitLabel}
       </button>
+      <p className={form.status}>This opens a draft in your email app. Review and send it to complete your request.</p>
     </form>
   );
 }

@@ -27,12 +27,11 @@
   width: auto;
 }
 
-/* The links run on 33px after the wordmark (node 260:247 starts at x225);
-   the button alone is pushed to the right edge. */
+/* Keep the menu and Join button together on the right of the wordmark. */
 .nav {
   display: flex;
   flex-wrap: wrap;
-  margin-left: clamp(1.25rem, 0.5rem + 1.6vw, 2.0625rem);
+  margin-left: auto;
   gap: clamp(1rem, 0.5rem + 1.39vw, 1.75rem);
 }
 
@@ -74,7 +73,7 @@
    green block; the 322:107 homepage lightens it so the hero's own primary CTA
    is the only filled green thing above the fold. */
 .cta {
-  margin-left: auto;
+  margin-left: clamp(1.5rem, 3.264vw, 2.9375rem);
   flex: none;
   display: inline-flex;
   align-items: center;
@@ -181,4 +180,3 @@
     padding-bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
   }
 }
-

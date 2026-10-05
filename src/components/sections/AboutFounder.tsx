@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import type { AboutFounder } from '@/lib/types';
 import styles from './AboutFounder.module.css';
 
@@ -46,6 +47,7 @@ export default function AboutFounder({ founder }: { founder: AboutFounder }) {
           >
             {founder.cta.label}
           </a>
+          <Link href="/contact?topic=speaker" className={`${styles.cta} ${styles.booking}`}>Book Kristie as a speaker →</Link>
         </div>
       </div>
     </section>

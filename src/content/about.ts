@@ -115,7 +115,7 @@ export const about: AboutPage = {
       },
     ],
     closing:
-      'Each company carries one part of the ecosystem — learning, technology, accreditation, and impact — under one women-first mission.',
+      'Each company carries one part of the ecosystem — learning, technology, accreditation, and impact — under one women-first mission. BitQueens Ventures is a future investment arm and is not yet operational.',
   },
 
   founder: {

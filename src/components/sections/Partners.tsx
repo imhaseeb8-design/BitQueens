@@ -5,26 +5,24 @@ import type { PartnersSection } from '@/lib/types';
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './Partners.module.css';
 
-/**
- * Partners — Figma 295:491.
- *
- * Two columns. On the left, the two-line headline, the invitation copy and a
- * green card asking for any other idea, with the CTA. On the right, four
- * numbered tiles, one per kind of partner, each wearing its own colour as a
- * 4px bar along the top. Nothing here is interactive except the CTA.
- *
- * Server Component.
- */
-export function Partners({ content }: { content: PartnersSection }) {
+export function Partners({
+  content,
+  layout = 'stacked',
+}: {
+  content: PartnersSection;
+  layout?: 'stacked' | 'matrix';
+}) {
+  const matrix = layout === 'matrix';
   return (
     <section
       id="partners"
       aria-label="Build with us"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${matrix ? styles.matrix : ''} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.lead}>
-          <Reveal>
+          <Reveal className={matrix ? styles.matrixHeader : undefined}>
+            {matrix && <p className={styles.eyebrow}>For partners</p>}
             <h2 className={styles.headline}>
               <span className={styles.headlineLine}>{content.headline}</span>
               <span className={`${styles.headlineLine} ${styles.serif}`}>

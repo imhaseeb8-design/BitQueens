@@ -1,4 +1,5 @@
 import type { HomePage } from '@/lib/types';
+import { about } from './about';
 
 /**
  * Homepage content.
@@ -236,7 +237,7 @@ export const home: HomePage = {
           /* These four sit inside #ecosystem, so they cannot link to it.
              Until there is a /partners page or a partner form, they open a
              mail to the address the footer already publishes. */
-          href: 'mailto:immanuelkristie@gmail.com?subject=Partnering%20with%20BitQueens',
+          href: '/contact?topic=partnerships',
           itemsLabel: 'Ways to contribute',
           items: ['Sponsor programmes', 'Share expertise', 'Open career paths'],
           color: '#3B6C9F',
@@ -252,7 +253,7 @@ export const home: HomePage = {
           /* These four sit inside #ecosystem, so they cannot link to it.
              Until there is a /partners page or a partner form, they open a
              mail to the address the footer already publishes. */
-          href: 'mailto:immanuelkristie@gmail.com?subject=Partnering%20with%20BitQueens',
+          href: '/contact?topic=partnerships',
           itemsLabel: 'Ways to contribute',
           items: ['Campus chapters', 'Host a programme', 'Faculty collaboration'],
           color: '#E8641C',
@@ -268,7 +269,7 @@ export const home: HomePage = {
           /* These four sit inside #ecosystem, so they cannot link to it.
              Until there is a /partners page or a partner form, they open a
              mail to the address the footer already publishes. */
-          href: 'mailto:immanuelkristie@gmail.com?subject=Partnering%20with%20BitQueens',
+          href: '/contact?topic=partnerships',
           itemsLabel: 'Ways to contribute',
           items: ['Co-host gatherings', 'Open your network', 'Amplify cohorts'],
           color: '#3B6C9F',
@@ -284,7 +285,7 @@ export const home: HomePage = {
           /* These four sit inside #ecosystem, so they cannot link to it.
              Until there is a /partners page or a partner form, they open a
              mail to the address the footer already publishes. */
-          href: 'mailto:immanuelkristie@gmail.com?subject=Partnering%20with%20BitQueens',
+          href: '/contact?topic=partnerships',
           itemsLabel: 'Ways to contribute',
           items: ['Fund scholarships', 'Back a cohort', 'Support operations'],
           color: '#F3AFBC',
@@ -412,7 +413,7 @@ export const home: HomePage = {
       {
         question: 'How do we start a conversation?',
         answer:
-          'Write to partnerships@bitqueens.org with who you are and what you have in mind. Every enquiry is read and answered by a person, not a form.',
+          'Use our Contact page and choose Partnerships. Tell us who you are and what you have in mind, then continue the conversation by email.',
       },
     ],
   },
@@ -468,8 +469,10 @@ export const home: HomePage = {
   founder: {
     headline: 'The story behind',
     headlineSerif: 'BitQueens.',
-    name: 'Kristie',
-    role: 'Founder, BitQueens',
+    // Share the profile details with About and Academy so they stay in sync.
+    name: about.founder.name,
+    role: about.founder.role,
+    facts: about.founder.facts,
     storyLines: ['Kristie built the on-ramp', 'she couldn’t find.'],
     // NEEDS CONFIRMATION — placeholder bio, awaiting Kristie's own copy.
     bio:

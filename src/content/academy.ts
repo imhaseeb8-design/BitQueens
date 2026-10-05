@@ -242,7 +242,7 @@ export const academy: AcademyPage = {
       {
         question: 'Will I get a certificate?',
         answer:
-          'Academy programmes come with recognition of completion. If you want an accredited certificate or diploma, that lives at BIET — our Institute of Emerging Technologies.',
+          'Academy programmes come with recognition of completion. BIET is being developed as the formal education arm; qualification and accreditation details will be published when confirmed.',
       },
       {
         question: 'I am not in Africa. Can I still join?',

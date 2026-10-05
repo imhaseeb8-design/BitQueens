@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/Button';
+import { SelectionLink } from '@/components/ui/SelectionLink';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type {
@@ -56,12 +57,12 @@ export function AcademyTracks({
         <ol className={styles.cards}>
           {content.tracks.map((track, i) => {
             const cohort = cohorts.find((c) => c.track === track.name);
-            const href = cohort ? cohort.cta.href : '/join';
+            const href = cohort ? cohort.cta.href : `/join?track=${encodeURIComponent(track.name)}`;
             const pending = cohort?.dates === 'To be announced';
 
             return (
               <Reveal key={track.name} as="li" delay={i * 90}>
-                <a href={href} className={styles.card}>
+                <SelectionLink href={href} selection={{kind:'cohort',value:cohort?.name ?? ''}} className={styles.card}>
                   <p className={styles.numeral} aria-hidden="true">
                     {String(i + 1).padStart(2, '0')}
                   </p>
@@ -87,7 +88,7 @@ export function AcademyTracks({
                       →
                     </span>
                   </p>
-                </a>
+                </SelectionLink>
               </Reveal>
             );
           })}

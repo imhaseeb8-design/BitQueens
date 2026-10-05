@@ -1,11 +1,7 @@
-/**
- * InnovationsHow — the three step cards.
- */
-
 .section {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0;
+  padding: clamp(3rem, 5vw, 4.5rem) 0;
 }
 
 .inner {
@@ -15,88 +11,74 @@
   padding: 0 var(--bq-gutter);
 }
 
+.inner h2 {
+  display: block;
+}
+
+.inner h2 span {
+  display: inline;
+}
+
+.inner h2 span + span {
+  margin-left: 0.2em;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--bq-col-gap);
-  margin: clamp(2.5rem, 4.5vw, 4rem) 0 0;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  margin: 2rem 0 0;
   padding: 0;
   list-style: none;
 }
 
 .card {
-  box-sizing: border-box;
-  min-height: 250px;
-  padding: 32px 28px;
-  background: var(--bq-ecosystem-panel);
-  border-top: 4px solid var(--bq-orange);
-  transition: background-color var(--bq-dur-hover) var(--bq-ease);
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  border-top: 2px solid var(--bq-orange);
+  padding-top: 1rem;
 }
 
 .numeral {
   margin: 0;
   font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   color: var(--bq-orange);
-  transition: color var(--bq-dur-hover) var(--bq-ease);
+}
+
+.stepCopy {
+  min-width: 0;
 }
 
 .title {
-  margin: 28px 0 0;
+  margin: 0;
   font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(1.5rem, 1.9vw, 2rem);
+  font-size: clamp(1.5rem, 2vw, 1.875rem);
   font-weight: 400;
-  line-height: 1.25;
+  line-height: 1.2;
   letter-spacing: -0.03em;
   color: var(--bq-green-deep);
-  transition: color var(--bq-dur-hover) var(--bq-ease);
 }
 
 .desc {
-  margin: 16px 0 0;
+  margin: 0.75rem 0 0;
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: var(--bq-ink-80);
   text-wrap: pretty;
-  transition: color var(--bq-dur-hover) var(--bq-ease);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .card:hover {
-    background: var(--bq-green-deep);
-  }
-
-  .card:hover .numeral,
-  .card:hover .desc {
-    color: var(--bq-green-mint);
-  }
-
-  .card:hover .title {
-    color: var(--bq-canvas);
-  }
-}
-
-@media (max-width: 900px) {
+@media (max-width: 700px) {
   .cards {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 1.75rem;
   }
 
   .card {
-    min-height: 0;
-    padding: 28px 24px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card,
-  .numeral,
-  .title,
-  .desc {
-    transition: none;
+    grid-template-columns: 2rem minmax(0, 1fr);
   }
 }

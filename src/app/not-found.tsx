@@ -1,0 +1,4 @@
+import { Button } from '@/components/ui/Button';
+import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import styles from '@/components/sections/Editorial.module.css';
+export default function NotFound(){return <section className={`${styles.page} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}><div className={styles.inner}><div className={styles.hero}><p className={styles.eyebrow}>404 · Page not found</p><h1 className={styles.headline}>Let’s find your<br/><span className={styles.serif}>way back.</span></h1><p className={styles.intro}>This page may have moved, or the link may be incomplete. Explore the ecosystem to find your next step.</p><div style={{display:'flex',flexWrap:'wrap',gap:'1rem',marginTop:'2rem'}}><Button href="/" variant="green">Back to homepage</Button><Button href="/ecosystem" variant="secondary">Explore the ecosystem</Button></div></div></div></section>;}

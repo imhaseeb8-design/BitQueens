@@ -8,10 +8,9 @@ import styles from './Founder.module.css';
 /**
  * Founder — Figma 289:453.
  *
- * A centred one-line title, then a green card split 500 / 796: Kristie's
- * portrait fills the left edge to edge, the story sits on the right with its
- * hairline and one CTA held at the bottom, into the About page. The wax seal hangs off the
- * card's top-right corner, with the "B" set over it.
+ * A centred title above a green portrait/story card. Kristie's identity and
+ * shared Academy credentials frame the original story, with one CTA into
+ * About. The wax seal hangs off the card's top-right corner.
  *
  * Server Component: nothing here needs state.
  */
@@ -39,6 +38,10 @@ export function Founder({ content }: { content: FounderSection }) {
           </div>
 
           <div className={styles.story}>
+            <div className={styles.identity}>
+              <p className={styles.name}>{content.name}</p>
+              <p className={styles.role}>{content.role}</p>
+            </div>
             <h3 className={styles.storyHeadline}>
               {content.storyLines.map((line) => (
                 <span key={line} className={styles.storyLine}>
@@ -50,6 +53,14 @@ export function Founder({ content }: { content: FounderSection }) {
 
             <div className={styles.actions}>
               <div className={styles.rule} />
+              <dl className={styles.facts}>
+                {content.facts.map((fact) => (
+                  <div key={fact.label} className={styles.fact}>
+                    <dt className={styles.factLabel}>{fact.label}</dt>
+                    <dd className={styles.factValue}>{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
               <div className={styles.ctas}>
                 <Button href={content.cta.href} size="compact" onDark className={styles.primaryCta}>
                   {content.cta.label}

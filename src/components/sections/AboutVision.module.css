@@ -1,6 +1,6 @@
 .vision {
   padding: clamp(3.5rem, 7vw, 5.5rem) 1.5rem;
-  background: var(--cream);
+  background: var(--bq-canvas);
 }
 
 .inner {
@@ -13,7 +13,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--bq-green-deep);
   margin: 0 0 1rem;
 }
 
@@ -21,14 +21,14 @@
   font-size: clamp(1.9rem, 4vw, 2.75rem);
   line-height: 1.15;
   margin: 0 0 2.5rem;
-  color: var(--ink);
-  font-weight: 700;
+  color: var(--bq-ink);
+  font-weight: 400;
 }
 
 .serif {
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
-  color: var(--green);
+  color: var(--bq-green-deep);
 }
 
 .cards {
@@ -44,28 +44,28 @@
 }
 
 .card {
-  background: #fff;
+  background: var(--bq-paper);
   border-radius: 1.25rem;
   padding: 2rem;
-  box-shadow: 0 10px 30px rgba(31, 41, 55, 0.08);
-  border-top: 4px solid var(--green);
+  box-shadow: none;
+  border-top: 4px solid var(--bq-green-deep);
 }
 
 .card h3 {
   margin: 0 0 0.9rem;
   font-size: 1.25rem;
-  color: var(--ink);
+  color: var(--bq-ink);
 }
 
 .card p {
   margin: 0;
   font-size: 1.05rem;
   line-height: 1.7;
-  color: var(--ink-soft);
+  color: var(--bq-ink-80);
 }
 
 .promise {
-  background: var(--green);
+  background: var(--bq-green-deep);
   color: #fff;
   border-radius: 1.5rem;
   padding: clamp(2rem, 4vw, 3rem);
@@ -94,7 +94,10 @@
 .promise li {
   font-size: 1.25rem;
   font-weight: 600;
-  font-style: italic;
+  font-style: normal;
   padding: 1rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.35);
 }
+
+.headline { font-family:var(--bq-neue-montreal),sans-serif; letter-spacing:-.035em; }
+.serif { font-family:var(--bq-instrument-serif),Georgia,serif; }

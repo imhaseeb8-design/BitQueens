@@ -26,7 +26,7 @@ const { logos } = home.hero.collaborators;
  * silhouette; that needs white-version artwork, which no CSS filter can
  * invent.
  */
-export function AcademyProof({ content }: { content: AcademyProofContent }) {
+export function AcademyProof({ content, showPartners = true }: { content: AcademyProofContent; showPartners?: boolean }) {
   return (
     <section
       aria-label={content.headline}
@@ -53,7 +53,7 @@ export function AcademyProof({ content }: { content: AcademyProofContent }) {
             ))}
           </dl>
 
-          <div className={styles.credits}>
+          {showPartners && <div className={styles.credits}>
             <p className={styles.creditsLabel}>Working with</p>
             <ul className={styles.logoList}>
               {logos.map((logo) => (
@@ -68,7 +68,7 @@ export function AcademyProof({ content }: { content: AcademyProofContent }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div>}
         </Reveal>
       </div>
     </section>

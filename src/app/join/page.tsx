@@ -16,7 +16,8 @@ export const metadata: Metadata = {
  * Copy left, form right on a paper panel. Joining is free, always — the form
  * is a signup, not a checkout.
  */
-export default function JoinPage() {
+export default async function JoinPage({searchParams}:{searchParams:Promise<{track?:string}>}) {
+  const {track} = await searchParams;
   return (
     <section
       aria-label="Join BitQueens"
@@ -34,7 +35,7 @@ export default function JoinPage() {
           <p className={styles.body}>{join.body}</p>
         </div>
         <div className={styles.panel}>
-          <JoinForm content={join} />
+          <JoinForm content={join} initialTrack={track} />
         </div>
       </div>
     </section>

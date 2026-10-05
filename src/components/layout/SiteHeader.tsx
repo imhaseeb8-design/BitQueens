@@ -14,7 +14,7 @@ export function SiteHeader() {
   return (
     <header className={`${styles.header} ${neueMontreal.variable} ${interTight.variable}`}>
       <div className={`${styles.inner} ${open ? styles.open : ''}`}>
-        <Link href="/" className={styles.logo} aria-label={`${site.name} home`}>
+        <Link href="/" className={styles.logo} aria-label={`${site.name} home`} onClick={() => setOpen(false)}>
           {/* The wordmark from Figma 260:346, as its vector. */}
           <Image
             src="/bitqueens-wordmark.svg"
@@ -35,7 +35,7 @@ export function SiteHeader() {
           {open ? 'Close' : 'Menu'}
         </button>
 
-        <nav id="bq-nav" className={styles.nav} aria-label="Main">
+        <nav id="bq-nav" className={styles.nav} aria-label="Main" onClick={() => setOpen(false)}>
           {site.nav.map((link) =>
             link.href === '/#ecosystem' ? (
               <PartnerLink
@@ -52,7 +52,7 @@ export function SiteHeader() {
           )}
         </nav>
 
-        <Link href={site.primaryCta.href} className={styles.cta}>
+        <Link href={site.primaryCta.href} className={styles.cta} onClick={() => setOpen(false)}>
           <span className={styles.ctaLabel}>{site.primaryCta.label}</span>
         </Link>
       </div>

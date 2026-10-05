@@ -4,13 +4,7 @@ import type { InnovationsHow as InnovationsHowContent } from '@/lib/types';
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './InnovationsHow.module.css';
 
-/**
- * "How it works" — the three steps from idea to built.
- *
- * Flat cards in the Innovations orange register: the numeral carries the
- * division colour, the card the hover-to-green behaviour the site uses for
- * step cards.
- */
+/** Compact three-step sequence beneath the shared section heading. */
 export function InnovationsHow({ content }: { content: InnovationsHowContent }) {
   return (
     <section
@@ -36,8 +30,10 @@ export function InnovationsHow({ content }: { content: InnovationsHowContent }) 
               <p className={styles.numeral}>
                 {String(i + 1).padStart(2, '0')}
               </p>
-              <h3 className={styles.title}>{step.title}</h3>
-              <p className={styles.desc}>{step.description}</p>
+              <div className={styles.stepCopy}>
+                <h3 className={styles.title}>{step.title}</h3>
+                <p className={styles.desc}>{step.description}</p>
+              </div>
             </Reveal>
           ))}
         </ol>

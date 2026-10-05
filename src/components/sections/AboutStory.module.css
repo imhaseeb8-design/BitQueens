@@ -1,6 +1,6 @@
 .story {
   padding: clamp(3.5rem, 7vw, 5.5rem) 1.5rem;
-  background: #fff;
+  background: var(--bq-canvas);
 }
 
 .inner {
@@ -13,7 +13,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--bq-green-deep);
   margin: 0 0 1rem;
 }
 
@@ -21,20 +21,20 @@
   font-size: clamp(1.9rem, 4vw, 2.75rem);
   line-height: 1.15;
   margin: 0 0 2rem;
-  color: var(--ink);
-  font-weight: 700;
+  color: var(--bq-ink);
+  font-weight: 400;
 }
 
 .serif {
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
-  color: var(--green);
+  color: var(--bq-green-deep);
 }
 
 .body p {
   font-size: 1.125rem;
   line-height: 1.75;
-  color: var(--ink-soft);
+  color: var(--bq-ink-80);
   margin: 0 0 1.25rem;
 }
 
@@ -49,7 +49,7 @@
   margin-top: 1.75rem;
   padding: 0.9rem 1.75rem;
   border-radius: 999px;
-  background: var(--green);
+  background: var(--bq-green-deep);
   color: #fff;
   font-weight: 600;
   text-decoration: none;
@@ -69,3 +69,6 @@
   background: rgba(255, 255, 255, 0.2);
   font-size: 0.7rem;
 }
+
+.headline { font-family:var(--bq-neue-montreal),sans-serif; letter-spacing:-.035em; }
+.serif { font-family:var(--bq-instrument-serif),Georgia,serif; }

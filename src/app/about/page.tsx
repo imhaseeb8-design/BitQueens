@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import styles from './page.module.css';
 import { about } from '@/content/about';
 import AboutHero from '@/components/sections/AboutHero';
 import AboutStory from '@/components/sections/AboutStory';
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main>
+    <div className={`${styles.page} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}>
       <AboutHero hero={about.hero} />
       <AboutStory story={about.story} />
       <AboutVision vision={about.vision} />
@@ -24,6 +26,6 @@ export default function AboutPage() {
       <AboutGroup group={about.group} />
       <AboutFounder founder={about.founder} />
       <AboutClosing closing={about.closing} />
-    </main>
+    </div>
   );
 }

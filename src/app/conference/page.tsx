@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { ConferenceBoard } from '@/components/sections/ConferenceBoard';
-import { ConferenceClosing } from '@/components/sections/ConferenceClosing';
+import { ConferenceInterest } from '@/components/sections/ConferenceInterest';
 import { ConferenceHero } from '@/components/sections/ConferenceHero';
 import { conference } from '@/content/conference';
 
@@ -25,7 +25,7 @@ export default function ConferencePage() {
     <>
       <ConferenceHero content={conference.hero} />
       <ConferenceBoard content={conference.board} />
-      <ConferenceClosing content={conference.closing} />
+      <ConferenceInterest />
     </>
   );
 }

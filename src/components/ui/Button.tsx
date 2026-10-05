@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { PartnerLink } from './PartnerLink';
+import { SelectionLink, type FormSelection } from './SelectionLink';
 import type { ReactNode } from 'react';
 import styles from './Button.module.css';
 
@@ -25,6 +27,7 @@ interface ButtonProps {
    */
   arrow?: boolean;
   className?: string;
+  selection?: FormSelection;
 }
 
 export function Button({
@@ -35,6 +38,7 @@ export function Button({
   onDark = false,
   arrow = true,
   className = '',
+  selection,
 }: ButtonProps) {
   // `quiet` has no box to clip, and its arrow is a pseudo-element, so none of
   // the crossing-arrow machinery below applies to it.
@@ -66,8 +70,7 @@ export function Button({
    * to shift toward, and shifting the label alone just walked it into the clip
    * and cut it in half. Those use the underline instead - see `.link` below.
    */
-  return (
-    <Link href={href} className={classes}>
+  const contents = (
       <span className={`${styles.shift} ${showArrow ? styles.hasArrow : ''}`.trim()}>
         {showArrow && (
           <span className={`${styles.arrow} ${styles.arrowLead}`} aria-hidden="true">
@@ -81,6 +84,7 @@ export function Button({
           </span>
         )}
       </span>
-    </Link>
   );
+  if (selection) return <SelectionLink href={href} selection={selection} className={classes}>{contents}</SelectionLink>;
+  return href === '/#ecosystem' ? <PartnerLink className={classes}>{contents}</PartnerLink> : <Link href={href} className={classes}>{contents}</Link>;
 }

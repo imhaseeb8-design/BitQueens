@@ -17,7 +17,7 @@ export const conference: ConferencePage = {
     headline: 'A seat at the',
     headlineSerif: 'future of tech.',
     body: 'Our flagship gathering connects women in emerging tech with the people, ideas and opportunities shaping what comes next. It is where the community meets in one room.',
-    primaryCta: { label: 'Join the interest list', href: '/join' },
+    primaryCta: { label: 'Join the interest list', href: '#interest' },
     secondaryCta: { label: 'Explore the Academy', href: '/academy' },
   },
 
@@ -30,13 +30,13 @@ export const conference: ConferencePage = {
     emptyTitle: 'No edition is scheduled right now.',
     emptyBody:
       'The next gathering has not been announced yet. Join the community and you will hear the date before it goes anywhere else — and in the meantime the weekly live trainings run every Friday and Sunday.',
-    emptyCta: { label: 'Join the interest list', href: '/join' },
+    emptyCta: { label: 'Join the interest list', href: '#interest' },
   },
 
   closing: {
     headline: 'Be in the room',
     headlineSerif: 'when it happens.',
-    body: 'One free step puts you on the list for the next edition, and into a community that is learning together every week.',
-    cta: { label: 'Join BitQueens', href: '/join' },
+    body: 'Whether you want to attend, speak, volunteer or partner, tell us how you would like to be involved.',
+    cta: { label: 'Share your interest', href: '#interest' },
   },
 };

@@ -5,13 +5,7 @@ import type { InnovationsProducts as InnovationsProductsContent } from '@/lib/ty
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './InnovationsProducts.module.css';
 
-/**
- * Products — Chainelle and BitQueens AI.
- *
- * Consulting-shape cards: no prices on the shelf (brief), just what each
- * product is, what an engagement includes, and one "Request a quote" door
- * each. The orange top-rule marks the division.
- */
+/** Product studio: a green Chainelle feature beside BitQueens AI. */
 export function InnovationsProducts({
   content,
 }: {
@@ -24,19 +18,21 @@ export function InnovationsProducts({
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
       <div className={styles.inner}>
+        <div className={styles.heading}>
         <SectionHead
           eyebrow={content.eyebrow}
           headline={content.headline}
           headlineSerif={content.headlineSerif}
-          intro={content.intro}
         />
+        <Reveal><p className={styles.intro}>{content.intro}</p></Reveal>
+        </div>
 
         <div className={styles.cards}>
           {content.products.map((product, i) => (
             <Reveal
               key={product.name}
               delay={i * 100}
-              className={styles.card}
+              className={`${styles.card} ${i === 0 ? styles.featured : ''}`}
             >
               <p className={styles.kicker}>{product.tagline}</p>
               <h3 className={styles.name}>{product.name}</h3>
@@ -53,7 +49,9 @@ export function InnovationsProducts({
               </ul>
               <Button
                 href={product.cta.href}
-                variant="green"
+                selection={{kind:'quote',value:product.name}}
+                variant={i === 0 ? 'primary' : 'green'}
+                onDark={i === 0}
                 size="compact"
                 arrow={false}
                 className={styles.cta}

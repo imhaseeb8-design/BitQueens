@@ -1,110 +1,22 @@
-/**
- * InnovationsSkills — the e-commerce-style product grid.
- *
- * Price cards, not brochures: the price line sits directly above the CTA the
- * way a shop would, and the card's footer is visually separated so the
- * commercial facts scan as one block.
- */
-
-.section {
-  background: var(--bq-canvas);
-  color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0;
+.section { background: var(--bq-canvas); color: var(--bq-ink); padding: clamp(4rem, 7vw, 6.5rem) 0; }
+.inner { box-sizing: border-box; max-width: var(--bq-max); margin: 0 auto; padding: 0 var(--bq-gutter); }
+.catalogue { margin-top: 2.75rem; }
+.table { width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left; }
+.table thead th { font-family: var(--bq-inter-tight), sans-serif; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--bq-ink-66); padding: 0 1.5rem 1rem 0; border-bottom: 1px solid var(--bq-rule); }
+.table thead th:first-child { width: 52%; }
+.table thead th:nth-child(2) { width: 25%; }
+.table tbody th, .table td { padding: 1.5rem 2rem 1.5rem 0; border-bottom: 1px solid var(--bq-rule); vertical-align: middle; }
+.name { margin: 0; font-family: var(--bq-neue-montreal), sans-serif; font-size: clamp(1.25rem, 1.75vw, 1.625rem); font-weight: 400; line-height: 1.25; letter-spacing: -.025em; color: var(--bq-green-deep); }
+.desc { max-width: 36rem; margin: .5rem 0 0; font-family: var(--bq-inter-tight), sans-serif; font-size: 1rem; font-weight: 400; line-height: 1.5; color: var(--bq-ink-80); text-wrap: pretty; }
+.meta { font-family: var(--bq-inter-tight), sans-serif; font-size: 1rem; line-height: 1.5; color: var(--bq-ink-66); }
+.price { margin: 0 0 .75rem; font-family: var(--bq-inter-tight), sans-serif; font-size: 1rem; line-height: 1.4; color: var(--bq-green-deep); }
+.cta { border-radius: 4px; }
+@media (max-width: 700px) {
+  .table, .table tbody { display: block; }
+  .table thead { display: none; }
+  .table tr { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem 0; border-top: 1px solid var(--bq-rule); }
+  .table tbody th, .table td { display: block; padding: 0; border: 0; }
+  .table tr:last-child { border-bottom: 1px solid var(--bq-rule); }
 }
-
-.inner {
-  box-sizing: border-box;
-  max-width: var(--bq-max);
-  margin: 0 auto;
-  padding: 0 var(--bq-gutter);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--bq-col-gap);
-  margin: clamp(2.5rem, 4.5vw, 4rem) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.card {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 32px;
-  min-height: 420px;
-  padding: 32px 28px;
-  background: var(--bq-ecosystem-panel);
-  border-radius: 16px;
-  border-top: 4px solid var(--bq-orange);
-}
-
-.top {
-  display: grid;
-  gap: 14px;
-  align-content: start;
-}
-
-.name {
-  margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(1.5rem, 1.9vw, 1.875rem);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  color: var(--bq-green-deep);
-  text-wrap: balance;
-}
-
-.desc {
-  margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--bq-ink-80);
-  text-wrap: pretty;
-}
-
-.bottom {
-  display: grid;
-  gap: 10px;
-  padding-top: 24px;
-  border-top: 1px solid var(--bq-rule);
-}
-
-.meta {
-  margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.06em;
-  color: var(--bq-ink-50);
-}
-
-.price {
-  margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: 1.375rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--bq-green-deep);
-}
-
-.cta {
-  justify-self: start;
-  margin-top: 8px;
-}
-
-@media (max-width: 1000px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .card {
-    min-height: 0;
-  }
-}
+.inner > div:first-child { max-width: none; }
+.inner > div:first-child p { max-width: 70rem; }

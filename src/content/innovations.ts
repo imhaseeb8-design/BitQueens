@@ -21,12 +21,6 @@ export const innovations: InnovationsPage = {
     body: 'Innovations & Labs is the technology arm of BitQueens — products like Chainelle and BitQueens AI, plus professional skills programmes. Designed and built by women, for what comes next.',
     primaryCta: { label: 'Request a quote', href: '#quote' },
     secondaryCta: { label: 'Explore products', href: '#products' },
-    art: {
-      src: '/innovations-hero-art.png',
-      alt: 'Abstract dotted motif in warm orange on cream',
-      width: 1920,
-      height: 1280,
-    },
   },
 
   how: {

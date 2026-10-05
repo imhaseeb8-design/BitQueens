@@ -1,10 +1,10 @@
 /**
- * InnovationsClosing — the final ink band.
+ * InnovationsClosing — the final invitation.
  */
 
 .section {
-  background: var(--bq-ink);
-  color: var(--bq-cream);
+  background: var(--bq-canvas);
+  color: var(--bq-green-deep);
   padding: clamp(5rem, 10vw, 9.5rem) 0;
 }
 
@@ -28,7 +28,7 @@
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.04em;
-  color: var(--bq-cream);
+  color: var(--bq-green-deep);
   text-wrap: balance;
 }
 
@@ -41,7 +41,7 @@
   font-size: 1.12em;
   line-height: 1.02;
   letter-spacing: 0;
-  color: var(--bq-blush);
+  color: var(--bq-green-deep);
 }
 
 .body {
@@ -50,7 +50,7 @@
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: var(--bq-t-body-lg);
   line-height: 1.6;
-  color: var(--bq-cream-82);
+  color: var(--bq-ink-80);
   text-wrap: pretty;
 }
 

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PartnerLink } from '@/components/ui/PartnerLink';
+import { UpdatesRequest } from '@/components/sections/UpdatesRequest';
 import { SocialIcon, type SocialName } from '@/components/ui/SocialIcon';
 import { footerLinks, mailboxes, site } from '@/content/site';
 import { interTight } from '@/styles/fonts';
@@ -29,6 +30,7 @@ export function SiteFooter() {
   return (
     <footer className={`${styles.footer} ${interTight.variable}`}>
       <div className={styles.inner}>
+        <UpdatesRequest />
         <div className={styles.grid}>
           <div className={styles.brand}>
             <Link href="/" className={styles.logo} aria-label={`${site.name} home`}>
@@ -76,6 +78,9 @@ export function SiteFooter() {
                 <Link href="/contact" className={styles.link}>
                   Contact
                 </Link>
+              </li>
+              <li>
+                <Link href="/brand-assets" className={styles.link}>Brand assets</Link>
               </li>
               <li>
                 <a href={`mailto:${mailboxes.general}`} className={styles.link}>

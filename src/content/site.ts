@@ -8,10 +8,8 @@ import type { SiteConfig } from '@/lib/types';
  * themselves — "Blog" not "Media", "Conference" not "Hub", "Partners" not
  * "Alliance".
  *
- * Top nav is deliberately short (5 items) — Innovations, BIET and Foundation
- * are one scroll away in the homepage's Ecosystem section and still fully
- * reachable via the footer; they don't need to also compete for space in
- * the hero's nav bar.
+ * Top nav is deliberately short (5 items). Ecosystem gives all four branches
+ * one overview; the footer also keeps a direct route to each branch.
  */
 export const site: SiteConfig = {
   name: 'BitQueens',
@@ -24,7 +22,7 @@ export const site: SiteConfig = {
     'opportunities in emerging technology.',
 
   nav: [
-    { label: 'Academy', href: '/academy' },
+    { label: 'Ecosystem', href: '/ecosystem' },
     { label: 'Conference', href: '/conference' },
     /* No dedicated /partners page (decision 2026-10-03): the homepage's
        #ecosystem accordion carries the pitch, so every partner CTA lands

@@ -1,6 +1,6 @@
 .closing {
   padding: clamp(4rem, 8vw, 6rem) 1.5rem;
-  background: linear-gradient(135deg, var(--green) 0%, #1f5c40 100%);
+  background: var(--bq-green-deep);
   color: #fff;
   text-align: center;
 }
@@ -14,11 +14,11 @@
   font-size: clamp(2.2rem, 5vw, 3.25rem);
   line-height: 1.1;
   margin: 0 0 1rem;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .serif {
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
 }
 
@@ -47,8 +47,8 @@
 }
 
 .primary {
-  background: #fff;
-  color: var(--green);
+  background: var(--bq-canvas);
+  color: var(--bq-green-deep);
 }
 
 .primary:hover {
@@ -64,3 +64,6 @@
 .secondary:hover {
   transform: translateY(-2px);
 }
+
+.headline { font-family:var(--bq-neue-montreal),sans-serif; letter-spacing:-.035em; }
+.serif { font-family:var(--bq-instrument-serif),Georgia,serif; }

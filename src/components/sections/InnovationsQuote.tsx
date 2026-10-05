@@ -1,17 +1,12 @@
 import { QuoteForm } from '@/components/sections/QuoteForm';
+import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { InnovationsQuote as InnovationsQuoteContent } from '@/lib/types';
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
-import styles from './InnovationsQuote.module.css';
+import styles from './AcademyEnroll.module.css';
 
-/**
- * #quote — the proposal request form.
- *
- * Copy left, form right on a paper panel: the same commitment-band language
- * the Academy's forms use, so every form on the site feels like the same
- * site.
- */
+/** Academy form layout with the Labs enquiry fields and copy. */
 export function InnovationsQuote({
   content,
 }: {
@@ -23,15 +18,14 @@ export function InnovationsQuote({
       aria-label="Request a quote"
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
+      <GlobalDotMap className={styles.ground} />
       <div className={styles.inner}>
-        <div className={styles.copy}>
           <SectionHead
-            eyebrow={content.eyebrow}
             headline={content.headline}
             headlineSerif={content.headlineSerif}
             intro={content.body}
+            align="center"
           />
-        </div>
         <Reveal delay={120} className={styles.panel}>
           <QuoteForm content={content} />
         </Reveal>

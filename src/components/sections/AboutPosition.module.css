@@ -1,6 +1,6 @@
 .position {
   padding: clamp(3.5rem, 7vw, 5.5rem) 1.5rem;
-  background: #fff;
+  background: var(--bq-canvas);
 }
 
 .inner {
@@ -22,7 +22,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--bq-green-deep);
   margin: 0 0 1rem;
 }
 
@@ -30,35 +30,35 @@
   font-size: clamp(1.9rem, 4vw, 2.75rem);
   line-height: 1.15;
   margin: 0 0 1.25rem;
-  color: var(--ink);
-  font-weight: 700;
+  color: var(--bq-ink);
+  font-weight: 400;
 }
 
 .serif {
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
-  color: var(--green);
+  color: var(--bq-green-deep);
 }
 
 .body {
   font-size: 1.125rem;
   line-height: 1.75;
-  color: var(--ink-soft);
+  color: var(--bq-ink-80);
   margin: 0;
   max-width: 38rem;
 }
 
 .not {
-  background: var(--cream);
+  background: var(--bq-canvas);
   border-radius: 1.25rem;
   padding: 2rem;
-  border-left: 4px solid var(--orange);
+  border-left: 4px solid var(--bq-orange);
 }
 
 .not h3 {
   margin: 0 0 1rem;
   font-size: 1.1rem;
-  color: var(--ink);
+  color: var(--bq-ink);
 }
 
 .not ul {
@@ -71,7 +71,7 @@
 
 .not li {
   font-size: 1rem;
-  color: var(--ink-soft);
+  color: var(--bq-ink-80);
   padding-left: 1.5rem;
   position: relative;
 }
@@ -80,6 +80,9 @@
   content: '✕';
   position: absolute;
   left: 0;
-  color: var(--orange);
-  font-weight: 700;
+  color: var(--bq-orange);
+  font-weight: 400;
 }
+
+.headline { font-family:var(--bq-neue-montreal),sans-serif; letter-spacing:-.035em; }
+.serif { font-family:var(--bq-instrument-serif),Georgia,serif; }

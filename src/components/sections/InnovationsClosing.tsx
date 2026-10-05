@@ -4,13 +4,7 @@ import type { InnovationsClosing as InnovationsClosingContent } from '@/lib/type
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './InnovationsClosing.module.css';
 
-/**
- * The closing band — "Let's build together."
- *
- * The ink band: the site's darkest closing register, kept for the page that
- * is most about making things. Cream primary CTA per the dark-band
- * counter-accent rule.
- */
+/** Closing invitation on the shared light page canvas. */
 export function InnovationsClosing({
   content,
 }: {
@@ -36,8 +30,7 @@ export function InnovationsClosing({
         <Reveal delay={160} className={styles.ctas}>
           <Button
             href={content.primaryCta.href}
-            variant="primary"
-            onDark
+            variant="green"
             arrow={false}
           >
             {content.primaryCta.label}
@@ -45,7 +38,6 @@ export function InnovationsClosing({
           <Button
             href={content.secondaryCta.href}
             variant="secondary"
-            onDark
             arrow={false}
           >
             {content.secondaryCta.label}

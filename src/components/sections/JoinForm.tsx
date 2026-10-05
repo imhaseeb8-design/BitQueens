@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import { prepareEmailEnquiry } from '@/lib/email-enquiry';
+import { EmailDraftNotice } from './EmailDraftNotice';
 import type { JoinPage } from '@/lib/types';
 import form from '@/components/ui/Form.module.css';
 
@@ -16,18 +18,11 @@ interface Errors {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * The /join signup form.
- *
- * Validation runs on blur and on submit, never per keystroke. There is no
- * backend yet: submit resolves locally and says so plainly, following the
- * NewsletterForm convention. Wire the submit to the real endpoint when it
- * exists — the field contract is the form state below.
- */
-export function JoinForm({ content }: { content: JoinPage }) {
+/** JoinForm: validates details and prepares an email draft without sending. */
+export function JoinForm({ content, initialTrack = '' }: { content: JoinPage; initialTrack?: string }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [track, setTrack] = useState('');
+  const [track, setTrack] = useState(content.tracks.includes(initialTrack) ? initialTrack : '');
   const [level, setLevel] = useState('');
   const [location, setLocation] = useState('');
   const [errors, setErrors] = useState<Errors>({});
@@ -44,29 +39,17 @@ export function JoinForm({ content }: { content: JoinPage }) {
     return next;
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const next = validate();
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
-    setStatus('submitting');
-    // TODO: replace with the real join endpoint.
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    prepareEmailEnquiry('Community membership', {Name:name, Email:email, Track:track, Level:level, Location:location});
     setStatus('success');
   }
 
-  if (status === 'success') {
-    return (
-      <div className={form.success} aria-live="polite">
-        <h2 className={form.successTitle}>{content.successTitle}</h2>
-        <p className={form.successBody}>{content.successBody}</p>
-        <p className={form.successNote}>
-          Signup is not connected yet, so nothing was sent. We will wire this up before launch.
-        </p>
-      </div>
-    );
-  }
+  if (status === 'success') return <EmailDraftNotice onBack={() => setStatus('idle')} />;
 
   const describedBy = (key: keyof Errors) =>
     errors[key] ? `${key}-error` : undefined;
@@ -86,7 +69,7 @@ export function JoinForm({ content }: { content: JoinPage }) {
             className={form.input}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, name: validate().name }))}
             aria-invalid={Boolean(errors.name)}
             aria-describedby={describedBy('name')}
           />
@@ -111,7 +94,7 @@ export function JoinForm({ content }: { content: JoinPage }) {
             className={form.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, email: validate().email }))}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={describedBy('email')}
           />
@@ -134,7 +117,7 @@ export function JoinForm({ content }: { content: JoinPage }) {
             className={form.select}
             value={track}
             onChange={(e) => setTrack(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, track: validate().track }))}
             aria-invalid={Boolean(errors.track)}
             aria-describedby={describedBy('track')}
           >
@@ -162,7 +145,7 @@ export function JoinForm({ content }: { content: JoinPage }) {
             className={form.select}
             value={level}
             onChange={(e) => setLevel(e.target.value)}
-            onBlur={() => setErrors(validate())}
+            onBlur={() => setErrors(previous => ({ ...previous, level: validate().level }))}
             aria-invalid={Boolean(errors.level)}
             aria-describedby={describedBy('level')}
           >
@@ -194,7 +177,7 @@ export function JoinForm({ content }: { content: JoinPage }) {
           className={form.input}
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          onBlur={() => setErrors(validate())}
+          onBlur={() => setErrors(previous => ({ ...previous, location: validate().location }))}
           aria-invalid={Boolean(errors.location)}
           aria-describedby={describedBy('location')}
         />
@@ -216,6 +199,7 @@ export function JoinForm({ content }: { content: JoinPage }) {
       <p className={form.status} data-tone="muted">
         {content.privacy}
       </p>
+      <p className={form.status}>This opens a draft in your email app. Review and send it to complete your request.</p>
     </form>
   );
 }

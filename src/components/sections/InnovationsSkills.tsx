@@ -1,18 +1,10 @@
 import { Button } from '@/components/ui/Button';
-import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { InnovationsSkills as InnovationsSkillsContent } from '@/lib/types';
 import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
 import styles from './InnovationsSkills.module.css';
 
-/**
- * Skills programmes — the e-commerce-style product grid (brief).
- *
- * Each card is a price card: name, what it covers, level and length, the
- * price line, one Enquire CTA. Pricing is confirmed personally per cohort
- * until it is finalised, so the price line says exactly that — never a
- * placeholder figure.
- */
+/** A programme catalogue with level, duration and enquiry details. */
 export function InnovationsSkills({
   content,
 }: {
@@ -32,36 +24,35 @@ export function InnovationsSkills({
           intro={content.intro}
         />
 
-        <ul className={styles.grid}>
-          {content.skills.map((skill, i) => (
-            <Reveal
-              key={skill.name}
-              as="li"
-              delay={i * 90}
-              className={styles.card}
-            >
-              <div className={styles.top}>
-                <h3 className={styles.name}>{skill.name}</h3>
-                <p className={styles.desc}>{skill.description}</p>
-              </div>
-              <div className={styles.bottom}>
-                <p className={styles.meta}>
-                  {skill.level} · {skill.length}
-                </p>
-                <p className={styles.price}>{skill.priceNote}</p>
-                <Button
-                  href={skill.cta.href}
-                  variant="green"
-                  size="compact"
-                  arrow={false}
-                  className={styles.cta}
-                >
-                  {skill.cta.label}
-                </Button>
-              </div>
-            </Reveal>
-          ))}
-        </ul>
+        <div className={styles.catalogue}>
+          <table className={styles.table}>
+            <caption className="bq-visually-hidden">Professional skills programmes</caption>
+            <thead>
+              <tr>
+                <th scope="col">Programme</th>
+                <th scope="col">Level &amp; duration</th>
+                <th scope="col">Enquiry</th>
+              </tr>
+            </thead>
+            <tbody>
+              {content.skills.map((skill) => (
+                <tr key={skill.name}>
+                  <th scope="row" className={styles.programme}>
+                    <h3 className={styles.name}>{skill.name}</h3>
+                    <p className={styles.desc}>{skill.description}</p>
+                  </th>
+                  <td className={styles.meta}>{skill.level} · {skill.length}</td>
+                  <td className={styles.enquiry}>
+                    <p className={styles.price}>{skill.priceNote}</p>
+                    <Button href={skill.cta.href} selection={{kind:'quote',value:'Skills programmes',message:`I’m interested in ${skill.name}.`}} variant="green" size="compact" className={styles.cta}>
+                      {skill.cta.label}
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );

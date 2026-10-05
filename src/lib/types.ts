@@ -188,6 +188,7 @@ export interface FounderSection {
   headlineSerif: string;
   name: string;
   role: string;
+  facts: { label: string; value: string }[];
   /** The panel's own headline, one entry per line (node 281:415). */
   storyLines: string[];
   bio: string;
@@ -622,8 +623,6 @@ export interface InnovationsHero {
   body: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
-  /** Generated abstract brand artwork — never photography of people. */
-  art: ImageSlot;
 }
 
 export interface InnovationsStep {
