@@ -1,3 +1,6 @@
+'use client';
+
+import { useId, useState } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { FaqSection } from '@/lib/types';
@@ -7,7 +10,7 @@ import styles from './Faq.module.css';
 /**
  * The shared FAQ accordion — used by the homepage and by /academy.
  *
- * Native <details> accordion: no JS, keyboard-accessible by default, and the
+ * Button-controlled accordion with animated answer panels. The
  * first item ships open so the section never reads as an empty list of
  * closed doors.
  *
@@ -15,9 +18,8 @@ import styles from './Faq.module.css';
  * it. Centred over a 48rem list, this section used to leave a third of the
  * page empty down either side.
  *
- * `name` groups the <details> so only one is open at a time. It has to differ
- * per instance: two accordions sharing a name would close each other's items
- * across sections.
+ * Each instance keeps one answer open; unique IDs connect its buttons and
+ * panels without interfering with other FAQ sections.
  */
 export function Faq({
   content,
@@ -26,6 +28,9 @@ export function Faq({
   content: FaqSection;
   name?: string;
 }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const instanceId = useId();
+
   return (
     <section
       id="faq"
@@ -44,19 +49,35 @@ export function Faq({
         <div className={styles.list}>
           {content.items.map((item, i) => (
             <Reveal key={item.question} delay={i * 60}>
-              <details
+              <div
                 className={styles.item}
-                open={i === 0}
-                name={name}
+                data-open={openIndex === i}
               >
-                <summary className={styles.question}>
+                <button
+                  type="button"
+                  className={styles.question}
+                  id={`${name}-${instanceId}-question-${i}`}
+                  aria-expanded={openIndex === i}
+                  aria-controls={`${name}-${instanceId}-answer-${i}`}
+                  onClick={() => setOpenIndex((current) => current === i ? null : i)}
+                >
                   <span>{item.question}</span>
                   <span className={styles.icon} aria-hidden="true">
                     +
                   </span>
-                </summary>
-                <p className={styles.answer}>{item.answer}</p>
-              </details>
+                </button>
+                <div
+                  className={styles.answerPanel}
+                  id={`${name}-${instanceId}-answer-${i}`}
+                  aria-labelledby={`${name}-${instanceId}-question-${i}`}
+                  aria-hidden={openIndex !== i}
+                  inert={openIndex !== i}
+                >
+                  <div className={styles.answerInner}>
+                    <p className={styles.answer}>{item.answer}</p>
+                  </div>
+                </div>
+              </div>
             </Reveal>
           ))}
         </div>

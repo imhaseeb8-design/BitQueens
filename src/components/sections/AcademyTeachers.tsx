@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
+import { DottedGlobe } from '@/components/ui/DottedGlobe';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { AcademyTeachers as AcademyTeachersContent } from '@/lib/types';
@@ -28,13 +29,17 @@ export function AcademyTeachers({ content }: { content: AcademyTeachersContent }
       aria-label="Who you learn from"
       className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
     >
+      <DottedGlobe className={styles.globe} />
+      <span className={styles.globeOverlay} aria-hidden="true" />
       <div className={styles.inner}>
-        <SectionHead
-          align="center"
-          headline={content.headline}
-          headlineSerif={content.headlineSerif}
-          intro={content.intro}
-        />
+        <div className={styles.intro}>
+          <SectionHead
+            align="center"
+            headline={content.headline}
+            headlineSerif={content.headlineSerif}
+            intro={content.intro}
+          />
+        </div>
 
         <Reveal delay={140} className={styles.card}>
           <div className={styles.portrait}>

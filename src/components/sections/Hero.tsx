@@ -118,8 +118,8 @@ export function Hero({ content, stats }: { content: HeroSection; stats: ImpactSt
               <Image
                 src={logo.logo}
                 alt={logo.name}
-                width={logo.width}
-                height={logo.height}
+                width={Math.round(logo.width * 0.85)}
+                height={Math.round(logo.height * 0.85)}
                 className={styles.logoImg}
               />
             </li>

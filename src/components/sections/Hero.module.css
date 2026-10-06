@@ -34,11 +34,11 @@
   top: clamp(1.5rem, 2.847vw, 2.5625rem);
   left: 50%;
   z-index: 0;
-  width: min(1160px, 80.556vw);
+  width: min(1250px, 87vw);
   height: auto;
   aspect-ratio: 2048 / 1153;
   transform: translateX(-50%);
-  opacity: 0.3;
+  opacity: 0.36;
   pointer-events: none;
   animation: bqHeroFade 1.2s var(--bq-ease) 200ms both;
 }
@@ -213,7 +213,7 @@
   /* The two headlines are both two lines; holding the taller one's height
      keeps the lede and the CTAs from stepping when the switch flips. */
   min-height: calc(2 * 1.1em);
-  margin: 28px 0 0;
+  margin: 12px 0 0;
   font-family: var(--bq-neue-montreal), sans-serif;
   /* 64 at the frame. */
   font-size: clamp(2.25rem, 4.444vw, 4rem);
@@ -227,7 +227,7 @@
 
 .body {
   max-width: 668px;
-  margin: 24px 0 0;
+  margin: 16px 0 0;
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
   line-height: 1.5;
@@ -241,7 +241,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
-  margin-top: 40px;
+  margin-top: 32px;
   animation: bqHeroRise 800ms var(--bq-ease) 200ms both;
 }
 
@@ -348,7 +348,7 @@
     opacity: 0;
   }
   to {
-    opacity: 0.3;
+    opacity: 0.36;
   }
 }
 
@@ -356,7 +356,7 @@
 
 @media (max-width: 900px) {
   .map {
-    width: 140vw;
+    width: 150vw;
   }
 
   .headline {

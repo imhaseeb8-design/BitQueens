@@ -422,13 +422,12 @@ export const home: HomePage = {
     eyebrow: 'The BitQueens Conference',
     headlineLines: ['A seat at the', 'future of tech.'],
     body:
-      'Our flagship gathering connects women in emerging tech with the ' +
-      'people, ideas and opportunities shaping what comes next.',
+      'Meet women building in emerging tech. Learn from their stories, ' +
+      'share ideas and make new connections.',
     /* Says which facts are still open, in the shape they will be answered in.
        Replacing "To be announced" with a real date needs no layout change. */
     details: [
-      { key: 'Next edition', value: 'To be announced' },
-      { key: 'Registration', value: 'Interest list open' },
+      { key: 'Next edition', value: 'Date to be announced. Join the interest list for updates.' },
     ],
     /* The weekly trainings, straight from linktr.ee/BitQueens — the Zoom
        rooms and the full zone labels, daylight-saving halves included. This

@@ -119,16 +119,6 @@
   color: var(--bq-green-deep);
 }
 
-/* The partners card wears the slate blue as a 5px bar along its top
-   (node 297:761). */
-.card[data-tone='cream']::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 5px;
-  background: var(--bq-blue-slate);
-}
-
 .eyebrow {
   margin: 0;
   font-family: var(--bq-inter-tight), sans-serif;

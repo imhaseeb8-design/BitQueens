@@ -8,12 +8,37 @@
  */
 
 .section {
+  position: relative;
+  overflow: clip;
   background: var(--bq-canvas);
   color: var(--bq-ink);
   padding: clamp(4rem, 8vw, 8rem) 0;
 }
 
+.globe {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 50%;
+  width: min(920px, 98vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  opacity: 0.09;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, black 45%, transparent 95%);
+}
+
+.globeOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, var(--bq-canvas) 15%, transparent 85%);
+  pointer-events: none;
+}
+
 .inner {
+  position: relative;
+  z-index: 2;
   box-sizing: border-box;
   max-width: var(--bq-max);
   margin: 0 auto;
@@ -26,6 +51,35 @@
   grid-template-columns: minmax(0, 420fr) minmax(0, 876fr);
   margin-top: clamp(2.5rem, 4.5vw, 4rem);
   background: var(--bq-ecosystem-panel);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 100vw;
+  height: clamp(2.5rem, 4.5vw, 4rem);
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, var(--bq-canvas) 35%);
+  pointer-events: none;
+}
+
+.intro {
+  position: relative;
+  isolation: isolate;
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+.intro::before {
+  content: '';
+  position: absolute;
+  inset: -20px -32px;
+  z-index: -1;
+  background: linear-gradient(to top, var(--bq-canvas) 20%, color-mix(in srgb, var(--bq-canvas) 85%, transparent) 65%, transparent 100%);
+  filter: blur(18px);
+  pointer-events: none;
 }
 
 /* The clip lives here rather than on the card: the card has to let the seal
