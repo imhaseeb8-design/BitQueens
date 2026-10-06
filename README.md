@@ -399,6 +399,54 @@ the design system's button.
 - `prefers-reduced-motion` keeps opacity, drops movement.
 - `@media (scripting: none)` reveals everything, so no-JS is never a blank page.
 
+**Dotted motion** — three canvas components in `components/ui/`, drawing the
+same material three ways:
+
+| Component | Draws | Used by |
+| --- | --- | --- |
+| `GlobalDotMap` | the world map | `Hero`, `AcademyHero`, `AcademyEnroll`, `ConferenceHero`, `InnovationsHero`, `InnovationsQuote` |
+| `DottedGlobe` | a rotating globe | `Place`, `EcosystemAccordion`, `EcosystemOverview` |
+| `DotGradientField` | a masked field — see shapes below | `AcademyPath` |
+
+`DotGradientField` takes a `shape` prop, typed `DotFieldShape` so the editor
+autocompletes it and rejects a typo:
+
+| `shape` | What it draws |
+| --- | --- |
+| `"crown"` | the brand mark — blunt enough to survive the dot pitch |
+| `"wave"` | a flowing ribbon that leaves its middle open, so a headline sits in the trough |
+| `"wordmark"` | BitQueens in dots; **needs a tall band** — the strokes are one dot wide and go to mush in a short one |
+| *(omitted)* | `"field"`, a plain radial gradient; the quietest of the four |
+
+`focusX` / `focusY` / `spreadX` / `spreadY` steer `field`; `focusY` also sets
+the line `wave` runs along, so the ribbon can be dropped behind a form. The
+other shapes size themselves to the element, so you place them by setting the
+container.
+
+All three share one set of numbers, **deliberately, and they should stay
+shared**: the `BASE` → `ACTIVE` greys-to-green ramp, the `0.011` pitch and
+`0.00272` radius ratios, the `0.48 + energy * 0.42` alpha, and the four
+drifting gaussians at `MOTION_SPEED 3.5`. Re-tuning one component's palette or
+pitch in isolation is how the three stop reading as the same material.
+
+Geometry scales with the **element's own width**, not the viewport — a
+full-bleed instance lands on the same dot size as the hero, a narrow one
+renders finer. If two instances must match exactly, give them the same width.
+The mask is coverage, not a stencil: a dot on a shape's edge comes back
+part-covered and is drawn smaller and fainter, which is what stops a hard
+outline reading as a jagged one.
+
+Reduced motion is respected in all three — static at low energy, no `rAF`
+loop. Each is a client component with a continuous render loop, so **count the
+instances per page** before adding another.
+
+Only `"crown"` is in use in the site today, in `AcademyPath`. The other three
+are built and ready but unplaced — they are not dead code, they are the rest
+of the set.
+
+`/preview-field` is the reference board: all four shapes side by side, each
+labelled with the exact prop. It is `noindex`.
+
 ---
 
 ## Open items
