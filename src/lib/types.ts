@@ -92,6 +92,13 @@ export interface Pillar {
    * scanning for one specific thing can find it without reading a sentence.
    */
   items: string[];
+  /** Extra context for a division preview, drawn from its own page. */
+  preview?: {
+    stats?: Stat[];
+    assurances?: string[];
+    descriptions: string[];
+    secondaryCta: NavLink;
+  };
 }
 
 export interface EcosystemSection {

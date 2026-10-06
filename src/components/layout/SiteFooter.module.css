@@ -112,13 +112,29 @@
 }
 
 /* Block, so each row is the link's own 22px and the 38 pitch holds. */
-.link {
-  display: block;
+.link,
+.upcoming {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   font-family: var(--bq-inter-tight), sans-serif;
   font-size: 1rem;
   line-height: 1.375;
   color: var(--bq-ink);
   transition: color 300ms var(--bq-ease);
+}
+
+.comingSoon {
+  display: inline-block;
+  padding: 3px 7px;
+  border: 1px solid var(--bq-ink-14);
+  border-radius: 999px;
+  background: var(--bq-paper);
+  font-size: 0.625rem;
+  line-height: 1.2;
+  color: var(--bq-ink-66);
+  white-space: nowrap;
 }
 
 @media (hover: hover) and (pointer: fine) {

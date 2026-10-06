@@ -5,11 +5,10 @@ import type { SiteConfig } from '@/lib/types';
  *
  * Nav follows the sitemap in the project brief. Note the deliberate naming:
  * visitors see the OUTPUT of the internal engines, never the engines
- * themselves — "Blog" not "Media", "Conference" not "Hub", "Partners" not
- * "Alliance".
+ * themselves — "Blog" not "Media", "Conference" not "Hub".
  *
- * Top nav is deliberately short (5 items). Ecosystem gives all four branches
- * one overview; the footer also keeps a direct route to each branch.
+ * Top nav contains four dedicated pages. Partnership actions lead to the
+ * homepage; upcoming ecosystem branches remain labelled in the footer.
  */
 export const site: SiteConfig = {
   name: 'BitQueens',
@@ -24,10 +23,6 @@ export const site: SiteConfig = {
   nav: [
     { label: 'Ecosystem', href: '/ecosystem' },
     { label: 'Conference', href: '/conference' },
-    /* No dedicated /partners page (decision 2026-10-03): the homepage's
-       #ecosystem accordion carries the pitch, so every partner CTA lands
-       there instead of a separate route. */
-    { label: 'Partners', href: '/#ecosystem' },
     { label: 'Blog', href: '/blog' },
     { label: 'About', href: '/about' },
   ],
@@ -57,17 +52,18 @@ export const site: SiteConfig = {
  */
 export const footerLinks = {
   ecosystem: [
+    { label: 'Ecosystem overview', href: '/ecosystem' },
     { label: 'Academy', href: '/academy' },
     { label: 'Innovations & Labs', href: '/innovations' },
-    { label: 'BIET', href: '/biet' },
-    { label: 'Foundation', href: '/foundation' },
+    { label: 'BIET', href: '/biet', comingSoon: true },
+    { label: 'Foundation', href: '/foundation', comingSoon: true },
   ],
   /* The footer's second column (Figma 298:51). Contact lives in the third,
      with the mailbox. */
   explore: [
     { label: 'About', href: '/about' },
     { label: 'Conference', href: '/conference' },
-    { label: 'Partners', href: '/#ecosystem' },
+    { label: 'Partner with us', href: '/#ecosystem' },
     { label: 'Blog', href: '/blog' },
   ],
 };

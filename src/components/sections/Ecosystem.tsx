@@ -1,10 +1,22 @@
 import Link from 'next/link';
 import { EcosystemAccordion } from './EcosystemAccordion';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 import { Section } from '@/components/ui/Section';
 import type { EcosystemByAudience } from '@/lib/types';
 import styles from './Ecosystem.module.css';
+
+function BranchCardLink({ comingSoon, href, children, ...props }: {
+  comingSoon?: boolean;
+  href: string;
+  children: ReactNode;
+  className: string;
+  style: CSSProperties;
+  'data-last'?: boolean;
+  'data-cta'?: string;
+}) {
+  return comingSoon ? <article {...props}>{children}</article> : <Link href={href} {...props}>{children}</Link>;
+}
 
 export type EcosystemVariant =
   | 'doors'
@@ -72,8 +84,9 @@ export function Ecosystem({
                 carries everything away. */}
             <div className={styles.sideStack}>
               {content.pillars.map((pillar, i) => (
-                <Link
+                <BranchCardLink
                   key={pillar.name}
+                  comingSoon={pillar.comingSoon}
                   href={pillar.href}
                   className={styles.sideCard}
                   style={{ '--i': i, '--accent': pillar.color } as CSSProperties}
@@ -95,10 +108,10 @@ export function Ecosystem({
                       <p className={styles.sideDesc}>{pillar.description}</p>
                     </div>
                     <span className={styles.sideCta}>
-                      {pillar.cta} <span aria-hidden="true">→</span>
+                      {pillar.comingSoon ? 'Coming soon' : <>{pillar.cta} <span aria-hidden="true">→</span></>}
                     </span>
                   </div>
-                </Link>
+                </BranchCardLink>
               ))}
               <div className={styles.sideHold} aria-hidden="true" />
             </div>
@@ -134,8 +147,9 @@ export function Ecosystem({
             before the parent's bottom edge carries it away. */}
         <div className={styles.stack}>
           {content.pillars.map((pillar, i) => (
-            <Link
+            <BranchCardLink
               key={pillar.name}
+              comingSoon={pillar.comingSoon}
               href={pillar.href}
               className={styles.stackCard}
               style={{ '--i': i, '--accent': pillar.color } as CSSProperties}
@@ -150,11 +164,11 @@ export function Ecosystem({
                 <div className={styles.stackBody}>
                   <p className={styles.stackDesc}>{pillar.description}</p>
                   <span className={styles.stackCta}>
-                    {pillar.cta} <span aria-hidden="true">→</span>
+                    {pillar.comingSoon ? 'Coming soon' : <>{pillar.cta} <span aria-hidden="true">→</span></>}
                   </span>
                 </div>
               </div>
-            </Link>
+            </BranchCardLink>
           ))}
           <div className={styles.stackHold} aria-hidden="true" />
         </div>
@@ -179,7 +193,7 @@ export function Ecosystem({
             <Reveal
               key={pillar.name}
               delay={i * 70}
-              href={pillar.href}
+              href={pillar.comingSoon ? undefined : pillar.href}
               className={styles.door}
               style={{ '--accent': pillar.color } as CSSProperties}
             >
@@ -192,7 +206,7 @@ export function Ecosystem({
               <h3 className={styles.doorName}>{pillar.name}</h3>
               <p className={styles.doorDesc}>{pillar.description}</p>
               <span className={styles.doorCta}>
-                {pillar.cta} <span aria-hidden="true">→</span>
+                {pillar.comingSoon ? 'Coming soon' : <>{pillar.cta} <span aria-hidden="true">→</span></>}
               </span>
             </Reveal>
           ))}
@@ -203,7 +217,7 @@ export function Ecosystem({
             <Reveal
               key={pillar.name}
               delay={i * 70}
-              href={pillar.href}
+              href={pillar.comingSoon ? undefined : pillar.href}
               className={styles.indexRow}
               style={{ '--accent': pillar.color } as CSSProperties}
             >
@@ -213,7 +227,7 @@ export function Ecosystem({
               <h3 className={styles.indexName}>{pillar.name}</h3>
               <p className={styles.indexDesc}>{pillar.description}</p>
               <span className={styles.indexCta}>
-                {pillar.cta} <span aria-hidden="true">→</span>
+                {pillar.comingSoon ? 'Coming soon' : <>{pillar.cta} <span aria-hidden="true">→</span></>}
               </span>
             </Reveal>
           ))}

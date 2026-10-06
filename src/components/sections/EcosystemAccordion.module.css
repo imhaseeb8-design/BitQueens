@@ -389,6 +389,81 @@
 
 /* -- responsive ----------------------------------------------------------- */
 
+.preview {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.preview .name {
+  margin-top: 12px;
+  font-size: clamp(1.75rem, 3.2vw, 2.875rem);
+  line-height: 1.1;
+}
+
+.preview .desc {
+  max-width: 620px;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--bq-green-deep);
+}
+
+.proof strong { font-weight: 600; }
+
+.proof li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.proofIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.preview .explore {
+  margin-top: 20px;
+  padding-top: 16px;
+}
+
+.preview .items {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.preview .itemCell { white-space: normal; }
+
+.itemDescription {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--bq-ink-66);
+}
+
+.preview .cta { margin-top: 20px; }
+
+.secondaryLink {
+  margin-top: 12px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--bq-green-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* Below this the open panel has no room left once three spines are taken
    out, so the accordion becomes a plain stack: every panel open, no
    clipping. */
@@ -468,6 +543,8 @@
     flex-direction: column;
     gap: 16px;
   }
+
+  .preview .items { grid-template-columns: 1fr; gap: 20px; }
 
   .panelInner .cta {
     margin-top: 32px;

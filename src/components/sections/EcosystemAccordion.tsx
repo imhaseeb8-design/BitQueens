@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react';
+import Link from 'next/link';
 import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
 import { DottedGlobe } from '@/components/ui/DottedGlobe';
@@ -10,6 +11,12 @@ import styles from './EcosystemAccordion.module.css';
 
 /** How long each tab holds before the next one opens on its own. */
 const AUTO_ADVANCE_MS = 3000;
+
+/* Match the existing homepage hero's impact icons. */
+const proofIcons: Record<string, string> = {
+  'women trained': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M16 3a4 4 0 0 1 0 8 M22 21v-2a4 4 0 0 0-3-3.87 M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
+  'cohorts delivered': 'm2 9 10-5 10 5-10 5-10-5 M6 11v6c3 3 9 3 12 0v-6 M22 9v8',
+};
 
 /**
  * The ecosystem as a horizontal accordion - Figma 274:324 / 268:279.
@@ -132,7 +139,7 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                       is shown, and an `inert` set from React state cannot see
                       the media query. */}
                   <div id={panelId} className={styles.panel}>
-                    <div className={styles.panelInner}>
+                    <div className={`${styles.panelInner} ${pillar.preview ? styles.preview : ''}`}>
                       <p className={styles.eyebrow}>
                         {num}
                         <span className={styles.eyebrowSlash} aria-hidden="true">
@@ -142,6 +149,27 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                       </p>
                       <h3 className={styles.name}>{pillar.name}</h3>
                       <p className={styles.desc}>{pillar.description}</p>
+                      {pillar.preview?.stats && (
+                        <ul className={styles.proof} aria-label="Academy impact">
+                          {pillar.preview.stats.map((stat) => (
+                            <li key={stat.label}>
+                              {proofIcons[stat.label] && (
+                                <svg className={styles.proofIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                  <path d={proofIcons[stat.label]} />
+                                </svg>
+                              )}
+                              <span><strong>{stat.value}</strong> {stat.label}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {pillar.preview?.assurances && (
+                        <ul className={styles.proof} aria-label="Working with the Labs">
+                          {pillar.preview.assurances.map((assurance) => (
+                            <li key={assurance}>{assurance}</li>
+                          ))}
+                        </ul>
+                      )}
 
                       <div className={styles.explore}>
                         <p className={styles.exploreLabel}>{pillar.itemsLabel}</p>
@@ -151,7 +179,10 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                               <span className={styles.itemNum} aria-hidden="true">
                                 {String(j + 1).padStart(2, '0')}
                               </span>
-                              {item}
+                              <span>{item}</span>
+                              {pillar.preview && (
+                                <p className={styles.itemDescription}>{pillar.preview.descriptions[j]}</p>
+                              )}
                             </li>
                           ))}
                         </ol>
@@ -172,6 +203,11 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                         <Button href={pillar.href} size="compact" className={styles.cta}>
                           {pillar.cta}
                         </Button>
+                      )}
+                      {pillar.preview && (
+                        <Link className={styles.secondaryLink} href={pillar.preview.secondaryCta.href}>
+                          {pillar.preview.secondaryCta.label}
+                        </Link>
                       )}
                     </div>
                   </div>

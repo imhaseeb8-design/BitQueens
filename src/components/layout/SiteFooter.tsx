@@ -53,7 +53,14 @@ export function SiteFooter() {
               <h2 className={styles.colTitle}>{column.title}</h2>
               <ul className={styles.list}>
                 {column.links.map((link) =>
-                  link.href === '/#ecosystem' ? (
+                  'comingSoon' in link && link.comingSoon === true ? (
+                    <li key={link.href}>
+                      <span className={styles.upcoming}>
+                        {link.label}
+                        <span className={styles.comingSoon}>Coming soon</span>
+                      </span>
+                    </li>
+                  ) : link.href === '/#ecosystem' ? (
                     <li key={link.href}>
                       <PartnerLink className={styles.link}>
                         {link.label}

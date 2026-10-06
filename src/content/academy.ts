@@ -199,7 +199,7 @@ export const academy: AcademyPage = {
     biet: {
       title: 'BIET',
       body: 'Our Institute of Emerging Technologies. Accredited certificates, diplomas, and fellowships for when you are ready to go formal.',
-      cta: { label: 'Explore BIET', href: '/biet' },
+      cta: { label: 'Explore the ecosystem', href: '/ecosystem' },
     },
   },
 

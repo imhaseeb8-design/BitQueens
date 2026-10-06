@@ -68,7 +68,8 @@ export function AcademyTeachers({ content }: { content: AcademyTeachersContent }
 
             <Button
               href={lead.cta.href}
-              variant="green"
+              variant="primary"
+              onDark
               size="compact"
               className={styles.cta}
             >

@@ -14,6 +14,31 @@ import { about } from './about';
  * independently checkable. Populate `stats` when BitQueens supplies them and
  * the numerals row appears automatically.
  */
+const academyImpactStats = [
+  {
+    value: '2000+',
+    label: 'women trained',
+    support: 'Hands-on training in emerging technologies since 2023.',
+  },
+  {
+    value: '3',
+    label: 'cohorts delivered',
+    support:
+      'Structured programmes taking beginners from curious to capable.',
+  },
+  {
+    value: '2',
+    label: 'campus chapters',
+    support:
+      'Student-led communities holding the momentum between cohorts.',
+  },
+  {
+    value: '8+',
+    label: 'countries reached',
+    support: 'Learners and chapters far beyond where we started.',
+  },
+];
+
 export const home: HomePage = {
   /* ---------------------------------------------------------- 01 · hero -- */
   hero: {
@@ -81,30 +106,7 @@ export const home: HomePage = {
     headline: 'The women’s layer of Web3.',
     headlineMuted:
       'Programs, cohorts and campus chapters for women across Africa and beyond.',
-    stats: [
-      {
-        value: '2000+',
-        label: 'women trained',
-        support: 'Hands-on training in emerging technologies since 2023.',
-      },
-      {
-        value: '3',
-        label: 'cohorts delivered',
-        support:
-          'Structured programmes taking beginners from curious to capable.',
-      },
-      {
-        value: '2',
-        label: 'campus chapters',
-        support:
-          'Student-led communities holding the momentum between cohorts.',
-      },
-      {
-        value: '8+',
-        label: 'countries reached',
-        support: 'Learners and chapters far beyond where we started.',
-      },
-    ],
+    stats: academyImpactStats,
   },
 
   /* --------------------------------------------------------- 02 · proof -- */
@@ -163,11 +165,23 @@ export const home: HomePage = {
           name: 'Academy',
           tag: 'Learn',
           description:
-            'Cohort programmes, campus chapters and community learning, built for beginners. This is where you join.',
-          cta: 'Join the Academy',
+            'Learn emerging technology with a women-first community. Start free, then explore guided programmes when you’re ready.',
+          cta: 'Explore the Academy',
           href: '/academy',
-          itemsLabel: 'Explore the Academy',
-          items: ['Cohort programmes', 'Campus chapters', 'Community learning'],
+          itemsLabel: 'Find your way to learn',
+          items: ['Free community', 'Guided cohorts', 'Campus chapters'],
+          preview: {
+            stats: academyImpactStats.slice(0, 2),
+            descriptions: [
+              'Weekly sessions and a peer community. No experience needed.',
+              'Learn in a group with live teaching. Free and paid options.',
+              'Connect with women learning at university.',
+            ],
+            secondaryCta: {
+              label: `Led by ${about.founder.name}`,
+              href: '/academy#teachers',
+            },
+          },
           color: '#3B6C9F',
           ctaFill: 'light',
         },
@@ -175,11 +189,23 @@ export const home: HomePage = {
           name: 'Innovations & Labs',
           tag: 'Build',
           description:
-            'Technology products, Chainelle, BitQueens AI and skills programmes. This is where you build.',
+            'Build with the BitQueens Labs team — explore technology products, practical AI and professional skills programmes for you or your organisation.',
           cta: 'Explore Labs',
           href: '/innovations',
           itemsLabel: 'Inside the Labs',
           items: ['Chainelle', 'BitQueens AI', 'Skills programmes'],
+          preview: {
+            assurances: ['Clear scope, timeline & cost', 'No commitment to enquire'],
+            descriptions: [
+              'Our flagship technology product. Talk to the team about its fit for your project.',
+              'Practical AI tools and integrations for teams and organisations.',
+              'Build skills in blockchain, AI and Web3 design. Pricing on enquiry.',
+            ],
+            secondaryCta: {
+              label: 'Discuss your project — request a quote',
+              href: '/innovations#quote',
+            },
+          },
           /* The 5px bars on the closed spines, from Figma 268:279: brand
              orange, the blue, blush. */
           color: '#E8641C',
