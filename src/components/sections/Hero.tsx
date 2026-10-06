@@ -5,9 +5,16 @@ import { useId } from 'react';
 import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
 import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
-import type { HeroSection } from '@/lib/types';
+import type { HeroSection, ImpactStat } from '@/lib/types';
 import { interTight, neueMontreal } from '@/styles/fonts';
 import styles from './Hero.module.css';
+
+const impactIcons: Record<string, string> = {
+  'women trained': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M16 3a4 4 0 0 1 0 8 M22 21v-2a4 4 0 0 0-3-3.87 M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
+  'cohorts delivered': 'm2 9 10-5 10 5-10 5-10-5 M6 11v6c3 3 9 3 12 0v-6 M22 9v8',
+  'campus chapters': 'M3 21h18 M5 21V7l7-4 7 4v14 M9 21v-5h6v5 M9 8h.01 M15 8h.01 M9 12h.01 M15 12h.01',
+  'countries reached': 'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0 M3 12h18 M12 3c4 5 4 13 0 18 M12 3c-4 5-4 13 0 18',
+};
 
 /**
  * Hero — Figma 322:107 ("Homepage / Learners") and 322:153 ("/ Partners").
@@ -21,7 +28,7 @@ import styles from './Hero.module.css';
  * Client Component. The switch does not keep its own state: it sets the
  * page's audience, so a section further down can answer the same question.
  */
-export function Hero({ content }: { content: HeroSection }) {
+export function Hero({ content, stats }: { content: HeroSection; stats: ImpactStat[] }) {
   const { audience: id, setAudience } = useAudience();
   const active = Math.max(0, content.audiences.findIndex((a) => a.id === id));
   const audience = content.audiences[active];
@@ -57,6 +64,11 @@ export function Hero({ content }: { content: HeroSection }) {
             ))}
           </div>
 
+          <p className={styles.credibility}>
+            <span className={styles.credibilityDot} aria-hidden="true" />
+            Women-first tech education since 2023
+          </p>
+
           {/* Keyed on the audience so the entrance replays on every switch;
               React remounts the panel rather than mutating it in place. */}
           <div
@@ -83,6 +95,17 @@ export function Hero({ content }: { content: HeroSection }) {
               </Button>
             </div>
           </div>
+          <ul className={styles.trust} aria-label="BitQueens impact">
+            {stats.map((stat) => (
+              <li key={stat.label} className={styles.trustItem}>
+                <svg className={styles.trustIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d={impactIcons[stat.label]} />
+                </svg>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

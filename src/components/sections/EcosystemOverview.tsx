@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react';
 import { AcademyProof } from '@/components/sections/AcademyProof';
 import { Button } from '@/components/ui/Button';
 import { DottedGlobe } from '@/components/ui/DottedGlobe';
@@ -21,7 +20,6 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
       as="article"
       id={branch.id}
       className={`${styles.branch} ${comingSoon ? styles.upcoming : ''}`}
-      style={{ '--branch-color': branch.color } as CSSProperties}
     >
       <div className={styles.visual} aria-hidden="true">
         <span className={styles.visualNumber}>{String(index + 1).padStart(2, '0')}</span>

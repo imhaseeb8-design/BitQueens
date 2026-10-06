@@ -62,7 +62,7 @@
 .heroActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 32px; }
 .branches { padding-block: clamp(4rem, 7vw, 7rem); scroll-margin-top: 24px; }
 .activeBranches { display: grid; gap: 32px; margin-top: 48px; }
-.branch { display: grid; grid-template-columns: minmax(0, 420fr) minmax(0, 876fr); background: var(--bq-ecosystem-panel); border-top: 4px solid var(--branch-color); scroll-margin-top: 24px; }
+.branch { display: grid; grid-template-columns: minmax(0, 420fr) minmax(0, 876fr); background: var(--bq-ecosystem-panel); scroll-margin-top: 24px; }
 .visual {
   display: flex;
   flex-direction: column;

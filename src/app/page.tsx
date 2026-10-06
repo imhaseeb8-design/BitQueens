@@ -1,5 +1,4 @@
 import { AudienceOnly } from '@/components/audience/AudienceProvider';
-import { AcademyProof } from '@/components/sections/AcademyProof';
 import { Blog } from '@/components/sections/Blog';
 import { CampusChapters } from '@/components/sections/CampusChapters';
 import { Conference } from '@/components/sections/Conference';
@@ -25,8 +24,8 @@ import { homeLayout } from '@/content/layout';
  * /academy, where it used to live, its form interrupted a learner on the way
  * to the cohort application.
  *
- * The impact band restores the brief's homepage numbers. Partner logos stay
- * in the hero; the conference follows the impact band.
+ * Impact figures sit in the hero's trust bar. Partner logos close the hero;
+ * the conference follows directly.
  *
  * The sections used to carry numbered "NN / NAME" eyebrows and the order was
  * described by those numbers. They are gone, so nothing renumbers when a
@@ -38,9 +37,8 @@ import { homeLayout } from '@/content/layout';
 export default function HomePage() {
   return (
     <>
-      <Hero content={home.hero} />
-      <AcademyProof content={{headline:'Our impact so far.',stats:home.impact.stats}} showPartners={false} />
-      {/* Proof is hidden: the Impact figures above carry the same job. The
+      <Hero content={home.hero} stats={home.impact.stats} />
+      {/* Proof is hidden: the hero's impact figures carry the same job. The
           component and its content are kept — restore this line to bring the
           entity register back.
           <Proof content={home.proof} variant={homeLayout.proof} /> */}

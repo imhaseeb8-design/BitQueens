@@ -64,8 +64,7 @@
   align-items: center;
   max-width: var(--bq-max);
   margin: 0 auto;
-  /* 123 above the switch, 137 below the CTAs. */
-  padding: clamp(3rem, 8.542vw, 7.6875rem) var(--bq-gutter)
+  padding: clamp(3rem, 6.25vw, 5.625rem) var(--bq-gutter)
     clamp(3rem, 9.514vw, 8.5625rem);
   text-align: center;
 }
@@ -136,6 +135,68 @@
   }
 }
 
+.credibility {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  margin: 1.5rem 0 0;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid rgba(6, 80, 60, 0.14);
+  border-radius: 999px;
+  background: var(--bq-canvas);
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--bq-green-deep);
+}
+
+.credibilityDot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bq-green-deep);
+}
+
+/* Quiet, open impact figures below the hero actions. */
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--bq-inter-tight), sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--bq-green-deep);
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  white-space: nowrap;
+}
+
+.trustItem + .trustItem {
+  border-left: 1px solid rgba(6, 80, 60, 0.2);
+  padding-left: 1.25rem;
+}
+
+.trustItem strong {
+  font-weight: 600;
+}
+
+.trustIcon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.125rem;
+}
+
 /* -- the copy -------------------------------------------------------------- */
 
 .panel {
@@ -152,7 +213,7 @@
   /* The two headlines are both two lines; holding the taller one's height
      keeps the lede and the CTAs from stepping when the switch flips. */
   min-height: calc(2 * 1.1em);
-  margin: 17px 0 0;
+  margin: 28px 0 0;
   font-family: var(--bq-neue-montreal), sans-serif;
   /* 64 at the frame. */
   font-size: clamp(2.25rem, 4.444vw, 4rem);
@@ -310,5 +371,40 @@
 @media (prefers-reduced-motion: reduce) {
   .switch::before {
     transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .trust {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 0.875rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .trustItem + .trustItem {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .trustItem:nth-child(even) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .trustItem {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    white-space: normal;
+  }
+
+  .trustItem span {
+    flex-basis: 100%;
+    text-align: left;
+  }
+
+  .trust {
+    width: min(100%, 320px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
