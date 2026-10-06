@@ -121,3 +121,77 @@ input {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* -- page transitions ------------------------------------------------------
+ *
+ * Driven by <PageTransition> in the root layout. These pseudo-elements are
+ * document-level, so they cannot live in a CSS module.
+ *
+ * The site's motion contract applies here as everywhere: opacity and
+ * transform only, one easing curve, and reduced motion keeps the fade but
+ * drops the movement.
+ */
+
+/* The header and footer live in the layout and survive navigation, so the
+   root snapshot holds chrome that is identical on both sides. Letting the
+   browser cross-fade it anyway dims the header for a quarter-second on every
+   click, for no reason. Only the page slot animates. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(bq-page),
+::view-transition-new(bq-page) {
+  /* The browser's default crossfade would run both at once and show the two
+     pages through each other. Out first, then in, reads as one move. */
+  animation-duration: 260ms;
+  animation-timing-function: var(--bq-ease);
+  animation-fill-mode: both;
+}
+
+::view-transition-old(bq-page) {
+  animation-name: bqPageOut;
+}
+
+::view-transition-new(bq-page) {
+  animation-name: bqPageIn;
+  animation-delay: 120ms;
+}
+
+@keyframes bqPageOut {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes bqPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* The movement goes, the fade stays — a hard cut between two full pages is
+   harsher than a short dissolve, including for people who asked for less
+   motion. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(bq-page),
+  ::view-transition-new(bq-page) {
+    animation-duration: 140ms;
+    animation-delay: 0ms;
+    animation-name: bqPageFade;
+  }
+
+  ::view-transition-old(bq-page) {
+    animation-direction: reverse;
+  }
+
+  @keyframes bqPageFade {
+    from {
+      opacity: 0;
+    }
+  }
+}

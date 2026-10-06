@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { AudienceProvider } from '@/components/audience/AudienceProvider';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
+import { PageTransition } from '@/components/ui/PageTransition';
 import { SmoothScroll } from '@/components/ui/SmoothScroll';
 import { site } from '@/content/site';
 import './globals.css';
@@ -52,7 +53,9 @@ export default function RootLayout({
             scrolling to the partner sections. */}
         <AudienceProvider>
           <SiteHeader />
-          <main id="main">{children}</main>
+          <main id="main">
+            <PageTransition>{children}</PageTransition>
+          </main>
           <SiteFooter />
         </AudienceProvider>
       </body>
