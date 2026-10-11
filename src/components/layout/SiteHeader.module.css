@@ -11,7 +11,7 @@
   left: 0;
   width: 100%;
   aspect-ratio: 4508 / 818;
-  background: url('/navbar-backdrop.png') center top / 100% 100% no-repeat;
+  background: url('/navbar-backdrop.webp') center top / 100% 100% no-repeat;
   content: '';
   pointer-events: none;
 }

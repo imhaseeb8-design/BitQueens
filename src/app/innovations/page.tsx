@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { AcademyProof } from '@/components/sections/AcademyProof';
 import { InnovationsHero } from '@/components/sections/InnovationsHero';
 import { InnovationsHow } from '@/components/sections/InnovationsHow';
@@ -8,11 +8,7 @@ import { InnovationsSkills } from '@/components/sections/InnovationsSkills';
 import { innovations } from '@/content/innovations';
 import { academy } from '@/content/academy';
 
-export const metadata: Metadata = {
-  title: 'Innovations & Labs',
-  description:
-    'BitQueens Innovations & Labs — technology products like Chainelle and BitQueens AI, plus professional skills programmes. This is where you build.',
-};
+export const metadata = pageMetadata('/innovations', 'Innovations & Labs', 'BitQueens Innovations & Labs — technology products like Chainelle and BitQueens AI, plus professional skills programmes. This is where you build.');
 
 /**
  * /innovations — "this is where you build" (brief).

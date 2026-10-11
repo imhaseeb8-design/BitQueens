@@ -1,15 +1,11 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { ConferenceBoard } from '@/components/sections/ConferenceBoard';
 import { ConferenceInterest } from '@/components/sections/ConferenceInterest';
 import { ConferenceHero } from '@/components/sections/ConferenceHero';
 import { Faq } from '@/components/sections/Faq';
 import { conference } from '@/content/conference';
 
-export const metadata: Metadata = {
-  title: 'Events',
-  description:
-    'BitQueens events — the flagship conference and the gatherings in between, for women in emerging tech. See what is next and join the interest list.',
-};
+export const metadata = pageMetadata('/events', 'Events', 'BitQueens events — the flagship conference and the gatherings in between, for women in emerging tech. See what is next and join the interest list.');
 
 /**
  * /events — where BitQueens gathers.

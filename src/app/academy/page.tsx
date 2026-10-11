@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { AcademyCommunity } from '@/components/sections/AcademyCommunity';
 import { AcademyEnroll } from '@/components/sections/AcademyEnroll';
 import { Faq } from '@/components/sections/Faq';
@@ -12,11 +12,7 @@ import { AcademyTracks } from '@/components/sections/AcademyTracks';
 import { academy } from '@/content/academy';
 import { home } from '@/content/home';
 
-export const metadata: Metadata = {
-  title: 'Academy',
-  description:
-    'Join the BitQueens Academy — cohort programmes, campus chapters, and a free learning community for women, taught in plain language. No experience needed.',
-};
+export const metadata = pageMetadata('/academy', 'Academy', 'Join the BitQueens Academy — cohort programmes, campus chapters, and a free learning community for women, taught in plain language. No experience needed.');
 
 /**
  * /academy — "this is where you join" (brief).

@@ -5,9 +5,12 @@ import { SiteHeader } from '@/components/layout/SiteHeader';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { SmoothScroll } from '@/components/ui/SmoothScroll';
 import { site } from '@/content/site';
+import { absoluteUrl, jsonLd, siteUrl } from '@/lib/seo';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s — ${site.name}`,
@@ -44,6 +47,12 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd({
+          '@context': 'https://schema.org', '@graph': [
+            { '@type': 'Organization', '@id': absoluteUrl('/#organization'), name: site.name, url: absoluteUrl('/'), sameAs: site.social.map(link => link.href) },
+            { '@type': 'WebSite', '@id': absoluteUrl('/#website'), name: site.name, url: absoluteUrl('/'), publisher: { '@id': absoluteUrl('/#organization') } },
+          ],
+        }) }} />
         <SmoothScroll />
         <a href="#main" className="bq-skip-link">
           Skip to content

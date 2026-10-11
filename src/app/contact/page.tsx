@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { ContactForm } from '@/components/sections/ContactForm';
 import { Faq } from '@/components/sections/Faq';
 import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
@@ -10,11 +10,7 @@ import { mailboxes } from '@/content/site';
 import { bodySans, displaySans } from '@/styles/fonts';
 import styles from '@/components/sections/ContactPage.module.css';
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  description:
-    'Talk to BitQueens about learning, partnerships, events or booking Kristie as a speaker.',
-};
+export const metadata = pageMetadata('/contact', 'Contact', 'Talk to BitQueens about learning, partnerships, events or booking Kristie as a speaker.');
 
 /**
  * /contact — one centred column on the dotted map.

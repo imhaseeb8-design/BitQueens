@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { Faq } from '@/components/sections/Faq';
 import { JoinForm } from '@/components/sections/JoinForm';
 import { TrustRow } from '@/components/ui/TrustRow';
@@ -7,11 +7,7 @@ import { join } from '@/content/join';
 import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './page.module.css';
 
-export const metadata: Metadata = {
-  title: 'Join BitQueens',
-  description:
-    'Join the BitQueens Academy — free membership for women learning emerging technology across Africa and beyond.',
-};
+export const metadata = pageMetadata('/join', 'Join BitQueens', 'Join the BitQueens Academy — free membership for women learning emerging technology across Africa and beyond.');
 
 /**
  * /join — the single destination for every "Join" CTA on the site.

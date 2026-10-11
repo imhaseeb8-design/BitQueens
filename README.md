@@ -17,6 +17,9 @@ npx eslint src
 
 ## Deployment
 
+Search and sharing configuration, verification steps and remaining account tasks:
+[SEO setup](docs/SEO.md).
+
 Live at **https://bitqueens-website.vercel.app**.
 
 Vercel is connected to this repo's `main` branch: **pushing to `main` deploys

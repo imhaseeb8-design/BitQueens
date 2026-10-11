@@ -27,7 +27,7 @@
 .cardImage { aspect-ratio: 1.3; }
 .meta { color:var(--bq-green-deep); font-size:.8rem; margin:1.1rem 0; }
 .meta span { color:var(--bq-ink-66); }
-.card h2,.related h2 { color:var(--bq-green-deep); font:400 1.7rem/1.2 var(--bq-display),sans-serif; letter-spacing:-.025em; margin-bottom:1rem; }
+.card h2,.card h3,.related h2 { color:var(--bq-green-deep); font:400 1.7rem/1.2 var(--bq-display),sans-serif; letter-spacing:-.025em; margin-bottom:1rem; }
 .card:hover img,.feature:hover img { transform:scale(1.025); }
 .empty { padding:3rem; text-align:center; background:var(--bq-paper); border-radius:4px; }
 .empty button { border:0; background:none; cursor:pointer; color:var(--bq-green-deep); margin-top:1rem; }

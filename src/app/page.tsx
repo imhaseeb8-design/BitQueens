@@ -1,3 +1,5 @@
+import { pageMetadata } from '@/lib/seo';
+import { site } from '@/content/site';
 import { AudienceOnly } from '@/components/audience/AudienceProvider';
 import { Blog } from '@/components/sections/Blog';
 import { CampusChapters } from '@/components/sections/CampusChapters';
@@ -35,6 +37,8 @@ import { homeLayout } from '@/content/layout';
  * Ecosystem still has layout variants under review. Switch in
  * `src/content/layout.ts` — no component edits required.
  */
+export const metadata = pageMetadata('/', 'Learn emerging technology with BitQueens', site.description);
+
 export default function HomePage() {
   return (
     <>

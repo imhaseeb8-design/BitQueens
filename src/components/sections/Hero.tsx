@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Dithering, MeshGradient } from '@paper-design/shaders-react';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
 import { TrustRow } from '@/components/ui/TrustRow';
@@ -14,27 +14,37 @@ import styles from './Hero.module.css';
 
 const HERO_MESH_COLORS = ['#3A6C9F', '#06503C', '#E8641B', '#F3AFBC'];
 
-function usePrefersReducedMotion() {
-  const [reduceMotion, setReduceMotion] = useState(false);
-
+// Pause shader animation when decorative marks are off screen or the tab is hidden.
+function useShaderMotion() {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [animate, setAnimate] = useState(false);
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updatePreference = () => setReduceMotion(preference.matches);
-    updatePreference();
-    preference.addEventListener('change', updatePreference);
-    return () => preference.removeEventListener('change', updatePreference);
+    let inView = false;
+    const update = () => setAnimate(inView && !preference.matches && !document.hidden);
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      update();
+    });
+    if (ref.current) observer.observe(ref.current);
+    preference.addEventListener('change', update);
+    document.addEventListener('visibilitychange', update);
+    return () => {
+      observer.disconnect();
+      preference.removeEventListener('change', update);
+      document.removeEventListener('visibilitychange', update);
+    };
   }, []);
-
-  return reduceMotion;
+  return { ref, animate };
 }
 
 function HeroShaderMark() {
-  const reduceMotion = usePrefersReducedMotion();
+  const { ref, animate } = useShaderMotion();
 
   return (
-    <span className={`${styles.headlineMark} ${styles.headlineShaderMark}`} aria-hidden="true">
+    <span ref={ref} className={`${styles.headlineMark} ${styles.headlineShaderMark}`} aria-hidden="true">
       <MeshGradient
-        speed={reduceMotion ? 0 : 1}
+        speed={animate ? 1 : 0}
         scale={1.91}
         distortion={0.75}
         swirl={0.1}
@@ -55,12 +65,12 @@ function HeroShaderMark() {
 }
 
 function HeroDitheringMark() {
-  const reduceMotion = usePrefersReducedMotion();
+  const { ref, animate } = useShaderMotion();
 
   return (
-    <span className={`${styles.headlineMark} ${styles.headlineDitheringMark}`} aria-hidden="true">
+    <span ref={ref} className={`${styles.headlineMark} ${styles.headlineDitheringMark}`} aria-hidden="true">
       <Dithering
-        speed={reduceMotion ? 0 : 0.7}
+        speed={animate ? 0.7 : 0}
         shape="sphere"
         type="4x4"
         size={2}
