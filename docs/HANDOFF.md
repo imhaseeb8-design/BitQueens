@@ -146,7 +146,41 @@ rather they were gone.
 
 ---
 
-## 7. Quality gates already in place
+## 7. What comes next
+
+The site is built and every section works; what it needs now is **real
+content in place of the stand-ins**, and that arrives as BitQueens grows.
+
+As you run cohorts, partner with organisations and gather results, send the
+material over and I will put it on the site:
+
+- **Logos of companies and universities you have worked with** — they join
+  the row on the homepage and the Ecosystem page.
+- **Photographs** — cohorts, sessions, campus chapters, events, and a
+  portrait of Kristie. Every image slot on the site is already shaped and
+  waiting for one.
+- **Updated figures** — women trained, cohorts delivered, chapters,
+  countries. These sit in one place and take a minute to change.
+- **Member stories and quotes** — with the person's permission to be named.
+  These replace the invented member card in section 2.
+- **Real events and programme details** — dates, venues, speakers, tracks,
+  so the placeholders can come out.
+- **Kristie's own bio and a pull quote** in her words.
+- **A brand icon**, if you would rather the browser-tab mark were something
+  other than the "B" currently drawn from the wordmark.
+
+**How to send it.** Anything is fine — a shared folder, an email, a
+document. For logos, the original vector file (`.svg` or `.ai`) or a PNG
+with a transparent background works best; for photographs, the largest
+version you have, unedited. A line saying where each piece belongs is all
+the briefing needed.
+
+There is no deadline on any of this. The site reads as finished today, and
+each piece makes it truer as it arrives.
+
+---
+
+## 8. Quality gates already in place
 
 - Every push runs TypeScript and ESLint in GitHub Actions. A red check means
   read the failure before assuming the site is broken.
