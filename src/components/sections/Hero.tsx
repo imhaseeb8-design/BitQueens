@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { MeshGradient } from '@paper-design/shaders-react';
+import { Dithering, MeshGradient } from '@paper-design/shaders-react';
 import { useEffect, useId, useState } from 'react';
 import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
@@ -14,7 +14,7 @@ import styles from './Hero.module.css';
 
 const HERO_MESH_COLORS = ['#3A6C9F', '#06503C', '#E8641B', '#F3AFBC'];
 
-function HeroShaderMark() {
+function usePrefersReducedMotion() {
   const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
@@ -24,6 +24,12 @@ function HeroShaderMark() {
     preference.addEventListener('change', updatePreference);
     return () => preference.removeEventListener('change', updatePreference);
   }, []);
+
+  return reduceMotion;
+}
+
+function HeroShaderMark() {
+  const reduceMotion = usePrefersReducedMotion();
 
   return (
     <span className={`${styles.headlineMark} ${styles.headlineShaderMark}`} aria-hidden="true">
@@ -43,6 +49,25 @@ function HeroShaderMark() {
         height={717}
         unoptimized
         className={styles.headlineShaderGlyph}
+      />
+    </span>
+  );
+}
+
+function HeroDitheringMark() {
+  const reduceMotion = usePrefersReducedMotion();
+
+  return (
+    <span className={`${styles.headlineMark} ${styles.headlineDitheringMark}`} aria-hidden="true">
+      <Dithering
+        speed={reduceMotion ? 0 : 0.7}
+        shape="sphere"
+        type="4x4"
+        size={2}
+        scale={1}
+        colorBack="#00000000"
+        colorFront="#234F3E"
+        className={styles.headlineDithering}
       />
     </span>
   );
@@ -134,7 +159,7 @@ export function Hero({
               delay={0.06}
               marks={{
                 portrait: <HeroShaderMark />,
-                room: <Image src="/conference-audience.png" alt="" width={96} height={96} className={styles.headlineMark} aria-hidden="true" />,
+                room: <HeroDitheringMark />,
               }}
             />
             <p className={styles.body}>{audience.body}</p>

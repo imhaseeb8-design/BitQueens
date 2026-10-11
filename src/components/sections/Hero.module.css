@@ -277,6 +277,18 @@
   pointer-events: none;
 }
 
+.headlineDitheringMark {
+  overflow: hidden;
+  background: #fff;
+}
+
+.headlineDithering {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50%;
+  background: #fff;
+}
+
 .headline {
   /* The lines are set in content now, so this only has to be wide enough not
      to break them again. */
