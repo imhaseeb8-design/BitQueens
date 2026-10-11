@@ -167,8 +167,25 @@
 }
 
 .entities,
-.copyright {
+.copyright,
+.credit {
   margin: 0;
+}
+
+.credit {
+  color: var(--bq-ink-50);
+}
+
+.creditLink {
+  color: var(--bq-ink-66);
+  text-decoration: none;
+  border-bottom: 1px solid var(--bq-ink-14);
+  transition: color 300ms var(--bq-ease), border-color 300ms var(--bq-ease);
+}
+
+.creditLink:hover {
+  color: var(--bq-green-deep);
+  border-bottom-color: var(--bq-green-deep);
 }
 
 .legalSep {

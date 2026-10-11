@@ -110,6 +110,19 @@ export function SiteFooter() {
             <span className={styles.legalDot} aria-hidden="true">·</span>
             {site.legal.jurisdiction}
           </p>
+          {/* The build credit. Quieter than the legal text beside it — it is
+              an attribution, not a term. */}
+          <p className={styles.credit}>
+            Made by{' '}
+            <a
+              href="https://geexweb.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.creditLink}
+            >
+              geexweb.com
+            </a>
+          </p>
         </div>
       </div>
 
