@@ -37,7 +37,7 @@ import { homeLayout } from '@/content/layout';
  * Ecosystem still has layout variants under review. Switch in
  * `src/content/layout.ts` — no component edits required.
  */
-export const metadata = pageMetadata('/', 'Learn emerging technology with BitQueens', site.description);
+export const metadata = pageMetadata('/', 'BitQueens — Learn emerging technology', site.description);
 
 export default function HomePage() {
   return (
