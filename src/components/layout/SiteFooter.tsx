@@ -108,6 +108,8 @@ export function SiteFooter() {
           <p className={styles.copyright}>
             © {new Date().getFullYear()} {site.name}
             <span className={styles.legalDot} aria-hidden="true">·</span>
+            {site.legal.rights}
+            <span className={styles.legalDot} aria-hidden="true">·</span>
             {site.legal.jurisdiction}
           </p>
           {/* The build credit. Quieter than the legal text beside it — it is

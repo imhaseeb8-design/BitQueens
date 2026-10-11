@@ -26,6 +26,7 @@ export interface SiteConfig {
   secondaryCta: NavLink;
   legal: {
     entities: string[];
+    rights: string;
     jurisdiction: string;
   };
   social: NavLink[];

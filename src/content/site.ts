@@ -35,6 +35,7 @@ export const site: SiteConfig = {
       'BitQueens Limited RC 9557101',
       'Bit-Queens Innovations Limited RC 9627471',
     ],
+    rights: 'All rights reserved',
     jurisdiction: 'Registered in Nigeria',
   },
 
