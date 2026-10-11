@@ -508,11 +508,11 @@
 }
 
 @media (max-width: 640px) {
-  /* Keep the first shader with “Learn emerging”; start “tech.” below it. */
-  .panel[data-audience='learn'] .headlineLead > span:last-of-type {
-    display: block;
-    width: fit-content;
-    margin-inline: auto;
+  /* The three authored lines are desktop line breaks. At this width they
+     re-flow as one sentence, so “Built for” runs on from “tech.” instead of
+     leaving it orphaned on a line of its own. */
+  .panel[data-audience='learn'] .headlineLine {
+    display: inline;
   }
 
   .trust {

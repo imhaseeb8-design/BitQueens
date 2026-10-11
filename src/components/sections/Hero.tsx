@@ -155,7 +155,7 @@ export function Hero({
               as="h1"
               text={audience.headlineLines.join('\n')}
               className={styles.headline}
-              lineClassNames={audience.headlineLines.map((_, index) => `${styles.headlineLine} ${index === 0 ? styles.headlineLead : ''}`)}
+              lineClassNames={audience.headlineLines.map(() => styles.headlineLine)}
               delay={0.06}
               marks={{
                 portrait: <HeroShaderMark />,

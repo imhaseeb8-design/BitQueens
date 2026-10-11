@@ -47,3 +47,12 @@
   height: 17px;
   margin-right: 0.125rem;
 }
+
+/* Stacked one per line on a phone, the dividers sit above and below each
+   other rather than between the figures — a column of stray rules. */
+@media (max-width: 640px) {
+  .trustItem + .trustItem {
+    border-left: 0;
+    padding-left: 0;
+  }
+}

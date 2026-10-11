@@ -278,6 +278,14 @@
 }
 
 @media (max-width: 620px) {
+  /* The right-aligned intro reads as a second column of the desktop head.
+     Once the head is one column it belongs on the same left edge as
+     everything else. */
+  .introBlock {
+    align-items: flex-start;
+    text-align: left;
+  }
+
   .headline {
     font-size: clamp(1.25rem, 6.6vw, 1.75rem);
   }
