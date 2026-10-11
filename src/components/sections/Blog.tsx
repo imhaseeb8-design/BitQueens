@@ -2,16 +2,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import type { BlogSection } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './Blog.module.css';
 
 /**
- * Blog — Figma 295:748.
+ * Blog — Figma 295:748, restyled.
  *
- * The hero's two-line headline treatment (sans over serif, 86px pitch) with
- * the "read our latest" link tucked against its bottom-right, then four story
- * cards: square artwork, tag pills, title. The artwork PNGs carry their own
- * arrow badge.
+ * It ran the hero's own two-line headline treatment at 48px for a list of
+ * four links, which made the blog the loudest thing on the page. Now one
+ * line at section-heading size, with the "read our latest" link beside it.
+ *
+ * The posts are cards on a panel ground rather than bare artwork: image,
+ * title, and the excerpt and date when a post has them. Both are empty for
+ * every post today, so the card ends at the title — nothing is invented to
+ * fill it, and the layout already holds the room for when they arrive.
  */
 export function Blog({ content }: { content: BlogSection }) {
   if (content.posts.length === 0) return null;
@@ -20,15 +24,13 @@ export function Blog({ content }: { content: BlogSection }) {
     <section
       id="blog"
       aria-label="Stories and perspectives"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.head}>
           <h2 className={styles.headline}>
-            <span className={styles.headlineLine}>{content.headline}</span>
-            <span className={`${styles.headlineLine} ${styles.serif}`}>
-              {content.headlineSerif}
-            </span>
+            {content.headline}{' '}
+            <span className={styles.headlineMuted}>{content.headlineMuted}</span>
           </h2>
           <Button
             href={content.cta.href}
@@ -55,15 +57,19 @@ export function Blog({ content }: { content: BlogSection }) {
                 )}
               </span>
 
-              <span className={styles.tags}>
-                {(post.tags ?? [post.category]).map((tag) => (
-                  <span key={tag} className={styles.tag}>
-                    {tag}
-                  </span>
-                ))}
-              </span>
+              <span className={styles.body}>
+                <span className={styles.tags}>
+                  {(post.tags ?? [post.category]).map((tag) => (
+                    <span key={tag} className={styles.tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </span>
 
-              <h3 className={styles.title}>{post.title}</h3>
+                <h3 className={styles.title}>{post.title}</h3>
+                {post.excerpt && <span className={styles.excerpt}>{post.excerpt}</span>}
+                {post.date && <span className={styles.date}>{post.date}</span>}
+              </span>
             </Link>
           ))}
         </div>

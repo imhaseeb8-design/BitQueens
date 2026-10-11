@@ -1,1 +1,8 @@
-.page { font-family:var(--bq-inter-tight),sans-serif; }
+.page { background: var(--bq-canvas); }
+
+/* The figures belong to the story above them, so the pair runs as one block
+   rather than two sections a full gap apart. The panel brings its own
+   bottom padding; only the top is pulled in. */
+.figures > section {
+  padding-top: var(--bq-section-y-tight);
+}

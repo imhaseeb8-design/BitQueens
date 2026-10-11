@@ -6,8 +6,31 @@ import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { ConferenceBoard as ConferenceBoardContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './ConferenceBoard.module.css';
+
+function EventMetaIcon({ name }: { name: 'calendar' | 'clock' | 'place' }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+      {name === 'calendar' ? (
+        <>
+          <rect x="2.25" y="3.25" width="11.5" height="10.5" rx="2" />
+          <path d="M2.25 6.5h11.5M5.5 1.75v2.5M10.5 1.75v2.5" />
+        </>
+      ) : name === 'clock' ? (
+        <>
+          <circle cx="8" cy="8" r="6" />
+          <path d="M8 4.5V8l2.5 1.5" />
+        </>
+      ) : (
+        <>
+          <path d="M13 6.9c0 3.5-5 7.35-5 7.35S3 10.4 3 6.9a5 5 0 0 1 10 0Z" />
+          <circle cx="8" cy="6.8" r="1.8" />
+        </>
+      )}
+    </svg>
+  );
+}
 
 /**
  * The editions board: the list on the left, the selected edition on the right.
@@ -34,7 +57,7 @@ export function ConferenceBoard({
     <section
       id="editions"
       aria-label="Conference editions"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <SectionHead
@@ -102,9 +125,9 @@ export function ConferenceBoard({
               <h3 className={styles.name}>{selected.name}</h3>
 
               <div className={styles.when}>
-                <span className={styles.whenDate}>{selected.date}</span>
-                <span className={styles.whenTime}>{selected.time}</span>
-                <span className={styles.whenFormat}>{selected.format}</span>
+                <span className={styles.whenDate}><EventMetaIcon name="calendar" />{selected.date}</span>
+                <span className={styles.whenTime}><EventMetaIcon name="clock" />{selected.time}</span>
+                <span className={styles.whenPlace}><EventMetaIcon name="place" />{selected.location}</span>
               </div>
 
               <p className={styles.aboutLabel}>About the edition</p>
@@ -152,7 +175,8 @@ export function ConferenceBoard({
               {selected.cta && (
                 <Button
                   href={selected.cta.href}
-                  variant="quiet"
+                  variant="green"
+                  size="compact"
                   className={styles.detailCta}
                 >
                   {selected.cta.label}

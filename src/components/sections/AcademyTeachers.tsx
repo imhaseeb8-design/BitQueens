@@ -4,7 +4,7 @@ import { DottedGlobe } from '@/components/ui/DottedGlobe';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { AcademyTeachers as AcademyTeachersContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyTeachers.module.css';
 
 /**
@@ -27,7 +27,7 @@ export function AcademyTeachers({ content }: { content: AcademyTeachersContent }
     <section
       id="teachers"
       aria-label="Who you learn from"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <DottedGlobe className={styles.globe} />
       <span className={styles.globeOverlay} aria-hidden="true" />

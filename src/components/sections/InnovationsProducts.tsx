@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { InnovationsProducts as InnovationsProductsContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './InnovationsProducts.module.css';
 
 /** Product studio: a green Chainelle feature beside BitQueens AI. */
@@ -15,7 +15,7 @@ export function InnovationsProducts({
     <section
       id="products"
       aria-label="Products"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.heading}>

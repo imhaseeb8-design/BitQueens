@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { AcademyCommunity as AcademyCommunityContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyCommunity.module.css';
 
 /**
@@ -15,17 +15,37 @@ import styles from './AcademyCommunity.module.css';
  * homepage's Conference section is: the blue should read as a block on the
  * page, not as the page changing colour.
  *
- * The left column is the ask and nothing else — one filled button, one quiet
- * link under it. The right column is what membership actually gets you: the
- * checklist, and under its last rule, when the live sessions run. The
- * sessions used to sit in the left column, where they read as two more
- * competing CTAs; they are not ways in, they are part of what you get, so
- * they belong on this side.
+ * The left column is the ask and nothing else — one filled button, and only
+ * one. It used to carry a WhatsApp link under it as well, which is a second
+ * door out of the page's primary conversion band. The right column is what
+ * membership actually gets you: the checklist, and under it, when the live
+ * sessions run. The sessions are not ways in, they are part of what you
+ * get, so they belong on this side.
  *
  * Both sessions run at the same hour, so the time is printed once and the
  * days carry the links — rather than repeating a three-timezone string twice.
  * If the times ever diverge the per-row form comes back automatically.
  */
+/** The same 14px tick the ecosystem and partner lists use. */
+function TickIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M3 8.4 6.2 11.6 13 4.8" />
+    </svg>
+  );
+}
+
 export function AcademyCommunity({
   content,
 }: {
@@ -41,7 +61,7 @@ export function AcademyCommunity({
     <section
       id="community"
       aria-label="The free community"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.block}>
         <div className={styles.card}>
@@ -58,16 +78,6 @@ export function AcademyCommunity({
               <Button href={content.cta.href} variant="primary" onDark arrow={false}>
                 {content.cta.label}
               </Button>
-              {content.secondaryCta && (
-                <a
-                  href={content.secondaryCta.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.secondary}
-                >
-                  {content.secondaryCta.label} →
-                </a>
-              )}
             </Reveal>
           </div>
 
@@ -76,7 +86,7 @@ export function AcademyCommunity({
               {content.includes.map((item, i) => (
                 <Reveal key={item} as="li" delay={i * 80} className={styles.item}>
                   <span className={styles.tick} aria-hidden="true">
-                    ✓
+                    <TickIcon />
                   </span>
                   <span className={styles.text}>{item}</span>
                 </Reveal>

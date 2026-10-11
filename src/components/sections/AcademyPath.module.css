@@ -71,9 +71,23 @@
   gap: 0 clamp(1.5rem, 4vw, 4rem);
   padding: clamp(1.5rem, 2.36vw, 2.125rem) 24px clamp(1.5rem, 2.36vw, 2.125rem) 0;
   border-bottom: 1px solid var(--bq-ink-14);
+  /* The shift used to be animated as `padding`, which relays out the row and
+     re-wraps the description on every frame — that is what made moving
+     between rows feel like it was catching. The ground and the rule animate
+     here; the content moves with a transform on the children below, which
+     the compositor can do on its own. The hairline goes with the fill so it
+     does not sit as a grey line across the green. */
   transition:
-    background-color 400ms var(--bq-ease),
-    padding 400ms var(--bq-ease);
+    background-color 320ms var(--bq-ease),
+    border-color 320ms var(--bq-ease);
+}
+
+/* The travel. Slightly slower than the colour so the row reads as settling
+   into place rather than snapping. */
+.row > * {
+  transition:
+    transform 420ms var(--bq-ease),
+    color 320ms var(--bq-ease);
 }
 
 /* Nudged up so it sits on the title's cap height rather than its line box. */
@@ -85,19 +99,19 @@
 
 .title {
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: clamp(1.5rem, 2.08vw, 1.875rem);
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.025em;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
   transition: color 400ms var(--bq-ease);
 }
 
 .desc {
   margin: 0;
   max-width: 46ch;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1.0625rem;
   line-height: 1.55;
   color: var(--bq-ink-80);
@@ -108,20 +122,31 @@
 @media (hover: hover) and (pointer: fine) {
   .row:hover {
     background: var(--bq-green-deep);
-    padding-left: 24px;
-    padding-right: 0;
+    border-bottom-color: transparent;
+    --mark-color: var(--bq-green-mint);
+  }
+
+  .row:hover > * {
+    transform: translateX(24px);
   }
 
   .row:hover .title {
     color: var(--bq-canvas);
   }
 
-  .row:hover {
-    --mark-color: var(--bq-green-mint);
-  }
-
   .row:hover .desc {
     color: var(--bq-green-mint);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row,
+  .row > * {
+    transition: none;
+  }
+
+  .row:hover > * {
+    transform: none;
   }
 }
 
@@ -134,7 +159,7 @@
 }
 
 .ctaRow .cta {
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1.0625rem;
   font-weight: 500;
   line-height: 1.2;

@@ -163,7 +163,6 @@ export function EnrollForm({
       >
         {status === 'submitting' ? 'Submitting…' : content.submitLabel}
       </button>
-      <p className={form.status}>This opens a draft in your email app. Review and send it to complete your request.</p>
     </form>
   );
 }

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { InnovationsSkills as InnovationsSkillsContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './InnovationsSkills.module.css';
 
 /** A programme catalogue with level, duration and enquiry details. */
@@ -14,7 +14,7 @@ export function InnovationsSkills({
     <section
       id="skills"
       aria-label="Skills programmes"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <SectionHead

@@ -1,7 +1,7 @@
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { AcademyStories as AcademyStoriesContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyStories.module.css';
 
 /**
@@ -22,7 +22,7 @@ export function AcademyStories({
   return (
     <section
       aria-label="Learner stories"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <SectionHead

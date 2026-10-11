@@ -1,15 +1,37 @@
-import { AcademyProof } from '@/components/sections/AcademyProof';
+import { LearnerValue } from '@/components/sections/LearnerValue';
 import { Button } from '@/components/ui/Button';
 import { DottedGlobe } from '@/components/ui/DottedGlobe';
 import { DotFieldMark, DotGlobeMark, NetworkMark, TrackMark } from '@/components/ui/PathMarks';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import { ecosystem } from '@/content/ecosystem';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { home } from '@/content/home';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './EcosystemOverview.module.css';
 
 const marks = [DotGlobeMark, NetworkMark, TrackMark, DotFieldMark];
 type Branch = (typeof ecosystem.branches)[number];
+
+/** The 14px tick beside each offering. Same stroke weight and caps as the
+ *  CTA arrow (Figma 344:30), so the marks read as one hand. */
+function TickIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M3 8.4 6.2 11.6 13 4.8" />
+    </svg>
+  );
+}
 
 function BranchCard({ branch, index }: { branch: Branch; index: number }) {
   const Mark = marks[index];
@@ -21,10 +43,10 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
       id={branch.id}
       className={`${styles.branch} ${comingSoon ? styles.upcoming : ''}`}
     >
+      {/* The mark alone. The number repeated the eyebrow beside it, and the
+          headline was a third name for a branch the title already names. */}
       <div className={styles.visual} aria-hidden="true">
-        <span className={styles.visualNumber}>{String(index + 1).padStart(2, '0')}</span>
         <Mark className={styles.mark} />
-        <p className={styles.visualCaption}>{branch.headline}</p>
       </div>
       <div className={styles.branchBody}>
         <div className={styles.branchMeta}>
@@ -41,7 +63,12 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
         <div className={styles.offerings}>
           <p className={styles.offeringsLabel}>{comingSoon ? 'What is planned' : branch.itemsLabel}</p>
           <ul>
-            {branch.items.map((item) => <li key={item}>{item}</li>)}
+            {branch.items.map((item) => (
+              <li key={item}>
+                <TickIcon />
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
         {!comingSoon && (
@@ -59,11 +86,10 @@ export function EcosystemOverview() {
   const { hero, branches, connection } = ecosystem;
 
   return (
-    <div className={`${styles.page} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}>
+    <div className={`${styles.page} ${displaySans.variable} ${bodySans.variable}`}>
       <section className={styles.hero} aria-label="The BitQueens ecosystem">
         <DottedGlobe className={styles.globe} />
         <div className={`${styles.inner} ${styles.heroInner}`}>
-          <Reveal><p className={styles.eyebrow}>{hero.eyebrow}</p></Reveal>
           <Reveal delay={80}>
             <h1 className={styles.heroTitle}>{hero.headline}<span>{hero.headlineSerif}</span></h1>
           </Reveal>
@@ -75,8 +101,18 @@ export function EcosystemOverview() {
         </div>
       </section>
 
+      {/* The homepage's figures panel, not the green `AcademyProof` band:
+          the same four numbers, in the layout the homepage settled on, so
+          the two pages read as one site. The heading is hidden — the hero
+          directly above already names the section. Its CTA goes to the
+          Academy rather than `/ecosystem`, which is this page. */}
       <div id="impact">
-        <AcademyProof content={ecosystem.proof} />
+        <LearnerValue
+          content={home.learnerValue}
+          stats={ecosystem.proof.stats}
+          hideHeading
+          cta={{ label: 'Explore the Academy', href: '/academy' }}
+        />
       </div>
 
       <section id="branches" className={`${styles.inner} ${styles.branches}`} aria-label="Our four branches">

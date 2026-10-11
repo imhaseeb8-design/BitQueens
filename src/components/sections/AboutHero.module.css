@@ -1,102 +1,98 @@
+/**
+ * The About hero. Same construction as the Academy, Conference and
+ * Innovations heroes: centred copy on the dotted map, at the page's own
+ * container, with the site's headline and button scale.
+ */
+
 .hero {
-  padding: clamp(4rem, 8vw, 6.5rem) 1.5rem;
+  position: relative;
+  overflow: clip;
+  padding-block: clamp(3rem, 6vw, 5.5rem) var(--bq-section-y);
   background: var(--bq-canvas);
 }
 
+.map {
+  position: absolute;
+  top: clamp(2rem, 5vw, 4rem);
+  left: 50%;
+  width: min(1100px, 92vw);
+  height: auto;
+  aspect-ratio: 2048 / 1153;
+  transform: translateX(-50%);
+  opacity: 0.1;
+  pointer-events: none;
+  mask-image: linear-gradient(#000, transparent 88%);
+}
+
 .inner {
-  max-width: 1180px;
+  position: relative;
+  box-sizing: border-box;
+  max-width: var(--bq-max);
   margin: 0 auto;
-  display: grid;
-  gap: 3rem;
-  align-items: center;
-}
-
-@media (min-width: 900px) {
-  .inner {
-    grid-template-columns: 1.05fr 0.95fr;
-  }
-}
-
-.eyebrow {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--bq-green-deep);
-  margin: 0 0 1rem;
+  padding: 0 var(--bq-gutter);
+  text-align: center;
 }
 
 .headline {
-  font-size: clamp(2.5rem, 5.5vw, 4rem);
-  line-height: 1.05;
-  margin: 0 0 1.25rem;
-  color: var(--bq-ink);
+  display: flex;
+  flex-direction: column;
+  max-width: min(100%, 1040px);
+  margin: 0 auto;
+  font-family: var(--bq-display), sans-serif;
+  /* The 56 every other page hero runs. */
+  font-size: clamp(2.125rem, 3.89vw, 3.5rem);
   font-weight: 400;
-}
-
-.serif {
-  display: block;
-  font-style: normal;
-  font-weight: 500;
+  line-height: 1.1;
   color: var(--bq-green-deep);
 }
 
+.line { display: block; }
+
 .body {
-  font-size: 1.125rem;
-  line-height: 1.7;
+  max-width: min(100%, 680px);
+  margin: 16px auto 0;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: var(--bq-t-subhead);
+  line-height: 1.5;
   color: var(--bq-ink-80);
-  margin: 0 0 2rem;
-  max-width: 34rem;
+  text-wrap: pretty;
 }
 
 .ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.9rem;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 32px;
 }
 
-.primary,
-.secondary {
-  display: inline-block;
-  padding: 0.9rem 1.9rem;
-  border-radius: 999px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+/* The homepage hero's pair, to the pixel. */
+.ctas .primaryCta,
+.ctas .secondaryCta {
+  min-height: 0;
+  padding: 12px 20px;
+  border-radius: 100px;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.19;
+  letter-spacing: 0;
 }
 
-.primary {
+.ctas .primaryCta {
+  border: 0;
   background: var(--bq-green-deep);
-  color: #fff;
-  box-shadow: 0 6px 20px rgba(46, 125, 87, 0.25);
+  color: #fafaf8;
 }
 
-.primary:hover {
-  transform: translateY(-2px);
-}
-
-.secondary {
+.ctas .secondaryCta {
+  border: 1px solid var(--bq-green-deep);
   background: transparent;
   color: var(--bq-green-deep);
-  border: 2px solid var(--bq-green-deep);
 }
 
-.secondary:hover {
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .ctas .secondaryCta:hover {
+    background: var(--bq-green-tint);
+  }
 }
-
-.art {
-  margin: 0;
-  border-radius: 1.5rem;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(31, 41, 55, 0.12);
-}
-
-.art img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.headline { font-family:var(--bq-neue-montreal),sans-serif; letter-spacing:-.035em; }
-.serif { font-family:var(--bq-instrument-serif),Georgia,serif; }

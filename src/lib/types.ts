@@ -97,7 +97,11 @@ export interface Pillar {
     stats?: Stat[];
     assurances?: string[];
     descriptions: string[];
-    secondaryCta: NavLink;
+    secondaryCta?: NavLink;
+    /** Keep this preview as a simple, unnumbered list. */
+    hideItemNumbers?: boolean;
+    /** Match the compact primary button in the hero. */
+    heroButton?: boolean;
   };
 }
 
@@ -107,6 +111,7 @@ export interface EcosystemSection {
   headlineMuted: string;
   intro: string;
   pillars: Pillar[];
+  invitation?: { text: string; cta: NavLink };
 }
 
 /** The accordion is written twice, once per side of the hero's switch. */
@@ -139,6 +144,16 @@ export interface PathByAudience {
   partner: PathSection;
 }
 
+export interface LearnerValueSection {
+  eyebrow: string;
+  headline: string;
+  intro: string;
+  benefits: { title: string; description: string }[];
+  impactHeading: string;
+  /** The way out of the figures panel, on the feature cell. */
+  impactCta: { label: string; href: string };
+}
+
 export interface ImageSlot {
   /** Path under /public once real photography lands. Empty renders a slot. */
   src?: string;
@@ -166,7 +181,6 @@ export interface ConferenceDetail {
 }
 
 export interface ConferenceSection {
-  eyebrow: string;
   /** Heading for the weekly-training block under the details. */
   sessionsLabel: string;
   /** The weekly live trainings — the canonical copy of this list. */
@@ -175,6 +189,11 @@ export interface ConferenceSection {
   headlineLines: string[];
   body: string;
   details: ConferenceDetail[];
+  /**
+   * The homepage teaser's one-line facts, each with a mark. `details` stays
+   * for the long form; this is the condensed row that replaced it there.
+   */
+  meta: { icon: 'calendar' | 'place'; value: string }[];
   cta: NavLink;
   /**
    * The photograph the frame layers over the artwork. Empty today: the asset
@@ -207,8 +226,13 @@ export interface FounderSection {
 export interface PartnerTier {
   title: string;
   description: string;
-  /** The 4px bar along the top of the tile (Figma 293:458). */
-  color: Hex;
+  /**
+   * What the partner gets back. The section listed only what each kind of
+   * partner could give — four ways to be asked for something, and no reason
+   * to say yes. Every line here is answerable from what BitQueens already
+   * runs; none of it promises an outcome.
+   */
+  gain: string;
 }
 
 export interface PartnersSection {
@@ -233,9 +257,11 @@ export interface Post {
 
 /** Produced by BitQueens Media, but visitors only ever see "Blog". */
 export interface BlogSection {
-  /** The two-line headline: sans, then the serif line (Figma 295:746). */
+  /** One line, at section-heading size — not the hero treatment it had. */
   headline: string;
-  headlineSerif: string;
+  /** The tail of that line, set at 70%. Same two-part rule as the others,
+   *  except this heading runs on one line, so the split is by phrase. */
+  headlineMuted: string;
   cta: NavLink;
   posts: Post[];
 }
@@ -296,10 +322,13 @@ export interface HeroAudience {
    * One string, not authored lines: the frame (322:127) lets the headline
    * wrap inside a 684 measure rather than breaking it by hand.
    */
-  headline: string;
+  /** Set as explicit lines: the browser broke the single string
+   *  mid-sentence once the copy grew. */
+  headlineLines: string[];
   body: string;
   primaryCta: NavLink;
-  secondaryCta: NavLink;
+  /** Optional: the learner hero runs a single CTA. */
+  secondaryCta?: NavLink;
 }
 
 export interface Collaborator {
@@ -397,6 +426,7 @@ export interface ConferencePage {
   hero: ConferenceHeroSection;
   board: ConferenceBoard;
   closing: ConferenceClosingSection;
+  faq: FaqSection;
 }
 
 export interface HomePage {
@@ -408,6 +438,7 @@ export interface HomePage {
   impact: ImpactSection;
   proof: ProofSection;
   ecosystem: EcosystemByAudience;
+  learnerValue: LearnerValueSection;
   path: PathByAudience;
   conference: ConferenceSection;
   founder: FounderSection;
@@ -724,8 +755,9 @@ export interface AboutHero {
   body: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
-  /** Generated abstract brand artwork — never photography of people. */
-  art: ImageSlot;
+  /** Generated abstract brand artwork — never photography of people.
+   *  The hero no longer renders it; `story.image` carries it now. */
+  art?: ImageSlot;
 }
 
 export interface AboutStory {
@@ -735,6 +767,8 @@ export interface AboutStory {
   paragraphs: string[];
   /** Link to the BitQueens story video on YouTube. */
   videoCta?: NavLink;
+  /** Sits in the column beside the prose. Omit and the prose runs alone. */
+  image?: ImageSlot;
 }
 
 export interface AboutVisionMission {
@@ -777,6 +811,7 @@ export interface AboutFounder {
   eyebrow: string;
   headline: string;
   headlineSerif: string;
+  storyLines: string[];
   name: string;
   role: string;
   /** Short paragraphs, in her voice where the facts allow. */

@@ -44,7 +44,7 @@
 }
 
 .ctaRow .cta {
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1.0625rem;
   font-weight: 500;
   line-height: 1.2;
@@ -64,6 +64,7 @@
 
 .card {
   box-sizing: border-box;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -79,30 +80,20 @@
   outline-offset: -2px;
 }
 
-.numeral {
-  margin: 0;
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.5rem;
-  line-height: 1;
-  color: var(--bq-blue-slate);
-  font-variant-numeric: tabular-nums;
-  transition: color 400ms var(--bq-ease);
-}
-
 .title {
-  margin: 22px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  margin: 0;
+  font-family: var(--bq-display), sans-serif;
   font-size: clamp(1.375rem, 1.74vw, 1.5rem);
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.025em;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
   transition: color 400ms var(--bq-ease);
 }
 
 .desc {
   margin: 14px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: var(--bq-ink-80);
@@ -120,10 +111,14 @@
   margin: auto 0 0;
   padding-top: 16px;
   border-top: 1px solid var(--bq-ink-14);
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.875rem;
+  font-family: var(--bq-body-sans), sans-serif;
+  /* The level, length, price and intake are what a reader is choosing on,
+     so they stop being the card's small print: up a step, in full ink, and
+     the price set as a filled pill rather than a caption. */
+  font-size: 0.9375rem;
+  font-weight: 500;
   line-height: 1.4;
-  color: var(--bq-ink-50);
+  color: var(--bq-ink);
   transition:
     color 400ms var(--bq-ease),
     border-color 400ms var(--bq-ease);
@@ -136,9 +131,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 10px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.875rem;
+  margin: 12px 0 0;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
   line-height: 1.4;
   color: var(--bq-green-deep);
   transition: color 400ms var(--bq-ease);
@@ -147,11 +143,13 @@
 /* A date nobody has set is not the same kind of fact as one that is. */
 .pending {
   font-style: italic;
-  color: var(--bq-ink-45);
+  font-weight: 400;
+  color: var(--bq-ink-50);
   transition: color 400ms var(--bq-ease);
 }
 
 .arrow {
+  display: inline-flex;
   flex: none;
   opacity: 0;
   transform: translateX(-6px);
@@ -162,12 +160,17 @@
 
 .access {
   flex: none;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--bq-green-tint);
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--bq-green-deep);
-  transition: color 400ms var(--bq-ease);
+  transition:
+    background-color 400ms var(--bq-ease),
+    color 400ms var(--bq-ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -179,13 +182,18 @@
     color: var(--bq-canvas);
   }
 
-  .card:hover .numeral,
   .card:hover .desc,
   .card:hover .foot,
-  .card:hover .access,
   .card:hover .intake,
   .card:hover .pending {
     color: var(--bq-green-mint);
+  }
+
+  /* The pill keeps a light ground on the green card, so mint text on it is
+     all but invisible — it goes dark instead. */
+  .card:hover .access {
+    background: var(--bq-cream);
+    color: var(--bq-green-deep);
   }
 
   .card:hover .foot {

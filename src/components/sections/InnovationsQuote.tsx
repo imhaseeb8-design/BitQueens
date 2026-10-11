@@ -3,7 +3,7 @@ import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { InnovationsQuote as InnovationsQuoteContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyEnroll.module.css';
 
 /** Academy form layout with the Labs enquiry fields and copy. */
@@ -16,7 +16,7 @@ export function InnovationsQuote({
     <section
       id="quote"
       aria-label="Request a quote"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <GlobalDotMap className={styles.ground} />
       <div className={styles.inner}>

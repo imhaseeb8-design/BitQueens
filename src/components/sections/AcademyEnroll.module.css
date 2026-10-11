@@ -46,6 +46,6 @@
   max-width: 42rem;
   margin: clamp(2.5rem, 4.5vw, 4rem) auto 0;
   padding: clamp(28px, 3vw, 44px);
-  border-radius: 20px;
+  border-radius: 4px;
   background: var(--bq-paper);
 }

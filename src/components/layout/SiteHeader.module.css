@@ -1,182 +1,270 @@
 .header {
   position: relative;
-  z-index: 20;
-  background: var(--bq-canvas);
+  z-index: 30;
+  height: var(--bq-header-height);
+  background: transparent;
 }
 
-/* Figma 260:245: an 81px bar, 72 in from the left and 47 from the right,
-   the wordmark then the links, and the green button held at the far right. */
+.header::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 4508 / 818;
+  background: url('/navbar-backdrop.png') center top / 100% 100% no-repeat;
+  content: '';
+  pointer-events: none;
+}
+
 .inner {
-  box-sizing: border-box;
-  max-width: var(--bq-max);
+  position: relative;
+  width: min(733px, calc(100% - 2 * var(--bq-gutter)));
+  height: 100%;
   margin: 0 auto;
-  padding: 0 clamp(1rem, 0.5rem + 2.5vw, 2.9375rem) 0 var(--bq-gutter);
-  min-height: clamp(60px, 5.6vw, 81px);
+}
+
+.surface {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  width: min(733px, calc(100% - 2 * var(--bq-gutter)));
+  border: 1px solid rgba(26, 26, 26, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  /* Written alone, with no -webkit- twin and no @supports guard: Lightning
+     CSS silently drops the pair and the blur never ships. */
+  backdrop-filter: blur(14px);
+  transform: translateX(-50%);
+}
+
+.bar {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
+  gap: 18px;
+  min-height: 60px;
+  padding: 0 9px 0 24px;
 }
 
 .logo {
+  display: flex;
   flex: none;
-  display: block;
+  align-items: center;
 }
 
 .logo img {
-  /* 120 × 24 at the frame (node 260:346). */
-  height: clamp(19px, 1.667vw, 24px);
-  width: auto;
+  width: 120px;
+  height: auto;
 }
 
-/* Keep the menu and Join button together on the right of the wordmark. */
-.nav {
+.desktopNav {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
   margin-left: auto;
-  gap: clamp(1rem, 0.5rem + 1.39vw, 1.75rem);
 }
 
-.navLink {
-  position: relative;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: var(--bq-t-meta);
-  letter-spacing: 0.02em;
-  padding: 6px 0;
-  transition: color 300ms var(--bq-ease);
-}
-
-/* Underline grows from the left rather than fading in — it reads as the link
-   acknowledging the pointer, not as a second element appearing. */
-.navLink::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 300ms var(--bq-ease);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .navLink:hover {
-    color: var(--bq-green-deep);
-  }
-
-  .navLink:hover::after {
-    transform: scaleX(1);
-  }
-}
-
-/* A 146 × 42 outlined button with 4px corners (node 322:120). It was a solid
-   green block; the 322:107 homepage lightens it so the hero's own primary CTA
-   is the only filled green thing above the fold. */
-.cta {
-  margin-left: clamp(1.5rem, 3.264vw, 2.9375rem);
-  flex: none;
+.navItem {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 146px;
-  min-height: 42px;
-  padding: 0 20px;
-  border: 1px solid var(--bq-green-deep);
-  border-radius: 4px;
-  background: transparent;
+  min-height: 36px;
+  padding: 0 13px;
+  border-radius: 999px;
   color: var(--bq-green-deep);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.875rem;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  text-decoration: none;
   white-space: nowrap;
-  transition:
-    background-color 300ms var(--bq-ease),
-    color 300ms var(--bq-ease),
-    transform var(--bq-dur-press) var(--bq-ease);
 }
 
-.ctaLabel {
+.desktopCta,
+.mobileCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid var(--bq-green-deep);
+  border-radius: 999px;
+  background: var(--bq-canvas);
+  color: var(--bq-green-deep);
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: transform var(--bq-dur-press) var(--bq-ease);
+}
+
+.flipLabel {
   position: relative;
+  display: block;
+  overflow: hidden;
+  line-height: 1.2;
+  perspective: 300px;
 }
 
-.cta:active {
+.flipFront,
+.flipBack {
+  display: block;
+  backface-visibility: hidden;
+  transition: transform 280ms var(--bq-ease);
+}
+
+.flipBack {
+  position: absolute;
+  inset: 0;
+  transform: translateY(110%) rotateX(-70deg);
+  transform-origin: center top;
+}
+
+.desktopCta:active,
+.mobileCta:active {
   transform: scale(0.97);
 }
 
+.mobileToggle,
+.mobilePanelClip {
+  display: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  .cta:hover {
-    background: var(--bq-green-deep);
-    color: var(--bq-canvas);
+  .navItem:hover .flipFront,
+  .desktopCta:hover .flipFront {
+    transform: translateY(-110%) rotateX(70deg);
+  }
+
+  .navItem:hover .flipBack,
+  .desktopCta:hover .flipBack {
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+.navItem:focus-visible .flipFront,
+.desktopCta:focus-visible .flipFront {
+  transform: translateY(-110%) rotateX(70deg);
+}
+
+.navItem:focus-visible .flipBack,
+.desktopCta:focus-visible .flipBack {
+  transform: translateY(0) rotateX(0);
+}
+
+@media (max-width: 900px) {
+  .inner {
+    width: calc(100% - 2 * var(--bq-gutter));
+  }
+
+  .surface {
+    top: max(0px, calc((var(--bq-header-height) - 60px) / 2));
+    width: calc(100% - 2 * var(--bq-gutter));
+  }
+
+  .bar {
+    padding: 0 14px 0 20px;
+  }
+
+  .desktopNav,
+  .desktopCta {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    margin-left: auto;
+    padding: 0 10px;
+    border: 0;
+    background: transparent;
+    color: var(--bq-green-deep);
+    font-family: var(--bq-body-sans), sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .mobileToggle span {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .mobilePanelClip {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    max-height: calc(100dvh - var(--bq-header-height) - 24px);
+    overflow-y: auto;
+    border: 1px solid var(--bq-ink-14);
+    border-radius: 18px;
+    background: var(--bq-canvas);
+    box-shadow: 0 20px 50px rgba(6, 80, 60, 0.13);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 180ms var(--bq-ease), transform 180ms var(--bq-ease), visibility 180ms;
+  }
+
+  .surface[data-mobile-open='true'] .mobilePanelClip {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .mobilePanel {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 20px 20px;
+  }
+
+  .mobileLink {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    border-bottom: 1px solid var(--bq-ink-14);
+    color: var(--bq-green-deep);
+    font-family: var(--bq-body-sans), sans-serif;
+    font-size: 1rem;
+  }
+
+  .mobileCta {
+    margin-top: 18px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cta:active {
+  .mobilePanelClip {
+    transition-duration: 0.01ms;
+  }
+
+  .flipFront,
+  .flipBack,
+  .navItem:hover .flipFront,
+  .navItem:hover .flipBack,
+  .desktopCta:hover .flipFront,
+  .desktopCta:hover .flipBack,
+  .navItem:focus-visible .flipFront,
+  .navItem:focus-visible .flipBack,
+  .desktopCta:focus-visible .flipFront,
+  .desktopCta:focus-visible .flipBack {
+    transition: none;
     transform: none;
   }
-}
 
-/* -- mobile -------------------------------------------------------------- */
-
-.toggle {
-  display: none;
-  margin-left: auto;
-  min-height: 44px;
-  padding: 10px 0;
-  background: none;
-  border: none;
-  font-size: var(--bq-t-meta);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-@media (max-width: 1080px) {
-  .nav,
-  .cta {
+  .flipBack {
     display: none;
   }
 
-  .toggle {
-    display: block;
-  }
-
-  .nav {
-    margin-left: 0;
-  }
-
-  .open .nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    order: 3;
-    flex-basis: 100%;
-    margin-top: 1.5rem;
-  }
-
-  .open .navLink {
-    padding: 14px 0;
-    border-top: 1px solid var(--bq-ink-14);
-    font-size: var(--bq-t-body);
-  }
-
-  .open .cta {
-    display: flex;
-    order: 4;
-    flex-basis: 100%;
-    /* In the stacked menu the button is a full-width block. */
-    margin: 1.5rem 0 0;
-    padding: 16px 24px;
-    width: auto;
-  }
-
-  .inner {
-    flex-wrap: wrap;
-    padding-right: var(--bq-gutter);
-    padding-bottom: 0;
-  }
-
-  .open {
-    padding-bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  .desktopCta:active,
+  .mobileCta:active {
+    transform: none;
   }
 }

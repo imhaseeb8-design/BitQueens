@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PartnerLink } from '@/components/ui/PartnerLink';
-import { UpdatesRequest } from '@/components/sections/UpdatesRequest';
 import { SocialIcon, type SocialName } from '@/components/ui/SocialIcon';
 import { footerLinks, mailboxes, site } from '@/content/site';
-import { interTight } from '@/styles/fonts';
+import { bodySans } from '@/styles/fonts';
 import styles from './SiteFooter.module.css';
 
 const SOCIAL_ICONS: Record<string, SocialName> = {
@@ -28,9 +27,8 @@ export function SiteFooter() {
   ];
 
   return (
-    <footer className={`${styles.footer} ${interTight.variable}`}>
+    <footer className={`${styles.footer} ${bodySans.variable}`}>
       <div className={styles.inner}>
-        <UpdatesRequest />
         <div className={styles.grid}>
           <div className={styles.brand}>
             <Link href="/" className={styles.logo} aria-label={`${site.name} home`}>

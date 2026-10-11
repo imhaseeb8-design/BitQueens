@@ -47,6 +47,7 @@
 
 .card {
   position: relative;
+  border-radius: 4px;
   display: grid;
   grid-template-columns: minmax(0, 420fr) minmax(0, 876fr);
   margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
@@ -109,7 +110,7 @@
 
 .name {
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: clamp(1.75rem, 2.64vw, 2.375rem);
   font-weight: 400;
   line-height: 1.15;
@@ -119,7 +120,7 @@
 
 .role {
   margin: 10px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   line-height: 1.4;
   color: rgba(250, 250, 248, 0.9);
@@ -128,7 +129,7 @@
 .bio {
   max-width: 54ch;
   margin: 22px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
   line-height: 1.6;
   color: rgba(250, 250, 248, 0.9);
@@ -151,7 +152,7 @@
 }
 
 .factLabel {
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.6875rem;
   font-weight: 600;
   line-height: 1.2;
@@ -162,7 +163,7 @@
 
 .factValue {
   margin: 8px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: clamp(1.0625rem, 1.25vw, 1.25rem);
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -174,7 +175,7 @@
    button brings its own. */
 .body .cta {
   margin-top: 30px;
-  border-radius: 4px;
+  border-radius: 999px;
   color: var(--bq-green-deep);
 }
 

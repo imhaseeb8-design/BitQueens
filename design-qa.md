@@ -1,62 +1,43 @@
-# Ecosystem partners section QA
+# How it works design QA
+
+- Source visual truth: `/var/folders/ft/p4hd_9710dgg_t8qsl48q4800000gn/T/TemporaryItems/NSIRD_screencaptureui_0HTsm6/Screenshot 2026-10-11 at 12.15.50 AM.png`; split-panel detail clarified by `/Users/am/Downloads/Group 2147226284.png`
+- Implementation: `http://localhost:3002/#path` (in-app browser screenshots captured inline during this task; the browser did not expose a filesystem screenshot path)
+- Source pixels: 2360 × 1738; reference displayed at 1825 × 1344. Implementation viewport: 1543 × 1034 CSS pixels at device scale factor 2, with an additional 390 × 844 mobile check. Layout was compared by region because the reference uses different product copy and imagery.
+- State: learner, Join selected for visual comparison; Learn and Build interactions checked. Partner content also checked.
+
+**Findings**
+
+No actionable P0, P1, or P2 issues remain. The implementation follows the source's two-column heading, three progress tabs, and one shared rounded image/text panel. The image also has four rounded corners inside that panel. It uses BitQueens green and the existing Join/Learn/Build copy. The reference's product UI image and blue accents were intentionally replaced by existing BitQueens landscape artwork and site tokens.
+
+**Fidelity checks**
+
+- Typography: display heading, right-aligned muted intro, step labels, and panel copy retain the reference hierarchy while using the site's fonts.
+- Spacing and layout: desktop columns and panel proportions match the reference's structure; the panel stacks on mobile without horizontal overflow.
+- Color: white canvas, muted text, green selection, and pale green panel follow the BitQueens palette.
+- Image: existing landscape artwork renders sharply and fills the left panel without distortion. Each step has its own image.
+- Copy: existing BitQueens learner and partner content is preserved; the section eyebrow and link identify the new layout.
+- Link icon: the down-left arrow reuses the shared BitQueens CTA arrow geometry and sits before the link label.
+
+**Interaction checks**
+
+- Clicking Learn selects its content and image.
+- ArrowRight from Learn focuses and selects Build.
+- Switching to Partners shows Align, Co-create, and Deliver; switching back restores learner content.
+- TypeScript and ESLint pass. The page renders after a reload; transient module-resolution errors logged while the files were being replaced did not persist in the rendered page.
+
+**Comparison history**
+
+The first browser view after hot reload showed unstyled new markup because the CSS module had not refreshed. A page reload loaded the CSS. The user then clarified that the split panel is one outer card, so the inter-column gap was removed and the card received one outer radius. A subsequent request specified four rounded image corners; the image pane now has its own radius inside the shared card. Desktop and mobile browser checks confirmed the resulting CSS.
+
+**Open questions**
+
+None.
+
+**Implementation checklist**
+
+- [x] Match the reference section structure.
+- [x] Add an image to the left panel.
+- [x] Preserve learner and partner content.
+- [x] Check desktop, mobile, mouse, and keyboard states.
 
 final result: passed
-
-Source: /Users/am/.codex/generated_images/01a107bd-5ece-7762-a21c-1e67f21ffef2/exec-07ff7029-21b8-4900-9ab4-6085670bc6b3.png
-Implementation: /tmp/bitqueens-partners-desktop.png
-Combined comparison: /tmp/bitqueens-partners-comparison.png
-Mobile evidence: /tmp/bitqueens-partners-mobile.png and /tmp/bitqueens-partners-mobile-cards.png
-Context capture: /tmp/bitqueens-partners-final.png
-
-## Comparison
-Desktop CSS viewport 1440 × 768. Source image 1717 × 916, normalized to 1440 × 768; implementation 1440 × 768 at 1×. Both show the ecosystem partnership section, resting state. Combined input places source and implementation beside each other. User-requested “For partners” label adds space above the heading. Mobile verified at 390 × 844, with a single column of partner categories and invitation following them.
-
-## Findings
-No actionable P0/P1/P2 differences remain.
-
-- Typography: existing Neue Montreal, Instrument Serif and Inter Tight retained. Heading hierarchy, serif emphasis and readable body match the concept. Minor invitation-title line wrapping differs naturally with the actual font; acceptable P3.
-- Layout: full-width introduction above invitation and 2×2 matrix, aligned panel heights, 16px gutters, square panels. Added label is intentional. Mobile text and cards stay inside the viewport; no horizontal overflow.
-- Colors: existing brand tokens retained, including actual deep green and each tier’s accent. The mock’s incidental raster shading is intentionally omitted; panels use flat brand fills.
-- Assets: no new image assets required. Existing shared Button and arrow reused.
-- Copy: all four categories, descriptions, intro, invitation and CTA preserved; only requested label added.
-
-## Verification
-Contact CTA has the existing mailto address and partnership subject. No browser console errors observed. TypeScript, ESLint and git diff whitespace checks pass. Homepage keeps the default stacked Partners layout. The initial hot-refresh screenshot showed stale CSS; a full reload resolved it before comparison, with no source fix required.
-
-## Checklist
-- [x] Selected third concept implemented on ecosystem route
-- [x] Simple label before heading
-- [x] Desktop combined visual comparison
-- [x] Mobile layout and overflow check
-- [x] Contact link checked
-- [x] Local preview kept open
-
-## Follow-up polish
-P3: invitation-title wrapping varies slightly from the generated image with production fonts. No blocking issues.
-
-# Innovations & Labs selected section redesign
-
-final result: passed
-
-## Sources and evidence
-User-selected screenshots: Screenshot 2026-10-06 at 12.54.53 AM (process), 12.55.06 AM (products), 12.55.16 AM (programmes), and 12.55.25 AM (proposal), from the supplied TemporaryItems paths.
-Desktop captures: /tmp/labs-how-final.png, /tmp/labs-products-final.png, /tmp/labs-skills-final.png, /tmp/labs-quote.png.
-Combined source/implementation comparisons: /tmp/labs-qa-1.png through /tmp/labs-qa-4.png. All four combined images were opened and reviewed.
-Mobile captures: /tmp/labs-skills-mobile.png and /tmp/labs-quote-mobile.png.
-Viewport: desktop 1480 × 1034, density 1; mobile 390 × 844. Source crops were 1060 × 454, 1092 × 764, 1036 × 600, and 1204 × 446. Each was uniformly resized to 740px wide beside a 740px-wide cropped implementation section. Source crops have differing context padding; compare content hierarchy rather than screenshot edges. Focused captures were used because a full-page screenshot makes small text illegible.
-State: desktop resting state; mobile programme catalogue and invalid-form state.
-
-## Comparison history
-First pass identified process heading displaced vertically by a stretched grid item, an orange product CTA instead of green, and a narrow programme intro. Fixed grid alignment to start, conditional green button variant, and full-width header/intro. Corrected proposal heading to the selected serif treatment. Final captures show these corrections.
-
-## Fidelity surfaces
-- Typography: production Neue Montreal, Instrument Serif and Inter Tight retained. Section hierarchy and serif emphasis match selection. Existing shared heading scale preserved; generated screenshot text is not an exact font rendering.
-- Layout: process title left, numbered ruled steps right; contrasting two-panel products; three-column programme table; green proposal band with cream form panel. All four compositions match selected directions. Production spacing uses brand gutters and readable body type rather than scaling screenshot pixels.
-- Colors: existing green, cream, orange, blue and rule tokens reused. No mock raster texture added.
-- Assets: no new raster assets needed. Existing product checklist and Button retained.
-- Content: existing copy, three programme rows, metadata, prices on enquiry, fields and all anchors retained.
-
-## Verification and limitations
-No horizontal overflow at desktop or mobile widths. Catalogue stacks vertically on narrow screens. Empty form submit produces four labelled invalid fields. Browser console returned no errors. Product and enquiry links target #quote. Quote form remains an existing local preview with no network submission; backend delivery was outside scope. Final TypeScript, ESLint and whitespace checks passed.
-
-No actionable P0/P1/P2 differences remain. Optional P3: source screenshots have subtly different font rendering and incidental texture, intentionally replaced by production typography and flat brand fills.

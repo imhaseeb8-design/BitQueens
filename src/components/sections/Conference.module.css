@@ -1,12 +1,10 @@
 /**
  * Conference — Figma 268:149 ("Conference story and image").
  *
- * A 1296 × 520 card inside the gutters, split 656 / 640. In the left column,
- * measured from the card: eyebrow y39; headline y82, 52px over 60; body y225,
- * 18px over 27; hairline y313; detail keys y349, values y369; CTA y426,
- * 55 tall; 39 below it, so the block sits centred (274:319 rebalanced the
- * earlier 45/33). Everything is inset 52 from the left. The photo fills the
- * right column edge to edge.
+ * A card inside the gutters, split 656 / 640, condensed from the frame's
+ * 520px band: the headline drops 52 -> 36, the gaps roughly halve, and the
+ * hairline-plus-key/value block becomes one row of marked facts. The photo
+ * still fills the right column edge to edge.
  */
 
 .section {
@@ -14,6 +12,7 @@
   --bq-cream: var(--bq-canvas);
   position: relative;
   z-index: 1;
+  padding-block: var(--bq-section-y);
   background: var(--bq-canvas);
 }
 
@@ -26,6 +25,9 @@
 
 .card {
   display: grid;
+  /* 18px, matching the Path stage — the two full-width cards on this page
+     should round the same amount. The small stat cards sit at 12. */
+  border-radius: 18px;
   grid-template-columns: minmax(0, 656fr) minmax(0, 640fr);
   overflow: hidden;
   background: var(--bq-green-deep);
@@ -41,8 +43,7 @@
   justify-content: center;
   min-width: 0;
   /* 39 / 56 / 39 / 52 at the frame. */
-  padding: clamp(1.75rem, 2.708vw, 2.4375rem) clamp(1.5rem, 3.889vw, 3.5rem)
-    clamp(1.75rem, 2.708vw, 2.4375rem) clamp(1.5rem, 3.611vw, 3.25rem);
+  padding: clamp(1.75rem, 2.4vw, 2.25rem) clamp(1.5rem, 3.2vw, 2.875rem);
 }
 
 .head {
@@ -51,25 +52,15 @@
   align-items: flex-start;
 }
 
-.eyebrow {
-  margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.8125rem;
-  line-height: 1.2;
-  letter-spacing: 0.138em;
-  text-transform: uppercase;
-  color: var(--bq-green-mint);
-}
-
 .headline {
   display: flex;
   flex-direction: column;
-  margin: 27px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  /* 52 at the frame. */
-  font-size: clamp(2rem, 3.611vw, 3.25rem);
+  margin: 0;
+  font-family: var(--bq-display), sans-serif;
+  /* 52 at the frame; the teaser does not need to shout it twice. */
+  font-size: clamp(1.625rem, 2.5vw, 2.25rem);
   font-weight: 400;
-  line-height: 1.154;
+  line-height: 1.14;
   letter-spacing: -0.035em;
   color: var(--bq-canvas);
 }
@@ -79,63 +70,46 @@
 }
 
 .body {
-  max-width: 530px;
-  margin: 23px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  max-width: 44ch;
+  margin: 14px 0 0;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
   line-height: 1.5;
   color: var(--bq-canvas);
   text-wrap: pretty;
 }
 
-/* -- the detail row ------------------------------------------------------- */
+/* -- the meta row -------------------------------------------------------- */
 
-/* 34 from the body to the hairline, 35 from the hairline to the keys. */
-.details {
-  width: 100%;
-  max-width: 550px;
-  margin-top: 34px;
-}
-
-.detailRule {
-  height: 1px;
-  background: var(--bq-green-mint);
-}
-
-/* The second column starts 266 in (x318 against the 52 inset). */
-.detailRow {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin: 35px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-}
-
-.detail {
+/* The hairline and the key/value pairs were a table for one fact. One row of
+   marked facts says the same in a quarter of the height, and wraps to two
+   lines rather than restacking. */
+.metaRow {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 20px;
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-  min-width: 0;
-}
-
-.detailKey {
-  font-size: 0.6875rem;
-  line-height: 1.2;
-  letter-spacing: 0.145em;
-  text-transform: uppercase;
-  color: var(--bq-green-mint);
-}
-
-.detailValue {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.2;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.3;
   color: var(--bq-canvas);
+}
+
+.meta svg {
+  flex: none;
+  color: var(--bq-green-mint);
 }
 
 /* -- the CTA -------------------------------------------------------------- */
 
 .ctaRow {
-  margin-top: 34px;
+  margin-top: 24px;
 }
 
 /* On top of the shared Button: the frame's green label, the 4px corner and
@@ -144,12 +118,12 @@
    prefix outranks the Button module's `.onDark.primary`. */
 .card .ctaRow .cta {
   min-height: 0;
-  padding: 17px 24px;
+  padding: 13px 20px;
   border: 0;
-  border-radius: 4px;
+  border-radius: 999px;
   color: var(--bq-green-deep);
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 1rem;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1.3;
   letter-spacing: 0;
@@ -157,7 +131,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .card .ctaRow .cta:hover {
-    background: var(--bq-green-mint);
+    background: var(--bq-cream);
   }
 }
 
@@ -190,18 +164,11 @@
     aspect-ratio: 4 / 3;
   }
 
-  .headline {
-    margin-top: 20px;
+  .metaRow {
+    margin-top: 18px;
   }
 
-  .details,
   .ctaRow {
-    margin-top: 28px;
-  }
-
-  .detailRow {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-top: 24px;
+    margin-top: 22px;
   }
 }

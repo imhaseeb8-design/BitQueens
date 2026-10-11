@@ -15,10 +15,9 @@ interface ButtonProps {
   onDark?: boolean;
   /**
    * `compact` is the 48px button the Figma frames specify (16/34 padding,
-   * 14px label). `default` is the older 56px scale the rest of the site still
-   * uses. The two are deliberately visible as separate values rather than one
-   * being quietly changed: aligning the whole site on `compact` is a call to
-   * make on purpose, not a side effect of one section.
+   * 14px label) and is now **the default everywhere** — the homepage's
+   * buttons are the site's buttons. `default` is the older 56px scale, kept
+   * only so a one-off can opt back into it; nothing does today.
    */
   size?: Size;
   /**
@@ -30,19 +29,53 @@ interface ButtonProps {
   selection?: FormSelection;
 }
 
+/**
+ * The CTA arrow — Figma 344:30 (`akar-icons:arrow`), 18×18, 1.7 stroke,
+ * round caps and joins.
+ *
+ * Inlined rather than used as the saved `public/cta-arrow.svg` file for one
+ * reason: the export hardcodes `stroke="white"`, which is right on the green
+ * button and invisible on the secondary and quiet ones. `currentColor` lets
+ * the one mark serve every variant. The geometry is the exported path,
+ * unaltered.
+ */
+export function CtaArrow() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M15.0006 8.99998L3.00059 8.99998M9.75059 3.74998L15.0006 8.99998L9.75059 14.25"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function Button({
   href,
   children,
   variant = 'primary',
-  size = 'default',
+  size = 'compact',
   onDark = false,
   arrow = true,
   className = '',
   selection,
 }: ButtonProps) {
-  // `quiet` has no box to clip, and its arrow is a pseudo-element, so none of
-  // the crossing-arrow machinery below applies to it.
-  const showArrow = arrow && variant !== 'quiet';
+  const showArrow = arrow;
+  // `quiet` has no box to clip, so it gets the single trailing arrow rather
+  // than the crossing pair — but it is the same SVG mark as every other
+  // variant, not a text character.
+  const crossing = showArrow && variant !== 'quiet';
 
   const classes = [
     styles.base,
@@ -71,16 +104,16 @@ export function Button({
    * and cut it in half. Those use the underline instead - see `.link` below.
    */
   const contents = (
-      <span className={`${styles.shift} ${showArrow ? styles.hasArrow : ''}`.trim()}>
-        {showArrow && (
+      <span className={`${styles.shift} ${crossing ? styles.hasArrow : ''}`.trim()}>
+        {crossing && (
           <span className={`${styles.arrow} ${styles.arrowLead}`} aria-hidden="true">
-            →
+            <CtaArrow />
           </span>
         )}
         <span className={styles.label}>{children}</span>
         {showArrow && (
           <span className={`${styles.arrow} ${styles.arrowTrail}`} aria-hidden="true">
-            →
+            <CtaArrow />
           </span>
         )}
       </span>

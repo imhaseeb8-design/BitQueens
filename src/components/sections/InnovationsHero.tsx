@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/Button';
 import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import { Reveal } from '@/components/ui/Reveal';
 import type { InnovationsHero as InnovationsHeroContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyHero.module.css';
 import labsStyles from './InnovationsHero.module.css';
 
@@ -11,7 +11,7 @@ export function InnovationsHero({ content }: { content: InnovationsHeroContent }
   return (
     <section
       aria-label="BitQueens Innovations and Labs"
-      className={`${styles.section} ${labsStyles.hero} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${labsStyles.hero} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.band}>
         <GlobalDotMap className={styles.map} />
@@ -19,7 +19,6 @@ export function InnovationsHero({ content }: { content: InnovationsHeroContent }
 
         <div className={styles.inner}>
           <Reveal variant="fade">
-            <p className={`${styles.eyebrow} ${labsStyles.eyebrow}`}>{content.eyebrow}</p>
           </Reveal>
 
           <Reveal delay={80} variant="fade">

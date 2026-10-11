@@ -2,8 +2,8 @@
  * Place — "Your place is here", then the two doors (Figma 297:850).
  *
  * At 1440: the globe 640 across, centred, 9% like the ecosystem's; the line
- * in Instrument Serif caps at 180px, which sets it to the 1296 content width,
- * centred on the globe's equator. The cards: two at 636 × 376 on a 24 gap,
+ * sits within the 1296 content width, centred on the globe's equator.
+ * The cards: two at 636 × 376 on a 24 gap,
  * padded 33 / 38 / 29; eyebrow 12px, title 43px over 50, body 18px over 27
  * at 548 wide, CTA 53 tall.
  *
@@ -20,7 +20,7 @@
  */
 
 .section {
-  --line-size: clamp(2.5rem, 12.5vw, 11.25rem);
+  --line-size: clamp(1.75rem, 9.25vw, 8.325rem);
   --globe-h: clamp(260px, 44.444vw, 640px);
   --cards-h: 376px;
   /* The cap height is ~0.7em; half of it less the 17px overlap. */
@@ -28,7 +28,7 @@
   position: relative;
   background: var(--bq-canvas);
   color: var(--bq-green-deep);
-  padding-top: clamp(2rem, 4.167vw, 3.75rem);
+  padding-top: var(--bq-section-y);
 }
 
 /* -- the pinned line ------------------------------------------------------ */
@@ -60,10 +60,10 @@
 
 .headline {
   position: relative;
+  max-width: 100%;
   margin: 0;
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  /* 180 at the frame, which sets "YOUR PLACE IS HERE" to the 1296 content
-     width. Fluid, so it stays one line and stays edge to edge. */
+  font-family: var(--bq-display), sans-serif;
+  /* Geist is wider than the original serif; size the line to fit the stage. */
   font-size: var(--line-size);
   font-weight: 400;
   line-height: 1;
@@ -99,6 +99,7 @@
 
 .card {
   position: relative;
+  border-radius: 18px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -114,14 +115,18 @@
   color: var(--bq-canvas);
 }
 
+/* The site's panel white, not the cream. It needs the hairline the cream
+   did not: #fbfbfb on a #ffffff canvas has no edge of its own, and this card
+   sits beside a solid green one that does. */
 .card[data-tone='cream'] {
-  background: var(--bq-cream);
+  border: 1px solid var(--bq-ink-14);
+  background: var(--bq-ecosystem-panel);
   color: var(--bq-green-deep);
 }
 
 .eyebrow {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.25;
@@ -142,7 +147,7 @@
   display: flex;
   flex-direction: column;
   margin: 32px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   /* 43 over 50 at the frame. */
   font-size: clamp(1.75rem, 2.986vw, 2.6875rem);
   font-weight: 400;
@@ -158,8 +163,8 @@
 .body {
   max-width: 548px;
   margin: 28px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: var(--bq-t-subhead);
   line-height: 1.5;
   text-wrap: pretty;
 }
@@ -177,8 +182,8 @@
   min-height: 0;
   padding: 16px 22px;
   border: 0;
-  border-radius: 4px;
-  font-family: var(--bq-inter-tight), sans-serif;
+  border-radius: 999px;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.3;
@@ -192,7 +197,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .card[data-tone='green'] .cta:hover {
-    background: var(--bq-green-mint);
+    background: var(--bq-cream);
   }
 }
 

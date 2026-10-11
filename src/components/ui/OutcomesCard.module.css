@@ -1,0 +1,34 @@
+/**
+ * Only what the outcomes card adds to `MemberCard`'s chrome: the ticked
+ * list. Everything else comes from that module.
+ */
+
+/* No wax seal, so no room needs reserving at the top. */
+.card {
+  gap: 0.875rem;
+  padding-top: 1.5rem;
+}
+
+.list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--bq-ink);
+}
+
+.item svg {
+  flex: none;
+  color: var(--bq-green-deep);
+}

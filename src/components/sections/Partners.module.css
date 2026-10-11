@@ -50,13 +50,13 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   /* 74 at the frame. */
-  font-size: clamp(2.75rem, 5.139vw, 4.625rem);
+  font-size: clamp(2.75rem, 5.139vw, 3rem);
   font-weight: 400;
   line-height: 1.108;
   letter-spacing: -0.0405em;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
 }
 
 .headlineLine {
@@ -65,43 +65,67 @@
 }
 
 /* 83 over 90 at the frame; pitched 80, two tighter than the first line's box. */
+/* The second part of a two-part heading, at 50% — the same rule SectionHead
+   and the EcosystemAccordion follow. */
 .serif {
   margin-top: -2px;
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.1216em;
-  line-height: 1.0843;
-  letter-spacing: 0;
+  font-family: var(--bq-display), sans-serif;
+  opacity: 0.5;
 }
 
 .body {
   max-width: 572px;
   margin: 21px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: var(--bq-t-subhead);
   line-height: 1.556;
-  color: var(--bq-ink);
+  color: var(--bq-ink-80);
   text-wrap: pretty;
 }
 
 /* -- the invitation card -------------------------------------------------- */
 
+/* The wave artwork rather than flat green, with the green laid back over it
+   as a scrim: the illustration is light and varied, and white type on it
+   alone would be unreadable in the pale bands. The scrim keeps the contrast
+   the flat fill had while the artwork still reads as texture. */
 .invitation {
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  overflow: hidden;
   max-width: 533px;
   min-height: 223px;
   margin-top: 53px;
   /* 33 / 38 / 32 at the frame. */
   padding: 33px 38px 32px;
-  background: var(--bq-green-deep);
+  background-color: var(--bq-green-deep);
+  background-image: url('/path-wave-02.webp');
+  background-position: center;
+  background-size: cover;
   color: var(--bq-canvas);
+}
+
+.invitation::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bq-green-deep);
+  opacity: 0.86;
+  pointer-events: none;
+}
+
+/* Everything sits over the scrim. */
+.invitation > * {
+  position: relative;
+  z-index: 1;
 }
 
 .invitationTitle {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   /* 33 over 40, light, at the frame. */
   font-size: clamp(1.5rem, 2.292vw, 2.0625rem);
   font-weight: 300;
@@ -112,7 +136,7 @@
 
 .invitationBody {
   margin: 12px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1.0625rem;
   line-height: 1.412;
   color: var(--bq-green-mint);
@@ -125,11 +149,11 @@
 .invitation .cta {
   margin-top: 28px;
   min-height: 0;
-  padding: 17px 22px;
+  padding: 12px 20px;
   border: 0;
-  border-radius: 4px;
+  border-radius: 999px;
   color: var(--bq-green-deep);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.25;
@@ -138,7 +162,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .invitation .cta:hover {
-    background: var(--bq-green-mint);
+    background: var(--bq-cream);
   }
 }
 
@@ -156,33 +180,14 @@
 
 .tile {
   position: relative;
+  border-radius: 12px;
+  overflow: hidden;
   box-sizing: border-box;
   display: grid;
-  /* The number column is 49 wide (copy starts at x80 against the 31 inset). */
-  grid-template-columns: 49px minmax(0, 1fr);
   align-items: start;
   min-height: 165px;
   padding: 25px 40px 32px 31px;
   background: var(--bq-ecosystem-panel);
-}
-
-/* The partner's colour, 4px along the top edge. */
-.tile::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 4px;
-  background: var(--accent);
-}
-
-.tileNum {
-  /* Its box sits 4 lower than the title's so the two share a baseline. */
-  padding-top: 4px;
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.125rem;
-  line-height: 1.2;
-  color: var(--bq-green-deep);
-  font-variant-numeric: tabular-nums;
 }
 
 .tileCopy {
@@ -191,19 +196,19 @@
 
 .tileTitle {
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   /* 31 over 37 at the frame. */
   font-size: clamp(1.5rem, 2.153vw, 1.9375rem);
   font-weight: 400;
   line-height: 1.194;
-  letter-spacing: -0.0226em;
+  /* Tracking comes from the global Geist heading rule. */
   color: var(--bq-green-deep);
 }
 
 .tileDesc {
   max-width: 428px;
   margin: 10px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
   line-height: 1.5;
   color: var(--bq-ink);
@@ -233,14 +238,14 @@
 .eyebrow {
   grid-column: 1 / -1;
   margin: 0 0 1.25rem;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.875rem;
   line-height: 1.4;
   color: var(--bq-green-deep);
 }
 
 .matrix .headline {
-  font-size: clamp(2.5rem, 4.3vw, 3.875rem);
+  font-size: clamp(2.5rem, 4.3vw, 3rem);
 }
 
 .matrix .headlineLine {
@@ -252,6 +257,7 @@
 }
 
 .matrix .invitation {
+  border-radius: 12px;
   max-width: none;
   min-height: 376px;
   height: 100%;
@@ -281,7 +287,6 @@
 }
 
 .matrix .tile {
-  grid-template-columns: 40px minmax(0, 1fr);
   min-height: 180px;
   padding: 2rem 1.75rem;
 }
@@ -301,7 +306,6 @@
 
   .matrix .tile {
     padding: 1.5rem 1.25rem;
-    grid-template-columns: 30px minmax(0, 1fr);
   }
 }
 
@@ -372,10 +376,30 @@
   .tile {
     min-height: 0;
     padding: 22px 24px 24px;
-    grid-template-columns: 40px minmax(0, 1fr);
   }
 
   .tileDesc {
     max-width: none;
   }
+}
+
+/* The return, marked so it reads as the answer to the line above it rather
+   than as more of the same sentence. */
+.tileGain {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 14px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--bq-ink-14);
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--bq-green-deep);
+  text-wrap: pretty;
+}
+
+.tileGain svg {
+  flex: none;
+  margin-top: 4px;
 }

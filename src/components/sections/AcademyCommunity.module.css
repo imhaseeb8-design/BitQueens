@@ -29,13 +29,14 @@
    with the blue inset, the space inside it has to be drawn by the card. */
 .card {
   box-sizing: border-box;
+  border-radius: 12px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2.5rem, 5vw, 5rem);
   /* `start`, not `center`: the two columns are different lengths and both
      should begin on the same line. */
   align-items: start;
-  padding: clamp(2.5rem, 4.5vw, 4.5rem) clamp(1.5rem, 3.889vw, 3.5rem);
+  padding: clamp(2rem, 3.2vw, 3rem) clamp(1.5rem, 3.2vw, 2.875rem);
   background: var(--bq-blue-deep);
   color: var(--bq-cream);
 }
@@ -44,7 +45,7 @@
 
 .copy {
   display: grid;
-  gap: 32px;
+  gap: 24px;
   align-content: start;
   min-width: 0;
 }
@@ -60,21 +61,6 @@
   gap: 28px;
 }
 
-.secondary {
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--bq-cream);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-color: var(--bq-cream-22);
-  transition: text-decoration-color 300ms var(--bq-ease);
-}
-
-.secondary:hover {
-  text-decoration-color: var(--bq-cream);
-}
-
 /* -- what you get --------------------------------------------------------- */
 
 .gets {
@@ -83,41 +69,33 @@
 
 .list {
   display: grid;
-  gap: 4px;
+  gap: 14px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* Four short lines did not need a ruled table and four 32px discs. The tick
+   is now the same small mark the rest of the site uses, and the rows are
+   spaced rather than separated. */
 .item {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--bq-cream-22);
-}
-
-.item:first-child {
-  border-top: 1px solid var(--bq-cream-22);
+  gap: 12px;
+  padding: 0;
 }
 
 .tick {
   flex: none;
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: var(--bq-cream);
-  color: var(--bq-blue-deep);
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  height: 1.5em;
+  color: var(--bq-cream);
 }
 
 .text {
   padding-top: 4px;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
   line-height: 1.5;
   color: var(--bq-cream);
@@ -134,7 +112,7 @@
 
 .sessionsTitle {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -145,7 +123,7 @@
 /* Printed once for both days. */
 .sessionsTime {
   margin: 10px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1.0625rem;
   line-height: 1.4;
   color: var(--bq-cream);
@@ -168,7 +146,7 @@
 }
 
 .sessionDay {
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   font-weight: 500;
   color: var(--bq-cream);
@@ -184,7 +162,7 @@
 
 /* Only rendered when the two days run at different times. */
 .sessionTime {
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.9375rem;
   color: var(--bq-cream-50);
 }

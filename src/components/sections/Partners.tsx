@@ -1,9 +1,28 @@
-import type { CSSProperties } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import type { PartnersSection } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './Partners.module.css';
+
+/** The 14px tick, same hand as the ecosystem offerings and the CTA arrow. */
+function TickIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M3 8.4 6.2 11.6 13 4.8" />
+    </svg>
+  );
+}
 
 export function Partners({
   content,
@@ -17,7 +36,7 @@ export function Partners({
     <section
       id="partners"
       aria-label="Build with us"
-      className={`${styles.section} ${matrix ? styles.matrix : ''} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${matrix ? styles.matrix : ''} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.lead}>
@@ -53,14 +72,16 @@ export function Partners({
               as="li"
               delay={i * 80}
               className={styles.tile}
-              style={{ '--accent': tier.color } as CSSProperties}
             >
-              <span className={styles.tileNum} aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
               <div className={styles.tileCopy}>
                 <h3 className={styles.tileTitle}>{tier.title}</h3>
                 <p className={styles.tileDesc}>{tier.description}</p>
+                {matrix && (
+                  <p className={styles.tileGain}>
+                    <TickIcon />
+                    {tier.gain}
+                  </p>
+                )}
               </div>
             </Reveal>
           ))}

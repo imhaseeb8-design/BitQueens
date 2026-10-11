@@ -6,11 +6,15 @@
   overflow: hidden;
   min-height: 56px;
   padding: 16px 36px;
+  /* Pill by default. `.base` carried no radius at all, so any variant without
+     a section-level override rendered square. `overflow: hidden` above clips
+     the parked arrows to this curve too. */
+  border-radius: 999px;
   border: 1px solid transparent;
-  font-family: var(--bq-body);
+  font-family: var(--bq-secondary-font);
   font-size: var(--bq-t-body);
   font-weight: 500;
-  letter-spacing: 0.01em;
+  letter-spacing: var(--bq-secondary-tracking);
   cursor: pointer;
   /* Name the properties explicitly — `all` animates things you did not mean. */
   transition:
@@ -21,13 +25,17 @@
 }
 
 /* The scale the Figma frames use for in-content CTAs (node 111:26 and the
-   ecosystem cards): 48px tall, 16/34 padding, 14px label. */
+   ecosystem cards). Now the homepage hero's geometry exactly — 12/20 around
+   a 16px label — because the homepage's buttons are the site's buttons. It
+   was 48px tall with 16/34 padding and a 14px label, which is why a CTA
+   looked different on every page that did not override it. */
 .compact {
-  min-height: 48px;
-  padding: 16px 34px;
-  font-size: 0.875rem;
-  letter-spacing: 0.02em;
-  line-height: 1.15;
+  min-height: 0;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: var(--bq-secondary-tracking);
+  line-height: 1.19;
 }
 
 /* Instant feedback on press — the interface confirms it heard you. */
@@ -64,8 +72,11 @@
 }
 
 .label,
+/* inline-flex, not inline-block: the arrow is an SVG now, and inline-block
+   leaves it sitting on the text baseline with a descender gap under it. */
 .arrow {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   transition: transform 300ms var(--bq-ease);
   will-change: transform;
 }
@@ -109,16 +120,19 @@
 }
 
 /* -- green: the deep-green block with the 4px corner (Figma 260:238 onward) */
+/* Flat green CTA. Padding 12/20, 6px gap, 100px corner, label #fafaf8. */
 .green {
   border: 0;
-  border-radius: 4px;
+  border-radius: 100px;
+  padding: 12px 20px;
+  gap: 6px;
   background: var(--bq-green-deep);
-  color: var(--bq-canvas);
+  color: #fafaf8;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .green:hover {
-    background: var(--bq-ink);
+    background: var(--bq-green-deep);
   }
 }
 
@@ -132,7 +146,7 @@
 @media (hover: hover) and (pointer: fine) {
   .secondary:hover {
     border-color: var(--bq-ink);
-    background: #f2f0e9;
+    background: var(--bq-ecosystem-panel);
   }
 }
 
@@ -144,12 +158,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .onDark.primary:hover {
-    background: var(--bq-blue-pale);
+    background: var(--bq-cream);
   }
 }
 
 .onDark.secondary {
-  border-color: rgba(241, 238, 228, 0.55);
+  border-color: rgba(251, 251, 251, 0.55);
   color: var(--bq-cream);
 }
 
@@ -172,9 +186,11 @@
   color: var(--bq-green-deep);
 }
 
-.quiet::after {
-  content: '\2192';
-  display: inline-block;
+/* It used to draw the Unicode arrow character, which renders in the body
+   font at the body's own weight — noticeably thinner than the 1.7-stroke
+   mark every other button carries. It now uses the same `CtaArrow` SVG and
+   only animates its arrival. */
+.quiet .arrow {
   opacity: 0;
   transform: translateX(-6px);
   transition:
@@ -187,7 +203,7 @@
     color: var(--bq-ink);
   }
 
-  .quiet:hover::after {
+  .quiet:hover .arrow {
     opacity: 1;
     transform: none;
   }

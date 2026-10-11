@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
+import { Faq } from '@/components/sections/Faq';
 import { JoinForm } from '@/components/sections/JoinForm';
+import { TrustRow } from '@/components/ui/TrustRow';
+import { home } from '@/content/home';
 import { join } from '@/content/join';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -19,9 +22,10 @@ export const metadata: Metadata = {
 export default async function JoinPage({searchParams}:{searchParams:Promise<{track?:string}>}) {
   const {track} = await searchParams;
   return (
+    <>
     <section
       aria-label="Join BitQueens"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.copy}>
@@ -33,11 +37,18 @@ export default async function JoinPage({searchParams}:{searchParams:Promise<{tra
             </span>
           </h1>
           <p className={styles.body}>{join.body}</p>
+          <TrustRow stats={home.impact.stats} className={styles.trust} />
         </div>
         <div className={styles.panel}>
           <JoinForm content={join} initialTrack={track} />
         </div>
       </div>
     </section>
+
+    {/* The questions someone asks on the way to signing up — the same
+        canonical set the homepage and the ecosystem page use, so the three
+        cannot drift. `name` keeps the accordion's ids unique per page. */}
+    <Faq content={home.faq} name="join-faq" />
+    </>
   );
 }

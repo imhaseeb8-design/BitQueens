@@ -36,13 +36,19 @@ export const ecosystem = {
       'The Foundation is in development. Scholarship, advocacy and giving opportunities will be announced when they are ready.',
     ][index],
   })),
+  /* The closing band is the page's ask, not a summary of it. The four
+     branches have just been described in full; restating them here only
+     delayed the one thing a reader can act on. Every claim below is already
+     answered on the site — the free weekly sessions, the peer community and
+     the beginner library are the FAQ's own words, and `/join` is the form
+     that routes someone to a track. Nothing here promises more than that. */
   connection: {
-    eyebrow: 'One shared purpose',
-    headline: 'More than four branches.',
-    headlineSerif: 'A wider world of opportunity.',
-    body: 'The Academy gives women a starting point. Innovations & Labs turns skills into practical work. BIET and the Foundation are being developed to extend that journey through structured learning and greater access.',
-    note: 'Start with what is open today. Grow with what comes next.',
-    cta: { label: 'Find your starting point', href: '/academy' },
+    eyebrow: 'Start here',
+    headline: 'One form.',
+    headlineSerif: 'Every way in.',
+    body: 'Tell us where you are and we will point you to the right track, cohort and community. Joining brings weekly live sessions, a peer community, and a library of beginner resources.',
+    note: 'Free, always. No technical background needed.',
+    cta: { label: 'Join BitQueens', href: '/join' },
   },
   partners: {
     ...home.partners,

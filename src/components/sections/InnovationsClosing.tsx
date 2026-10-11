@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import type { InnovationsClosing as InnovationsClosingContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './InnovationsClosing.module.css';
 
 /** Closing invitation on the shared light page canvas. */
@@ -13,7 +13,7 @@ export function InnovationsClosing({
   return (
     <section
       aria-label="Start building with Innovations and Labs"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <Reveal>

@@ -1,7 +1,7 @@
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { InnovationsHow as InnovationsHowContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './InnovationsHow.module.css';
 
 /** Compact three-step sequence beneath the shared section heading. */
@@ -10,7 +10,7 @@ export function InnovationsHow({ content }: { content: InnovationsHowContent }) 
     <section
       id="how"
       aria-label="How Innovations and Labs works"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <SectionHead

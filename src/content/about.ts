@@ -19,12 +19,6 @@ export const about: AboutPage = {
     body: 'BitQueens is building the women’s layer of Web3 — an ecosystem that makes emerging technologies accessible, practical, and rewarding for women across Africa and beyond.',
     primaryCta: { label: 'Join BitQueens', href: '/join' },
     secondaryCta: { label: 'Explore the Academy', href: '/academy' },
-    art: {
-      src: '/about-hero-art.png',
-      alt: 'Abstract dotted motif in deep green on warm cream',
-      width: 1920,
-      height: 1280,
-    },
   },
 
   story: {
@@ -120,8 +114,9 @@ export const about: AboutPage = {
 
   founder: {
     eyebrow: 'Founder',
-    headline: 'Meet',
-    headlineSerif: 'Kristie.',
+    headline: 'The story behind',
+    headlineSerif: 'BitQueens.',
+    storyLines: ['Kristie built the on-ramp', 'she couldn’t find.'],
     name: 'Kristie Ezigbonwa Immanuel',
     role: 'Founder, BitQueens · Blockchain Educator for Women',
     bio: [

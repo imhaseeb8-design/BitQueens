@@ -2,7 +2,7 @@ import { ChapterForm } from '@/components/sections/ChapterForm';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { CampusChapters as CampusChaptersContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './CampusChapters.module.css';
 
 /**
@@ -30,7 +30,7 @@ export function CampusChapters({
     <section
       id="chapters"
       aria-label="Campus chapters"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.pitch}>

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/Button';
 import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import { Reveal } from '@/components/ui/Reveal';
 import type { AcademyHero as AcademyHeroContent } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyHero.module.css';
 
 /**
@@ -19,7 +19,7 @@ export function AcademyHero({ content }: { content: AcademyHeroContent }) {
   return (
     <section
       aria-label="BitQueens Academy"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.band}>
         <GlobalDotMap className={styles.map} />
@@ -27,7 +27,6 @@ export function AcademyHero({ content }: { content: AcademyHeroContent }) {
 
         <div className={styles.inner}>
           <Reveal variant="fade">
-            <p className={styles.eyebrow}>{content.eyebrow}</p>
           </Reveal>
 
           <Reveal delay={80} variant="fade">

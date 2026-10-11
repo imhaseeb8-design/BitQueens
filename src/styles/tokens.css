@@ -8,10 +8,13 @@
 
 :root {
   /* -- colour ------------------------------------------------------------ */
-  --bq-canvas: #fafaf8; /* page ground, off-white */
-  --bq-cream: #f1eee4; /* text on dark blocks */
-  --bq-cream-dim: #dcd8cd;
-  --bq-paper: #f0ede4; /* image slots, inset panels */
+  --bq-canvas: #ffffff; /* page ground — pure white in this variant */
+  /* Was the warm cream #f1eee4. Retired across the site in favour of the
+     panel white; the token name stays so on-dark text keeps reading from
+     one place. */
+  --bq-cream: #fbfbfb; /* text on dark blocks */
+  --bq-cream-dim: #d6d6d6;
+  --bq-paper: #fbfbfb; /* image slots, inset panels */
   --bq-ink: #1a1a1a;
 
   /* The interactive/accent role: primary CTA, section numerals, focus rings,
@@ -27,7 +30,7 @@
 
   --bq-orange: #e8641c; /* brand hue; still the Innovations & Labs pillar */
   --bq-conference-green: #2a492f; /* updated conference frame */
-  --bq-ecosystem-panel: #f9f8f3; /* updated accordion frame */
+  --bq-ecosystem-panel: #fbfbfb; /* updated accordion frame */
   --bq-forest: #1e4a2c; /* flat solid block */
   /* The hero's green (Figma 260:232, "Trust Bar Variant"): wordmark,
      headline, both Join buttons. Its tint is the trust-bar pill behind
@@ -57,27 +60,33 @@
   --bq-ink-14: rgba(26, 26, 26, 0.14);
   --bq-ink-06: rgba(26, 26, 26, 0.06);
 
-  --bq-cream-82: rgba(241, 238, 228, 0.82);
-  --bq-cream-50: rgba(241, 238, 228, 0.5);
-  --bq-cream-30: rgba(241, 238, 228, 0.3);
-  --bq-cream-22: rgba(241, 238, 228, 0.22);
-  --bq-cream-10: rgba(241, 238, 228, 0.1);
-  --bq-cream-08: rgba(241, 238, 228, 0.08);
+  --bq-cream-82: rgba(251, 251, 251, 0.82);
+  --bq-cream-50: rgba(251, 251, 251, 0.5);
+  --bq-cream-30: rgba(251, 251, 251, 0.3);
+  --bq-cream-22: rgba(251, 251, 251, 0.22);
+  --bq-cream-10: rgba(251, 251, 251, 0.1);
+  --bq-cream-08: rgba(251, 251, 251, 0.08);
 
   /* -- type -------------------------------------------------------------- */
+  --bq-heading-font: 'SF Pro Display', 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  --bq-secondary-font: 'SF Pro Text', 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  --bq-secondary-tracking: -0.5px;
   --bq-display: 'Cabinet Grotesk', 'Switzer', system-ui, sans-serif;
   --bq-body: 'Switzer', system-ui, -apple-system, sans-serif;
 
   /* Fluid display scale. Each clamp runs min at 360px → max at 1440px. */
-  --bq-t-hero: clamp(3.5rem, 1.2rem + 10.2vw, 7.5rem);
-  --bq-t-xxl: clamp(2.75rem, 1.1rem + 7.3vw, 6.5rem);
-  --bq-t-xl: clamp(2.5rem, 1.3rem + 5.3vw, 5.125rem);
-  --bq-t-lg: clamp(2rem, 1.2rem + 3.6vw, 3.875rem);
-  --bq-t-md: clamp(1.75rem, 1.2rem + 2.4vw, 2.875rem);
-  --bq-t-sm: clamp(1.5rem, 1.2rem + 1.4vw, 2.125rem);
-  --bq-t-xs: clamp(1.3rem, 1.1rem + 0.9vw, 1.6875rem);
+  --bq-t-hero: clamp(2.75rem, 1rem + 8vw, 5.5rem);
+  --bq-t-xxl: clamp(2.25rem, 0.9rem + 5.8vw, 3rem);
+  --bq-t-xl: clamp(2rem, 1.1rem + 4.2vw, 3rem);
+  --bq-t-lg: clamp(1.75rem, 1.05rem + 2.9vw, 3rem);
+  --bq-t-md: clamp(1.5rem, 1.05rem + 1.9vw, 2.25rem);
+  --bq-t-sm: clamp(1.3rem, 1.05rem + 1.1vw, 1.75rem);
+  --bq-t-xs: clamp(1.15rem, 1rem + 0.7vw, 1.4375rem);
 
-  --bq-t-body-lg: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem);
+  --bq-t-body-lg: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  /* The line under a section heading. Every section subheading uses this —
+     they had drifted to 18, 18.4, 19 and 20px across the site. 16 → 18px. */
+  --bq-t-subhead: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
   --bq-t-body: clamp(0.95rem, 0.92rem + 0.15vw, 1.0625rem);
   --bq-t-body-sm: 0.9375rem;
   --bq-t-meta: 0.75rem;
@@ -85,9 +94,30 @@
 
   /* -- layout ------------------------------------------------------------ */
   --bq-max: 1440px;
+  --bq-header-height: clamp(60px, 5.6vw, 81px);
   /* 20px at 360 → exactly 72px at the 1440 design width, then holds. */
   --bq-gutter: clamp(1.25rem, 0.4rem + 4.56vw, 4.5rem);
   --bq-col-gap: 24px;
+
+  /* -- section rhythm ----------------------------------------------------
+     Padding is paid by BOTH neighbours, so a section declaring 8rem top and
+     bottom sits 256px from the next one that does the same. That stacking,
+     not the numbers, is what made the spacing across this site range from
+     2.4rem to 9.5rem and need hand-patching section by section.
+
+     So the token is the GAP BETWEEN two sections, and each section pays half
+     of it per edge. Two neighbours then add up to exactly one gap, and the
+     arithmetic stays obvious when a section is moved.
+
+         .section { padding-block: var(--bq-section-y); }
+
+     `--bq-band-y` is a different measurement: the padding INSIDE a
+     full-bleed coloured band, which is not a gap and is never halved. */
+  --bq-section-gap: clamp(3.5rem, 7vw, 7rem);               /* 56 → 112px */
+  --bq-section-y: calc(var(--bq-section-gap) / 2);          /* 28 → 56px  */
+  /* For two sections that should read as one run, not as two subjects. */
+  --bq-section-y-tight: calc(var(--bq-section-gap) / 4);    /* 14 → 28px  */
+  --bq-band-y: clamp(3rem, 5.5vw, 5rem);                    /* 48 → 80px  */
 
   /* -- motion ------------------------------------------------------------ */
   /* Strong ease-out. The built-in CSS easings are too weak to read as

@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/Button';
 import { DottedGlobe } from '@/components/ui/DottedGlobe';
-import { Reveal } from '@/components/ui/Reveal';
+import { TextReveal } from '@/components/ui/TextReveal';
 import type { PlaceSection } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './Place.module.css';
 
 /**
@@ -20,13 +20,11 @@ export function Place({ content }: { content: PlaceSection }) {
     <section
       id="place"
       aria-label={content.headline}
-      className={`${styles.section} ${instrumentSerif.variable} ${neueMontreal.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.stage}>
         <DottedGlobe className={styles.globe} period={180} />
-        <Reveal as="h2" variant="fade" className={styles.headline}>
-          {content.headline}
-        </Reveal>
+        <TextReveal text={content.headline} className={styles.headline} />
       </div>
 
       <div className={styles.band}>

@@ -1,22 +1,59 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
+import { TextReveal } from '@/components/ui/TextReveal';
 import type { ConferenceSection } from '@/lib/types';
-import { neueMontreal, interTight } from '@/styles/fonts';
+import { displaySans, bodySans } from '@/styles/fonts';
 import styles from './Conference.module.css';
 
+/** 16px marks for the meta row. Stroke weight and caps follow the CTA
+ *  arrow (Figma 344:30) so the two read as one hand. */
+function MetaIcon({ name }: { name: 'calendar' | 'place' }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {name === 'calendar' ? (
+        <>
+          <rect x="2.25" y="3.25" width="11.5" height="10.5" rx="2" />
+          <path d="M2.25 6.5h11.5M5.5 1.75v2.5M10.5 1.75v2.5" />
+        </>
+      ) : (
+        <>
+          <path d="M13 6.9c0 3.5-5 7.35-5 7.35S3 10.4 3 6.9a5 5 0 0 1 10 0Z" />
+          <circle cx="8" cy="6.8" r="1.8" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 /**
- * Conference — Figma 268:149 ("Conference story and image").
+ * Conference — a condensed teaser, from Figma 268:149.
  *
- * A green card inside the gutters, split 656/640: the story on the left, the
- * audience photograph filling the right edge to edge. The photo is mirrored
- * so the woman in front looks into the copy rather than off the card.
+ * A green card inside the gutters: the story on the left, the audience
+ * photograph filling the right edge to edge. The photo is mirrored so the
+ * woman in front looks into the copy rather than off the card.
+ *
+ * It was the full frame — an eyebrow, a 52px headline over two lines, a
+ * two-sentence body, a hairline and a key/value list — which made a 520px
+ * band for what is one sentence and one date. Now: a one-line headline, one
+ * line of copy, the facts as a marked row, and the way through. The eyebrow
+ * went with the rest: it said "The BitQueens Conference" above a headline on
+ * the BitQueens homepage, directly over a CTA reading "Explore the
+ * Conference". The conference page carries everything else.
  *
  * The CTA is the shared Button so it carries the site's arrow shift; the
- * frame's cream-on-green colouring and 4px corner are set in the module.
- *
- * A short introduction, one next-edition update and a route to the
- * conference page. Weekly training is presented in the Academy community.
+ * frame's cream-on-green colouring is set in the module.
  */
 export function Conference({ content }: { content: ConferenceSection }) {
   const photo = content.image.src ? content.image : content.backdrop;
@@ -25,33 +62,23 @@ export function Conference({ content }: { content: ConferenceSection }) {
     <section
       id="conference"
       aria-label="The Conference"
-      className={`${styles.section} ${neueMontreal.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.block}>
         <div className={styles.card}>
           <div className={styles.col}>
             <Reveal className={styles.head}>
-              <p className={styles.eyebrow}>{content.eyebrow}</p>
-              <h2 className={styles.headline}>
-                {content.headlineLines.map((line) => (
-                  <span key={line} className={styles.line}>
-                    {line}
-                  </span>
-                ))}
-              </h2>
+              <TextReveal text={content.headlineLines.join('\n')} className={styles.headline} lineClassNames={content.headlineLines.map(() => styles.line)} />
               <p className={styles.body}>{content.body}</p>
             </Reveal>
 
-            <Reveal delay={120} className={styles.details}>
-              <div className={styles.detailRule} />
-              <dl className={styles.detailRow}>
-                {content.details.map((detail) => (
-                  <div key={detail.key} className={styles.detail}>
-                    <dt className={styles.detailKey}>{detail.key}</dt>
-                    <dd className={styles.detailValue}>{detail.value}</dd>
-                  </div>
-                ))}
-              </dl>
+            <Reveal delay={120} className={styles.metaRow}>
+              {content.meta.map((item) => (
+                <span key={item.value} className={styles.meta}>
+                  <MetaIcon name={item.icon} />
+                  {item.value}
+                </span>
+              ))}
             </Reveal>
 
             <Reveal delay={200} className={styles.ctaRow}>

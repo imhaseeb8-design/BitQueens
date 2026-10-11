@@ -1,0 +1,118 @@
+.section {
+  padding-block: var(--bq-section-y);
+  background: var(--bq-canvas);
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+/* No box. The border made this a card floating inside the page, and its own
+   padding pushed the heading in from the gutter every other section's
+   heading starts at. The rule above the logos is kept — that one separates
+   two things, which is a job. */
+.card {
+  background: var(--bq-canvas);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: 1fr minmax(15rem, 0.7fr);
+  align-items: end;
+  gap: 1.5rem;
+  padding: 0 0 clamp(1.5rem, 2.6vw, 2.25rem);
+}
+
+.intro h2 {
+  margin: 0;
+  font-family: var(--bq-display), sans-serif;
+  font-size: clamp(1.875rem, 2.6vw, 2.375rem);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  color: var(--bq-ink);
+  white-space: nowrap;
+}
+
+.intro p {
+  max-width: 28rem;
+  margin: 0;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: var(--bq-t-subhead);
+  line-height: 1.5;
+  color: var(--bq-ink-80);
+}
+
+.viewport {
+  overflow: hidden;
+  border-top: 1px solid var(--bq-ink-14);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: logoMarquee 30s linear infinite;
+}
+
+.logos {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: clamp(2.75rem, 5vw, 5rem);
+  margin: 0;
+  padding: clamp(1.5rem, 2.4vw, 2rem) clamp(2.75rem, 5vw, 5rem) clamp(1.5rem, 2.4vw, 2rem) 0;
+  list-style: none;
+}
+
+.logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.5rem;
+  height: 3.5rem;
+}
+
+.logoImage {
+  width: auto;
+  max-width: 7rem;
+  height: auto;
+  max-height: 4rem;
+  object-fit: contain;
+  filter: grayscale(1);
+}
+
+@keyframes logoMarquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 1100px) {
+  .intro {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .intro {
+    gap: 1rem;
+  }
+
+  .intro h2 {
+    white-space: normal;
+  }
+
+  .logos {
+    gap: 2.5rem;
+    padding: 1.25rem 2.5rem 1.25rem 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; }
+  .viewport { overflow-x: auto; mask-image: none; }
+  .track .logos:last-child { display: none; }
+}

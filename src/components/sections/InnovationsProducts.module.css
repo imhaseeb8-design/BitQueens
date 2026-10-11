@@ -29,13 +29,13 @@
   align-items: flex-start;
   padding: clamp(32px, 3.5vw, 52px);
   background: var(--bq-ecosystem-panel);
-  border-radius: 20px;
+  border-radius: 12px;
   border-top: 4px solid var(--bq-orange);
 }
 
 .kicker {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: var(--bq-t-eyebrow);
   font-weight: 600;
   line-height: 1.25;
@@ -46,17 +46,17 @@
 
 .name {
   margin: 18px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-family: var(--bq-display), sans-serif;
+  font-size: clamp(1.5rem, 2vw, 1.75rem);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.035em;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
 }
 
 .desc {
   margin: 16px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: var(--bq-t-body-lg);
   line-height: 1.55;
   color: var(--bq-ink-80);
@@ -77,7 +77,7 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: var(--bq-ink);
@@ -109,16 +109,16 @@
 
 /* Selected product studio layout. */
 .heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: clamp(2rem, 5vw, 4.5rem); }
-.intro { margin: 0; font-family: var(--bq-inter-tight), sans-serif; font-size: 1.125rem; line-height: 1.55; color: var(--bq-ink-80); text-wrap: pretty; }
+.intro { margin: 0; font-family: var(--bq-body-sans), sans-serif; font-size: 1.125rem; line-height: 1.55; color: var(--bq-ink-80); text-wrap: pretty; }
 .cards { gap: 1.5rem; margin-top: 2.75rem; }
-.card { border-radius: 4px; border: 1px solid var(--bq-rule); padding: clamp(1.75rem, 3vw, 2.75rem); }
-.name { font-size: clamp(2.5rem, 4.4vw, 4rem); }
+.card { border-radius: 12px; border: 1px solid var(--bq-rule); padding: clamp(1.75rem, 3vw, 2.75rem); }
+.name { font-size: clamp(1.5rem, 2vw, 1.75rem); }
 .desc { font-size: 1rem; }
-.cta { border-radius: 4px; }
+.cta { border-radius: 999px; }
 .featured { background: var(--bq-green-deep); border-color: var(--bq-green-deep); }
 .featured .kicker, .featured .name, .featured .point { color: var(--bq-canvas); }
 .featured .desc { color: var(--bq-cream-82); }
-.featured .points { border-color: rgba(250,250,248,.25); }
+.featured .points { border-color: rgba(255,255,255,.25); }
 @media (max-width: 800px) { .heading { grid-template-columns: 1fr; gap: 1.5rem; } }
 
 .featured .cta { color: var(--bq-green-deep); }

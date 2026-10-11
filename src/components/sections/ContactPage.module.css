@@ -1,17 +1,264 @@
-.section { font-family:var(--bq-inter-tight),sans-serif; padding:clamp(3rem,6vw,6rem) 0 clamp(4rem,7vw,7rem); }
-.inner { max-width:var(--bq-max); padding:0 var(--bq-gutter); margin:auto; }
-.grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,5rem); align-items:start; }
-.copy > h1, .copy > h2 { font-family:var(--bq-neue-montreal),sans-serif; font-weight:400; font-size:clamp(3rem,5.5vw,5.5rem); color:var(--bq-green-deep); line-height:1.05; letter-spacing:-.035em; }
-.copy > h1 span, .copy > h2 span { display:block; font-family:var(--bq-instrument-serif),Georgia,serif; font-size:1.1em; }
-.eyebrow { font-size:.75rem; letter-spacing:.16em; text-transform:uppercase; color:var(--bq-blue-slate); margin-bottom:1.25rem; }
-.intro { font-size:1.15rem; line-height:1.65; color:var(--bq-ink-66); margin-top:1.5rem; max-width:32rem; }
-.routes { margin:2.5rem 0; border-top:1px solid var(--bq-rule); }
-.route { padding:1.15rem 0; border-bottom:1px solid var(--bq-rule); }
-.route h2 { color:var(--bq-green-deep); font:400 1.4rem/1.3 var(--bq-neue-montreal),sans-serif; }
-.route p { font-size:.95rem; color:var(--bq-ink-66); margin-top:.4rem; }
-.mail { color:var(--bq-green-deep); overflow-wrap:anywhere; text-decoration:underline; text-underline-offset:4px; }
-.panel { padding:clamp(1.5rem,3vw,3rem); border-radius:20px; background:var(--bq-paper); }
-.panel h2 { font:400 2rem/1.2 var(--bq-neue-montreal),sans-serif; color:var(--bq-green-deep); margin-bottom:2rem; }
-@media(max-width:800px) { .grid { grid-template-columns:1fr; } .copy > h1, .copy > h2 { font-size:3.25rem; } }
+/**
+ * /contact. Copy left, form right — the same two-column build as /join, on
+ * the site's container, rhythm, type and corners.
+ */
 
-@media(max-width:800px) { .routes { display:grid; grid-template-columns:1fr 1fr; gap:0 1rem; } .route h2 { font-size:1.2rem; } .route p { font-size:.9rem; } }
+.section {
+  padding-block: clamp(3rem, 5vw, 4.5rem) var(--bq-section-y);
+  background: var(--bq-canvas);
+  color: var(--bq-ink);
+  font-family: var(--bq-body-sans), sans-serif;
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--bq-max);
+  margin: 0 auto;
+  padding: 0 var(--bq-gutter);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.copy { min-width: 0; }
+
+.eyebrow {
+  margin: 0 0 1rem;
+  font-size: var(--bq-t-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bq-blue-slate);
+}
+
+/* The 56 every page headline runs. It was `clamp(3rem, 5.5vw, 3rem)` —
+   identical floor and ceiling, so the fluid middle never did anything. */
+/* `.section .headline` (two classes) rather than `.headline` alone, so it
+   outranks the `.copy > h1` element rule the shared components need. It was
+   scoped to `.copy >`, which stopped matching when the page moved to a
+   centred column. */
+.section .headline {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: var(--bq-display), sans-serif;
+  font-size: clamp(2.125rem, 3.89vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--bq-green-deep);
+}
+
+.line { display: block; }
+
+/* `ComingSoon` and `ConferenceInterest` share this stylesheet and render a
+   bare heading inside `.copy` rather than the `.headline` class above, so
+   the element selector has to stay for them. */
+.copy > h1,
+.copy > h2 {
+  margin: 0;
+  font-family: var(--bq-display), sans-serif;
+  font-size: var(--bq-t-lg);
+  font-weight: 400;
+  line-height: 1.08;
+  color: var(--bq-green-deep);
+}
+
+/* Direct children only. As a descendant selector this reached inside
+   `TextReveal`, blockifying its per-word wrappers and breaking the headline
+   to one word per line. */
+.copy > h1 > span,
+.copy > h2 > span {
+  display: block;
+}
+
+.intro {
+  max-width: 34rem;
+  margin: 16px 0 0;
+  font-size: var(--bq-t-subhead);
+  line-height: 1.55;
+  color: var(--bq-ink-80);
+  text-wrap: pretty;
+}
+
+.route {
+  padding: 1.125rem 0;
+  border-bottom: 1px solid var(--bq-ink-14);
+}
+
+.direct {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+.directLabel {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--bq-ink-50);
+}
+
+.mail {
+  color: var(--bq-green-deep);
+  font-size: 0.9375rem;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  border-bottom: 1px solid var(--bq-ink-14);
+  padding-bottom: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mail:hover { border-bottom-color: var(--bq-green-deep); }
+}
+
+.panel {
+  box-sizing: border-box;
+  padding: clamp(1.5rem, 2.8vw, 2.5rem);
+  border: 1px solid var(--bq-ink-14);
+  border-radius: 12px;
+  background: var(--bq-ecosystem-panel);
+}
+
+.panelTitle {
+  margin: 0 0 1.5rem;
+  font-family: var(--bq-display), sans-serif;
+  font-size: clamp(1.375rem, 1.95vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--bq-ink);
+}
+
+/* The events page reuses this panel at the larger corner. */
+.eventPanel { border-radius: 18px; }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* -- /contact: one centred column on the map ----------------------------
+   The form is the page, so it sits in the middle under the headline rather
+   than beside it, and what a message can be about follows underneath. The
+   shared `.grid` / `.copy` / `.route` rules above are left alone — they
+   belong to `ComingSoon` and `ConferenceInterest`, which share this file. */
+
+.centred {
+  position: relative;
+  overflow: clip;
+}
+
+/* The map needs a box of its own: it fills its element, so a width with no
+   height collapses the canvas to nothing. */
+.map {
+  position: absolute;
+  top: clamp(1rem, 4vw, 3rem);
+  left: 50%;
+  width: min(1180px, 100%);
+  height: auto;
+  aspect-ratio: 2048 / 1153;
+  transform: translateX(-50%);
+  opacity: 0.12;
+  pointer-events: none;
+  mask-image: linear-gradient(#000, #000 60%, transparent);
+}
+
+.centred .inner {
+  position: relative;
+}
+
+.head {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.centred .intro {
+  margin-inline: auto;
+}
+
+.centred .headline {
+  align-items: center;
+}
+
+/* The form, centred and capped — a full-width field row at 1440 would make
+   the inputs longer than anything anyone types into them. */
+.formPanel {
+  max-width: 44rem;
+  margin: clamp(2rem, 3.4vw, 2.75rem) auto 0;
+  text-align: left;
+}
+
+/* -- what a message can be about ---------------------------------------- */
+
+.ways {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+  margin-top: clamp(2.5rem, 4.5vw, 4rem);
+  padding-top: clamp(1.75rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--bq-ink-14);
+}
+
+.way { min-width: 0; }
+
+.wayTitle {
+  margin: 0;
+  font-family: var(--bq-display), sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--bq-ink);
+}
+
+.wayBody {
+  margin: 6px 0 0;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--bq-ink-50);
+  text-wrap: pretty;
+}
+
+.direct {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.directLabel {
+  margin: 0;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--bq-ink-50);
+}
+
+.mail {
+  color: var(--bq-green-deep);
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.9375rem;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  border-bottom: 1px solid var(--bq-ink-14);
+  padding-bottom: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mail:hover { border-bottom-color: var(--bq-green-deep); }
+}
+
+@media (max-width: 860px) {
+  .ways { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+  .ways { grid-template-columns: 1fr; }
+}

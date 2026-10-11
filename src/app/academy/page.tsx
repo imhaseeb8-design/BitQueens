@@ -4,11 +4,13 @@ import { AcademyEnroll } from '@/components/sections/AcademyEnroll';
 import { Faq } from '@/components/sections/Faq';
 import { AcademyHero } from '@/components/sections/AcademyHero';
 import { AcademyPath } from '@/components/sections/AcademyPath';
-import { AcademyProof } from '@/components/sections/AcademyProof';
+import { LearnerValue } from '@/components/sections/LearnerValue';
+import { LogoMarquee } from '@/components/sections/LogoMarquee';
 import { AcademyStories } from '@/components/sections/AcademyStories';
 import { AcademyTeachers } from '@/components/sections/AcademyTeachers';
 import { AcademyTracks } from '@/components/sections/AcademyTracks';
 import { academy } from '@/content/academy';
+import { home } from '@/content/home';
 
 export const metadata: Metadata = {
   title: 'Academy',
@@ -42,7 +44,19 @@ export default function AcademyPage() {
   return (
     <>
       <AcademyHero content={academy.hero} />
-      <AcademyProof content={academy.proof} />
+      {/* The homepage's figures panel, not the green `AcademyProof` band —
+          same four numbers, the layout the homepage settled on. The heading
+          is hidden: the hero directly above already names the page. Its CTA
+          goes to the join form rather than the Academy, which is this page. */}
+      <LearnerValue
+        content={home.learnerValue}
+        stats={academy.proof.stats}
+        hideHeading
+        cta={{ label: 'Join free', href: '/join' }}
+      />
+      {/* The collaborator logos the green band used to close with. Reads
+          from the homepage's own list, so the two cannot drift. */}
+      <LogoMarquee content={home.hero.collaborators} />
       <AcademyPath content={academy.path} />
       <AcademyTracks content={academy.tracks} cohorts={academy.cohorts} />
       {/* The free tier comes before the paid ask: the hero's own CTA is

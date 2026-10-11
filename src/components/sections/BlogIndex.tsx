@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { CtaArrow } from '@/components/ui/Button';
 import Link from 'next/link';
 import { blogPosts } from '@/content/blog';
 import styles from './Editorial.module.css';
@@ -21,7 +22,7 @@ export function BlogIndex() {
   return <>
     {showFeature && <Link href={feature.href} className={styles.feature}>
       <div className={styles.featureImage}><Image src={feature.image!.src!} alt={feature.image!.alt} fill sizes="(max-width: 750px) 100vw, 50vw" priority /></div>
-      <div className={styles.featureCopy}><p className={styles.eyebrow}>Featured · {feature.category}</p><h2>{feature.title}</h2><p>{feature.excerpt}</p><span className={styles.readLink}>Read the story <span aria-hidden="true">↗</span></span></div>
+      <div className={styles.featureCopy}><p className={styles.eyebrow}>Featured · {feature.category}</p><h2>{feature.title}</h2><p>{feature.excerpt}</p><span className={styles.readLink}>Read the story <CtaArrow /></span></div>
     </Link>}
     <section aria-label="Browse stories" className={styles.browse}>
       <div className={styles.toolbar}>
@@ -31,7 +32,7 @@ export function BlogIndex() {
       <p className={styles.resultCount} role="status">{filtered.length} {filtered.length === 1 ? 'story' : 'stories'}</p>
       <div className={styles.grid}>{filtered.map(post => <Link key={post.slug} href={post.href} className={styles.card}>
         <div className={styles.cardImage}><Image src={post.image!.src!} alt={post.image!.alt} fill sizes="(max-width: 650px) 100vw, (max-width: 1000px) 50vw, 33vw" /></div>
-        <p className={styles.meta}>{post.tags?.join(' / ')} <span>· {post.readTime}</span></p><h2>{post.title}</h2><p>{post.excerpt}</p><span className={styles.readLink}>Read story <span aria-hidden="true">↗</span></span>
+        <p className={styles.meta}>{post.tags?.join(' / ')} <span>· {post.readTime}</span></p><h2>{post.title}</h2><p>{post.excerpt}</p><span className={styles.readLink}>Read story <CtaArrow /></span>
       </Link>)}</div>
       {!filtered.length && <div className={styles.empty}><h2>No stories found.</h2><p>Try another topic or a different search.</p><button onClick={() => {setCategory('All stories'); setQuery('');}}>Show all stories →</button></div>}
     </section>

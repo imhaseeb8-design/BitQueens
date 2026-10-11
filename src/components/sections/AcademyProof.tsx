@@ -3,7 +3,7 @@ import { Figure } from '@/components/ui/Figure';
 import { Reveal } from '@/components/ui/Reveal';
 import { home } from '@/content/home';
 import type { AcademyProof as AcademyProofContent } from '@/lib/types';
-import { interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyProof.module.css';
 
 /* The homepage's own collaborator logos, imported rather than re-listed, so
@@ -30,7 +30,7 @@ export function AcademyProof({ content, showPartners = true }: { content: Academ
   return (
     <section
       aria-label={content.headline}
-      className={`${styles.section} ${neueMontreal.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <h2 className="bq-visually-hidden">{content.headline}</h2>

@@ -2,9 +2,10 @@
 
 import { useId, useState } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
+import { Button } from '@/components/ui/Button';
 import { SectionHead } from '@/components/ui/SectionHead';
 import type { FaqSection } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './Faq.module.css';
 
 /**
@@ -14,9 +15,8 @@ import styles from './Faq.module.css';
  * first item ships open so the section never reads as an empty list of
  * closed doors.
  *
- * The head holds the left column and stays put while the answers scroll past
- * it. Centred over a 48rem list, this section used to leave a third of the
- * page empty down either side.
+ * The head and answers scroll together. The homepage also includes a contact
+ * link beneath its introduction for questions not covered by the list.
  *
  * Each instance keeps one answer open; unique IDs connect its buttons and
  * panels without interfering with other FAQ sections.
@@ -35,7 +35,7 @@ export function Faq({
     <section
       id="faq"
       aria-label="Frequently asked questions"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.head}>
@@ -44,6 +44,14 @@ export function Faq({
             headlineSerif={content.headlineSerif}
             intro={content.intro}
           />
+          {name === 'home-faq' && (
+            <div className={styles.contactPrompt}>
+              <p>Still have a question? We’re here to help.</p>
+              <Button href="/contact" variant="link" size="compact" className={styles.contactLink}>
+                Get in touch
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className={styles.list}>

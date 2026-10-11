@@ -6,7 +6,7 @@ import type {
   AcademyCohort,
   AcademyEnroll as AcademyEnrollContent,
 } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyEnroll.module.css';
 
 /**
@@ -32,7 +32,7 @@ export function AcademyEnroll({
     <section
       id="enroll"
       aria-label="Enroll in a cohort"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       {/* The same map the hero carries, at the same width and opacity, so the
           page opens and closes on one image. */}

@@ -6,15 +6,16 @@
  * use — not the pill radius the reference for this had; a 4px card and a 4px
  * button read as the same material, which a 24px card would not.
  *
- * The ground is `--bq-paper`, not `--bq-ecosystem-panel`: the panel token is
- * #f9f8f3 against a #fafaf8 canvas, a difference of three values, so the
- * cards would have been invisible.
+ * The ground is `--bq-ecosystem-panel`, the site's panel white. At #fbfbfb
+ * against a #ffffff canvas that is four values of separation and would be
+ * invisible on its own, so each card carries a hairline — the fill sets the
+ * tone, the border draws the shape.
  */
 
 .section {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0;
+  padding-block: var(--bq-section-y);
 }
 
 .inner {
@@ -31,9 +32,25 @@
 /* Stays on screen while the answers move past it — the questions are the
    thing being read, so they get the taller column and the motion. */
 .head {
-  position: sticky;
-  top: 120px;
   min-width: 0;
+}
+
+.contactPrompt {
+  margin-top: clamp(1.75rem, 3vw, 3rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--bq-ink-14);
+}
+
+.contactPrompt p {
+  margin: 0 0 0.35rem;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--bq-ink-66);
+}
+
+.contactLink {
+  color: var(--bq-green-deep);
 }
 
 .list {
@@ -43,8 +60,9 @@
 }
 
 .item {
-  border-radius: 4px;
-  background: var(--bq-paper);
+  border: 1px solid var(--bq-ink-14);
+  border-radius: 12px;
+  background: var(--bq-ecosystem-panel);
   transition: background-color var(--bq-dur-hover) var(--bq-ease);
 }
 
@@ -64,12 +82,12 @@
   border: 0;
   background: transparent;
   text-align: left;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: clamp(1.125rem, 1.4vw, 1.375rem);
   font-weight: 500;
   line-height: 1.35;
   letter-spacing: -0.01em;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
   cursor: pointer;
   list-style: none;
 }
@@ -77,7 +95,7 @@
 .question:focus-visible {
   outline: 2px solid var(--bq-green-deep);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 .icon {
@@ -120,7 +138,7 @@
   margin: 0;
   padding: 0 24px 26px;
   max-width: 42rem;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: var(--bq-t-body-lg);
   line-height: 1.6;
   color: var(--bq-ink-80);
@@ -132,9 +150,6 @@
     grid-template-columns: 1fr;
   }
 
-  .head {
-    position: static;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

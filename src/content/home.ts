@@ -45,23 +45,40 @@ export const home: HomePage = {
     audiences: [
       {
         id: 'learn',
-        switchLabel: 'I’m here to learn',
-        headline: 'Learn emerging tech. Build what comes next.',
-        body:
-          'Gain practical skills, build real projects, and grow with a ' +
-          'women-first community across Africa and beyond.',
+        switchLabel: 'For Learners',
+        /* "Build what comes next" could sit on any bootcamp's homepage —
+           everything that made this BitQueens was down in the lede. The second
+           line now carries the audience and the entry bar instead. */
+        /* `{mark}` drops an inline image into the line. Two only, and placed
+           so they sit diagonally — one late on the first line, one early on
+           the second — rather than stacking into a vertical column. */
+        headlineLines: [
+          'Learn emerging {portrait} tech.',
+          'Built for {room} women starting',
+          'from zero.',
+        ],
+        /* Three facts, no adjectives. The headline above now says who this is
+           for, so the lede is free to say what actually happens — and "free"
+           is the biggest objection this page can remove. "Africa and beyond"
+           is gone because the stats row underneath already says 8+ countries
+           reached. */
+        body: 'Free to join. Taught live, every week. Built around real projects.',
+        /* One CTA, not two. The hero's job is to start someone moving, and a
+           second door beside the first makes that a decision rather than a
+           step. Joining is reachable from the header and the closing band. */
         primaryCta: { label: 'Explore the Academy', href: '/academy' },
-        secondaryCta: { label: 'Join the community', href: '/join' },
       },
       {
         id: 'partner',
-        switchLabel: 'I’m here to partner',
-        headline: 'Back women building Africa’s digital future.',
+        switchLabel: 'For Partners',
+        headlineLines: [
+          'For companies, campuses & networks',
+          'backing women in tech.',
+        ],
         body:
-          'Partner with BitQueens to bring practical emerging-tech education, ' +
-          'community, and opportunity to more women.',
+          'We partner with companies, universities, networks, and funders to ' +
+          'bring practical emerging-tech learning and opportunity to more women.',
         primaryCta: { label: 'Partner with BitQueens', href: '/#ecosystem' },
-        secondaryCta: { label: 'See our impact', href: '/about' },
       },
     ],
     collaborators: {
@@ -168,19 +185,17 @@ export const home: HomePage = {
             'Learn emerging technology with a women-first community. Start free, then explore guided programmes when you’re ready.',
           cta: 'Explore the Academy',
           href: '/academy',
-          itemsLabel: 'Find your way to learn',
+          itemsLabel: '',
           items: ['Free community', 'Guided cohorts', 'Campus chapters'],
           preview: {
             stats: academyImpactStats.slice(0, 2),
+            hideItemNumbers: true,
+            heroButton: true,
             descriptions: [
               'Weekly sessions and a peer community. No experience needed.',
               'Learn in a group with live teaching. Free and paid options.',
               'Connect with women learning at university.',
             ],
-            secondaryCta: {
-              label: `Led by ${about.founder.name}`,
-              href: '/academy#teachers',
-            },
           },
           color: '#3B6C9F',
           ctaFill: 'light',
@@ -192,19 +207,17 @@ export const home: HomePage = {
             'Build with the BitQueens Labs team — explore technology products, practical AI and professional skills programmes for you or your organisation.',
           cta: 'Explore Labs',
           href: '/innovations',
-          itemsLabel: 'Inside the Labs',
+          itemsLabel: '',
           items: ['Chainelle', 'BitQueens AI', 'Skills programmes'],
           preview: {
             assurances: ['Clear scope, timeline & cost', 'No commitment to enquire'],
+            hideItemNumbers: true,
+            heroButton: true,
             descriptions: [
               'Our flagship technology product. Talk to the team about its fit for your project.',
               'Practical AI tools and integrations for teams and organisations.',
               'Build skills in blockchain, AI and Web3 design. Pricing on enquiry.',
             ],
-            secondaryCta: {
-              label: 'Discuss your project — request a quote',
-              href: '/innovations#quote',
-            },
           },
           /* The 5px bars on the closed spines, from Figma 268:279: brand
              orange, the blue, blush. */
@@ -248,10 +261,13 @@ export const home: HomePage = {
     partner: {
       eyebrow: 'Partner paths',
       headline: 'Build together',
-      headlineMuted: 'Four ways in.',
+      headlineMuted: 'Your ideas are welcome.',
       intro:
-        'Four kinds of partner, one route each. Pick the one that matches ' +
-        'what you can offer.',
+        'Explore a few ways to work with BitQueens. We welcome other ideas and industries, too.',
+      invitation: {
+        text: 'Don’t see your industry here? Let’s talk about how we can work together.',
+        cta: { label: 'Talk to us', href: '/contact?topic=partnerships' },
+      },
       pillars: [
         {
           name: 'Companies',
@@ -321,6 +337,28 @@ export const home: HomePage = {
     },
   },
 
+
+  learnerValue: {
+    eyebrow: 'Why learn with BitQueens',
+    headline: 'An open door. A real way forward.',
+    intro: 'Start with what you know today. Learn with people who make emerging technology easier to understand and easier to use.',
+    impactHeading: 'The progress so far.',
+    impactCta: { label: 'Explore Ecosystem', href: '/ecosystem' },
+    benefits: [
+      {
+        title: 'Free to begin',
+        description: 'Join the community and explore weekly sessions before choosing a guided programme.',
+      },
+      {
+        title: 'Taught live, in plain language',
+        description: 'Ask questions as you learn alongside other women. No technical background required.',
+      },
+      {
+        title: 'Built around real projects',
+        description: 'Move from new ideas to practical work you can build on beyond a session or cohort.',
+      },
+    ],
+  },
 
   /* ---------------------------------------------------------- 05 · path -- */
   /* Rebuilt from Figma 288:442: three flat cards with a corner mark each,
@@ -403,8 +441,7 @@ export const home: HomePage = {
   faq: {
     headline: 'The questions',
     headlineSerif: 'we get most.',
-    intro:
-      'About BitQueens, about joining, and about building with us. If yours is not here, write to us — a person answers.',
+    intro: 'About BitQueens, about joining, and about building with us.',
     items: [
       {
         question: 'What is BitQueens?',
@@ -445,15 +482,25 @@ export const home: HomePage = {
   },
 
   conference: {
-    eyebrow: 'The BitQueens Conference',
-    headlineLines: ['A seat at the', 'future of tech.'],
-    body:
-      'Meet women building in emerging tech. Learn from their stories, ' +
-      'share ideas and make new connections.',
+    /* One line, and short enough to stay one line: the body underneath
+       already says "emerging tech", so "of tech" was the headline saying it
+       first and worse. */
+    headlineLines: ['A seat at the future.'],
+    body: 'Meet women building in emerging tech — stories, ideas, new connections.',
     /* Says which facts are still open, in the shape they will be answered in.
        Replacing "To be announced" with a real date needs no layout change. */
     details: [
       { key: 'Next edition', value: 'Date to be announced. Join the interest list for updates.' },
+    ],
+    /* ------------------------------------------------------------------ *
+     * PLACEHOLDER — NOT A REAL EDITION. No date or venue has been
+     * confirmed by BitQueens. These two lines exist so the teaser can be
+     * judged in its filled state and MUST be replaced with the real
+     * edition, or reverted to "To be announced", before this ships.
+     * ------------------------------------------------------------------ */
+    meta: [
+      { icon: 'calendar', value: 'March 2027' },
+      { icon: 'place', value: 'Lagos, Nigeria' },
     ],
     /* The weekly trainings, straight from linktr.ee/BitQueens — the Zoom
        rooms and the full zone labels, daylight-saving halves included. This
@@ -472,7 +519,7 @@ export const home: HomePage = {
         href: 'https://us02web.zoom.us/j/81595873470',
       },
     ],
-    cta: { label: 'Explore the Conference', href: '/conference' },
+    cta: { label: 'Explore the events', href: '/events' },
     // Image supplied in the updated Figma frame, mirrored in presentation.
     image: {
       src: '/conference-audience.png',
@@ -482,7 +529,7 @@ export const home: HomePage = {
     },
     /* Shared artwork: the same wave the second path panel uses. */
     backdrop: {
-      src: '/path-wave-02.jpg',
+      src: '/path-wave-02.webp',
       alt: '',
       width: 1200,
       height: 672,
@@ -500,11 +547,13 @@ export const home: HomePage = {
     facts: about.founder.facts,
     storyLines: ['Kristie built the on-ramp', 'she couldn’t find.'],
     // NEEDS CONFIRMATION — placeholder bio, awaiting Kristie's own copy.
+    /* The "on-ramp she couldn't find" sentence is gone: the headline right
+       above says it, so the bio was restating the heading before adding
+       anything of its own. */
     bio:
       'Kristie founded BitQueens after watching capable women be priced and ' +
-      'talked out of an industry that badly needs them. She builds the on-ramp ' +
-      'she couldn’t find: programmes that assume no prior knowledge, taught in ' +
-      'plain language, with a community attached.',
+      'talked out of an industry that badly needs them. Her programmes assume ' +
+      'no prior knowledge, and come with a community attached.',
     cta: { label: 'Read the full story', href: '/about' },
     portrait: {
       src: '/kristie-portrait.jpg',
@@ -515,15 +564,21 @@ export const home: HomePage = {
   },
 
   /* ------------------------------------------------------ 08 · partners -- */
+  /* Reframed for partners. Every line of the old section was something the
+     partner would give — share, bring, co-host, support — so the page asked
+     four times and offered nothing. It now leads with the reach a partner is
+     actually buying into (the same four published figures), and each tier
+     says what comes back as well as what goes in. */
   partners: {
-    headline: 'The future opens',
-    headlineSerif: 'when we build together.',
+    headline: 'Reach women entering tech,',
+    headlineSerif: 'through work already running.',
     body:
-      'If you share knowledge, host a space, open networks, or support access, ' +
-      'you belong here. Together, we help more women learn and build in tech.',
+      'BitQueens has trained 2000+ women across 8+ countries since 2023, ' +
+      'through cohorts, campus chapters and a weekly community. Partnering ' +
+      'puts your people, tools or funding inside something already working.',
     invitation: {
-      title: 'Have another idea? Let’s talk.',
-      body: 'There’s no single way to build with BitQueens.',
+      title: 'Not sure which one fits?',
+      body: 'One conversation, no commitment — we will tell you honestly whether there is a fit.',
       cta: { label: 'Partner with BitQueens', href: '/#ecosystem' },
     },
     /* In number order. The frame (295:491) stacks 04 above 03; the numbers
@@ -532,32 +587,32 @@ export const home: HomePage = {
       {
         title: 'Companies',
         description: 'Share expertise, tools, mentors, and real-world opportunities.',
-        color: '#3B6C9F',
+        gain: 'Your team and tools in front of women entering the field, before anyone else meets them.',
       },
       {
         title: 'Universities',
         description:
           'Bring learning and community to campus through chapters and programmes.',
-        color: '#2A492F',
+        gain: 'A running chapter on your campus, with the programme and the community already built.',
       },
       {
         title: 'Communities & networks',
         description: 'Co-host gatherings and connect women to wider networks.',
-        color: '#E8641C',
+        gain: 'A co-hosted audience that reaches well past your own list.',
       },
       {
         title: 'Funders & institutions',
         description:
           'Support accessible learning and the partnerships that help it grow.',
-        color: '#F3AFBC',
+        gain: 'Delivery you can report against, with the figures published openly.',
       },
     ],
   },
 
   /* ---------------------------------------------------------- 09 · blog -- */
   blog: {
-    headline: 'Stories, Ideas and',
-    headlineSerif: 'Perspectives...',
+    headline: 'Stories, ideas and',
+    headlineMuted: 'perspectives.',
     cta: { label: 'Read our latest', href: '/blog' },
     posts: [
       {

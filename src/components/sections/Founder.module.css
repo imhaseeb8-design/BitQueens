@@ -11,8 +11,7 @@
   position: relative;
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  /* 36 at the frame, after the path section's own bottom padding. */
-  padding: clamp(2rem, 2.5vw, 2.25rem) 0 clamp(5rem, 8.6vw, 9.5rem);
+  padding-block: var(--bq-section-y);
 }
 
 .inner {
@@ -26,32 +25,38 @@
 
 .title {
   margin: 0 0 46px;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   /* 72 at the frame. */
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 400;
   line-height: 1.139;
   letter-spacing: -0.0417em;
   text-align: center;
   white-space: nowrap;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
 }
 
 /* 80 over 93 at the frame, on the same baseline. */
 .serif {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.1111em;
+  font-family: var(--bq-display), sans-serif;
   line-height: 1.1625;
-  letter-spacing: 0;
 }
 
 /* -- the card ------------------------------------------------------------- */
 
 .card {
   position: relative;
+  /* 18px, matching the Conference card and the Path stage. No
+     `overflow: hidden` here — the wax seal is deliberately hung outside the
+     top-right corner, so the portrait rounds its own two corners instead. */
+  border-radius: 18px;
   display: grid;
   grid-template-columns: minmax(0, 500fr) minmax(0, 796fr);
-  min-height: 580px;
+  /* 580 at the frame, when the bio ran four lines. `.actions` is pinned to
+     the bottom with `margin-top: auto`, so every line the bio loses becomes
+     empty green between it and the rule — the height has to come down with
+     the copy. */
+  min-height: 480px;
   background: var(--bq-green-deep);
   color: var(--bq-canvas);
 }
@@ -60,6 +65,7 @@
   position: relative;
   min-width: 0;
   overflow: hidden;
+  border-radius: 18px 0 0 18px;
 }
 
 /* Top-aligned: the frame keeps her face and crops the dress. */
@@ -85,7 +91,7 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   /* 44 over 48 at the frame. */
   font-size: clamp(1.75rem, 3.056vw, 2.75rem);
   font-weight: 400;
@@ -96,12 +102,12 @@
 
 .identity {
   margin-bottom: 28px;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
 }
 
 .name {
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: clamp(1.125rem, 1.4vw, 1.375rem);
   line-height: 1.3;
   letter-spacing: -0.02em;
@@ -111,7 +117,7 @@
   margin: 6px 0 0;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: rgba(250, 250, 248, 0.9);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .storyLine {
@@ -121,10 +127,10 @@
 .bio {
   max-width: 648px;
   margin: 18px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
   line-height: 1.556;
-  color: rgba(250, 250, 248, 0.9);
+  color: rgba(255, 255, 255, 0.9);
   text-wrap: pretty;
 }
 
@@ -132,7 +138,7 @@
 .actions {
   align-self: stretch;
   margin-top: auto;
-  padding-top: 32px;
+  padding-top: 24px;
 }
 
 .rule {
@@ -152,17 +158,17 @@
 }
 
 .factLabel {
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.6875rem;
   line-height: 1.5;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(250, 250, 248, 0.9);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .factValue {
   margin: 8px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: clamp(1.125rem, 1.4vw, 1.375rem);
   line-height: 1.3;
   letter-spacing: -0.02em;
@@ -181,11 +187,11 @@
    corner. `.card .story` outranks the Button module's `.onDark.primary`. */
 .card .story .primaryCta {
   min-height: 0;
-  padding: 17px 22px;
+  padding: 12px 20px;
   border: 0;
-  border-radius: 4px;
+  border-radius: 999px;
   color: var(--bq-green-deep);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1.334;
@@ -195,9 +201,11 @@
 /* A 16px text link on the green (node 281:421). */
 .card .story .secondaryCta {
   min-height: 0;
-  padding: 0;
+  padding: 0 0 5px;
+  border: 0;
+  background: none;
   color: var(--bq-canvas);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.25;
@@ -227,6 +235,33 @@
   pointer-events: none;
 }
 
+/* Homepage layout: two independent rounded cards, with the story first. The
+   About page continues to use the original shared card layout above. */
+.homeTitle {
+  text-align: left;
+}
+
+.homeTitleEnd {
+  opacity: 0.55;
+}
+
+.homeCard {
+  gap: 16px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  background: transparent;
+}
+
+.homeCard .story {
+  order: 1;
+  border-radius: 24px;
+  background: var(--bq-green-deep);
+}
+
+.homeCard .portrait {
+  order: 2;
+  border-radius: 24px;
+}
+
 /* -- responsive ----------------------------------------------------------- */
 
 @media (max-width: 1100px) {
@@ -245,8 +280,10 @@
     min-height: 0;
   }
 
+  /* Stacked: it is the top of the card now, not its left edge. */
   .portrait {
     aspect-ratio: 500 / 520;
+    border-radius: 18px 18px 0 0;
   }
 
   .story {
@@ -265,5 +302,15 @@
     top: -24px;
     right: -10px;
     width: 64px;
+  }
+
+  .homeCard {
+    gap: 16px;
+  }
+
+  .homeCard .portrait {
+    min-height: 0;
+    aspect-ratio: 500 / 520;
+    border-radius: 24px;
   }
 }

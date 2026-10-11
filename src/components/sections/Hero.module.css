@@ -1,44 +1,58 @@
 /**
  * Hero — Figma 322:107 / 322:153.
  *
- * At 1440, measured from the top of the band (the 81px header sits above it):
- * map 1160 × 653 at y41, centred, 10% opacity under a wash that clears at the
- * top and reaches 80% ground at the bottom; switch 284 × 43 at y123; headline
- * y183, 64px over 1.1 in a 684 measure; lede y347, 18px over 27 in 668; CTAs
- * y441, 51 tall on a 15 gap. Then the collaborator strip, 137 under the
- * CTAs, with 80 of ground below it.
- *
- * Everything is centred, so the measures below are `max-width` + `auto`
- * margins rather than offsets, and the vertical rhythm is fluid to the 1440
- * values and then holds.
+ * The band fills the viewport below the header, with its content centred in
+ * the space above the collaborator strip. The strip stays at the bottom. A
+ * min-height lets the whole section grow on short or narrow screens instead
+ * of clipping the headline, actions, or logos.
  */
 
 .hero {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--bq-header-height));
   background: var(--bq-canvas);
-  /* 80 of ground under the strip before the next section. */
-  padding-bottom: clamp(2.5rem, 5.556vw, 5rem);
 }
 
 /* -- the band ------------------------------------------------------------- */
 
 .band {
   position: relative;
+  display: flex;
+  flex: 1;
   overflow: clip;
 }
 
 /* Centred behind the copy and faint — the motion should read as weather
    behind the page, not as a picture. */
+/* Split, not centred. The map runs the full width and the mask takes its
+   middle out, so the dots gather against both edges and the headline sits on
+   clean ground instead of on top of them. Being clear of the type is also
+   what lets the opacity come up. */
 .map {
   position: absolute;
   top: clamp(1.5rem, 2.847vw, 2.5625rem);
   left: 50%;
   z-index: 0;
-  width: min(1250px, 87vw);
+  width: 92%;
   height: auto;
   aspect-ratio: 2048 / 1153;
   transform: translateX(-50%);
-  opacity: 0.36;
+  /* The keyframe below ends on this same variable. Declaring the value in
+     both places is what silently pinned the map at 0.36 — the animation
+     fills forwards, so its end frame wins over the rule. */
+  --map-opacity: 0.62;
+  opacity: var(--map-opacity);
+  mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 18%,
+    transparent 40%,
+    transparent 60%,
+    #000 82%,
+    #000 100%
+  );
   pointer-events: none;
   animation: bqHeroFade 1.2s var(--bq-ease) 200ms both;
 }
@@ -49,8 +63,8 @@
   z-index: 0;
   background: linear-gradient(
     to bottom,
-    rgba(250, 250, 248, 0) 0%,
-    rgba(250, 250, 248, 0.8) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 100%
   );
   pointer-events: none;
 }
@@ -62,40 +76,65 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   max-width: var(--bq-max);
   margin: 0 auto;
-  padding: clamp(3rem, 6.25vw, 5.625rem) var(--bq-gutter)
-    clamp(3rem, 9.514vw, 8.5625rem);
+  padding: clamp(2.5rem, 5vh, 4rem) var(--bq-gutter);
   text-align: center;
+}
+
+@media (min-width: 901px) {
+  .inner {
+    /* Keep the entire switch-to-proof group just above the viewport's
+       centre, without shifting the globe in the following section. */
+    transform: translateY(clamp(-6rem, -7vh, -4rem));
+  }
 }
 
 /* -- the audience switch --------------------------------------------------- */
 
+/* A segmented control: one hairline outline holding two states.
+   The track was `--bq-paper` — which, once the page went pure white, was the
+   warmest thing on it and read as a stray swatch. An outline says "one
+   control with two options" without introducing a colour. */
 .switch {
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  width: min(284px, 100%);
+  /* Sized to its content, not to a number. At a fixed 320px the columns were
+     wider than either label, so the track carried slack at both ends. */
+  width: fit-content;
+  max-width: 100%;
   padding: 3px;
-  border-radius: 6px;
-  /* The track is the page ground: only the active pill reads as a control,
-     and the other option sits on the open page (322:107, edited). */
-  background: var(--bq-canvas);
+  border-radius: 999px;
+  border: 1px solid var(--bq-ink-14);
+  /* Frosted, not filled. The map pulses directly behind this, and a fully
+     transparent track let the dots blink through the labels. A translucent
+     white plus a blur mutes them without turning the control into a chip —
+     on a white page the fill is invisible except where the dots are. */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
   animation: bqHeroRise 800ms var(--bq-ease) both;
 }
 
 /* The active pill is one element that slides, rather than a background that
    appears on whichever option is selected: the switch then reads as one
-   control with a state, not two buttons taking turns. */
+   control with a state, not two buttons taking turns.
+   It used to be a solid deep-green slab, which made the switch the loudest
+   thing in the hero — louder than the headline it sits above. */
 .switch::before {
   content: '';
+  box-sizing: border-box;
   position: absolute;
   top: 3px;
   left: 3px;
   width: calc(50% - 3px);
   height: calc(100% - 6px);
-  border-radius: 3px;
-  background: var(--bq-green-deep);
+  border-radius: 999px;
+  /* A faint neutral fill, not a second outline: a bordered pill inside a
+     bordered track reads as two rings. */
+  background: var(--bq-ink-06);
   transition: transform 420ms var(--bq-ease);
 }
 
@@ -105,22 +144,23 @@
 
 .option {
   position: relative;
-  min-height: 37px;
-  padding: 10px 12px;
+  min-height: 34px;
+  padding: 7px 12px;
   border: 0;
-  border-radius: 3px;
+  border-radius: 999px;
   background: none;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 0.75rem;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
   line-height: 1.25;
-  color: rgba(6, 80, 60, 0.6);
+  color: var(--bq-ink-45);
   white-space: nowrap;
   cursor: pointer;
   transition: color 420ms var(--bq-ease);
 }
 
 .option[aria-selected='true'] {
-  color: var(--bq-canvas);
+  color: var(--bq-ink);
   cursor: default;
 }
 
@@ -145,7 +185,7 @@
   border: 1px solid rgba(6, 80, 60, 0.14);
   border-radius: 999px;
   background: var(--bq-canvas);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.8125rem;
   line-height: 1.4;
   color: var(--bq-green-deep);
@@ -160,43 +200,6 @@
 }
 
 /* Quiet, open impact figures below the hero actions. */
-.trust {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem 1.25rem;
-  margin: 2rem 0 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--bq-green-deep);
-}
-
-.trustItem {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  white-space: nowrap;
-}
-
-.trustItem + .trustItem {
-  border-left: 1px solid rgba(6, 80, 60, 0.2);
-  padding-left: 1.25rem;
-}
-
-.trustItem strong {
-  font-weight: 600;
-}
-
-.trustIcon {
-  flex: none;
-  width: 20px;
-  height: 20px;
-  margin-right: 0.125rem;
-}
-
 /* -- the copy -------------------------------------------------------------- */
 
 .panel {
@@ -206,32 +209,99 @@
   width: 100%;
 }
 
+.headlineLine {
+  display: block;
+}
+
+.partnerStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 18px;
+  padding: 6px 12px;
+  border: 1px solid rgba(6, 80, 60, 0.18);
+  border-radius: 999px;
+  background: var(--bq-green-tint);
+  color: var(--bq-green-deep);
+  font-family: var(--bq-secondary-font);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: var(--bq-secondary-tracking);
+}
+
+.partnerStatusDot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Sized in `em` so it tracks the headline at every breakpoint, and nudged up
+   a little because an optical centre sits above a text baseline. */
+.headlineMark {
+  display: inline-block;
+  width: 0.86em;
+  height: 0.86em;
+  margin: 0 0.1em;
+  /* Round. The rounded-square read as an app icon, which is the reference's
+     register, not this one — a circle reads as a portrait. The globe is a
+     transparent PNG, so the radius only shows on the photo. */
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: -0.1em;
+}
+
+.headlinePortraitFrame {
+  position: relative;
+  overflow: hidden;
+}
+
+.headlinePortrait {
+  position: absolute;
+  width: 250%;
+  height: 250%;
+  max-width: none;
+  left: -80%;
+  top: -28%;
+  object-fit: cover;
+}
+
 .headline {
-  /* 684 at the frame, and the same two-line measure carries the partner
-     headline (667). */
-  max-width: 684px;
-  /* The two headlines are both two lines; holding the taller one's height
-     keeps the lede and the CTAs from stepping when the switch flips. */
-  min-height: calc(2 * 1.1em);
+  /* The lines are set in content now, so this only has to be wide enough not
+     to break them again. */
+  max-width: min(100%, 1040px);
+  /* The learner headline runs to three lines and the partner one to two, so
+     this holds the taller of the pair — otherwise the lede and the CTA jump
+     up a line every time the switch flips. */
+  min-height: calc(3 * 1.1em);
   margin: 12px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  /* 64 at the frame. */
-  font-size: clamp(2.25rem, 4.444vw, 4rem);
+  font-family: var(--bq-display), sans-serif;
+  /* 56. The fluid middle is rebased with it, so it still tops out at 56
+     around 1440 rather than stepping mid-range. */
+  font-size: clamp(2.125rem, 3.89vw, 3.5rem);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.025em;
   color: var(--bq-green-deep);
   text-wrap: balance;
-  animation: bqHeroRise 800ms var(--bq-ease) 60ms both;
+}
+
+/* The partner headline is two lines. Release the learner's three-line reserve
+   so the supporting copy sits directly beneath the final line. */
+.panel[data-audience='partner'] .headline {
+  min-height: 0;
 }
 
 .body {
-  max-width: 668px;
+  /* Wide enough to hold the lede on one line at desktop; it still wraps
+     where the viewport is narrower than the sentence. */
+  max-width: min(100%, 760px);
   margin: 16px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: var(--bq-t-subhead);
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.8);
+  color: var(--bq-ink-80);
   text-wrap: pretty;
   animation: bqHeroRise 800ms var(--bq-ease) 130ms both;
 }
@@ -248,22 +318,25 @@
 /* Both sit on the shared Button, so they carry the site's arrow shift; only
    the frame's colour, corner and type are set here. `.ctas .x` outranks the
    Button module's own single-class rules. */
+/* Pill, not the site's 4px corner. A single CTA has nothing to sit square
+   against, and the round end reads as the one thing to press. */
 .ctas .primaryCta,
 .ctas .secondaryCta {
   min-height: 0;
-  padding: 16px 34px;
-  border-radius: 4px;
-  font-family: var(--bq-inter-tight), sans-serif;
+  padding: 12px 20px;
+  border-radius: 100px;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.19;
   letter-spacing: 0;
 }
 
+/* Matches the shared flat green CTA. */
 .ctas .primaryCta {
   border: 0;
   background: var(--bq-green-deep);
-  color: var(--bq-canvas);
+  color: #fafaf8;
 }
 
 .ctas .secondaryCta {
@@ -274,7 +347,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .ctas .primaryCta:hover {
-    background: var(--bq-ink);
+    background: var(--bq-green-deep);
   }
 
   .ctas .secondaryCta:hover {
@@ -285,38 +358,76 @@
 
 /* -- the collaborator strip ------------------------------------------------ */
 
-/* One centred caption over one static row — the logos are a fact about the
-   work, not something that needs to move to be noticed. */
+/* A centred caption over a running row. This was a static row — four logos
+   is not many, and standing still they read as all there is. Moving, the row
+   implies it continues past both edges. */
 .strip {
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  max-width: var(--bq-max);
+  width: 100%;
   margin: 0 auto;
-  padding: 0 var(--bq-gutter);
+  padding: 0 var(--bq-gutter) clamp(2rem, 4vh, 3.5rem);
   text-align: center;
 }
 
 .stripLabel {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
-  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 1rem;
   line-height: 1.4;
   color: var(--bq-ink-50);
   text-wrap: pretty;
 }
 
-/* Centred with one stated gap rather than spread to a width: the spacing is
-   then the same between every pair, whatever the logos measure. */
+/* The viewport the track runs through. The mask fades both ends so logos
+   arrive and leave rather than popping at a hard edge. */
+.ticker {
+  overflow: hidden;
+  /* Held to a narrow centred window so four or five logos are in view at a
+     time. Run full-bleed the row fits nine, which reads as a wall rather
+     than a procession. */
+  max-width: min(100%, 820px);
+  margin: clamp(2rem, 3.056vw, 2.75rem) auto 0;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
 .logos {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem clamp(2.5rem, 8.333vw, 7.5rem);
-  margin: clamp(2rem, 3.056vw, 2.75rem) 0 0;
+  width: max-content;
+  margin: 0;
   padding: 0;
   list-style: none;
+  animation: bqLogoTicker 34s linear infinite;
+}
+
+/* One pass of the set. Three sit side by side, so translating by a third
+   lands the second pass exactly where the first began. */
+.pass {
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5.5rem);
+  padding-right: clamp(2.5rem, 6vw, 5.5rem);
+}
+
+@keyframes bqLogoTicker {
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* A row that moves on its own is exactly what reduced motion asks about. */
+@media (prefers-reduced-motion: reduce) {
+  .logos {
+    animation: none;
+    justify-content: center;
+  }
 }
 
 .logo {
@@ -348,7 +459,7 @@
     opacity: 0;
   }
   to {
-    opacity: 0.36;
+    opacity: var(--map-opacity);
   }
 }
 
@@ -356,7 +467,7 @@
 
 @media (max-width: 900px) {
   .map {
-    width: 150vw;
+    width: 138vw;
   }
 
   .headline {
@@ -407,4 +518,12 @@
     width: min(100%, 320px);
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+/* The chip under the figures, in the band the dotted globe runs through.
+   Centred on the same axis as everything else in the hero. */
+.conferenceRow {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2.5rem, 4.5vw, 4rem);
 }

@@ -12,7 +12,7 @@ import type {
   AcademyPath as AcademyPathContent,
   AcademyStep,
 } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyPath.module.css';
 
 const MARKS: Record<AcademyStep['mark'], typeof TrackMark> = {
@@ -42,7 +42,7 @@ export function AcademyPath({ content }: { content: AcademyPathContent }) {
     <section
       id="how"
       aria-label="How the Academy works"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.head}>

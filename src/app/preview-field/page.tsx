@@ -64,7 +64,7 @@ export default function PreviewField() {
             <p
               style={{
                 margin: 0,
-                fontFamily: 'var(--bq-neue-montreal), sans-serif',
+                fontFamily: 'var(--bq-display), sans-serif',
                 fontSize: 22,
                 letterSpacing: '-0.02em',
                 color: 'var(--bq-green-deep)',

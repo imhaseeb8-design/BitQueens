@@ -114,8 +114,10 @@ the ecosystem stack (Figma node 89:205). It has to be brighter than the
 early. "Correcting" it to `--bq-canvas` is a mistake this repo has already
 made once — don't repeat it.
 
-**Type** — Cabinet Grotesk (display) + Switzer (body), via Fontshare. The scale
-is fluid `clamp()` in `tokens.css`; use the tokens, not raw px.
+**Type** — semantic headings use the system SF Pro Display face with `-0.5px`
+letter spacing across every page; browsers without SF Pro use the system sans
+fallback. Body text keeps its existing font. The scale is fluid `clamp()` in
+`tokens.css`; use the tokens, not raw px.
 
 **Grid** — 1440px frame, 72px margins. The grid is a layout constraint only;
 **nothing draws it.** An earlier pass rendered the two outer margin rails as

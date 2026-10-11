@@ -1,11 +1,11 @@
 import { AudienceOnly } from '@/components/audience/AudienceProvider';
 import { Blog } from '@/components/sections/Blog';
 import { CampusChapters } from '@/components/sections/CampusChapters';
-import { Conference } from '@/components/sections/Conference';
 import { Ecosystem } from '@/components/sections/Ecosystem';
 import { Faq } from '@/components/sections/Faq';
 import { Founder } from '@/components/sections/Founder';
 import { Hero } from '@/components/sections/Hero';
+import { LogoMarquee } from '@/components/sections/LogoMarquee';
 import { Path } from '@/components/sections/Path';
 import { Place } from '@/components/sections/Place';
 import { home } from '@/content/home';
@@ -14,18 +14,19 @@ import { homeLayout } from '@/content/layout';
 /**
  * The homepage.
  *
- * Order is the argument: who we are and the numbers behind it → the flagship
- * moment → what the ecosystem is → that you can start → who can build with
- * us → who is behind it → what we publish → the questions both audiences
- * ask → your place, and the two doors.
+ * Order is the argument: who we are and the numbers behind it → the ecosystem
+ * → why learners can start here → how to begin → who is behind it →
+ * what we publish → the questions both audiences ask →
+ * your place, and the two doors.
  *
  * Campus chapters sit on the partner side only. Starting a chapter is a
  * partner-shaped ask — you bring a campus, we bring the playbook — and on
  * /academy, where it used to live, its form interrupted a learner on the way
  * to the cohort application.
  *
- * Impact figures sit in the hero's trust bar. Partner logos close the hero;
- * the conference follows directly.
+ * Impact figures sit in the hero's trust bar. Partner logos follow the
+ * ecosystem. The detailed progress and conference teaser sections are hidden
+ * from the homepage; their components remain available to other pages.
  *
  * The sections used to carry numbered "NN / NAME" eyebrows and the order was
  * described by those numbers. They are gone, so nothing renumbers when a
@@ -42,8 +43,8 @@ export default function HomePage() {
           component and its content are kept — restore this line to bring the
           entity register back.
           <Proof content={home.proof} variant={homeLayout.proof} /> */}
-      <Conference content={home.conference} />
       <Ecosystem content={home.ecosystem} variant={homeLayout.ecosystem} />
+      <LogoMarquee content={home.hero.collaborators} />
       <Path content={home.path} />
       {/* Partners is hidden: on the partner side the ecosystem accordion
           already names Companies, Universities, Networks and Funders, so

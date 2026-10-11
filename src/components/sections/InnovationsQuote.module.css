@@ -1,7 +1,8 @@
 .section { background: var(--bq-green-deep); color: var(--bq-canvas); padding: clamp(3rem, 5vw, 4.5rem) 0; }
 .inner { box-sizing: border-box; max-width: var(--bq-max); margin: 0 auto; padding: 0 var(--bq-gutter); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-.panel { background: var(--bq-ecosystem-panel); color: var(--bq-ink); border-radius: 4px; padding: clamp(1.5rem, 3vw, 2.5rem); font-family: var(--bq-inter-tight), sans-serif; }
-.panel input, .panel select, .panel textarea, .panel button { border-radius: 4px; }
+.panel { background: var(--bq-ecosystem-panel); color: var(--bq-ink); border-radius: 12px; padding: clamp(1.5rem, 3vw, 2.5rem); font-family: var(--bq-body-sans), sans-serif; }
+.panel input, .panel select, .panel textarea { border-radius: 8px; }
+.panel button { border-radius: 999px; }
 @media (max-width: 900px) { .inner { grid-template-columns: 1fr; } }
-.copy h2 { font-family: var(--bq-instrument-serif), Georgia, serif; letter-spacing: 0; }
+.copy h2 { font-family: var(--bq-display), sans-serif; letter-spacing: 0; }
 .copy h2 span { font-size: 1em; line-height: 1.05; }

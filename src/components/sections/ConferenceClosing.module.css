@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: var(--bq-t-lg);
   font-weight: 400;
   line-height: 1.08;
@@ -32,16 +32,13 @@
 }
 
 .serif {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.12em;
-  line-height: 1.05;
-  letter-spacing: 0;
+  font-family: var(--bq-display), sans-serif;
 }
 
 .body {
   max-width: 38rem;
   margin: clamp(1.25rem, 2vw, 1.75rem) auto 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: var(--bq-t-body-lg);
   line-height: 1.55;
   color: var(--bq-cream-82);

@@ -29,7 +29,7 @@
 
 .eyebrow {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: var(--bq-t-eyebrow);
   font-weight: 600;
   line-height: 1.25;
@@ -42,7 +42,7 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: var(--bq-t-xl);
   font-weight: 400;
   line-height: 1.06;
@@ -56,16 +56,13 @@
 }
 
 .serif {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.12em;
-  line-height: 1.02;
-  letter-spacing: 0;
+  font-family: var(--bq-display), sans-serif;
 }
 
 .body {
   margin: 0;
   max-width: 30rem;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: var(--bq-t-body-lg);
   line-height: 1.6;
   color: var(--bq-ink-80);
@@ -74,7 +71,7 @@
 
 .panel {
   background: var(--bq-paper);
-  border-radius: 20px;
+  border-radius: 12px;
   padding: clamp(28px, 3vw, 44px);
 }
 
@@ -86,4 +83,17 @@
   .copy {
     position: static;
   }
+}
+
+/* The figures under the copy: the same quiet row the hero and the About
+   page close on, one step down in scale because the form beside it is the
+   thing to do, not the numbers. */
+.trust {
+  justify-content: flex-start;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 900px) {
+  .trust { justify-content: center; }
 }

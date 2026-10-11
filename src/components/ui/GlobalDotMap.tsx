@@ -68,7 +68,13 @@ function energyAt(x: number, y: number, t: number) {
   return smooth01(clamp01(peak * 0.84 + sum * 0.23 + local - 0.04));
 }
 
-export function GlobalDotMap({ className = '' }: { className?: string }) {
+export function GlobalDotMap({
+  className = '',
+  pulseGrowth = 0.22,
+}: {
+  className?: string;
+  pulseGrowth?: number;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -116,7 +122,7 @@ export function GlobalDotMap({ className = '' }: { className?: string }) {
         const y = POINTS[i + 1];
         const energy = reduceMotion ? 0.12 : energyAt(x, y, t);
 
-        const radius = baseRadius * (0.94 + energy * 0.22);
+        const radius = baseRadius * (0.94 + energy * pulseGrowth);
         const r = Math.round(BASE[0] + (ACTIVE[0] - BASE[0]) * energy);
         const g = Math.round(BASE[1] + (ACTIVE[1] - BASE[1]) * energy);
         const b = Math.round(BASE[2] + (ACTIVE[2] - BASE[2]) * energy);
@@ -137,7 +143,7 @@ export function GlobalDotMap({ className = '' }: { className?: string }) {
       observer.disconnect();
       if (frameId !== undefined) cancelAnimationFrame(frameId);
     };
-  }, []);
+  }, [pulseGrowth]);
 
   return (
     <div className={`${styles.root} ${className}`} aria-hidden="true">

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import type { ConferenceClosingSection } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './ConferenceClosing.module.css';
 
 /** The page's one door, on the forest band the site closes dark sections with. */
@@ -13,7 +13,7 @@ export function ConferenceClosing({
   return (
     <section
       aria-label="Join BitQueens"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <Reveal>

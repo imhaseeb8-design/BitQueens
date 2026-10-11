@@ -55,7 +55,7 @@
   flex-direction: column;
   min-width: 0;
   padding: 32px 30px 28px;
-  background: #f3f1ea;
+  background: var(--bq-ecosystem-panel);
   border-top: 2px solid var(--accent);
   transition:
     transform 500ms var(--bq-ease),
@@ -154,7 +154,7 @@
   .indexRow:hover {
     padding-block: 52px;
     padding-left: 36px;
-    background: #f2f0e9;
+    background: var(--bq-ecosystem-panel);
   }
 }
 
@@ -264,7 +264,7 @@
   align-items: center;
   gap: clamp(1rem, 0.5rem + 2vw, 1.75rem);
   min-height: var(--stack-header-h);
-  border-top: 1px solid rgba(241, 238, 228, 0.3);
+  border-top: 1px solid rgba(251, 251, 251, 0.3);
 }
 
 .stackIndex {
@@ -272,7 +272,7 @@
   font-size: var(--bq-t-eyebrow);
   font-weight: 500;
   letter-spacing: 0.2em;
-  color: rgba(241, 238, 228, 0.72);
+  color: rgba(251, 251, 251, 0.72);
 }
 
 .stackName {
@@ -298,7 +298,7 @@
   margin: 0 0 clamp(1.75rem, 1.25rem + 1.5vw, 2.5rem);
   font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
   line-height: 1.6;
-  color: rgba(241, 238, 228, 0.86);
+  color: rgba(251, 251, 251, 0.86);
   text-wrap: pretty;
 }
 
@@ -308,7 +308,7 @@
   gap: 10px;
   width: fit-content;
   padding-bottom: 4px;
-  border-bottom: 1px solid rgba(241, 238, 228, 0.6);
+  border-bottom: 1px solid rgba(251, 251, 251, 0.6);
   font-size: 1rem;
   font-weight: 500;
   transition: gap 400ms var(--bq-ease), border-color 400ms var(--bq-ease);
@@ -514,8 +514,8 @@
   align-items: center;
   gap: 10px;
   width: fit-content;
-  padding: 16px 34px;
-  font-size: 0.875rem;
+  padding: 12px 20px;
+  font-size: 1rem;
   /* The frame's 48px height is 16 + 16 padding around a 16px line box. The
      inherited body line-height (1.6) would make that 54. */
   line-height: 1.15;

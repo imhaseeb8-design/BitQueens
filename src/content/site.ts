@@ -22,7 +22,7 @@ export const site: SiteConfig = {
 
   nav: [
     { label: 'Ecosystem', href: '/ecosystem' },
-    { label: 'Conference', href: '/conference' },
+    { label: 'Events', href: '/events' },
     { label: 'Blog', href: '/blog' },
     { label: 'About', href: '/about' },
   ],
@@ -62,7 +62,7 @@ export const footerLinks = {
      with the mailbox. */
   explore: [
     { label: 'About', href: '/about' },
-    { label: 'Conference', href: '/conference' },
+    { label: 'Events', href: '/events' },
     { label: 'Partner with us', href: '/#ecosystem' },
     { label: 'Blog', href: '/blog' },
   ],

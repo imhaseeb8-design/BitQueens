@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/Button';
 import { GlobalDotMap } from '@/components/ui/GlobalDotMap';
 import { Reveal } from '@/components/ui/Reveal';
 import type { ConferenceHeroSection } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './ConferenceHero.module.css';
 
 /**
@@ -13,7 +13,7 @@ export function ConferenceHero({ content }: { content: ConferenceHeroSection }) 
   return (
     <section
       aria-label="The BitQueens Conference"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <GlobalDotMap className={styles.map} />
       <div className={styles.wash} />

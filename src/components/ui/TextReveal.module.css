@@ -1,0 +1,71 @@
+.reveal {
+  --reveal-blur: 6px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.line {
+  display: block;
+}
+
+.clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(105%);
+  filter: blur(var(--reveal-blur));
+}
+
+.reveal[data-visible='true'] .word {
+  animation: word-in 750ms var(--bq-ease) both;
+  animation-delay: var(--reveal-delay, 0s);
+}
+
+@keyframes word-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (scripting: none) {
+  .word {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    transform: none;
+    filter: none;
+  }
+
+  .reveal[data-visible='true'] .word {
+    animation: word-fade 300ms var(--bq-ease) both;
+    animation-delay: 0s;
+  }
+}
+
+@keyframes word-fade {
+  to { opacity: 1; }
+}

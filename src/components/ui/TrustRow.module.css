@@ -1,0 +1,49 @@
+/**
+ * The figures row. Lifted out of Hero.module.css unchanged when the About
+ * page's closing block needed the same thing.
+ */
+
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.625rem 1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  /* Grey and quiet: four green figures directly under a green button and a
+     green headline made the block one colour all the way down, and at full
+     weight they competed with the CTA they sit beneath. These are
+     corroboration, not the thing to read — but 50% dropped them far enough
+     back to read as disabled. */
+  color: var(--bq-ink-66);
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  white-space: nowrap;
+}
+
+.trustItem + .trustItem {
+  border-left: 1px solid var(--bq-ink-14);
+  padding-left: 1rem;
+}
+
+/* The figure still leads, but 600 against a 50%-ink label was a bigger jump
+   than this row needs. */
+.trustItem strong {
+  font-weight: 500;
+  color: var(--bq-ink-80);
+}
+
+.trustIcon {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  margin-right: 0.125rem;
+}

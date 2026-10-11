@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button';
+import { Button, CtaArrow } from '@/components/ui/Button';
 import { SelectionLink } from '@/components/ui/SelectionLink';
 import { Reveal } from '@/components/ui/Reveal';
 import { SectionHead } from '@/components/ui/SectionHead';
@@ -6,7 +6,7 @@ import type {
   AcademyCohort,
   AcademyTracks as AcademyTracksContent,
 } from '@/lib/types';
-import { instrumentSerif, interTight, neueMontreal } from '@/styles/fonts';
+import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './AcademyTracks.module.css';
 
 /**
@@ -37,12 +37,11 @@ export function AcademyTracks({
     <section
       id="tracks"
       aria-label="Learning tracks"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
       <div className={styles.inner}>
         <div className={styles.head}>
           <SectionHead
-            eyebrow={content.eyebrow}
             headline={content.headline}
             headlineSerif={content.headlineSerif}
             intro={content.intro}
@@ -63,9 +62,6 @@ export function AcademyTracks({
             return (
               <Reveal key={track.name} as="li" delay={i * 90}>
                 <SelectionLink href={href} selection={{kind:'cohort',value:cohort?.name ?? ''}} className={styles.card}>
-                  <p className={styles.numeral} aria-hidden="true">
-                    {String(i + 1).padStart(2, '0')}
-                  </p>
                   <h3 className={styles.title}>{track.name}</h3>
                   <p className={styles.desc}>{track.description}</p>
 
@@ -85,7 +81,7 @@ export function AcademyTracks({
                         : 'Self-paced · join any time'}
                     </span>
                     <span className={styles.arrow} aria-hidden="true">
-                      →
+                      <CtaArrow />
                     </span>
                   </p>
                 </SelectionLink>

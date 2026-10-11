@@ -1,4 +1,5 @@
 import { Reveal } from './Reveal';
+import { TextReveal } from './TextReveal';
 import styles from './SectionHead.module.css';
 
 interface SectionHeadProps {
@@ -42,16 +43,12 @@ export function SectionHead({
           <p className={styles.eyebrow}>{eyebrow}</p>
         </Reveal>
       )}
-      <Reveal delay={80}>
-        <h2 className={styles.headline}>
-          <span className={styles.line}>{headline}</span>
-          {headlineSerif && (
-            <span className={`${styles.line} ${styles.serif}`}>
-              {headlineSerif}
-            </span>
-          )}
-        </h2>
-      </Reveal>
+      <TextReveal
+        text={headlineSerif ? `${headline}\n${headlineSerif}` : headline}
+        className={styles.headline}
+        lineClassNames={headlineSerif ? [styles.line, `${styles.line} ${styles.serif}`] : [styles.line]}
+        delay={0.08}
+      />
       {intro && (
         <Reveal delay={140}>
           <p className={styles.intro}>{intro}</p>

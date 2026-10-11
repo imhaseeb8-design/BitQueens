@@ -57,10 +57,10 @@
 .purpose {
   max-width: 391px;
   margin: 11px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   line-height: 1.5625;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
   text-wrap: pretty;
 }
 
@@ -93,11 +93,11 @@
 
 .colTitle {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.25;
-  letter-spacing: 0.15em;
+  letter-spacing: 0px !important;
   text-transform: uppercase;
   color: var(--bq-green-deep);
 }
@@ -118,7 +118,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   line-height: 1.375;
   color: var(--bq-ink);
@@ -160,7 +160,7 @@
   margin-top: 70px;
   padding: 21px 0 40px;
   border-top: 1px solid var(--bq-green-deep);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.8125rem;
   line-height: 1.46;
   color: #53645d;

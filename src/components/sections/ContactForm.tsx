@@ -42,7 +42,6 @@ export function ContactForm({initialTopic='general'}:{initialTopic?:string}) {
     <div className={form.field}><label className={form.label} htmlFor="contact-org">Organisation (optional)</label><input id="contact-org" name="organization" autoComplete="organization" className={form.input} value={org} onChange={e=>setOrg(e.target.value)}/></div>
     <div className={form.field}><label className={form.label} htmlFor="contact-message">{topic==='speaker'?'Tell us about your event':'Your message'}</label><textarea id="contact-message" name="message" required className={form.textarea} placeholder={topic==='speaker'?'Share the date, location, audience and topic you have in mind.':'Tell us what you have in mind and how we can help.'} value={message} onChange={e=>setMessage(e.target.value)} aria-invalid={!!errors.message} aria-describedby={errors.message?'contact-message-error':undefined}/>{errors.message&&<p id="contact-message-error" className={form.fieldError}>{errors.message}</p>}</div>
     <button className={form.submit} type="submit">Continue in email →</button>
-    <p className={form.status}>This opens a draft in your email app. Review it and send it there.</p>
     {prepared&&<p className={form.status} role="status">Your email draft is ready. If your email app didn’t open, write directly to <a href={`mailto:${mailboxes.general}`}>{mailboxes.general}</a>.</p>}
   </form>;
 }

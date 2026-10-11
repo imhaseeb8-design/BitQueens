@@ -9,7 +9,7 @@
 .section {
   background: var(--bq-canvas);
   color: var(--bq-ink);
-  padding: clamp(4rem, 8vw, 8rem) 0;
+  padding-block: var(--bq-section-y);
 }
 
 .inner {
@@ -51,13 +51,13 @@
 }
 
 .chapterName {
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: 1rem;
   color: var(--bq-green-deep);
 }
 
 .chapterCity {
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.875rem;
   color: var(--bq-ink-50);
 }
@@ -66,13 +66,13 @@
   box-sizing: border-box;
   min-width: 0;
   padding: clamp(28px, 3vw, 44px);
-  border-radius: 20px;
+  border-radius: 12px;
   background: var(--bq-paper);
 }
 
 .formEyebrow {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: var(--bq-t-eyebrow);
   font-weight: 600;
   line-height: 1.25;
@@ -83,12 +83,12 @@
 
 .formHeadline {
   margin: 12px 0 clamp(1.5rem, 2.5vw, 2rem);
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: clamp(1.5rem, 2.1vw, 1.875rem);
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.03em;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
   text-wrap: balance;
 }
 

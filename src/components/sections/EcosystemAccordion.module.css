@@ -1,12 +1,10 @@
 /**
  * Ecosystem accordion - Figma 274:324 (header) and 268:279 (the row).
  *
- * Measured at 1440 wide, 1296 content, from the bottom of the conference
- * card above:
- *   globe      849 square, centred, its top 110 below the card (50 at the
- *              frame, plus the extra 60); 9% opacity;
- *              cut off where the row begins
- *   headline   centred, 226 below the card (166 at the frame, plus 60):
+ * Measured at 1440 wide, 1296 content, from the section's top:
+ *   globe      centred above the row at 9% opacity; its lower dots fade out
+ *              before the accordion begins
+ *   headline   centred, 226 down:
  *              75px sans over 82, then 88px
  *              serif over 94, both the deep green
  *   row        47 below the headline, 525 tall
@@ -25,48 +23,59 @@
 
 .section {
   position: relative;
+  margin-top: clamp(-6rem, -7vw, -4rem);
   background: var(--bq-canvas);
-  padding-bottom: clamp(3rem, 1.5rem + 5vw, 6rem);
+  padding-bottom: var(--bq-section-y);
 }
 
 /* -- the header ----------------------------------------------------------- */
 
-/* Clips the globe at the row's top edge. The frame puts the headline 166
-   under the conference card; this adds 60 more so the card has room to
-   breathe before the globe starts. */
+/* Gives the headline room above the accordion. */
 .header {
   position: relative;
   overflow: hidden;
-  padding: clamp(6rem, 15.694vw, 14.125rem) var(--bq-gutter) 47px;
+  padding: clamp(4.5rem, 8vw, 7rem) var(--bq-gutter) 47px;
   text-align: center;
+}
+
+/* Let the dots dissolve before the accordion starts, without fading the type. */
+.header::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: clamp(110px, 12vw, 180px);
+  background: linear-gradient(to bottom, transparent, var(--bq-canvas) 90%);
+  pointer-events: none;
 }
 
 .globe {
   position: absolute;
-  top: clamp(3rem, 7.639vw, 6.875rem);
+  top: clamp(-5rem, -5vw, -3rem);
   left: 50%;
-  width: clamp(560px, 58.958vw, 849px);
+  width: clamp(500px, 62vw, 900px);
   height: auto;
   aspect-ratio: 1;
   max-width: none;
   transform: translateX(-50%);
   opacity: 0.09;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 22%, transparent 37%);
   pointer-events: none;
 }
 
 .headline {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   /* 75 at the frame. */
-  font-size: clamp(2.75rem, 5.208vw, 4.6875rem);
+  font-size: clamp(2.75rem, 5.208vw, 3rem);
   font-weight: 400;
   line-height: 1.0933;
   letter-spacing: -0.04em;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
 }
 
 .headlineLine {
@@ -75,10 +84,8 @@
 
 /* 88 over 94 at the frame. */
 .serif {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: 1.17333em;
-  line-height: 1.0682;
-  letter-spacing: 0;
+  font-family: var(--bq-display), sans-serif;
+  opacity: 0.5;
 }
 
 /* -- the row -------------------------------------------------------------- */
@@ -110,8 +117,41 @@
   height: var(--row-h);
 }
 
+.invitation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 32px;
+  text-align: left;
+}
+
+.invitationText {
+  margin: 0;
+  font-family: var(--bq-body-sans), sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--bq-ink-80);
+}
+
+.invitation .invitationCta {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .invitation .invitationCta:hover {
+    border: 0;
+    background: none;
+  }
+}
+
 .item {
   position: relative;
+  border-radius: 10px;
   width: var(--spine-w);
   height: 100%;
   /* The clip. Without it every item would render at its full open width. */
@@ -122,6 +162,7 @@
 
 .item[data-open] {
   width: var(--open-w);
+  border-top-right-radius: 100px;
 }
 
 /* Always the open width, never the item's current width. */
@@ -139,7 +180,7 @@
   display: flex;
   flex-direction: column;
   /* Every label ends on the same line and grows upward from there, whatever
-     its length; the number sits under it. */
+     its length; the mark sits under it. */
   justify-content: flex-end;
   align-items: center;
   gap: 24px;
@@ -169,13 +210,13 @@
   outline-offset: -4px;
 }
 
-/* The 5px division colour along the top of a closed spine. The open one does
-   not need it: it is solid green. */
+/* Stepped color blocks along the top of a closed spine. The open one is solid green. */
 .divisionColour {
   position: absolute;
   inset: 0 0 auto 0;
-  height: 5px;
-  background: var(--accent);
+  width: 100%;
+  height: clamp(38px, 4vw, 52px);
+  fill: var(--accent);
   transition: opacity 400ms var(--accordion-ease);
 }
 
@@ -188,7 +229,7 @@
      first word nearest the number. */
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   /* 23 closed, 25 open at the frame. */
   font-size: clamp(1.125rem, 1.667vw, 1.5rem);
   font-weight: 400;
@@ -197,13 +238,11 @@
   color: inherit;
 }
 
-.spineNum {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
-  font-size: clamp(1.25rem, 1.736vw, 1.5625rem);
-  font-weight: 400;
-  line-height: 1.2;
+.spineIcon {
+  width: 30px;
+  height: 30px;
+  flex: none;
   color: inherit;
-  font-variant-numeric: tabular-nums;
 }
 
 /* -- the panel ------------------------------------------------------------ */
@@ -261,7 +300,7 @@
   border-radius: 4px;
   background: var(--bq-green-tint);
   color: var(--bq-green-deep);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.6875rem;
   line-height: 1.2;
   letter-spacing: 0.1em;
@@ -272,7 +311,7 @@
 /* "01  /  LEARN" in the division colour (node 268:285). */
 .eyebrow {
   margin: 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.25;
@@ -288,20 +327,21 @@
 
 .name {
   margin: 26px 0 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
-  /* 56 over 67 at the frame. */
-  font-size: clamp(1.75rem, 3.889vw, 3.5rem);
+  font-family: var(--bq-display), sans-serif;
+  /* 56 at the frame, brought down to 42: at 48 it was competing with the
+     section headline above it rather than sitting under it. */
+  font-size: clamp(1.75rem, 3.4vw, 2.625rem);
   font-weight: 400;
   line-height: 1.196;
   letter-spacing: -0.036em;
-  color: var(--bq-green-deep);
+  color: var(--bq-ink);
   white-space: nowrap;
 }
 
 .desc {
   max-width: 505px;
   margin: 13px 0 0;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
   line-height: 1.667;
   color: var(--bq-ink);
@@ -320,7 +360,7 @@
 
 .exploreLabel {
   margin: 0;
-  font-family: var(--bq-neue-montreal), sans-serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: 0.875rem;
   line-height: 1.2;
   letter-spacing: 0.01em;
@@ -342,7 +382,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
   line-height: 1.2;
   color: var(--bq-green-deep);
@@ -350,7 +390,7 @@
 }
 
 .itemNum {
-  font-family: var(--bq-instrument-serif), Georgia, serif;
+  font-family: var(--bq-display), sans-serif;
   font-size: 0.9375rem;
   line-height: 1.2;
   color: var(--accent);
@@ -367,15 +407,28 @@
   min-height: 0;
   padding: 16px 23px;
   border: 0;
-  border-radius: 4px;
+  border-radius: 999px;
   background: var(--bq-green-deep);
   color: var(--bq-canvas);
-  font-family: var(--bq-inter-tight), sans-serif;
+  font-family: var(--bq-body-sans), sans-serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: 0;
   flex-shrink: 0;
+}
+
+.panelInner .heroCta {
+  padding: 12px 20px;
+  background: var(--bq-green-deep);
+  font-size: 1rem;
+  line-height: 1.19;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .panelInner .heroCta:hover {
+    background: var(--bq-green-deep);
+  }
 }
 
 /* A coming-soon pillar's CTA is not a link: same block, muted, and
@@ -396,7 +449,7 @@
 
 .preview .name {
   margin-top: 12px;
-  font-size: clamp(1.75rem, 3.2vw, 2.875rem);
+  font-size: clamp(1.75rem, 3.2vw, 2.625rem);
   line-height: 1.1;
 }
 
@@ -434,6 +487,7 @@
 
 .preview .explore {
   margin-top: 20px;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
   padding-top: 16px;
 }
 
@@ -453,7 +507,7 @@
   color: var(--bq-ink-66);
 }
 
-.preview .cta { margin-top: 20px; }
+.preview .cta { margin-top: auto; }
 
 .secondaryLink {
   margin-top: 12px;
@@ -484,8 +538,17 @@
   .item[data-open] {
     width: 100%;
     height: auto;
+    border-radius: 10px;
     overflow: visible;
     transition: none;
+  }
+
+  .spine {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .panel {
+    border-radius: 0 0 10px 10px;
   }
 
   .itemInner {
@@ -512,9 +575,11 @@
     order: 2;
   }
 
-  .spineNum {
+  .spineIcon {
     order: 1;
-    opacity: 0.7;
+    opacity: 0.5;
+    width: 24px;
+    height: 24px;
   }
 
   .divisionColour {

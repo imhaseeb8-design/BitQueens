@@ -199,7 +199,6 @@ export function JoinForm({ content, initialTrack = '' }: { content: JoinPage; in
       <p className={form.status} data-tone="muted">
         {content.privacy}
       </p>
-      <p className={form.status}>This opens a draft in your email app. Review and send it to complete your request.</p>
     </form>
   );
 }

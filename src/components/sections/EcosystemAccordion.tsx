@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
 import { DottedGlobe } from '@/components/ui/DottedGlobe';
+import { TextReveal } from '@/components/ui/TextReveal';
 import type { EcosystemByAudience } from '@/lib/types';
-import { neueMontreal, instrumentSerif, interTight } from '@/styles/fonts';
+import { displaySans, bodySans } from '@/styles/fonts';
 import styles from './EcosystemAccordion.module.css';
 
 /** How long each tab holds before the next one opens on its own. */
@@ -17,6 +18,23 @@ const proofIcons: Record<string, string> = {
   'women trained': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M16 3a4 4 0 0 1 0 8 M22 21v-2a4 4 0 0 0-3-3.87 M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
   'cohorts delivered': 'm2 9 10-5 10 5-10 5-10-5 M6 11v6c3 3 9 3 12 0v-6 M22 9v8',
 };
+
+/* Four simple line marks for the accordion spines, in pillar order. */
+const spineMarks = [
+  'M4 20v-6a8 8 0 0 1 16 0v6 M8 20v-6a4 4 0 0 1 8 0v6 M3 20h18',
+  'M12 3v18 M3 12h18 M5.6 5.6l12.8 12.8 M18.4 5.6 5.6 18.4 M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6',
+  'M12 2 22 12 12 22 2 12 12 2Z M12 7 17 12 12 17 7 12 12 7Z',
+  'M12 12C7 9 7 4 12 3c5 1 5 6 0 9Z M12 12c3-5 8-5 9 0-1 5-6 5-9 0Z M12 12c5 3 5 8 0 9-5-1-5-6 0-9Z M12 12c-3 5-8 5-9 0 1-5 6-5 9 0Z',
+];
+
+/* Rectangular top-edge accents from Figma 346:428, on a 71 × 52 grid.
+   Academy receives a companion pattern for when it becomes a closed tab. */
+const divisionAccents = [
+  [[0, 0, 71, 13], [0, 13, 23, 17], [27, 13, 23, 12], [17, 28, 26, 13], [47, 25, 24, 9]],
+  [[0, 0, 71, 21], [0, 21, 28, 17], [24, 29, 24, 17], [53, 25, 18, 9], [41, 44, 13, 8]],
+  [[0, 0, 71, 13], [13, 13, 45, 13], [0, 26, 35, 21], [49, 21, 18, 13]],
+  [[0, 0, 71, 12], [29, 10, 42, 12], [16, 18, 18, 12], [26, 28, 30, 16], [0, 35, 19, 8]],
+];
 
 /**
  * The ecosystem as a horizontal accordion - Figma 274:324 / 268:279.
@@ -81,16 +99,16 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
     <section
       id="ecosystem"
       aria-label="The ecosystem"
-      className={`${styles.section} ${neueMontreal.variable} ${instrumentSerif.variable} ${interTight.variable}`}
+      className={`${styles.section} ${displaySans.variable} ${bodySans.variable}`}
     >
+      <DottedGlobe className={styles.globe} />
       <div className={styles.header}>
-        <DottedGlobe className={styles.globe} />
-        <h2 className={styles.headline}>
-          <span className={styles.headlineLine}>{content.headline}</span>
-          <span className={`${styles.headlineLine} ${styles.serif}`}>
-            {content.headlineMuted}
-          </span>
-        </h2>
+        <TextReveal
+          key={audience}
+          text={`${content.headline}\n${content.headlineMuted}`}
+          className={styles.headline}
+          lineClassNames={[styles.headlineLine, `${styles.headlineLine} ${styles.serif}`]}
+        />
       </div>
 
       <div className={styles.inner}>
@@ -125,11 +143,15 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                     onClick={() => setActive(i)}
                   >
                     {/* Only on closed spines: the open one is solid green. */}
-                    <span className={styles.divisionColour} aria-hidden="true" />
+                    <svg className={styles.divisionColour} viewBox="0 0 71 52" preserveAspectRatio="none" aria-hidden="true" style={pillar.name === 'Academy' ? { fill: 'var(--bq-green-deep)' } : undefined}>
+                      {divisionAccents[i % divisionAccents.length].map(([x, y, width, height], block) => (
+                        <rect key={block} x={x} y={y} width={width} height={height} />
+                      ))}
+                    </svg>
                     <span className={styles.spineLabel}>{pillar.spineLabel ?? pillar.name}</span>
-                    <span className={styles.spineNum} aria-hidden="true">
-                      {num}
-                    </span>
+                    <svg className={styles.spineIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d={spineMarks[i % spineMarks.length]} />
+                    </svg>
                   </button>
 
                   {/* Closed panels stay in the DOM and stay laid out, so they
@@ -172,13 +194,15 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                       )}
 
                       <div className={styles.explore}>
-                        <p className={styles.exploreLabel}>{pillar.itemsLabel}</p>
+                        {pillar.itemsLabel && <p className={styles.exploreLabel}>{pillar.itemsLabel}</p>}
                         <ol className={styles.items}>
                           {pillar.items.map((item, j) => (
                             <li key={item} className={styles.itemCell}>
-                              <span className={styles.itemNum} aria-hidden="true">
-                                {String(j + 1).padStart(2, '0')}
-                              </span>
+                              {!pillar.preview?.hideItemNumbers && (
+                                <span className={styles.itemNum} aria-hidden="true">
+                                  {String(j + 1).padStart(2, '0')}
+                                </span>
+                              )}
                               <span>{item}</span>
                               {pillar.preview && (
                                 <p className={styles.itemDescription}>{pillar.preview.descriptions[j]}</p>
@@ -200,11 +224,11 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
                           Coming soon
                         </span>
                       ) : (
-                        <Button href={pillar.href} size="compact" className={styles.cta}>
+                        <Button href={pillar.href} variant={pillar.preview?.heroButton ? 'green' : 'primary'} size="compact" className={`${styles.cta} ${pillar.preview?.heroButton ? styles.heroCta : ''}`}>
                           {pillar.cta}
                         </Button>
                       )}
-                      {pillar.preview && (
+                      {pillar.preview?.secondaryCta && (
                         <Link className={styles.secondaryLink} href={pillar.preview.secondaryCta.href}>
                           {pillar.preview.secondaryCta.label}
                         </Link>
@@ -216,6 +240,14 @@ export function EcosystemAccordion({ content: byAudience }: { content: Ecosystem
             );
           })}
         </div>
+        {content.invitation && (
+          <div className={styles.invitation}>
+            <p className={styles.invitationText}>{content.invitation.text}</p>
+            <Button href={content.invitation.cta.href} variant="secondary" size="compact" className={styles.invitationCta}>
+              {content.invitation.cta.label}
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
