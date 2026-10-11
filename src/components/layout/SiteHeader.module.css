@@ -152,12 +152,20 @@
 }
 
 @media (max-width: 900px) {
+  .header {
+    height: calc(var(--bq-header-height) + 12px);
+  }
+
+  .logo img {
+    width: 104px;
+  }
+
   .inner {
     width: calc(100% - 2 * var(--bq-gutter));
   }
 
   .surface {
-    top: max(0px, calc((var(--bq-header-height) - 60px) / 2));
+    top: calc(12px + max(0px, (var(--bq-header-height) - 60px) / 2));
     width: calc(100% - 2 * var(--bq-gutter));
   }
 

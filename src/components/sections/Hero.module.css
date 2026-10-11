@@ -508,6 +508,13 @@
 }
 
 @media (max-width: 640px) {
+  /* Keep the first shader with “Learn emerging”; start “tech.” below it. */
+  .panel[data-audience='learn'] .headlineLead > span:last-of-type {
+    display: block;
+    width: fit-content;
+    margin-inline: auto;
+  }
+
   .trust {
     display: grid;
     grid-template-columns: repeat(2, auto);

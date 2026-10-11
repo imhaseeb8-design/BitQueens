@@ -278,6 +278,14 @@
 }
 
 @media (max-width: 620px) {
+  .headline {
+    font-size: clamp(1.25rem, 6.6vw, 1.75rem);
+  }
+
+  .headlineLine {
+    white-space: nowrap;
+  }
+
   .stepsNav {
     gap: 10px;
   }
