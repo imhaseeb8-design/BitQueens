@@ -17,6 +17,9 @@ npx eslint src
 
 ## Deployment
 
+For the BitQueens team — what still needs deciding, how to change the copy,
+and how to attach the real domain: [Handoff](docs/HANDOFF.md).
+
 Search and sharing configuration, verification steps and remaining account tasks:
 [SEO setup](docs/SEO.md).
 
