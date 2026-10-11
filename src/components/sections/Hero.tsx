@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useId } from 'react';
+import { MeshGradient } from '@paper-design/shaders-react';
+import { useEffect, useId, useState } from 'react';
 import { useAudience } from '@/components/audience/AudienceProvider';
 import { Button } from '@/components/ui/Button';
 import { TrustRow } from '@/components/ui/TrustRow';
@@ -11,13 +12,41 @@ import type { ConferenceSection, HeroSection, ImpactStat } from '@/lib/types';
 import { bodySans, displaySans } from '@/styles/fonts';
 import styles from './Hero.module.css';
 
-/* Inline images the headline copy can call for by name. Decorative only —
-   each line still reads as a sentence with them removed, which is why they
-   are aria-hidden and carry no alt text. */
-const HEADLINE_MARKS: Record<string, { src: string }> = {
-  portrait: { src: '/kristie-portrait.jpg' },
-  room: { src: '/conference-audience.png' },
-};
+const HERO_MESH_COLORS = ['#3A6C9F', '#06503C', '#E8641B', '#F3AFBC'];
+
+function HeroShaderMark() {
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePreference = () => setReduceMotion(preference.matches);
+    updatePreference();
+    preference.addEventListener('change', updatePreference);
+    return () => preference.removeEventListener('change', updatePreference);
+  }, []);
+
+  return (
+    <span className={`${styles.headlineMark} ${styles.headlineShaderMark}`} aria-hidden="true">
+      <MeshGradient
+        speed={reduceMotion ? 0 : 1}
+        scale={1.91}
+        distortion={0.75}
+        swirl={0.1}
+        frame={57365.1}
+        colors={HERO_MESH_COLORS}
+        className={styles.headlineShader}
+      />
+      <Image
+        src="/bitqueens-b-mark-white.png"
+        alt=""
+        width={572}
+        height={717}
+        unoptimized
+        className={styles.headlineShaderGlyph}
+      />
+    </span>
+  );
+}
 
 /**
  * Hero — Figma 322:107 ("Homepage / Learners") and 322:153 ("/ Partners").
@@ -103,18 +132,10 @@ export function Hero({
               className={styles.headline}
               lineClassNames={audience.headlineLines.map(() => styles.headlineLine)}
               delay={0.06}
-              marks={Object.fromEntries(
-                Object.entries(HEADLINE_MARKS).map(([name, mark]) => [
-                  name,
-                  name === 'portrait' ? (
-                    <span key={name} className={`${styles.headlineMark} ${styles.headlinePortraitFrame}`} aria-hidden="true">
-                      <Image src={mark.src} alt="" width={240} height={240} className={styles.headlinePortrait} />
-                    </span>
-                  ) : (
-                    <Image key={name} src={mark.src} alt="" width={96} height={96} className={styles.headlineMark} aria-hidden="true" />
-                  ),
-                ]),
-              )}
+              marks={{
+                portrait: <HeroShaderMark />,
+                room: <Image src="/conference-audience.png" alt="" width={96} height={96} className={styles.headlineMark} aria-hidden="true" />,
+              }}
             />
             <p className={styles.body}>{audience.body}</p>
 
